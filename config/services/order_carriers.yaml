@@ -1,0 +1,19 @@
+services:
+  App\Integration\Shipment\UPSCarrier:
+    tags: ['order.shipment.carrier']
+    arguments:
+      $apiKey: '%env(default::UPS_API_KEY)%'
+
+  App\Integration\Shipment\DHLCarrier:
+    tags: ['order.shipment.carrier']
+    arguments:
+      $apiKey: '%env(default::DHL_API_KEY)%'
+
+  App\Integration\Shipment\FedExCarrier:
+    tags: ['order.shipment.carrier']
+    arguments:
+      $apiKey: '%env(default::FEDEX_API_KEY)%'
+
+  App\Service\Order\CarrierPollingService:
+    autowire: true
+    autoconfigure: true

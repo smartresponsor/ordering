@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ordercomponent
+description: Order (Symfony 7 + Doctrine ORM 3) — App + Worker + Outbox
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

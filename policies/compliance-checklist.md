@@ -1,0 +1,1 @@
+- SOC2-style controls checklist (stub). - GDPR/CCPA mapping (stub).

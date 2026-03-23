@@ -1,0 +1,6 @@
+framework:
+  messenger:
+    routing:
+      'App\Event\Order\OrderPlacedEvent': async
+      'App\Event\Order\OrderRefundedEvent': async
+      'App\Event\Order\OrderCancelledEvent': async

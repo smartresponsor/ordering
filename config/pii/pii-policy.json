@@ -1,0 +1,12 @@
+{
+  "fields": [
+    "email",
+    "phone",
+    "address"
+  ],
+  "log_redact": [
+    "email",
+    "phone"
+  ],
+  "pci_scope": "token-only"
+}

@@ -1,0 +1,5 @@
+# Observability smoke
+GET /healthz
+
+GET /order/dummy/ping
+X-Request-ID: demo-correlation-id-001

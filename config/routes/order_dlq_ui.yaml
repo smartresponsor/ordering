@@ -1,0 +1,4 @@
+order_dlq_ui:
+  resource: '../../src/Controller/Order'
+  type: attribute
+  prefix: /

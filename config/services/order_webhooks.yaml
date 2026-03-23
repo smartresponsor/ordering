@@ -1,0 +1,6 @@
+services:
+  App\Repository\Order\WebhookLogRepository: ~
+  App\Service\Order\WebhookIdempotencyService:
+    arguments:
+      - '@App\Repository\Order\WebhookLogRepository'
+      - '@doctrine.orm.entity_manager'

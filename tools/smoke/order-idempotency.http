@@ -1,0 +1,10 @@
+# X-Idempotency-Key smoke
+GET /healthz
+
+POST /order/sample/create
+X-Idempotency-Key: 123
+X-Idempotency-Owner: test
+
+POST /order/sample/create
+X-Idempotency-Key: 123
+X-Idempotency-Owner: test

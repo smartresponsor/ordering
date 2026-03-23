@@ -1,0 +1,7 @@
+parameters:
+  taxation_gateway_mode: '%env(TAXATION_GATEWAY_MODE)%'
+
+services:
+  # Switch implementation via ENV-resolved class name
+  App\Contract\Order\OrderTaxationGatewayInterface:
+    class: '%env(resolve:TAXATION_GATEWAY_CLASS)%'

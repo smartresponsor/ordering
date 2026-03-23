@@ -1,0 +1,5 @@
+id,status,totalAmount,currency,customerId
+ord_2001,placed,1999,USD,cus_1
+ord_2002,confirmed,2799,USD,cus_2
+ord_2002,confirmed,2799,USD,cus_2
+ord_2003,, -5, USD, 

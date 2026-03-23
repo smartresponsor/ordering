@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Order;
+
+use App\Entity\Order\OrderPriceAudit;
+use App\ValueObject\Order\Currency;
+use App\ValueObject\Order\Discount;
+use App\ValueObject\Order\TaxRate;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+final class OrderWorkflowSubscriber
+{
+    public function __construct(
+        private OrderPricingService $pricing,
+        private EntityManagerInterface $em,
+    ) {
+    }
+
+    #[AsEventListener(event: 'order.placed')]
+    public function onOrderPlaced(object $event): void
+    {
+        $orderId = $event->orderId ?? 'unknown';
+        $lines = $event->lines ?? [5000, 5000];
+        $currency = new Currency('USD');
+        $discount = new Discount(10.0, 0);
+        $tax = new TaxRate(20.0);
+
+        $detail = $this->pricing->calculate($lines, $currency, $discount, $tax);
+        $this->em->persist($detail);
+
+        $audit = new OrderPriceAudit(
+            \Ramsey\Uuid\Uuid::uuid4()->toString(),
+            $orderId,
+            $detail->currency()->code(),
+            $detail->subtotalMinor(),
+            $detail->discountMinor(),
+            $detail->taxMinor(),
+            $detail->totalMinor(),
+            'order.placed.snapshot'
+        );
+        $this->em->persist($audit);
+        $this->em->flush();
+    }
+}

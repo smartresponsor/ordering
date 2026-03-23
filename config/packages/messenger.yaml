@@ -1,0 +1,28 @@
+framework:
+  messenger:
+    transports:
+      async: '%env(MESSENGER_TRANSPORT_DSN)%'
+      failed: 'doctrine://default?queue_name=failed'
+    failure_transport: failed
+    routing:
+      'App\Message\Command\StartOrderSagaCommand': async
+      'App\Message\Command\RetryOrderSagaCommand': async
+    buses:
+      messenger.bus.default:
+        default_middleware: allow_no_handlers
+        middleware:
+          - doctrine_ping_connection
+          - doctrine_close_connection
+          - validation
+          - dispatch_after_current_bus
+          - failure_transporter
+          - 'messenger.retry_strategy_service'
+
+services:
+  messenger.retry_strategy_service:
+    class: Symfony\Component\Messenger\Retry\MultiplierRetryStrategy
+    arguments:
+      $maxRetries: 5
+      $delayMilliseconds: 200
+      $multiplier: 2
+      $maxDelayMilliseconds: 10000

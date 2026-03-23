@@ -1,0 +1,13 @@
+api_platform:
+  title: 'Order Component API'
+  version: '0.4.0-b4'
+  defaults:
+    pagination_items_per_page: 25
+    cache_headers:
+      vary: ['Content-Type', 'Authorization']
+  graphql:
+    enabled: true
+  formats:
+    jsonld: ['application/ld+json']
+    json: ['application/json']
+    html: ['text/html']

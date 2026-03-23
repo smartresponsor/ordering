@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\ValueObject\Order;
+
+final readonly class Quantity
+{
+    public function __construct(public int $value)
+    {
+        if ($value <= 0) {
+            throw new \InvalidArgumentException('Quantity > 0');
+        }
+    }
+}

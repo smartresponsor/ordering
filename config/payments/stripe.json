@@ -1,0 +1,5 @@
+{
+  "api_key": "sk_test_xxx",
+  "webhook_secret": "whsec_xxx",
+  "currency_default": "USD"
+}

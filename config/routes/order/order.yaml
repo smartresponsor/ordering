@@ -1,0 +1,5 @@
+# auto-generated for Order controller audit
+order.order.index:
+  path: /order/order/index
+  controller: App\Controller\Order\OrderController::index
+  methods: [GET]

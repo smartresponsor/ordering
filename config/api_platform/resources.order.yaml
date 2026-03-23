@@ -1,0 +1,22 @@
+resources:
+  Order\ReturnRequest:
+    disabled: true
+  App\ApiResource\Order\ReturnRequestInput:
+    shortName: 'OrderReturn'
+    operations:
+      - class: 'ApiPlatform\Metadata\Post'
+        uriTemplate: '/orders/{id}/returns'
+        controller: 'App\Controller\Order\ApiReturnController::create'
+        deserialize: true
+        read: false
+        validate: true
+        name: 'order_return_create'
+  App\ApiResource\Order\RefundView:
+    shortName: 'OrderRefund'
+    operations:
+      - class: 'ApiPlatform\Metadata\GetCollection'
+        uriTemplate: '/orders/{id}/refunds'
+        controller: 'App\Controller\Order\ApiRefundController::list'
+        read: false
+        deserialize: false
+        name: 'order_refunds_list'

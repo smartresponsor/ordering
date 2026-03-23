@@ -1,0 +1,35 @@
+{
+  "title": "Payments \u2014 Provider Health (v1)",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Stripe p95 (ms)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(payment_provider_latency_ms_bucket{provider=\"stripe\"}[5m])) by (le))"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Errors by op",
+      "targets": [
+        {
+          "expr": "sum(rate(payment_provider_error_total[5m])) by (provider,op)"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Webhook verify fails",
+      "targets": [
+        {
+          "expr": "increase(payment_webhook_verify_fail_total[1h])"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 27,
+  "version": 1
+}

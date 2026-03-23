@@ -1,0 +1,7 @@
+framework:
+  rate_limiter:
+    order_api_tenant:
+      policy: 'token_bucket'
+      limit: 300
+      rate: { interval: '60 seconds', amount: 300 }
+      cache_pool: 'cache.rate_limiter'

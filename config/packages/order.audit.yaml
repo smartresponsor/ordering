@@ -1,0 +1,7 @@
+order_component:
+  audit:
+    mask_fields: ['card', 'card_number', 'email', 'phone', 'iban', 'pan']
+services:
+  App\Service\SensitiveData\MaskingService:
+    arguments:
+      $maskKeys: '%order_component.audit.mask_fields%'

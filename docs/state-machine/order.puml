@@ -1,0 +1,1 @@
+@startuml\n[*] --> draft\ndraft --> placed : place()\nplaced --> confirmed : confirm()\nconfirmed --> fulfilled : fulfill()\nfulfilled --> closed : close()\nplaced --> canceled : cancel()\nconfirmed --> canceled : cancel()\nfulfilled --> returned : return()\n@enduml\n

@@ -1,0 +1,7 @@
+App\Entity\Order\OrderEntity:
+  type: entity
+  table: orders
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }

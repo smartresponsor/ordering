@@ -1,0 +1,6 @@
+src/Service/Order/OrderClient.php:4:use SmartResponsor\OrderSDK\Http\HttpClient;
+src/Service/Order/OrderClient.php:5:use SmartResponsor\OrderSDK\Model\Order;
+src/Service/Order/OrderClient.php:6:use SmartResponsor\OrderSDK\Model\Error;
+src/Service/Order/ProviderRouter.php:13:use SmartResponsor\Order\ProviderAdapter\ProviderAdapterInterface;
+src/Service/Order/RouterTest.php:14:use SmartResponsor\Order\ProviderAdapter\StripeAdapter;
+src/Service/Order/RouterTest.php:15:use SmartResponsor\Order\ProviderAdapter\DummyAdapter;

@@ -1,0 +1,7 @@
+parameters:
+  payment_gateway_mode: '%env(PAYMENT_GATEWAY_MODE)%'
+
+services:
+  # Advanced: resolve class from env for runtime switch
+  App\Contract\Order\OrderPaymentGatewayInterface:
+    class: '%env(resolve:PAYMENT_GATEWAY_CLASS)%'

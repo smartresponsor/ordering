@@ -1,0 +1,9 @@
+{
+  "ts": "2025-10-20",
+  "archive": "order-core-phase-31_0-router-quotas-cost-budgets.zip",
+  "domain": "order",
+  "layer": "payments",
+  "bucket_commits": 20,
+  "milestone": "AA3",
+  "message": "router-quotas-cost-budgets"
+}

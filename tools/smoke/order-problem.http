@@ -1,0 +1,7 @@
+
+# Problem+JSON smoke
+GET /order/non-existent  # ожидаем 404 + application/problem+json
+
+# эмуляция 400
+GET /order/observability/demo
+Accept: application/problem+json

@@ -1,0 +1,6 @@
+services:
+  App\OpenApi\OrderOpenApiFactory:
+    decorates: 'api_platform.openapi.factory'
+    arguments: ['@App\OpenApi\OrderOpenApiFactory.inner']
+    autoconfigure: true
+    autowire: true

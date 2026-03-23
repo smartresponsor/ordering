@@ -1,0 +1,10 @@
+services:
+  App\Security\WebhookSignatureVerifier:
+    arguments:
+      $secret: '%env(WEBHOOK_SECRET)%'
+
+  App\Http\Subscriber\WebhookHmacSubscriber:
+    arguments:
+      $header: 'X-Signature'
+    tags:
+      - { name: 'kernel.event_listener', event: 'kernel.request' }

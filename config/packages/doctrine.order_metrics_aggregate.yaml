@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    mappings:
+      OrderMetricsAggregate:
+        is_bundle: false
+        type: attribute
+        dir: "%kernel.project_dir%/src/Service/Order"
+        prefix: "App\Service\Order"
+        alias: OrderMetricsAggregate

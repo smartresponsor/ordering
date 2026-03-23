@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Order;
+
+final class RefundAmount extends Money
+{
+    public static function fromMoney(Money $money): self
+    {
+        return new self($money->amount, $money->currency);
+    }
+}

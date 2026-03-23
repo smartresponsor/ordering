@@ -1,0 +1,13 @@
+groups:
+- name: router
+  rules:
+  - alert: ProviderErrorSpike
+    expr: sum(rate(router_provider_error_total[5m])) by (provider,region) > 5
+    for: 10m
+    labels: {severity: page}
+    annotations: {summary: "Provider errors spike"}
+  - alert: ProviderHealthLow
+    expr: avg(provider_health_score) by (provider,region) < 0.3
+    for: 15m
+    labels: {severity: warn}
+    annotations: {summary: "Provider health below 0.3"}

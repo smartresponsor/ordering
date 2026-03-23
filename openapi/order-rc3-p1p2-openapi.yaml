@@ -1,0 +1,271 @@
+openapi: 3.0.3
+info:
+  title: SmartResponsor Order API — RC3 P1/P2
+  version: 0.3.0-rc3
+paths:
+  /order/{orderId}/reservation:
+    post:
+      summary: Place reservation
+      operationId: placeReservation
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationResponse'
+  /order/{orderId}/reservation/{reservationId}/release:
+    post:
+      summary: Release reservation
+      operationId: releaseReservation
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: reservationId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /order/{orderId}/reservation/{reservationId}/consume:
+    post:
+      summary: Consume reservation
+      operationId: consumeReservation
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: reservationId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+
+  /order/{orderId}/return:
+    post:
+      summary: Open RMA request
+      operationId: openRma
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RmaRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RmaResponse'
+
+  /order/{orderId}/exchange:
+    post:
+      summary: Open exchange request
+      operationId: openExchange
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRequest'
+      responses:
+        '202': { description: Accepted }
+
+  /order/{orderId}/claim:
+    post:
+      summary: Open claim
+      operationId: openClaim
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+      responses:
+        '202': { description: Accepted }
+
+  /return/{rmaId}/approve:
+    post:
+      summary: Approve RMA
+      operationId: approveRma
+      parameters:
+        - name: rmaId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /return/{rmaId}/receive:
+    post:
+      summary: Receive RMA items
+      operationId: receiveRma
+      parameters:
+        - name: rmaId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /return/{rmaId}/refund:
+    post:
+      summary: Refund RMA
+      operationId: refundRma
+      parameters:
+        - name: rmaId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /return/{rmaId}/reject:
+    post:
+      summary: Reject RMA
+      operationId: rejectRma
+      parameters:
+        - name: rmaId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+
+  /exchange/{exchangeId}/approve:
+    post:
+      summary: Approve exchange
+      operationId: approveExchange
+      parameters:
+        - name: exchangeId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /exchange/{exchangeId}/complete:
+    post:
+      summary: Complete exchange
+      operationId: completeExchange
+      parameters:
+        - name: exchangeId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /exchange/{exchangeId}/reject:
+    post:
+      summary: Reject exchange
+      operationId: rejectExchange
+      parameters:
+        - name: exchangeId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+
+  /claim/{claimId}/resolve:
+    post:
+      summary: Resolve claim
+      operationId: resolveClaim
+      parameters:
+        - name: claimId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+  /claim/{claimId}/reject:
+    post:
+      summary: Reject claim
+      operationId: rejectClaim
+      parameters:
+        - name: claimId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Accepted }
+
+components:
+  schemas:
+    ReservationRequest:
+      type: object
+      required: [sku, qty, stockLocationId, idempotencyKey]
+      properties:
+        sku: { type: string }
+        qty: { type: integer, minimum: 1 }
+        stockLocationId: { type: string }
+        idempotencyKey: { type: string }
+    ReservationResponse:
+      type: object
+      properties:
+        reservationId: { type: string }
+        status: { type: string, enum: [pending, active, released, consumed, failed] }
+    RmaRequest:
+      type: object
+      required: [lines]
+      properties:
+        cause: { type: string }
+        lines:
+          type: array
+          items:
+            type: object
+            required: [orderItemId, qty]
+            properties:
+              orderItemId: { type: string }
+              qty: { type: integer, minimum: 1 }
+    RmaResponse:
+      type: object
+      properties:
+        rmaId: { type: string }
+        status: { type: string, enum: [requested, approved, in_transit, received, refunded, rejected, canceled] }
+    ExchangeRequest:
+      type: object
+      required: [lines]
+      properties:
+        lines:
+          type: array
+          items:
+            type: object
+            required: [orderItemId, qty, newSku]
+            properties:
+              orderItemId: { type: string }
+              qty: { type: integer, minimum: 1 }
+              newSku: { type: string }
+    ClaimRequest:
+      type: object
+      required: [type]
+      properties:
+        type: { type: string, enum: [damage, lost, missing_item, other] }
+        note: { type: string }

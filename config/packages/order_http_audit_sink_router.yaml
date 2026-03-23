@@ -1,0 +1,21 @@
+
+services:
+  # Monolog sink uses a separate channel
+  App\Service\Order\Http\MonologAuditSink:
+    arguments:
+      $logger: '@monolog.logger.order.audit.ndjson'
+    autowire: true
+    autoconfigure: true
+
+  # Router fans out to both sinks. Order matters (first = primary for expectations).
+  App\Service\Order\Http\SinkRouter:
+    arguments:
+      $sink:
+        - '@App\Service\Order\Http\NdjsonAuditSink'
+        - '@App\Service\Order\Http\MonologAuditSink'
+    autowire: true
+    autoconfigure: true
+
+  # Bind the interface to router (E15 bound it to Ndjson; this overrides)
+  App\ServiceInterface\Order\Http\AuditSinkInterface: '@App\Service\Order\Http\SinkRouter'
+  App\ServiceInterface\Order\Http\SinkRouterInterface: '@App\Service\Order\Http\SinkRouter'

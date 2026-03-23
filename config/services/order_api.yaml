@@ -1,0 +1,4 @@
+services:
+  App\Controller\Order\OrderPriceController: ~
+  App\Subscriber\Order\OrderWorkflowSubscriber:
+    tags: ['kernel.event_listener']

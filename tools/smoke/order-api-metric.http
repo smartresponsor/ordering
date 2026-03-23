@@ -1,0 +1,6 @@
+# API Metric smoke
+GET /order/dummy/ping
+Accept: application/json
+
+GET /api/order/health
+Accept: application/json

@@ -1,0 +1,9 @@
+
+# After E13..E15 installed, apply this overlay; then hit any JSON endpoint.
+# Expect:
+#  - var/audit/order-YYYY-MM-DD.ndjson  (NDJSON sink)
+#  - var/log/order-audit-ndjson.log     (Monolog sink)
+#
+# Optional: disable router in runtime (example service locator usage):
+# $router = $container->get(App\ServiceInterface\Order\Http\SinkRouterInterface::class);
+# $router->enable(false);

@@ -1,0 +1,6 @@
+# Generate some audit by hitting any JSON endpoint, then rotate:
+bin/console order:audit:rotate
+# Rotate only files older than 3 days, without gzip:
+bin/console order:audit:rotate --older-than-days=3 --no-gzip
+# Check manifest:
+type var/audit/SHA256SUMS.txt

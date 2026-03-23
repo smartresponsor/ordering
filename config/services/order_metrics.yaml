@@ -1,0 +1,6 @@
+services:
+  App\Projector\Order\OrderMetricsProjector:
+    arguments: ['@doctrine.dbal.default_connection', '@doctrine.orm.entity_manager']
+
+  App\Controller\Order\SyncOrderMetricsCommand:
+    tags: ['console.command']

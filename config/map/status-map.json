@@ -1,0 +1,11 @@
+{
+  "draft": "draft",
+  "placed": "placed",
+  "confirmed": "confirmed",
+  "fulfilled": "fulfilled",
+  "closed": "closed",
+  "canceled": "canceled",
+  "cancelled": "canceled",
+  "returned": "returned",
+  "shipped": "fulfilled"
+}

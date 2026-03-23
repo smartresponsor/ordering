@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+namespace SmartResponsor\Order;
+
+use SmartResponsor\Order\ProviderAdapter\StripeAdapter;
+use SmartResponsor\Order\ProviderAdapter\DummyAdapter;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$mode = $argv[1] ?? 'demo';
+$policyJson = file_get_contents(__DIR__ . '/../config/router/policy.json');
+$policyData = json_decode($policyJson, true, 512, JSON_THROW_ON_ERROR);
+
+$policy = new ProviderPolicy(
+    (float)$policyData['route']['weight_latency'],
+    (float)$policyData['route']['weight_error'],
+    (float)$policyData['route']['weight_cost'],
+    (int)$policyData['threshold']['p95_ms'],
+    (float)$policyData['threshold']['error_rate']
+);
+
+$canarySwitch = new CanarySwitch((int)($policyData['canary']['seed'] ?? 42));
+$quota = new QuotaPolicy();
+$cost = new CostPolicy();
+
+$adapter = [
+    'stripe' => new StripeAdapter(),
+    'alt' => new DummyAdapter('alt'),
+];
+
+$probe = [
+    'stripe' => new HealthProbe(220, 0.3, 0.019, 10000),
+    'alt'    => new HealthProbe(260, 0.2, 0.022,  5000),
+];
+
+$canary = [
+    'stripe' => 5.00,  // 5%
+    'alt'    => 0.00,
+];
+
+$router = new ProviderRouter($adapter, $probe, $canary, $policy, $canarySwitch, $quota, $cost);
+
+$context = new RouteContext('intent-aa-demo-0001', 'us', 12.34, $mode === 'canary');
+$decision = $router->select($context);
+
+echo "provider=" . $decision->provider() . " score=" . number_format($decision->score(), 6) . "\n";

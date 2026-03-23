@@ -1,0 +1,7 @@
+{
+  "allowed": [
+    "USD",
+    "EUR"
+  ],
+  "default": "USD"
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Payments Router \u2014 Health & Routing",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Provider success (rate)",
+      "targets": [
+        {
+          "expr": "sum(rate(router_provider_success_total[5m])) by (provider,region,op)"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Provider errors (rate)",
+      "targets": [
+        {
+          "expr": "sum(rate(router_provider_error_total[5m])) by (provider,region,op)"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Health score",
+      "targets": [
+        {
+          "expr": "avg(provider_health_score) by (provider,region)"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "ordering/order",
+  "type": "project",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.4",
+    "ext-json": "*",
+    "ext-openssl": "*",
+    "api-platform/core": "^4.0",
+    "lexik/jwt-authentication-bundle": "^3.0",
+    "sentry/sentry-symfony": "^5.8",
+    "symfony/console": "^8.0",
+    "symfony/dotenv": "^8.0",
+    "symfony/framework-bundle": "^8.0",
+    "symfony/messenger": "^8.0",
+    "symfony/monolog-bundle": "^3.0",
+    "symfony/runtime": "^8.0",
+    "symfony/security-bundle": "^8.0",
+    "symfony/yaml": "^8.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.94",
+    "phpmd/phpmd": "^2.15",
+    "phpstan/phpstan": "^1.12",
+    "phpunit/phpunit": "^10.5"
+  },
+  "scripts": {
+    "test": "phpunit --configuration phpunit.xml.dist --testsuite OrderFast",
+    "test:full": "phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack",
+    "owner:canon:scan": "php bin/owner-canon-scan.php",
+    "owner:canon:report": "php bin/owner-canon-scan.php --write=.meta/owner-canon-scan.json",
+    "owner:canon:enforce": "php bin/owner-canon-scan.php --fail-on-violations",
+    "lint:php": "find src config tests -name \"*.php\" -print0 | xargs -0 -n1 php -l",
+    "lint:canon": "@owner:canon:enforce",
+    "fix:cs": "php vendor/bin/php-cs-fixer fix",
+    "check:cs": "php vendor/bin/php-cs-fixer fix --dry-run --diff",
+    "analyse": "php vendor/bin/phpstan analyse",
+    "mess:detect": "php vendor/bin/phpmd src,tests text phpmd.xml"
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
+    },
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

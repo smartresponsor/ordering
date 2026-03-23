@@ -1,0 +1,17 @@
+
+name: chaos-nightly
+on: { schedule: [{ cron: "15 2 * * *" }], workflow_dispatch: {} }
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [ "scenario/db-outage.json", "scenario/netem-db.yaml" ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preflight
+        run: echo "Note: netem requires privileged runner"
+      - name: Run scenario
+        run: |
+          if [[ "${{ matrix.scenario }}" == *.yaml ]]; then echo "(YAML runner not implemented, use json twin)"; else php bin/run-scenario.php "${{ matrix.scenario }}"; fi

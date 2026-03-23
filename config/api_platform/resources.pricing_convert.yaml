@@ -1,0 +1,10 @@
+resources:
+  App\ApiResource\Order\PricingConvertInput:
+    shortName: 'OrderPricingConvert'
+    operations:
+      - class: 'ApiPlatform\Metadata\Post'
+        uriTemplate: '/orders/pricing/convert'
+        controller: 'App\Controller\Order\ApiPricingConvertController'
+        read: false
+        deserialize: false
+        name: 'order_pricing_convert'

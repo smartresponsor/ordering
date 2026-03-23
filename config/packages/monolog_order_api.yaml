@@ -1,0 +1,9 @@
+monolog:
+  channels: ['order.api']
+
+  handlers:
+    order_api:
+      type: stream
+      path: '%kernel.logs_dir%/order-api.log'
+      level: info
+      channels: ['order.api']

@@ -1,0 +1,1 @@
+@startuml\n[*] --> ready\nready --> shipped : ship()\nshipped --> delivered : deliver()\ndelivered --> returned : return()\nshipped --> lost : markLost()\n@enduml\n

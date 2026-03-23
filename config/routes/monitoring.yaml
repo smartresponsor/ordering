@@ -1,0 +1,10 @@
+metrics:
+  path: /metrics
+  controller: App\Infrastructure\Monitoring\MetricsController
+  methods: [GET]
+
+
+order_ready:
+  path: /_ready/order
+  controller: App\Infrastructure\Monitoring\HealthController::readiness
+  methods: [GET]

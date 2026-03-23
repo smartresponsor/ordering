@@ -1,0 +1,21 @@
+monolog:
+  channels: ['order', 'order.outbox', 'order.idempotency']
+
+  handlers:
+    order:
+      type: stream
+      path: '%kernel.logs_dir%/order.log'
+      level: info
+      channels: ['order']
+
+    order_outbox:
+      type: stream
+      path: '%kernel.logs_dir%/order-outbox.log'
+      level: info
+      channels: ['order.outbox']
+
+    order_idempotency:
+      type: stream
+      path: '%kernel.logs_dir%/order-idempotency.log'
+      level: info
+      channels: ['order.idempotency']

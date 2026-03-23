@@ -1,0 +1,15 @@
+services:
+  App\Repository\Order\OrderStockReservationRepository:
+    arguments: ['@doctrine.orm.entity_manager']
+
+  App\Service\Order\Adapter\InMemoryInventoryGateway:
+    arguments: [{ SKU-001: 100, SKU-002: 50 }]
+    public: true
+
+  App\Service\Order\InventoryReservationService:
+    arguments:
+      - '@App\Service\Order\Adapter\InMemoryInventoryGateway'
+      - '@App\Repository\Order\OrderStockReservationRepository'
+
+  App\Subscriber\Order\InventorySubscriber:
+    tags: ['kernel.event_subscriber']

@@ -1,0 +1,3 @@
+- `payment_intent.succeeded` → `payment.succeeded`
+- `payment_intent.payment_failed` → `payment.failed`
+- `charge.refunded` → `payment.refunded`

@@ -1,0 +1,40 @@
+{
+  "admin": {
+    "order.create": true,
+    "order.get": true,
+    "order.search": true,
+    "order.transition": true,
+    "order.refund": true,
+    "order.close": true,
+    "payment.authorize": true,
+    "payment.capture": true,
+    "payment.refund": true,
+    "delivery.ship": true,
+    "delivery.deliver": true,
+    "delivery.return": true,
+    "import.run": true,
+    "admin.user.manage": true,
+    "admin.policy.edit": true
+  },
+  "ops": {
+    "order.get": true,
+    "order.search": true,
+    "order.transition": true,
+    "payment.capture": true,
+    "delivery.deliver": true
+  },
+  "csr": {
+    "order.get": true,
+    "order.search": true,
+    "order.transition": true
+  },
+  "reader": {
+    "order.get": true,
+    "order.search": true
+  },
+  "integrator": {
+    "order.create": true,
+    "order.get": true,
+    "order.transition": true
+  }
+}

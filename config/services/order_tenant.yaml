@@ -1,0 +1,11 @@
+services:
+  App\Security\Jwt\JwtTenantResolver:
+    arguments: ['public']
+
+  App\RateLimiter\TenantKeyResolver:
+    arguments: ['@request_stack', '@security.token_storage', '@App\Security\Jwt\JwtTenantResolver']
+
+  App\EventListener\OrderTenantRateLimitListener:
+    arguments: ['@limiter.order_api_tenant', '@App\RateLimiter\TenantKeyResolver']
+    tags:
+      - { name: 'kernel.event_listener', event: 'kernel.request' }

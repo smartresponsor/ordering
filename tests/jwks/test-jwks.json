@@ -1,0 +1,11 @@
+{
+  "keys": [
+    {
+      "kid": "test1",
+      "kty": "RSA",
+      "alg": "RS256",
+      "use": "sig",
+      "pem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx5pD9lWQvQiWmrO6wWbG\nhevCC6M1E1aDewfsj3Z1sT2+zY3FcXk1m8Xc6lQKJQOZ4Wm7kIYk0rQqg1kFGLkG\n+afVfM0cQY0W2V6z+7Y3xJw2Y3rUmQYbQw66R8nM1sXf9kDChK5+qZl3gq0+Xg2v\n0o4TUr4lZ4iWqv1kq2Q2R0V9m0M+F6c2Q6V7Yx1g0x0o0H2d6Jr7v1n6Q6B1dC0k\n5wq3E9iX8U8p5i5n3b0h7gqCzKqVf5zUoG5wGQIDAQAB\n-----END PUBLIC KEY-----\n"
+    }
+  ]
+}

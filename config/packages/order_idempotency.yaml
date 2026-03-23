@@ -1,0 +1,4 @@
+services:
+  App\Infrastructure\Order\Idempotency\IdempotencyRequestListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: __invoke, priority: 10 }

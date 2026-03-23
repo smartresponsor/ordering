@@ -1,0 +1,11 @@
+# List first page
+bin/console order:dlq:list -l 10
+
+# Filter by topic
+bin/console order:dlq:list --topic=order.created
+
+# Requeue explicit ids (reset attempt by default)
+bin/console order:dlq:requeue 01HZYX000000000000000000 01HZYX000000000000000001
+
+# Requeue current filtered page
+bin/console order:dlq:requeue --batch --topic=order.created -l 50 -o 0

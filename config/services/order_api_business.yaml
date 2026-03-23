@@ -1,0 +1,23 @@
+services:
+  # API Platform processors/providers are autowired by namespace
+  App\MessageHandler\Order\OrderPaymentCommandHandler: ~
+  App\MessageHandler\Order\OrderShipmentCommandHandler: ~
+
+  # Payment/Shipment default adapters (override in env-specific configs)
+  App\Service\Order\Adapter\Payment\StripeGateway: ~
+  App\Service\Order\Adapter\Payment\PayPalGateway: ~
+  App\Service\Order\Adapter\Shipment\UPSCarrier: ~
+  App\Service\Order\Adapter\Shipment\DHLCarrier: ~
+
+  # Polymorphic selection via alias (choose Stripe / PayPal; UPS / DHL)
+  App\Service\Order\Adapter\Payment\PaymentGatewayInterface: '@App\Service\Order\Adapter\Payment\StripeGateway'
+  App\Service\Order\Adapter\Shipment\CarrierInterface: '@App\Service\Order\Adapter\Shipment\UPSCarrier'
+
+  # Subscribers
+  App\Subscriber\Order\PaymentWebhookListener:
+    arguments: ['@App\Service\Order\PaymentService', '@App\Service\Order\TransactionalEventPublisher']
+    tags: ['kernel.event_subscriber']
+
+  App\Subscriber\Order\ShipmentStatusListener:
+    arguments: ['@App\Service\Order\ShipmentService', '@App\Service\Order\TransactionalEventPublisher']
+    tags: ['kernel.event_subscriber']

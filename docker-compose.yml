@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order_php
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      DATABASE_URL: postgres://app:app@db:5432/app
+      MESSENGER_TRANSPORT_DSN: amqp://guest:guest@rabbitmq:5672/%2f/messages
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c "composer install && php bin/console doctrine:migrations:migrate --no-interaction && php-fpm"
+    ports:
+      - "9000:9000"
+
+  db:
+    image: postgres:16
+    container_name: order_db
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: order_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"

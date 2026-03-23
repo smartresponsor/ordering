@@ -1,0 +1,19 @@
+
+# Requirements:
+#   composer require aws/aws-sdk-php:^3
+#   export AWS_ACCESS_KEY_ID=...
+#   export AWS_SECRET_ACCESS_KEY=...
+#   export AWS_REGION=us-east-1
+#   export ORDER_AUDIT_S3_BUCKET=my-bucket
+# Optional:
+#   export AWS_ENDPOINT=http://127.0.0.1:9000
+#   export AWS_S3_PATH_STYLE=1
+#   export ORDER_AUDIT_S3_PREFIX=order/
+#   export ORDER_AUDIT_S3_SSE=AES256   # or aws:kms
+#   export ORDER_AUDIT_S3_KMS_KEY=arn:aws:kms:...:key/....
+#
+# Ship today's audit:
+bin/console order:audit:ship-s3 --date=today
+#
+# Ship specific date:
+bin/console order:audit:ship-s3 --date=2025-11-06 --prefix=order/tenant-1/

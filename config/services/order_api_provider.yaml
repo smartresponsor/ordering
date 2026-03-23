@@ -1,0 +1,3 @@
+services:
+  App\Api\State\OrderPriceProvider:
+    arguments: ['@doctrine.dbal.default_connection']

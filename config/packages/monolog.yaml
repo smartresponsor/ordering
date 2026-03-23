@@ -1,0 +1,8 @@
+monolog:
+  channels: ['order_audit']
+  handlers:
+    order_audit:
+      type: stream
+      path: '%kernel.project_dir%/var/log/order_audit.log'
+      level: info
+      channels: ['order_audit']

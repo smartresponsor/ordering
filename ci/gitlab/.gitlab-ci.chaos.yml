@@ -1,0 +1,9 @@
+
+stages: [chaos]
+chaos:
+  stage: chaos
+  script:
+    - php bin/run-scenario.php scenario/db-outage.json
+  allow_failure: true
+  rules:
+    - when: always

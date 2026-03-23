@@ -1,0 +1,10 @@
+
+# HTTP Audit smoke
+GET /order/dummy/ping
+Accept: application/json
+
+POST /order/dummy/echo
+Accept: application/json
+Content-Type: application/json
+
+{"a":1,"password":"secret","token":"123"}

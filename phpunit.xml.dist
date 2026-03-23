@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true" cacheDirectory=".phpunit.cache">
+  <php>
+    <server name="APP_ENV" value="test"/>
+    <server name="APP_DEBUG" value="1"/>
+    <server name="KERNEL_CLASS" value="App\Kernel"/>
+  </php>
+  <testsuites>
+    <testsuite name="OrderFast">
+      <file>tests/Unit/MoneyTest.php</file>
+      <file>tests/Unit/PriceCalculationTest.php</file>
+      <file>tests/Unit/Pricing/CurrencyConversionServiceTest.php</file>
+      <file>tests/Unit/Pricing/DefaultTaxationStrategyTest.php</file>
+      <file>tests/Unit/Pricing/TaxationConfigLoaderTest.php</file>
+    </testsuite>
+    <testsuite name="OrderFullStack">
+      <directory>tests</directory>
+      <exclude>tests/Unit/MoneyTest.php</exclude>
+      <exclude>tests/Unit/PriceCalculationTest.php</exclude>
+      <exclude>tests/Unit/Pricing/CurrencyConversionServiceTest.php</exclude>
+      <exclude>tests/Unit/Pricing/DefaultTaxationStrategyTest.php</exclude>
+      <exclude>tests/Unit/Pricing/TaxationConfigLoaderTest.php</exclude>
+    </testsuite>
+  </testsuites>
+</phpunit>

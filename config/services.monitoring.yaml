@@ -1,0 +1,4 @@
+services:
+  App\Monitoring\MetricsRegistry:
+    arguments:
+      $path: '%kernel.project_dir%/var/metrics/metrics.prom'

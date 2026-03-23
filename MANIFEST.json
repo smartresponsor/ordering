@@ -1,0 +1,33 @@
+{
+  "name": "order-core-phase-29_0-security-polish",
+  "domain": "order",
+  "layer": "security",
+  "version": "phase-29_0",
+  "date": "2025-10-20",
+  "artifacts": [
+    "README.md",
+    "config/security/jwt.json",
+    "src/Security/JWT/JwksCache.php",
+    "src/Security/JWT/JwtVerifier.php",
+    "src/Security/Http/AuthMiddleware.php",
+    "src/Security/Audit/AuditLogger.php",
+    "src/Security/Http/AuditMiddleware.php",
+    "bin/jwks-refresh.php",
+    "bin/jwt-mint-test.php",
+    "bin/auth-negative.php",
+    "bin/secret-rotate-k8s.sh",
+    "tests/keys/test-private.pem",
+    "tests/keys/test-public.pem",
+    "tests/jwks/test-jwks.json",
+    "config/envoy/jwt-authn.yaml",
+    "docs/security-auth-jwt.md",
+    "docs/audit-log.md",
+    "docs/secret-rotation.md",
+    "Makefile"
+  ],
+  "invariants": {
+    "single_hyphen": true,
+    "no_plurals": true,
+    "comments_language": "English"
+  }
+}

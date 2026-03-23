@@ -1,0 +1,10 @@
+services:
+  App\Integration\Payment\StripeStubGateway:
+    arguments:
+      $secret: '%env(default::STRIPE_SECRET)%'
+
+  App\Service\Order\RefundProcessor:
+    arguments:
+      $em: '@doctrine.orm.entity_manager'
+      $bus: '@messenger.default_bus'
+      $gateway: '@App\Integration\Payment\StripeStubGateway'

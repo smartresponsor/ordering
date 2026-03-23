@@ -1,0 +1,28 @@
+{
+  "issuers": [
+    {
+      "name": "corp-github",
+      "issuer": "https://github.example.com",
+      "alg": "RS256",
+      "jwks": "https://github.example.com/.well-known/jwks.json"
+    },
+    {
+      "name": "corp-gitlab",
+      "issuer": "https://gitlab.example.com",
+      "alg": "RS256",
+      "jwks": "https://gitlab.example.com/-/jwks.json"
+    }
+  ],
+  "claims": {
+    "required": [
+      "sub",
+      "exp",
+      "iat",
+      "iss",
+      "tenant_id",
+      "roles"
+    ],
+    "tenant_claim": "tenant_id",
+    "roles_claim": "roles"
+  }
+}

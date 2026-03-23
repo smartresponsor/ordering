@@ -1,0 +1,36 @@
+cat > fast_import_product.txt << 'EOF'
+# --- BEGIN FAST IMPORT SCRIPT ---
+
+# 1. Core foundation
+commit refs/heads/master
+committer Oleksandr Tishchenko <dev@smartresponsor.com> 1720500000 +0000
+data <<EOT
+Initial ProductCore foundation (v1.0)
+EOT
+from refs/heads/master^0
+M 100644 inline 0_product-suite-v1-10-meta.zip
+EOT
+
+# 2. Product iteration chain
+commit refs/heads/master
+committer Oleksandr Tishchenko <dev@smartresponsor.com> 1720500600 +0000
+data <<EOT
+001_product-vendor-trend-scheduler-suite_ (suite, Vendor+TrendScheduler integration)
+EOT
+M 100644 inline 001_product-vendor-trend-scheduler-suite_.zip
+EOT
+
+commit refs/heads/master
+committer Oleksandr Tishchenko <dev@smartresponsor.com> 1720501200 +0000
+data <<EOT
+002_product-stock-cache-optimizer (patch, cache optimization)
+EOT
+M 100644 inline 002_product-stock-cache-optimizer.zip
+EOT
+
+# 3. Continue all product-suite releases in order
+# (up to product-suite-v44.0-global-governance-council.zip)
+# Each as sequential commits with commit messages and file imports.
+
+# --- END FAST IMPORT SCRIPT ---
+EOF

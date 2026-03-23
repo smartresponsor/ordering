@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prom-adapter-config
+  namespace: custom-metrics
+data:
+  config.yaml: |
+    rules:
+    - seriesQuery: 'queue_backlog_age_seconds'
+      resources:
+        overrides: { namespace: { resource: "namespace" }, pod: { resource: "pod" } }
+      name:
+        matches: "^(.*)"
+        as: "queue_backlog_age_seconds"
+      metricsQuery: 'avg_over_time(queue_backlog_age_seconds{<<.LabelMatchers>>}[5m])'

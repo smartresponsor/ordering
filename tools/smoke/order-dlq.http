@@ -1,0 +1,11 @@
+# DLQ viewer
+GET /order/dlq?limit=5
+
+# Single requeue (requires ROLE_ORDER_ADMIN)
+POST /order/dlq/01HZYX000000000000000000/requeue?resetAttempt=1
+
+# Batch requeue
+POST /order/dlq/requeue
+Content-Type: application/json
+
+{ "ids": ["01HZYX000000000000000000","01HZYX000000000000000001"], "resetAttempt": true }

@@ -1,0 +1,7 @@
+monolog:
+  channels: ['order_security']
+  handlers:
+    order_security:
+      type: stream
+      path: '%kernel.logs_dir%/order_security.log'
+      channels: ['order_security']

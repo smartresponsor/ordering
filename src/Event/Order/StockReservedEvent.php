@@ -1,0 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Event\Order;
+
+use App\Entity\Order\InventoryReservation;
+
+final readonly class StockReservedEvent
+{
+    public function __construct(public InventoryReservation $reservation)
+    {
+    }
+}

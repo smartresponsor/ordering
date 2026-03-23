@@ -1,0 +1,6 @@
+services:
+  App\Security\JwtScopeVoter: ~
+  App\EventListener\OrderApiRateLimitListener:
+    arguments: ['@limiter.order_api']
+    tags:
+      - { name: 'kernel.event_listener', event: 'kernel.request' }

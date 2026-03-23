@@ -1,0 +1,6 @@
+services:
+  App\EventSubscriber\ApiAuditSubscriber:
+    arguments:
+      $orderAuditLogger: '@monolog.logger.order_audit'
+      $tokens: '@security.token_storage'
+    tags: ['kernel.event_subscriber']
