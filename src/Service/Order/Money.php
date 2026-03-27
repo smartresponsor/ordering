@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-final class Money
+class Money
 {
     private string $amount; // string decimal for precision
     private Currency $currency;

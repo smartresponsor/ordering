@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-final class OrderReservationService implements App\ServiceInterface\Order\OrderReservationServiceInterface
+final class OrderReservationService implements \App\ServiceInterface\Order\OrderReservationServiceInterface
 {
     public function reserve(string $sku, int $qty): bool
     {

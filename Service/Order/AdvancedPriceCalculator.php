@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * Owner: Marketing America Corp.
+ */
+
+namespace App\Service\Order;
+
+use App\ServiceInterface\Order\CurrencyConversionServiceInterface;
+use App\ServiceInterface\Order\LegacyTaxationStrategyInterface;
+use App\ValueObject\Order\Discount;
+use App\ValueObject\Order\Money;
+use App\ValueObject\Order\PriceBreakdown;
+
+final class AdvancedPriceCalculator
+{
+    public function __construct(
+        private CurrencyConversionServiceInterface $fx,
+        private bool $taxAfterDiscount = true,
+    ) {
+    }
+
+    /** @param array<int,array{priceMinor:int, quantity:int, currency?:string}> $items */
+    public function calculate(
+        array $items,
+        string $displayCurrency,
+        ?Discount $discount,
+        ?LegacyTaxationStrategyInterface $taxStrategy,
+    ): PriceBreakdown {
+        $displayCurrency = strtoupper($displayCurrency);
+        $subtotal = Money::zero($displayCurrency);
+
+        foreach ($items as $i) {
+            $minor = (int) $i['priceMinor'] * max(1, (int) $i['quantity']);
+            $itemMoney = new Money(number_format($minor / 100, 2, '.', ''), strtoupper($i['currency'] ?? $displayCurrency));
+            $itemMoney = $this->fx->convert($itemMoney, $displayCurrency);
+            $subtotal = $subtotal->add($itemMoney);
+        }
+
+        $discountedBase = $discount ? $discount->apply($subtotal) : $subtotal;
+        $discountMoney = $subtotal->subtract($discountedBase);
+
+        $taxBase = $this->taxAfterDiscount ? $discountedBase : $subtotal;
+        $tax = $taxStrategy ? $taxStrategy->tax($taxBase) : Money::zero($displayCurrency);
+        $total = $taxBase->add($tax);
+
+        return new PriceBreakdown($subtotal, $discountMoney, $tax, $total);
+    }
+}

@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use App\Entity\Order\OrderItem;
 
-final class FlatTaxationStrategy implements TaxationStrategyInterface, \App\ServiceInterface\Order\FlatTaxationStrategyInterface
+class FlatTaxationStrategy implements TaxationStrategyInterface, \App\ServiceInterface\Order\FlatTaxationStrategyInterface
 {
     public function __construct(private readonly float $rate = 0.2)
     {

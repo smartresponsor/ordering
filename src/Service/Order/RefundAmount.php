@@ -8,6 +8,6 @@ final class RefundAmount extends Money
 {
     public static function fromMoney(Money $money): self
     {
-        return new self($money->amount, $money->currency);
+        return new self($money->getAmount(), $money->getCurrency());
     }
 }

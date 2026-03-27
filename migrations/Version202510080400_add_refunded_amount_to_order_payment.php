@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace DoctrineMigrations;
+
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 final class Version202510080400_add_refunded_amount_to_order_payment extends AbstractMigration

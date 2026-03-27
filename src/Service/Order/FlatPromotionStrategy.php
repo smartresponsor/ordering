@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use App\Entity\Order\OrderItem;
 
-final class FlatPromotionStrategy implements PromotionStrategyInterface, \App\ServiceInterface\Order\FlatPromotionStrategyInterface
+class FlatPromotionStrategy implements PromotionStrategyInterface, \App\ServiceInterface\Order\FlatPromotionStrategyInterface
 {
     public function __construct(private readonly int $percent = 10)
     {

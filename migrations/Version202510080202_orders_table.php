@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DoctrineMigrations;
@@ -15,10 +16,10 @@ final class Version202510080202_orders_table extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql("CREATE TABLE IF NOT EXISTS orders (
+        $this->addSql('CREATE TABLE IF NOT EXISTS orders (
             id VARCHAR(36) PRIMARY KEY,
             status VARCHAR(32) NOT NULL
-        )");
+        )');
     }
 
     public function down(Schema $schema): void

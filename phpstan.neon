@@ -3,6 +3,9 @@ parameters:
   paths:
     - src
     - tests
+  excludePaths:
+    analyse:
+      - src/Service/Order/*Test.php
   checkGenericClassInNonGenericObjectType: true
   checkMissingIterableValueType: true
   inferPrivatePropertyTypeFromConstructor: true

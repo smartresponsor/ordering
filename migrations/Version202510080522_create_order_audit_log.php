@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace DoctrineMigrations;
+
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 final class Version202510080522_create_order_audit_log extends AbstractMigration

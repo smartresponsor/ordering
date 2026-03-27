@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -17,6 +18,7 @@ final class Version202510062126_baseline extends AbstractMigration
     {
         // orders
         $this->addSql('CREATE TABLE IF NOT EXISTS orders (id SERIAL PRIMARY KEY, status VARCHAR(16) NOT NULL, currency VARCHAR(3) NOT NULL, subtotal INT NOT NULL DEFAULT 0, discount_total INT NOT NULL DEFAULT 0, tax_total INT NOT NULL DEFAULT 0, grand_total INT NOT NULL DEFAULT 0, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NULL)');
+
         // order_items
         $this->addSql('CREATE TABLE IF NOT EXISTS order_items (id SERIAL PRIMARY KEY, order_id INT NOT NULL, sku VARCHAR(64) NOT NULL, unit_price INT NOT NULL, quantity INT NOT NULL, discount INT NOT NULL DEFAULT 0, tax INT NOT NULL DEFAULT 0, final_price INT NOT NULL DEFAULT 0, CONSTRAINT fk_items_order FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE)');
         $this->addSql('CREATE INDEX IF NOT EXISTS idx_items_order ON order_items (order_id)');

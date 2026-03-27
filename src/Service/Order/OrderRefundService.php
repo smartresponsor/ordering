@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-final class OrderRefundService implements App\ServiceInterface\Order\OrderRefundServiceInterface
+final class OrderRefundService implements \App\ServiceInterface\Order\OrderRefundServiceInterface
 {
     public function refund(float $amount): bool
     {
