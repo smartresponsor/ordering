@@ -1,5 +1,4 @@
 security:
-  enable_authenticator_manager: true
   providers:
     app_user_provider:
       memory: ~
@@ -8,11 +7,11 @@ security:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
-    api:
-      pattern: ^/
-      stateless: true
-      jwt: ~
+    main:
+      lazy: true
+      stateless: false
 
   access_control:
-    - { path: ^/orders, roles: IS_AUTHENTICATED_FULLY }
-    - { path: ^/graphql, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/manage, roles: PUBLIC_ACCESS }
+    - { path: ^/order/health, roles: PUBLIC_ACCESS }
+    - { path: ^/order, roles: PUBLIC_ACCESS }

@@ -3,22 +3,31 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\\:
-    resource: '../src/'
+  App\Controller\OrderController:
+    tags: ['controller.service_arguments']
+
+  App\Controller\OrderManagementController:
+    tags: ['controller.service_arguments']
+
+  App\Controller\HealthCheckController:
+    tags: ['controller.service_arguments']
+
+  App\Controller\ReadinessController:
+    tags: ['controller.service_arguments']
+
+  App\Form\:
+    resource: '../src/Form/'
+
+  App\Service\:
+    resource: '../src/Service/'
     exclude:
-      - '../src/DependencyInjection/'
-      - '../src/Entity/'
-      - '../src/Kernel.php'
-      - '../src/Migrations/'
-      - '../src/Resources/'
-      - '../src/**/Tests/'
-      - '../src/**/*Test.php'
-      - '../src/**/Kernel.php'
+      - '../src/Service/Tx/'
 
-  App\\Controller\\:
-    resource: '../src/Controller/'
-    tags: ['controller.service_arguments']
+  App\Command\OrderDemoLoadCommand: ~
+  App\Command\OrderDemoResetCommand: ~
+  App\Command\OrderDiagnosticsCommand: ~
+  App\Command\OrderReportCommand: ~
 
-  App\\Api\\Controller\\:
-    resource: '../src/Api/Controller/'
-    tags: ['controller.service_arguments']
+  App\DataFixtures\OrderDemoFixtures: ~
+
+  Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'

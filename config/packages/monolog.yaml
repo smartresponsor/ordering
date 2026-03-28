@@ -1,5 +1,5 @@
 monolog:
-  channels: ['order_audit']
+  channels: ['order', 'order_audit']
   handlers:
     order_audit:
       type: stream

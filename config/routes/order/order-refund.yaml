@@ -1,5 +1,0 @@
-# auto-generated for Order controller audit
-order.order-refund.list:
-  path: /order/order-refund/list
-  controller: App\Controller\Order\OrderRefundController::list
-  methods: [GET]

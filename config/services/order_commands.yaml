@@ -1,9 +1,0 @@
-services:
-  App\Message\Handler\Order\OrderPartialPaymentHandler:
-    tags: ['messenger.message_handler']
-
-  App\Message\Handler\Order\OrderRefundHandler:
-    tags: ['messenger.message_handler']
-
-  App\Api\Processor\OrderPartialPaymentProcessor: ~
-  App\Api\Processor\OrderRefundProcessor: ~

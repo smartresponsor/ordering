@@ -7,19 +7,11 @@
   </php>
   <testsuites>
     <testsuite name="OrderFast">
-      <file>tests/Unit/MoneyTest.php</file>
-      <file>tests/Unit/PriceCalculationTest.php</file>
-      <file>tests/Unit/Pricing/CurrencyConversionServiceTest.php</file>
-      <file>tests/Unit/Pricing/DefaultTaxationStrategyTest.php</file>
-      <file>tests/Unit/Pricing/TaxationConfigLoaderTest.php</file>
+      <file>tests/Unit/Order/OrderStateTest.php</file>
     </testsuite>
     <testsuite name="OrderFullStack">
-      <directory>tests</directory>
-      <exclude>tests/Unit/MoneyTest.php</exclude>
-      <exclude>tests/Unit/PriceCalculationTest.php</exclude>
-      <exclude>tests/Unit/Pricing/CurrencyConversionServiceTest.php</exclude>
-      <exclude>tests/Unit/Pricing/DefaultTaxationStrategyTest.php</exclude>
-      <exclude>tests/Unit/Pricing/TaxationConfigLoaderTest.php</exclude>
+      <file>tests/Integration/OrderDemoCommandTest.php</file>
+      <file>tests/Functional/OrderManagementUiTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>

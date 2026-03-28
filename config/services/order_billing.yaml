@@ -1,3 +1,0 @@
-services:
-  App\Subscriber\Order\PaymentStatusSubscriber:
-    tags: ['kernel.event_subscriber']

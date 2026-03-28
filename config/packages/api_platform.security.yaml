@@ -1,4 +1,0 @@
-api_platform:
-  defaults:
-    security: "is_granted('ROLE_ORDER_READ')"
-    pagination_items_per_page: 25

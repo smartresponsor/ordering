@@ -1,4 +1,0 @@
-order_dlq:
-  resource: '../../src/Controller/Order'
-  type: attribute
-  prefix: /

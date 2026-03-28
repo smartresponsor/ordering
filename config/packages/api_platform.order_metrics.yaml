@@ -1,5 +1,0 @@
-api_platform:
-  defaults:
-    pagination_items_per_page: 25
-  graphql:
-    enabled: true

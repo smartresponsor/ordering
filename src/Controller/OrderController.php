@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\Order\OrderCreateDTO;
-use App\DTO\Order\OrderPaymentDTO;
-use App\DTO\Order\OrderShipmentDTO;
-use App\Entity\Order\Order;
+use App\DTO\OrderCreateDTO;
+use App\DTO\OrderPaymentDTO;
+use App\DTO\OrderRefundDTO;
+use App\DTO\OrderShipmentDTO;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,9 @@ final readonly class OrderController
     public function create(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true) ?? [];
-        $dto = new OrderCreateDTO($data['currency'] ?? 'USD', $data['grandTotal'] ?? '0.00');
+        $dto = new OrderCreateDTO();
+        $dto->currency = (string) ($data['currency'] ?? 'USD');
+        $dto->grandTotal = (string) ($data['grandTotal'] ?? '0.00');
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {
             return new JsonResponse(['errors' => (string) $errors], 422);
@@ -40,18 +43,18 @@ final readonly class OrderController
     #[Route('/{id}', name: 'order_get', methods: ['GET'])]
     public function get(string $id): JsonResponse
     {
-        $o = $this->em->getRepository(Order::class)->findOneBy(['id' => $id]);
-        if (!$o) {
+        $order = $this->em->getRepository(Order::class)->find($id);
+        if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
         return new JsonResponse([
-            'id' => $o->id(),
-            'status' => $o->status(),
-            'grandTotal' => $o->grandTotal(),
-            'paidTotal' => $o->paidTotal(),
-            'refundedTotal' => $o->refundedTotal(),
-            'currency' => $o->currency(),
+            'id' => $order->id(),
+            'status' => $order->status(),
+            'grandTotal' => $order->grandTotal(),
+            'paidTotal' => $order->paidTotal(),
+            'refundedTotal' => $order->refundedTotal(),
+            'currency' => $order->currency(),
         ]);
     }
 
@@ -70,72 +73,84 @@ final readonly class OrderController
     #[Route('/{id}/pay', name: 'order_pay', methods: ['POST'])]
     public function pay(string $id, Request $request): JsonResponse
     {
-        $o = $this->em->getRepository(Order::class)->findOneBy(['id' => $id]);
-        if (!$o) {
+        $order = $this->em->getRepository(Order::class)->find($id);
+        if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
         $data = json_decode($request->getContent(), true) ?? [];
-        $dto = new OrderPaymentDTO($data['amount'] ?? '0.00', $data['externalRef'] ?? 'unknown');
+        $dto = new OrderPaymentDTO();
+        $dto->amount = (string) ($data['amount'] ?? '0.00');
+        $dto->externalRef = (string) ($data['externalRef'] ?? 'unknown');
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {
             return new JsonResponse(['errors' => (string) $errors], 422);
         }
 
         try {
-            $o->applyPartialPayment($dto->amount, $dto->externalRef, true);
+            $payment = $order->applyPayment($dto->amount, $dto->externalRef);
+            $this->em->persist($payment);
             $this->em->flush();
         } catch (\DomainException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $o->id(), 'status' => $o->status(), 'paidTotal' => $o->paidTotal()]);
+        return new JsonResponse(['id' => $order->id(), 'status' => $order->status(), 'paidTotal' => $order->paidTotal()]);
     }
 
     #[Route('/{id}/ship', name: 'order_ship', methods: ['POST'])]
     public function ship(string $id, Request $request): JsonResponse
     {
-        $o = $this->em->getRepository(Order::class)->findOneBy(['id' => $id]);
-        if (!$o) {
+        $order = $this->em->getRepository(Order::class)->find($id);
+        if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
         $data = json_decode($request->getContent(), true) ?? [];
-        $dto = new OrderShipmentDTO((int) ($data['count'] ?? 1), $data['note'] ?? null);
+        $dto = new OrderShipmentDTO();
+        $dto->carrier = (string) ($data['carrier'] ?? 'UPS');
+        $dto->note = isset($data['note']) ? (string) $data['note'] : null;
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {
             return new JsonResponse(['errors' => (string) $errors], 422);
         }
 
         try {
-            $o->shipItems($dto->count, $dto->note);
+            $shipment = $order->ship($dto->carrier, null, $dto->note);
+            $this->em->persist($shipment);
             $this->em->flush();
         } catch (\DomainException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $o->id(), 'status' => $o->status()]);
+        return new JsonResponse(['id' => $order->id(), 'status' => $order->status()]);
     }
 
     #[Route('/{id}/refund', name: 'order_refund', methods: ['POST'])]
     public function refund(string $id, Request $request): JsonResponse
     {
-        $o = $this->em->getRepository(Order::class)->findOneBy(['id' => $id]);
-        if (!$o) {
+        $order = $this->em->getRepository(Order::class)->find($id);
+        if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
         $data = json_decode($request->getContent(), true) ?? [];
-        $amount = (string) ($data['amount'] ?? '0.00');
-        $reason = $data['reason'] ?? null;
+        $dto = new OrderRefundDTO();
+        $dto->amount = (string) ($data['amount'] ?? '0.00');
+        $dto->reason = isset($data['reason']) ? (string) $data['reason'] : null;
+        $errors = $this->validator->validate($dto);
+        if (count($errors) > 0) {
+            return new JsonResponse(['errors' => (string) $errors], 422);
+        }
 
         try {
-            $o->refundPartial($amount, $reason);
+            $refund = $order->refund($dto->amount, $dto->reason);
+            $this->em->persist($refund);
             $this->em->flush();
         } catch (\DomainException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $o->id(), 'status' => $o->status(), 'refundedTotal' => $o->refundedTotal()]);
+        return new JsonResponse(['id' => $order->id(), 'status' => $order->status(), 'refundedTotal' => $order->refundedTotal()]);
     }
 }

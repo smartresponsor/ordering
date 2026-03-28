@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory;
 
+use App\ServiceInterface\Inventory\InventoryServiceInterface;
+
 final class InMemoryInventoryService implements InventoryServiceInterface
 {
     private array $reserved = [];

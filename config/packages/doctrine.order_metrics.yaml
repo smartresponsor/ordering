@@ -1,9 +1,0 @@
-doctrine:
-  orm:
-    mappings:
-      OrderReadModel:
-        is_bundle: false
-        type: attribute
-        dir: '%kernel.project_dir%/src/ReadModel/Entity'
-        prefix: 'App\ReadModel\Entity'
-        alias: OrderReadModel

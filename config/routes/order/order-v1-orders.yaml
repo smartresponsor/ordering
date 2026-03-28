@@ -1,5 +1,0 @@
-# auto-generated for Order controller audit
-order.order-v1-orders.list:
-  path: /order/order-v1-orders/list
-  controller: App\Controller\Order\OrderV1OrdersController::list
-  methods: [GET]

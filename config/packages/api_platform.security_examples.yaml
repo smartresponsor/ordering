@@ -1,3 +1,0 @@
-# Пример: добавь security в ресурсы API Platform
-# #[ApiResource(security: "is_granted('ROLE_ORDER_VIEW')")]
-# #[ApiResource(operations: [new Post(security: "is_granted('ROLE_ORDER_PAYMENT')")])]

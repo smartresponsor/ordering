@@ -11,6 +11,10 @@ if (!is_file($autoload)) {
 
 require $autoload;
 
+if (class_exists(Symfony\Component\Dotenv\Dotenv::class) && is_file(dirname(__DIR__).'/.env')) {
+    (new Symfony\Component\Dotenv\Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+}
+
 $_SERVER['APP_ENV'] ??= $_ENV['APP_ENV'] ?? 'test';
 $_ENV['APP_ENV'] = (string) $_SERVER['APP_ENV'];
 $_SERVER['APP_DEBUG'] ??= $_ENV['APP_DEBUG'] ?? '1';

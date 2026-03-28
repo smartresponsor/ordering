@@ -1,5 +1,12 @@
 framework:
   secret: 'testsecret'
   test: true
-  annotations: false
   http_method_override: false
+  csrf_protection: true
+  form: true
+  validation:
+    enable_attributes: true
+  session:
+    enabled: true
+  router:
+    utf8: true

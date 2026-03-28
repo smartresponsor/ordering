@@ -1,7 +1,0 @@
-parameters:
-  shipment_gateway_mode: '%env(SHIPMENT_GATEWAY_MODE)%'
-
-services:
-  # Advanced switch: resolve class from env
-  App\Contract\Order\OrderShipmentGatewayInterface:
-    class: '%env(resolve:SHIPMENT_GATEWAY_CLASS)%'

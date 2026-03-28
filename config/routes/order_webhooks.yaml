@@ -1,9 +1,0 @@
-order_payment_webhook:
-  path: /webhooks/payment
-  controller: App\Controller\Order\PaymentWebhookController
-  methods: [POST]
-
-order_refund_webhook:
-  path: /webhooks/refund
-  controller: App\Controller\Order\RefundWebhookController
-  methods: [POST]

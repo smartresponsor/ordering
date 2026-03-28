@@ -1,6 +1,0 @@
-services:
-  App\Service\Order\Billing\PaymentProcessor: ~
-  App\Service\Order\Billing\BillingService:
-    arguments:
-      - '@doctrine.orm.entity_manager'
-      - '@App\Service\Order\Billing\PaymentProcessor'
