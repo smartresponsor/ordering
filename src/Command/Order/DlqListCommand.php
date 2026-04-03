@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Command\Order;
 
-use App\CommandInterface\Order\DlqListCommandInterface;
+use App\CommandInterface\Console\Order\DlqListCommandInterface;
 use App\ServiceInterface\Order\Outbox\DlqServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

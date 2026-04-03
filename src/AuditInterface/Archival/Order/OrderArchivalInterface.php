@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\AuditInterface\Order;
+namespace App\AuditInterface\Archival\Order;
 
 interface OrderArchivalInterface
 {

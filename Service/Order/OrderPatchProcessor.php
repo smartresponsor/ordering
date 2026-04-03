@@ -12,9 +12,9 @@ namespace App\Service\Order;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Api\Resource\Order\OrderResource;
-use App\Message\Order\OrderCancelCommand;
-use App\Message\Order\OrderPaymentCommand;
-use App\Message\Order\OrderShipmentCommand;
+use App\Message\Command\Order\OrderCancelCommand;
+use App\Message\Command\Order\OrderPaymentCommand;
+use App\Message\Command\Order\OrderShipmentCommand;
 use App\ServiceInterface\Order\OrderPatchProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Message\Order\OrderPartialPaymentCommand;
+use App\Message\Legacy\Order\OrderPartialPaymentCommand;
 use App\Service\Order\Adapter\Payment\PaymentGatewayInterface;
 use App\Service\Order\PartialPaymentService;
 use App\Service\Order\TransactionalEventPublisher;

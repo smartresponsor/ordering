@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Order;
 
 use App\Entity\Order\OutboxMessage;
-use App\Message\Order\OrderDomainMessage;
+use App\Message\Domain\Order\OrderDomainMessage;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use App\ServiceInterface\Order\TransactionalEventPublisherInterface;
 use Symfony\Component\Messenger\MessageBusInterface;

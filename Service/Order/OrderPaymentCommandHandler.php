@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Message\Order\OrderPaymentCommand;
+use App\Message\Command\Order\OrderPaymentCommand;
 use App\Service\Order\Adapter\Payment\PaymentGatewayInterface;
 use App\ServiceInterface\Order\OrderPaymentCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

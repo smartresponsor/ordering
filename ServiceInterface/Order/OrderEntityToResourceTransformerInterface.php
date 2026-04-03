@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\ApiResource\Order\OrderResource;
+use App\ApiResource\View\Order\OrderResource;
 use App\Entity\Order\Order as OrderEntity;
 
 interface OrderEntityToResourceTransformerInterface

@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Message\Order\OrderCancelCommand;
+use App\Message\Command\Order\OrderCancelCommand;
 use App\ServiceInterface\Order\OrderDeleteProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

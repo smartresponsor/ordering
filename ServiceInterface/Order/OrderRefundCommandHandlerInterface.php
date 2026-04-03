@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Message\Order\OrderRefundCommand;
+use App\Message\Legacy\Order\OrderRefundCommand;
 use App\Service\Order\OrderRefundService;
 use App\Service\Order\TransactionalEventPublisher;
 

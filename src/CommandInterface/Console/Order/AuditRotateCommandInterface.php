@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\CommandInterface\Order;
+namespace App\CommandInterface\Console\Order;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

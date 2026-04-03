@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Message\Order\OrderDomainMessage;
+use App\Message\Domain\Order\OrderDomainMessage;
 use Psr\Log\LoggerInterface;
 
 interface OrderDomainMessageHandlerInterface

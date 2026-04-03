@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Message\Order\OrderShipmentCommand;
+use App\Message\Command\Order\OrderShipmentCommand;
 use App\Service\Order\Adapter\Shipment\CarrierInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

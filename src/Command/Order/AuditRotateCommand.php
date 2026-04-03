@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Command\Order;
 
-use App\CommandInterface\Order\AuditRotateCommandInterface;
+use App\CommandInterface\Console\Order\AuditRotateCommandInterface;
 use App\ServiceInterface\Order\Http\AuditRotateInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

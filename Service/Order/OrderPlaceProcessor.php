@@ -12,7 +12,7 @@ namespace App\Service\Order;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Api\Resource\Order\OrderResource;
-use App\Message\Order\OrderPlaceCommand;
+use App\Message\Command\Order\OrderPlaceCommand;
 use App\ServiceInterface\Order\OrderPlaceProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Message\Order\OrderDomainMessage;
+use App\Message\Domain\Order\OrderDomainMessage;
 use App\ServiceInterface\Order\OrderDomainMessageHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;

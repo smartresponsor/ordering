@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Order;
+namespace App\Message\Domain\Order;
 
 final class OrderDomainMessage
 {

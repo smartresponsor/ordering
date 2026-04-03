@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Message\Order\OrderShipmentCommand;
+use App\Message\Command\Order\OrderShipmentCommand;
 use App\Service\Order\Adapter\Shipment\CarrierInterface;
 use App\Service\Order\OrderShipmentService;
 use App\Service\Order\TransactionalEventPublisher;

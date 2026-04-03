@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\ApiResource\Order\OrderResource;
+use App\ApiResource\View\Order\OrderResource;
 use App\Entity\Order\Order as OrderEntity;
 use App\ServiceInterface\Order\OrderEntityToResourceTransformerInterface;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ApiResource\Order;
+namespace App\ApiResource\View\Order;
 
 final class RefundView
 {

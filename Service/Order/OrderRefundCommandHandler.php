@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Message\Order\OrderRefundCommand;
+use App\Message\Legacy\Order\OrderRefundCommand;
 use App\ServiceInterface\Order\OrderRefundCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
