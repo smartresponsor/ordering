@@ -9,7 +9,7 @@ use App\Entity\Outbox\OutboxMessage;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

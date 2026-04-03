@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Workflow\Order;
 
 use App\ServiceInterface\Order\OrderPaymentGatewayInterface;
 use App\ServiceInterface\Order\OrderShipmentGatewayInterface;

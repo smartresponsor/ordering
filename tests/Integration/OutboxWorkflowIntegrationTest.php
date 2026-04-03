@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Entity\Order;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use App\Service\Outbox\OutboxProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

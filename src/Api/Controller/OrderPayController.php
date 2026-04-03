@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Api\Controller;
 
 use App\Entity\Order;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

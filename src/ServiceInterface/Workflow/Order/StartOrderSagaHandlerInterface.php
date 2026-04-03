@@ -7,15 +7,15 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Workflow\Order;
 
-use App\Message\Command\RetryOrderSagaCommand;
+use App\Message\Command\StartOrderSagaCommand;
 use App\Saga\OrderSaga;
 use Doctrine\ORM\EntityManagerInterface;
 
-interface RetryOrderSagaHandlerInterface
+interface StartOrderSagaHandlerInterface
 {
     public function __construct(EntityManagerInterface $em, OrderSaga $saga);
 
-    public function __invoke(RetryOrderSagaCommand $cmd): void;
+    public function __invoke(StartOrderSagaCommand $cmd): void;
 }

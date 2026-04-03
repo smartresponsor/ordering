@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Workflow\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
@@ -16,7 +16,7 @@ use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;
-use App\ServiceInterface\Order\OrderWorkflowServiceInterface;
+use App\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
 use App\ValueObject\Order\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
@@ -75,12 +75,19 @@ final class OrderWorkflowService implements OrderWorkflowServiceInterface
     public function cancel(Order $order): void
     {
         $this->apply($order, 'cancel');
-        $this->publish($order, 'App\\Event\\Order\\OrderCancelledEvent');
+        $this->publish(\App\Event\Domain\Order\OrderCancelledEvent::class, $order);
     }
 
     public function refund(Order $order): void
     {
         $this->apply($order, 'refund');
-        $this->publish($order, 'App\\Event\\Order\\OrderRefundedEvent');
+        $this->publish(\App\Event\Domain\Order\OrderRefundedEvent::class, $order);
+    }
+
+
+    private function publish(string $eventClass, Order $order): void
+    {
+        $this->outbox->publish($eventClass, ['orderId' => $order->getId()]);
+        $this->em->flush();
     }
 }

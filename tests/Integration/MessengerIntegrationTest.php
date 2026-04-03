@@ -6,7 +6,7 @@ namespace Tests\Integration;
 
 use App\Entity\Order;
 use App\Message\OrderMessage;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

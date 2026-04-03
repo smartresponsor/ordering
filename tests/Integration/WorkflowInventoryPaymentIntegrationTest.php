@@ -7,7 +7,7 @@ namespace Tests\Integration;
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\Service\Inventory\InMemoryInventoryService;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use App\ValueObject\Money\Currency;
 use App\ValueObject\Order\OrderStatus;
 use App\ValueObject\Order\Quantity;

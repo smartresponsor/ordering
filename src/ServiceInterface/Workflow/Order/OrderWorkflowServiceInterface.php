@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Workflow\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
@@ -15,6 +15,7 @@ use App\Service\Inventory\InventoryServiceInterface;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;
+use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 

@@ -11,7 +11,7 @@ namespace App\ServiceInterface\Order;
 
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Repository\Order\OrderRepository;
-use App\Service\Order\OrderStatusService;
+use App\Service\Workflow\Order\OrderStatusService;
 
 interface OrderPlacedHandlerInterface
 {

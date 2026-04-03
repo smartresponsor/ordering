@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Workflow\Order;
 
 use App\Entity\Order\OrderRefundTransaction;
 use App\Entity\Order\OrderReturnRequest;
 use App\Event\Domain\Order\OrderRefundInitiatedEvent;
-use App\ServiceInterface\Order\ReturnWorkflowServiceInterface;
+use App\ServiceInterface\Workflow\Order\ReturnWorkflowServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;

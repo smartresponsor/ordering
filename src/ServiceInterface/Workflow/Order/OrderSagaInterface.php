@@ -7,7 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Workflow\Order;
+
+use App\Entity\Order;
 
 interface OrderSagaInterface
 {

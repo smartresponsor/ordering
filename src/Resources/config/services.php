@@ -10,7 +10,7 @@ use App\Service\Inventory\InventoryServiceInterface;
 use App\Service\Order\OrderPricing\PriceCalculator;
 use App\Service\Order\OrderPricing\Strategy\FlatPromotionStrategy;
 use App\Service\Order\OrderPricing\Strategy\FlatTaxationStrategy;
-use App\Service\Order\OrderWorkflowService;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use App\Service\Outbox\OutboxMessengerDispatcher;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentGatewayInterface;
