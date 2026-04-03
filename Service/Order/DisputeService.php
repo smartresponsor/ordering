@@ -11,9 +11,9 @@ namespace App\Service\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderDispute;
-use App\Event\Order\OrderChargebackIssuedEvent;
-use App\Event\Order\OrderDisputeOpenedEvent;
-use App\Event\Order\OrderDisputeResolvedEvent;
+use App\Event\Domain\Order\OrderChargebackIssuedEvent;
+use App\Event\Domain\Order\OrderDisputeOpenedEvent;
+use App\Event\Domain\Order\OrderDisputeResolvedEvent;
 use App\ServiceInterface\Order\DisputeServiceInterface;
 use App\ServiceInterface\Order\OrderDisputeServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

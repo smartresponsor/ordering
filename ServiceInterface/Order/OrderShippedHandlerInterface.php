@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Event\Order\OrderShippedEvent;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\Repository\Order\OrderRepository;
 use App\Service\Order\OrderStatusService;
 

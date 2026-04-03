@@ -45,7 +45,7 @@ final class MessengerIntegrationTest extends TestCase
         $svc->place($o); // should publish OrderPlaced → handled synchronously in test via sync transport
         // publish duplicate
         $bus = $c->get('messenger.default_bus');
-        $bus->dispatch(new OrderMessage('App\Event\Order\OrderPlacedEvent', $o->getId()));
+        $bus->dispatch(new OrderMessage('App\Event\Domain\Order\OrderPlacedEvent', $o->getId()));
 
         $count = (int) $em->createQuery('SELECT COUNT(k.key) FROM App\Entity\Outbox\IdempotencyKey k')->getSingleScalarResult();
         $this->assertSame(1, $count, 'Idempotency stored only once');

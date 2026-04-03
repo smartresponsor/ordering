@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Event\Order\OrderChargebackIssuedEvent;
-use App\Event\Order\OrderDisputeOpenedEvent;
-use App\Event\Order\OrderDisputeResolvedEvent;
+use App\Event\Domain\Order\OrderChargebackIssuedEvent;
+use App\Event\Domain\Order\OrderDisputeOpenedEvent;
+use App\Event\Domain\Order\OrderDisputeResolvedEvent;
 
 interface OrderDisputeSubscriberInterface
 {

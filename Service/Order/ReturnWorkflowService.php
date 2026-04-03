@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use App\Entity\Order\OrderRefundTransaction;
 use App\Entity\Order\OrderReturnRequest;
-use App\Event\Order\OrderRefundInitiatedEvent;
+use App\Event\Domain\Order\OrderRefundInitiatedEvent;
 use App\ServiceInterface\Order\ReturnWorkflowServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;

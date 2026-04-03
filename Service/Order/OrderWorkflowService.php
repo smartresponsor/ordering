@@ -40,7 +40,7 @@ final class OrderWorkflowService implements OrderWorkflowServiceInterface
         $this->apply($order, 'place');
         $this->calculator->recalc($order, $items);
         $this->inventory->reserve($items);
-        $this->outbox->publish(\App\Event\Order\OrderPlacedEvent::class, ['orderId' => $order->getId()]);
+        $this->outbox->publish(\App\Event\Domain\Order\OrderPlacedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 
@@ -48,7 +48,7 @@ final class OrderWorkflowService implements OrderWorkflowServiceInterface
     {
         $this->payments->charge($order, $amount);
         $this->apply($order, 'pay');
-        $this->outbox->publish(\App\Event\Order\OrderPaidEvent::class, ['orderId' => $order->getId()]);
+        $this->outbox->publish(\App\Event\Domain\Order\OrderPaidEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 
@@ -56,7 +56,7 @@ final class OrderWorkflowService implements OrderWorkflowServiceInterface
     {
         $this->shipper->ship($order, 'UPS');
         $this->apply($order, 'ship');
-        $this->outbox->publish(\App\Event\Order\OrderShippedEvent::class, ['orderId' => $order->getId()]);
+        $this->outbox->publish(\App\Event\Domain\Order\OrderShippedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 

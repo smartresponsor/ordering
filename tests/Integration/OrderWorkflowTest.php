@@ -6,9 +6,9 @@ namespace Tests\Integration;
 
 use App\Entity\Order;
 use App\Entity\Outbox\OutboxMessage;
-use App\Event\Order\OrderPaidEvent;
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderShippedEvent;
+use App\Event\Domain\Order\OrderPaidEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\Service\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

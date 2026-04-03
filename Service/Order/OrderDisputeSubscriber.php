@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderChargebackIssuedEvent;
-use App\Event\Order\OrderDisputeOpenedEvent;
-use App\Event\Order\OrderDisputeResolvedEvent;
+use App\Event\Domain\Order\OrderChargebackIssuedEvent;
+use App\Event\Domain\Order\OrderDisputeOpenedEvent;
+use App\Event\Domain\Order\OrderDisputeResolvedEvent;
 use App\ServiceInterface\Order\OrderDisputeSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderFullyRefundedEvent;
-use App\Event\Order\OrderPartiallyRefundedEvent;
+use App\Event\Domain\Order\OrderFullyRefundedEvent;
+use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use App\ServiceInterface\Order\OrderRefundEventSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

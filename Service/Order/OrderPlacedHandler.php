@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Order;
 
 use App\Entity\Order\Order as OrderAggregate;
-use App\Event\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Repository\Order\OrderRepository;
 use App\ServiceInterface\Order\OrderPlacedHandlerInterface;
 

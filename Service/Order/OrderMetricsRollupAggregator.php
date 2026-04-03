@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderCancelledEvent;
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderRefundedEvent;
+use App\Event\Domain\Order\OrderCancelledEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderRefundedEvent;
 use App\ServiceInterface\Order\OrderMetricsRollupAggregatorInterface;
 
 final class OrderMetricsRollupAggregator implements OrderMetricsRollupAggregatorInterface

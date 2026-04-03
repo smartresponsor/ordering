@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderRefundedEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderRefundedEvent;
 
 interface MetricsSubscriberInterface
 {

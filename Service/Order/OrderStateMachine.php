@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Order;
 
 use App\Entity\Order\Entity\Order\Order;
-use App\Event\Order\OrderStatusChanged;
+use App\Event\Domain\Order\OrderStatusChanged;
 use App\ServiceInterface\Order\OrderStateMachineInterface;
 use App\ServiceInterface\Order\WebhookDispatcherInterface;
 

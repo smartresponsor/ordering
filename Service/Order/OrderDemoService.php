@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-final class OrderDemoService implements App\DemoInterface\Order\OrderDemoServiceInterface
+final class OrderDemoService implements App\DemoInterface\Scenario\Order\OrderDemoServiceInterface
 {
     public function seed(): int
     {

@@ -11,10 +11,10 @@ namespace App\Service\Order;
 
 use App\Entity\Order\InventoryReservation;
 use App\Entity\Order;
-use App\Event\Order\StockConsumedEvent;
-use App\Event\Order\StockReleasedEvent;
-use App\Event\Order\StockReservationFailedEvent;
-use App\Event\Order\StockReservedEvent;
+use App\Event\Domain\Order\StockConsumedEvent;
+use App\Event\Domain\Order\StockReleasedEvent;
+use App\Event\Domain\Order\StockReservationFailedEvent;
+use App\Event\Domain\Order\StockReservedEvent;
 use App\ServiceInterface\Order\InventoryGatewayInterface;
 use App\ServiceInterface\Order\InventoryServiceInterface;
 use App\ServiceInterface\Order\OrderInventoryServiceInterface;

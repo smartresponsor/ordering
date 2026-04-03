@@ -8,7 +8,7 @@ use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\Integration\Inventory\InMemoryInventoryGateway;
 use App\Service\Order\InventoryService;
-use App\Subscriber\Order\InventorySubscriber;
+use App\Subscriber\Event\Order\InventorySubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;

@@ -7,7 +7,7 @@ namespace Tests\Embedded\Service\Order;
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
 use App\Service\Order\OrderService;
-use App\Subscriber\Order\OrderRefundEventSubscriber;
+use App\Subscriber\Event\Order\OrderRefundEventSubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;

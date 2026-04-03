@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Event\Order\OrderDeliveredEvent;
-use App\Event\Order\OrderReturnWindowExpiredEvent;
+use App\Event\Domain\Order\OrderDeliveredEvent;
+use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 
 interface OrderShipmentSubscriberInterface
 {

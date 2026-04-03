@@ -7,7 +7,7 @@ namespace Tests\Integration;
 use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
 use App\Service\Order\ShipmentService;
-use App\Subscriber\Order\OrderShipmentSubscriber;
+use App\Subscriber\Event\Order\OrderShipmentSubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;

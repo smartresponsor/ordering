@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderRefundedEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderRefundedEvent;
 use App\ServiceInterface\Order\MetricsSubscriberInterface;
 use App\ServiceInterface\Order\OrderMetricsSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

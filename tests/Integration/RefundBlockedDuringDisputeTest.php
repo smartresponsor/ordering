@@ -8,7 +8,7 @@ use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
 use App\Service\Order\DisputeService;
 use App\Service\Order\OrderService;
-use App\Subscriber\Order\OrderDisputeSubscriber;
+use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;

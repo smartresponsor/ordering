@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\DLQInterface\Order\OrderDeadLetterHandlerInterface;
+use App\DLQInterface\Handler\Order\OrderDeadLetterHandlerInterface;
 
 final class OrderDeadLetterHandler implements OrderDeadLetterHandlerInterface
 {

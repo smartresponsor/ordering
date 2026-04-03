@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderCancelledEvent;
-use App\Event\Order\OrderPaidEvent;
-use App\Event\Order\OrderPartiallyPaidEvent;
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderRefundedEvent;
-use App\Event\Order\OrderShippedEvent;
+use App\Event\Domain\Order\OrderCancelledEvent;
+use App\Event\Domain\Order\OrderPaidEvent;
+use App\Event\Domain\Order\OrderPartiallyPaidEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderRefundedEvent;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\ServiceInterface\Order\OrderMetricsProjectorInterface;
 
 final class OrderMetricsProjector implements OrderMetricsProjectorInterface

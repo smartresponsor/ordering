@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Event\Order\OrderDeliveredEvent;
-use App\Event\Order\OrderReturnWindowExpiredEvent;
+use App\Event\Domain\Order\OrderDeliveredEvent;
+use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 use App\ServiceInterface\Order\OrderShipmentSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

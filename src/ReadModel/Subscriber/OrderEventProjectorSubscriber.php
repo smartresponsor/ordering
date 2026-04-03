@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Subscriber;
 
-use App\Event\Order\OrderPlacedEvent;
-use App\Event\Order\OrderShippedEvent;
+use App\Event\Domain\Order\OrderPlacedEvent;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\ReadModel\Service\OrderReadModelProjector;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

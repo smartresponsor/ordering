@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use App\ServiceInterface\Order\OrderPaymentGatewayInterface;
 use App\Entity\Order\OrderRefundTransaction;
-use App\Event\Order\OrderRefundCompletedEvent;
+use App\Event\Domain\Order\OrderRefundCompletedEvent;
 use App\ServiceInterface\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
