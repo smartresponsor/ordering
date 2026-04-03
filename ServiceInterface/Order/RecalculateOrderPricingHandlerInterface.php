@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Order;
 
 use App\Message\Command\Order\RecalculateOrderPricingCommand;
-use App\Service\Order\OrderPricingService;
+use App\Service\Pricing\Order\OrderPricingService;
 
 interface RecalculateOrderPricingHandlerInterface
 {

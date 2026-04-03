@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Tests\Service\Order;
 
-use App\Service\Order\FlatTaxStrategy;
-use App\Service\Order\ProgressiveTaxStrategy;
+use App\Service\Pricing\Order\FlatTaxStrategy;
+use App\Service\Pricing\Order\ProgressiveTaxStrategy;
 use App\ValueObject\Order\Money;
 use PHPUnit\Framework\TestCase;
 

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\CurrencyConversionService;
-use App\Service\Order\InMemoryRateProvider;
+use App\Service\Pricing\Order\CurrencyConversionService;
+use App\Service\Pricing\Order\InMemoryRateProvider;
 use App\ValueObject\Order\Money;
 use PHPUnit\Framework\TestCase;
 

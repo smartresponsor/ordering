@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\ServiceInterface\Order\CurrencyConversionServiceInterface;
-use App\ServiceInterface\Order\LegacyTaxationStrategyInterface;
+use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
+use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 use App\ValueObject\Order\Discount;
 use App\ValueObject\Order\Money;
 use App\ValueObject\Order\PriceBreakdown;

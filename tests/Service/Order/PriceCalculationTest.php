@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\PriceCalculatorService;
-use App\Service\Order\VatExclusiveStrategy;
+use App\Service\Pricing\Order\PriceCalculatorService;
+use App\Service\Pricing\Order\VatExclusiveStrategy;
 use App\ValueObject\Order\Discount;
 use App\ValueObject\Order\Money;
 use App\ValueObject\Order\Taxation;

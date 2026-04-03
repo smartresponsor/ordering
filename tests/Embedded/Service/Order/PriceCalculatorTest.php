@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\CurrencyConversionService;
-use App\Service\Order\DefaultPromotionStrategy;
-use App\Service\Order\DefaultTaxationStrategy;
-use App\Service\Order\PriceCalculator;
-use App\Service\Order\TaxationConfigLoader;
+use App\Service\Pricing\Order\CurrencyConversionService;
+use App\Service\Pricing\Order\DefaultPromotionStrategy;
+use App\Service\Pricing\Order\DefaultTaxationStrategy;
+use App\Service\Pricing\Order\PriceCalculator;
+use App\Service\Pricing\Order\TaxationConfigLoader;
 use App\ValueObject\Order\Currency;
 use App\ValueObject\Order\Discount;
 use App\ValueObject\Order\Money;
