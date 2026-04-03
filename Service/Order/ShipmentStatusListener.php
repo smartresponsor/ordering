@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ShipmentStatusListener implements EventSubscriberInterface
 {
-    public function __construct(private OrderShipmentService $service, private TransactionalEventPublisher $publisher)
+    public function __construct(private \App\Service\Shipment\Order\ShipmentService $service, private TransactionalEventPublisher $publisher)
     {
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final class OrderShipmentCommandHandler
 {
     public function __construct(
-        private OrderShipmentService $service,
+        private \App\Service\Shipment\Order\ShipmentService $service,
         private TransactionalEventPublisher $publisher,
         private CarrierInterface $carrier,
     ) {

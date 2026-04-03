@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Shipment\Order;
 
 use App\Integration\Shipment\CarrierInterface;
 use App\Repository\Order\OrderShipmentViewRepository;
-use App\ServiceInterface\Order\CarrierPollingServiceInterface;
+use App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 

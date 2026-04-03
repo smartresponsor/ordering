@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Shipment\Order;
 
 use App\Entity\Order;
-use App\ServiceInterface\Order\DHLGatewayInterface;
+use App\ServiceInterface\Shipment\Order\DHLGatewayInterface;
 
 final class DHLGateway implements DHLGatewayInterface
 {

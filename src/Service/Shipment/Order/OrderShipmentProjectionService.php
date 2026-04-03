@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Shipment\Order;
 
 use App\Entity\Order\OrderShipmentView;
 use App\Repository\Order\OrderShipmentViewRepository;
-use App\ServiceInterface\Order\OrderShipmentProjectionServiceInterface;
+use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 
 final class OrderShipmentProjectionService implements OrderShipmentProjectionServiceInterface
 {

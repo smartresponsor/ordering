@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Event\Order;
 
-use App\Service\Order\ShipmentService;
+use App\Service\Shipment\Order\ShipmentService;
 use App\Service\Order\TransactionalEventPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -11,7 +11,7 @@ namespace App\ServiceInterface\Order;
 
 use App\Message\Command\Order\OrderShipmentCommand;
 use App\Service\Order\Adapter\Shipment\CarrierInterface;
-use App\Service\Order\OrderShipmentService;
+use App\Service\Shipment\Order\ShipmentService;
 use App\Service\Order\TransactionalEventPublisher;
 
 interface OrderShipmentCommandHandlerInterface

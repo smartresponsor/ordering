@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Shipment\Order;
 
 use App\Entity\Order;
-use App\ServiceInterface\Order\UPSGatewayInterface;
+use App\ServiceInterface\Shipment\Order\UPSGatewayInterface;
 
 final class UPSGateway implements UPSGatewayInterface
 {

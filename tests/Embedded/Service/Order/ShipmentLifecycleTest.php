@@ -6,7 +6,7 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
-use App\Service\Order\OrderShipmentService;
+use App\Service\Shipment\Order\ShipmentService;
 use App\Subscriber\Event\Order\OrderShipmentSubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +23,7 @@ final class ShipmentLifecycleTest extends KernelTestCase
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new OrderShipmentSubscriber(new NullLogger()));
-        $svc = new OrderShipmentService($em, $dispatcher);
+        $svc = new ShipmentService($em, $dispatcher);
 
         $order = new Order('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);

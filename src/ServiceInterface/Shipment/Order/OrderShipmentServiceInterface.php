@@ -7,6 +7,8 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\ServiceInterface\Shipment\Order;
 
-class_alias(ShipmentService::class, OrderShipmentService::class);
+interface OrderShipmentServiceInterface extends ShipmentServiceInterface
+{
+}
