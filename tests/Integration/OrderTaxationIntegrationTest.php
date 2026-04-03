@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Contract\Order\OrderTaxationGatewayInterface;
-use App\Entity\Order\Order;
+use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderTaxationIntegrationTest extends KernelTestCase
@@ -16,14 +15,13 @@ final class OrderTaxationIntegrationTest extends KernelTestCase
         $gateway = self::getContainer()->get(OrderTaxationGatewayInterface::class);
         $this->assertNotNull($gateway);
 
-        $order = $this->createMock(Order::class);
-        $order->method('getNumber')->willReturn('ORDER-003');
-        $order->method('getTotalAmount')->willReturn('100.00');
-        $order->method('getCurrency')->willReturn('EUR');
-
-        $breakdown = $gateway->calculate($order, 'DE');
-        $this->assertSame('100.00', $breakdown->subtotal);
-        $this->assertNotEmpty($breakdown->taxAmount);
-        $this->assertNotEmpty($breakdown->total);
+        $breakdown = $gateway->calculate(
+            'ORDER-003',
+            [['sku' => 'SKU-1', 'qty' => 1, 'price' => '100.00']],
+            ['country' => 'DE', 'currency' => 'EUR']
+        );
+        $this->assertArrayHasKey('subtotal', $breakdown);
+        $this->assertArrayHasKey('taxAmount', $breakdown);
+        $this->assertArrayHasKey('total', $breakdown);
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Api\Order;
+namespace App\Api\Controller;
 
 use App\ServiceInterface\Order\OrderAuditTrailBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

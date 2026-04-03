@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Contract\Order\OrderTaxationGatewayInterface;
-use App\Contract\Order\TaxBreakdown;
-use App\Entity\Order\Order;
+use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Contract\Gateway\Order\TaxBreakdown;
+use App\Entity\Order;
 use App\ServiceInterface\Order\EUTaxStrategyInterface;
 
 final class EUTaxStrategy implements EUTaxStrategyInterface, OrderTaxationGatewayInterface

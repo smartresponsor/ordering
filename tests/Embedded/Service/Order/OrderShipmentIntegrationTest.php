@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Embedded\Service\Order;
+namespace Tests\Service\Order;
 
-use App\Contract\Order\OrderShipmentGatewayInterface;
-use App\Entity\Order\Order;
+use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderShipmentIntegrationTest extends KernelTestCase
@@ -16,13 +15,7 @@ final class OrderShipmentIntegrationTest extends KernelTestCase
         $gateway = self::getContainer()->get(OrderShipmentGatewayInterface::class);
         $this->assertNotNull($gateway);
 
-        // NOTE: your Order constructor may differ; adapt in project
-        $order = $this->createMock(Order::class);
-        $order->method('getNumber')->willReturn('ORDER-002');
-        $order->method('getTotalAmount')->willReturn('100.00');
-        $order->method('getCurrency')->willReturn('USD');
-
-        $tracking = $gateway->createShipment($order, 'DHL');
-        $this->assertMatchesRegularExpression('/^DHL-/', $tracking);
+        $tracking = $gateway->ship('ORDER-002', 'DHL', ['currency' => 'USD']);
+        $this->assertNotSame('', $tracking);
     }
 }

@@ -11,8 +11,8 @@ namespace App\ServiceInterface\Order;
 
 use App\ServiceInterface\Order\OrderPaymentGatewayInterface;
 use App\ServiceInterface\Order\OrderShipmentGatewayInterface;
-use App\Contract\Order\OrderTaxationGatewayInterface;
-use App\Entity\Order\Order;
+use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface OrderOrchestratorInterface

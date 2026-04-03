@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Embedded\Service\Order;
+namespace Tests\Service\Order;
 
-use App\Contract\Order\OrderPaymentGatewayInterface;
+use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderPaymentIntegrationTest extends KernelTestCase
@@ -13,8 +13,10 @@ final class OrderPaymentIntegrationTest extends KernelTestCase
     {
         self::bootKernel();
         $gateway = self::getContainer()->get(OrderPaymentGatewayInterface::class);
-        $payment = $gateway->initiatePayment('ORDER-001', 199.99, 'USD');
-        $this->assertNotNull($payment);
-        $this->assertTrue(method_exists($gateway, 'refundPayment'));
+        $chargeId = $gateway->charge('ORDER-001', '199.99', ['currency' => 'USD']);
+        $this->assertNotSame('', $chargeId);
+
+        $refundId = $gateway->refund('ORDER-001', '50.00', ['currency' => 'USD']);
+        $this->assertNotSame('', $refundId);
     }
 }

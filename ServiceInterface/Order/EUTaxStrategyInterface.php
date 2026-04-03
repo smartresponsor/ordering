@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Contract\Order\OrderTaxationGatewayInterface;
+use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 
 interface EUTaxStrategyInterface extends OrderTaxationGatewayInterface
 {

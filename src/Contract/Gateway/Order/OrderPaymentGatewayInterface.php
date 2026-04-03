@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Contract\Order;
+namespace App\Contract\Gateway\Order;
 
 interface OrderPaymentGatewayInterface
 {

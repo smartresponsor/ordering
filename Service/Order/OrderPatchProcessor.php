@@ -11,7 +11,7 @@ namespace App\Service\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Order\Resource\OrderResource;
+use App\Api\Resource\Order\OrderResource;
 use App\Message\Order\OrderCancelCommand;
 use App\Message\Order\OrderPaymentCommand;
 use App\Message\Order\OrderShipmentCommand;
