@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Api\Resource\Order;
+
+final class OrderResource extends \App\Service\Order\OrderResource
+{
+}

@@ -25,7 +25,8 @@ final readonly class OrderController
     #[Route('', name: 'order_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
+        $payload = json_decode($request->getContent(), true);
+        $data = is_array($payload) ? $payload : [];
         $dto = new OrderCreateDTO();
         $dto->currency = (string) ($data['currency'] ?? 'USD');
         $dto->grandTotal = (string) ($data['grandTotal'] ?? '0.00');
@@ -78,7 +79,8 @@ final readonly class OrderController
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true) ?? [];
+        $payload = json_decode($request->getContent(), true);
+        $data = is_array($payload) ? $payload : [];
         $dto = new OrderPaymentDTO();
         $dto->amount = (string) ($data['amount'] ?? '0.00');
         $dto->externalRef = (string) ($data['externalRef'] ?? 'unknown');
@@ -106,7 +108,8 @@ final readonly class OrderController
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true) ?? [];
+        $payload = json_decode($request->getContent(), true);
+        $data = is_array($payload) ? $payload : [];
         $dto = new OrderShipmentDTO();
         $dto->carrier = (string) ($data['carrier'] ?? 'UPS');
         $dto->note = isset($data['note']) ? (string) $data['note'] : null;
@@ -134,7 +137,8 @@ final readonly class OrderController
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true) ?? [];
+        $payload = json_decode($request->getContent(), true);
+        $data = is_array($payload) ? $payload : [];
         $dto = new OrderRefundDTO();
         $dto->amount = (string) ($data['amount'] ?? '0.00');
         $dto->reason = isset($data['reason']) ? (string) $data['reason'] : null;

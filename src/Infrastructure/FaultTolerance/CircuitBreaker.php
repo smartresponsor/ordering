@@ -19,7 +19,7 @@ final class CircuitBreaker
     /**
      * @throws \Throwable
      */
-    public function call(callable $fn)
+    public function call(callable $fn): mixed
     {
         if ($this->open && $this->openedAt && $this->openedAt->modify("+{$this->cooldownSec} seconds") > new \DateTimeImmutable()) {
             throw new \RuntimeException('Circuit open');

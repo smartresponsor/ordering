@@ -28,7 +28,8 @@ final class OrderDemoLoadCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $count = max(1, (int) $input->getOption('count'));
+        $countOption = $input->getOption('count');
+        $count = max(1, is_numeric($countOption) ? (int) $countOption : 12);
 
         $this->demoDataService->purge();
         $loaded = $this->demoDataService->load($count);

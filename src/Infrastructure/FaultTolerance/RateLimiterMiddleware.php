@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 
 final class RateLimiterMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly int $maxPerSecond = 50)
+    public function __construct(int $maxPerSecond = 50)
     {
         $this->interval = 1.0 / max(1, $maxPerSecond);
     }

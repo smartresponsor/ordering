@@ -6,5 +6,6 @@ namespace App\Contract\Order;
 
 interface OrderShipmentGatewayInterface
 {
+    /** @param array<string, mixed> $context */
     public function ship(string $orderId, string $carrierCode, array $context = []): string;
 }

@@ -8,6 +8,8 @@ use App\Http\Middleware\RateLimitHeaderMiddleware;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
 
 final class RateLimitHeadersTest extends TestCase
 {
@@ -20,30 +22,12 @@ final class RateLimitHeadersTest extends TestCase
             }
         };
 
-        $limiterFactory = new class implements \Symfony\Component\RateLimiter\RateLimiterFactory {
-            public function create(string $id): \Symfony\Component\RateLimiter\LimiterInterface
-            {
-                return new class implements \Symfony\Component\RateLimiter\LimiterInterface {
-                    private int $limit = 100;
-                    private int $remaining = 99;
-
-                    public function consume(int $tokens = 1): \Symfony\Component\RateLimiter\RateLimit
-                    {
-                        $this->remaining = max(0, $this->remaining - $tokens);
-
-                        return new \Symfony\Component\RateLimiter\RateLimit(
-                            $this->remaining,
-                            new \DateTimeImmutable('+60 seconds'),
-                            $this->limit
-                        );
-                    }
-
-                    public function reset(): void
-                    {
-                    }
-                };
-            }
-        };
+        $limiterFactory = new RateLimiterFactory([
+            'id' => 'api_test',
+            'policy' => 'fixed_window',
+            'limit' => 100,
+            'interval' => '60 seconds',
+        ], new InMemoryStorage());
 
         $mw = new RateLimitHeaderMiddleware($kernel, $limiterFactory);
         $resp = $mw->handle(Request::create('/api/orders', 'GET'));

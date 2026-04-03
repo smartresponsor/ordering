@@ -28,7 +28,8 @@ final class SyncReadModelCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $orderId = (string) ($input->getArgument('orderId') ?? '');
+        $orderIdArg = $input->getArgument('orderId');
+        $orderId = is_scalar($orderIdArg) ? (string) $orderIdArg : '';
         if ($orderId) {
             $view = $this->em->getRepository(OrderView::class)->find($orderId);
             if ($view) {

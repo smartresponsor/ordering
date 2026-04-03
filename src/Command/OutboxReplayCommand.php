@@ -26,7 +26,8 @@ final class OutboxReplayCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $limit = (int) $input->getArgument('limit');
+        $limitArg = $input->getArgument('limit');
+        $limit = is_numeric($limitArg) ? (int) $limitArg : 100;
         $count = $this->publisher->replay($limit);
         $output->writeln(sprintf('<info>Published %d message(s) from outbox</info>', $count));
 

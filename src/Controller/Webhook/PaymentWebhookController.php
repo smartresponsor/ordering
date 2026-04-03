@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Webhook;
 
-use App\Service\Order\Billing\WebhookHandler;
+use App\Service\Billing\Order\WebhookHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class PaymentWebhookController
 {
