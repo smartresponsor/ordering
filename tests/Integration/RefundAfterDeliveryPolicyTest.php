@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
 use App\Service\Order\RefundEligibilityService;
 use App\ValueObject\Order\Money;

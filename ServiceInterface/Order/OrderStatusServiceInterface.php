@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Service\Order\OrderService;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;

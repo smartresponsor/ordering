@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Entity\Order\OrderDispute;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

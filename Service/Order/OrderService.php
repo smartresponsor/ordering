@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Order;
 
 use App\Entity\Order\IdempotencyKey;
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
 use App\Entity\Order\OrderRefundLedger;
 use App\Event\Order\OrderFullyRefundedEvent;

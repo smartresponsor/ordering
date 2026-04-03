@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Fixtures;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderFactory

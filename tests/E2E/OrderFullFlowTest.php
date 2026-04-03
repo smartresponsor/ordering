@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\E2E;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Service\Order\OrderOrchestrator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

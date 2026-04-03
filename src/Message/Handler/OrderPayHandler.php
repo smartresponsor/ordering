@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Handler;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Message\Command\OrderPayCommand;
 use App\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;

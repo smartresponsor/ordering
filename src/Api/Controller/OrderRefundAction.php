@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Api\Controller;
 
 use App\Api\Dto\OrderRefundInput;
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

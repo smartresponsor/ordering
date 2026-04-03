@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 
 /**
  * Shipment gateway contract for Ordering service layer.

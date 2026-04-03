@@ -12,7 +12,7 @@ namespace App\ServiceInterface\Order;
 use App\Entity\Order\Billing\OrderInvoice;
 use App\Entity\Order\Billing\OrderPaymentIntent;
 use App\Entity\Order\Billing\OrderTransaction;
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Service\Order\OrderPaymentProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 

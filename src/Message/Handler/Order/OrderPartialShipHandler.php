@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Handler\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Message\Command\Order\OrderPartialShipCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

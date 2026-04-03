@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use PHPUnit\Framework\TestCase;
 
 final class OrderInvalidTransitionsTest extends TestCase

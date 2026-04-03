@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Entity\Order\Order;
+use App\Entity\Order;
 use App\Entity\Order\OrderDispute;
 use App\Event\Order\OrderChargebackIssuedEvent;
 use App\Event\Order\OrderDisputeOpenedEvent;
