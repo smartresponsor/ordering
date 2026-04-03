@@ -7,7 +7,7 @@ namespace Tests\Integration;
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\Integration\Inventory\InMemoryInventoryGateway;
-use App\Service\Order\InventoryService;
+use App\Service\Inventory\Order\InventoryService;
 use App\Subscriber\Event\Order\InventorySubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +23,7 @@ final class InventoryReservationFlowTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new InventorySubscriber(new NullLogger()));
+        $dispatcher->addSubscriber(new InventorySubscriber());
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 10, 'SKU-2' => 5]);
         $svc = new InventoryService($em, $dispatcher, $gateway);
 
@@ -50,7 +50,7 @@ final class InventoryReservationFlowTest extends KernelTestCase
         self::bootKernel();
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new InventorySubscriber(new NullLogger()));
+        $dispatcher->addSubscriber(new InventorySubscriber());
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 1]);
         $svc = new InventoryService($em, $dispatcher, $gateway);
 

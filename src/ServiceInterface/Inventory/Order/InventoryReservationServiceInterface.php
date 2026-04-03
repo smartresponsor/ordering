@@ -7,18 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Inventory\Order;
 
 use App\Entity\Order\OrderStockReservation;
-use App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
 
 interface InventoryReservationServiceInterface
 {
-    public function __construct(
-        InventoryGatewayInterface $gateway,
-        OrderStockReservationRepositoryInterface $repo,
-    );
-
     public function reserveOrFail(string $orderId, string $sku, int $qty): OrderStockReservation;
 
     public function release(string $orderId, string $sku, int $qty): void;

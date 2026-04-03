@@ -7,8 +7,8 @@ namespace Tests\Embedded\Service\Order;
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\Integration\Inventory\InMemoryInventoryGateway;
-use App\Service\Order\InventorySubscriber;
-use App\Service\Order\OrderInventoryService;
+use App\Subscriber\Event\Order\InventorySubscriber;
+use App\Service\Inventory\Order\InventoryService;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
@@ -23,9 +23,9 @@ final class InventoryReservationFlowTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new InventorySubscriber(new NullLogger()));
+        $dispatcher->addSubscriber(new InventorySubscriber());
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 10, 'SKU-2' => 5]);
-        $svc = new OrderInventoryService($em, $dispatcher, $gateway);
+        $svc = new InventoryService($em, $dispatcher, $gateway);
 
         $order = new Order('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);
@@ -50,9 +50,9 @@ final class InventoryReservationFlowTest extends KernelTestCase
         self::bootKernel();
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new InventorySubscriber(new NullLogger()));
+        $dispatcher->addSubscriber(new InventorySubscriber());
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 1]);
-        $svc = new OrderInventoryService($em, $dispatcher, $gateway);
+        $svc = new InventoryService($em, $dispatcher, $gateway);
 
         $order = new Order('VND-2', new Money('50.00', 'USD'));
         $em->persist($order);

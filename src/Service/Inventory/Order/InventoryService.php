@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Inventory\Order;
 
 use App\Entity\Order\InventoryReservation;
 use App\Entity\Order;
@@ -15,13 +15,12 @@ use App\Event\Domain\Order\StockConsumedEvent;
 use App\Event\Domain\Order\StockReleasedEvent;
 use App\Event\Domain\Order\StockReservationFailedEvent;
 use App\Event\Domain\Order\StockReservedEvent;
-use App\ServiceInterface\Order\InventoryGatewayInterface;
-use App\ServiceInterface\Order\InventoryServiceInterface;
-use App\ServiceInterface\Order\OrderInventoryServiceInterface;
+use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
+use App\ServiceInterface\Inventory\Order\InventoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class InventoryService implements InventoryServiceInterface, OrderInventoryServiceInterface
+final class InventoryService implements InventoryServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
