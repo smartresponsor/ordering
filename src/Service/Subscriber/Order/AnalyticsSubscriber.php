@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
-use App\ServiceInterface\Order\EmailSubscriberInterface;
+use App\ServiceInterface\Subscriber\Order\AnalyticsSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: 'order.event', method: 'onOrderEvent')]
-final class EmailSubscriber implements EmailSubscriberInterface
+final class AnalyticsSubscriber implements AnalyticsSubscriberInterface
 {
     public function onOrderEvent(array $payload): void
     {
-        // send emails on placed/paid/shipped events (stub)
+        // collect metrics (stub)
     }
 }

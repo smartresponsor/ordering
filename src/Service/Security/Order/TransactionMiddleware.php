@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\ServiceInterface\Order\TransactionMiddlewareInterface;
+use App\ServiceInterface\Security\Order\TransactionMiddlewareInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class TransactionMiddleware implements TransactionMiddlewareInterface

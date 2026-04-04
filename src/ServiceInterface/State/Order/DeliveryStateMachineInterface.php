@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\State\Order;
 
 use App\Entity\Order\Delivery;
 

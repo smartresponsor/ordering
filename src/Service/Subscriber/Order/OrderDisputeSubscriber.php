@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
 use App\Event\Domain\Order\OrderChargebackIssuedEvent;
 use App\Event\Domain\Order\OrderDisputeOpenedEvent;
 use App\Event\Domain\Order\OrderDisputeResolvedEvent;
-use App\ServiceInterface\Order\OrderDisputeSubscriberInterface;
+use App\ServiceInterface\Subscriber\Order\OrderDisputeSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 

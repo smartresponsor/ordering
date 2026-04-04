@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
 use App\Event\Domain\Order\OrderDeliveredEvent;
 use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
-use App\ServiceInterface\Order\OrderShipmentSubscriberInterface;
+use App\ServiceInterface\Subscriber\Order\OrderShipmentSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 

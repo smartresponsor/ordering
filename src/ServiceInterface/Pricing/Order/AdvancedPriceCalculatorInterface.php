@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Pricing\Order;
 
 use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\PriceBreakdown;

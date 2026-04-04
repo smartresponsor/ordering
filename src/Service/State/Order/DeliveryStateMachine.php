@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\State\Order;
 
 use App\Entity\Order\Delivery;
-use App\ServiceInterface\Order\DeliveryStateMachineInterface;
+use App\ServiceInterface\State\Order\DeliveryStateMachineInterface;
 
 final class DeliveryStateMachine implements DeliveryStateMachineInterface
 {

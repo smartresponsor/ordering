@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
 use App\Entity\Order\OrderAuditLog;
 use App\Entity\Order\OrderEventRecord;
 use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
-use App\ServiceInterface\Order\OrderAuditSubscriberInterface;
+use App\ServiceInterface\Subscriber\Order\OrderAuditSubscriberInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Uid\Uuid;

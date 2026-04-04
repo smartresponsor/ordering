@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
 use App\Entity\Order\OrderPriceAudit;
 use App\ValueObject\Pricing\Order\Currency;
@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 final class OrderWorkflowSubscriber
 {
     public function __construct(
-        private OrderPricingService $pricing,
+        private \App\ServiceInterface\Pricing\Order\OrderPricingServiceInterface $pricing,
         private EntityManagerInterface $em,
     ) {
     }

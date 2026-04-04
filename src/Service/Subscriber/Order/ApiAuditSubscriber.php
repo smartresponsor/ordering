@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Subscriber\Order;
 
-use App\ServiceInterface\Order\ApiAuditSubscriberInterface;
+use App\ServiceInterface\Subscriber\Order\ApiAuditSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
