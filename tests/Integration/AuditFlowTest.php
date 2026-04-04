@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Entity\Order;
-use App\Service\Order\AuditLoggerService;
+use App\Service\Analytics\Order\AuditLoggerService;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

@@ -6,7 +6,7 @@ namespace App\Api\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Service\Order\OrderMetricsAggregateView;
+use App\Service\Analytics\Order\OrderMetricsAggregateView;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsAggregateProvider implements ProviderInterface

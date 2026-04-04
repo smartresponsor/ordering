@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order;
-use App\Service\Order\MetricsProjectionService;
-use App\Service\Order\OrderMetricsProjection;
+use App\Service\Analytics\Order\MetricsProjectionService;
+use App\Service\Analytics\Order\OrderMetricsProjection;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

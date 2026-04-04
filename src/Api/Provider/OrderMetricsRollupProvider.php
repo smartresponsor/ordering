@@ -6,7 +6,7 @@ namespace App\Api\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Service\Order\OrderMetricsRollupView;
+use App\Service\Analytics\Order\OrderMetricsRollupView;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsRollupProvider implements ProviderInterface
