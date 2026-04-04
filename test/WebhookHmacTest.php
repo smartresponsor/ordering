@@ -1,26 +1,27 @@
 <?php
+
 declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * Owner: Marketing America Corp
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+namespace App\Test\Smoke;
 
+use App\Service\Webhook\Order\WebhookSignerHmac;
+use App\Service\Webhook\Order\WebhookVerifierHmac;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Basic smoke coverage for webhook signing and verification.
+ */
 final class WebhookHmacTest extends TestCase
 {
-    public function testHmacSignVerify()
+    public function testSignVerify(): void
     {
-        $s = new WebhookSignerHmac();
-        $v = new WebhookVerifierHmac();
+        $signer = new WebhookSignerHmac();
+        $verifier = new WebhookVerifierHmac();
         $payload = '{"ok":true}';
         $secret = 'x';
-        $sig = $s->sign($payload, $secret);
-        $this->assertTrue($v->verify($payload, $secret, $sig));
-        $this->assertFalse($v->verify($payload, 'y', $sig));
+        $signature = $signer->sign($payload, $secret);
+
+        self::assertTrue($verifier->verify($payload, $secret, $signature));
+        self::assertFalse($verifier->verify($payload, 'y', $signature));
     }
 }

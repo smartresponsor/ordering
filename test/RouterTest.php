@@ -1,20 +1,26 @@
 <?php
+
 declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+namespace App\Test\Smoke;
 
+use App\Service\Transport\Order\DummyAdapter;
+use App\Service\Transport\Order\ProviderRouter;
+use App\Service\Transport\Order\StripeAdapter;
+use App\ValueObject\Routing\Order\CanarySwitch;
+use App\ValueObject\Routing\Order\CostPolicy;
+use App\ValueObject\Routing\Order\HealthProbe;
+use App\ValueObject\Routing\Order\ProviderPolicy;
+use App\ValueObject\Routing\Order\QuotaPolicy;
+use App\ValueObject\Routing\Order\RouteContext;
 use PHPUnit\Framework\TestCase;
-use SmartResponsor\Order\ProviderAdapter\StripeAdapter;
-use SmartResponsor\Order\ProviderAdapter\DummyAdapter;
 
+/**
+ * Basic smoke coverage for provider routing.
+ */
 final class RouterTest extends TestCase
 {
-    public function testSelect()
+    public function testSelect(): void
     {
         $policy = new ProviderPolicy(0.5, 0.3, 0.2, 500, 5.0);
         $router = new ProviderRouter(
@@ -24,10 +30,10 @@ final class RouterTest extends TestCase
             $policy,
             new CanarySwitch(42),
             new QuotaPolicy(),
-            new CostPolicy()
+            new CostPolicy(),
         );
-        $ctx = new RouteContext('intent-abc', 'us', 10.0, false);
-        $d = $router->select($ctx);
-        $this->assertTrue(in_array($d->provider(), ['stripe','alt'], true));
+
+        $decision = $router->select(new RouteContext('intent-abc', 'us', 10.0, false));
+        self::assertContains($decision->provider(), ['stripe', 'alt']);
     }
 }

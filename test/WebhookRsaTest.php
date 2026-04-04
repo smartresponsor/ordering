@@ -1,34 +1,34 @@
 <?php
+
 declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * Owner: Marketing America Corp
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+namespace App\Test\Smoke;
 
+use App\Service\Webhook\Order\WebhookSignerRsa;
+use App\Service\Webhook\Order\WebhookVerifierRsa;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Basic smoke coverage for webhook signing and verification.
+ */
 final class WebhookRsaTest extends TestCase
 {
-    public function testRsaSignVerify()
+    public function testSignVerify(): void
     {
         $cfg = [
             'private_key_bits' => 2048,
             'private_key_type' => OPENSSL_KEYTYPE_RSA,
         ];
-        $res = openssl_pkey_new($cfg);
-        openssl_pkey_export($res, $priv);
-        $det = openssl_pkey_get_details($res);
-        $pub = $det['key'];
+        $resource = openssl_pkey_new($cfg);
+        openssl_pkey_export($resource, $privateKey);
+        $details = openssl_pkey_get_details($resource);
+        $publicKey = $details['key'];
 
-        $s = new WebhookSignerRsa();
-        $v = new WebhookVerifierRsa();
+        $signer = new WebhookSignerRsa();
+        $verifier = new WebhookVerifierRsa();
         $payload = '{"ok":true}';
 
-        $env = $s->sign($payload, $priv, 'kid-test');
-        $this->assertTrue($v->verify($payload, $pub, $env));
+        $envelope = $signer->sign($payload, $privateKey, 'kid-test');
+        self::assertTrue($verifier->verify($payload, $publicKey, $envelope));
     }
 }
