@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Event\Order;
 
-use App\Service\Order\PaymentService;
-use App\Service\Order\TransactionalEventPublisher;
+use App\Service\Payment\Order\PaymentService;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class PaymentWebhookListener implements EventSubscriberInterface

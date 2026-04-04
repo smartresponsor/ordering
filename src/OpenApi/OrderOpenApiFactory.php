@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\OpenApi;
 
 use ApiPlatform\OpenApi\OpenApi;
-use App\ServiceInterface\Order\OrderOpenApiFactoryInterface;
+use App\ServiceInterface\OpenApi\Order\OrderOpenApiFactoryInterface;
 
 final class OrderOpenApiFactory implements OrderOpenApiFactoryInterface
 {

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Command\Operations\Order;
 
 use App\CommandInterface\Console\Order\DlqListCommandInterface;
-use App\ServiceInterface\Order\Outbox\DlqServiceInterface;
+use App\ServiceInterface\Outbox\Order\DlqServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

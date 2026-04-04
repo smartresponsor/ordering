@@ -11,7 +11,7 @@ namespace App\ServiceInterface\Refund\Order;
 
 use App\Message\Legacy\Order\OrderRefundCommand;
 use App\Service\Refund\Order\OrderRefundService;
-use App\Service\Order\TransactionalEventPublisher;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 
 interface OrderRefundCommandHandlerInterface
 {

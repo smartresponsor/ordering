@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace App\Service\Outbox\Order;
 
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
-use App\ServiceInterface\Order\OutboxRelayInterface;
-use App\ServiceInterface\Order\TransactionalEventPublisherInterface;
+use App\ServiceInterface\Outbox\Order\OutboxRelayInterface;
+use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 

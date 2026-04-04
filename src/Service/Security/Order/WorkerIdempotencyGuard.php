@@ -13,7 +13,7 @@ use App\ServiceInterface\Security\Order\IdempotencyStoreInterface;
  * This file is part of SmartResponsor (Order domain).
  */
 
-use App\ServiceInterface\Order\WorkerIdempotencyGuardInterface;
+use App\ServiceInterface\Security\Order\WorkerIdempotencyGuardInterface;
 
 final class WorkerIdempotencyGuard implements WorkerIdempotencyGuardInterface
 {

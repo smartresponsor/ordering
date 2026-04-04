@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Subscriber\Event\Order;
 
 use App\Service\Shipment\Order\ShipmentService;
-use App\Service\Order\TransactionalEventPublisher;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class ShipmentStatusListener implements EventSubscriberInterface

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Workflow\Order;
 
-use App\ServiceInterface\Order\OrderPaymentGatewayInterface;
-use App\ServiceInterface\Order\OrderShipmentGatewayInterface;
+use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
