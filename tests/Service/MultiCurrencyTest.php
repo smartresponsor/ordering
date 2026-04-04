@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Service;
 
-use App\Service\Order\Currency\CurrencyConversionService;
-use App\Service\Order\Currency\InMemoryRateProvider;
+use App\Service\Pricing\Order\CurrencyConversionService;
+use App\Service\Pricing\Order\InMemoryRateProvider;
 use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 

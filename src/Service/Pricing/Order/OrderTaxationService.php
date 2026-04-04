@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-final class OrderTaxationService implements \App\ServiceInterface\Order\OrderTaxationServiceInterface
+final class OrderTaxationService implements \App\ServiceInterface\Pricing\Order\OrderTaxationServiceInterface
 {
     public function apply(float $amount, float $rate): float
     {

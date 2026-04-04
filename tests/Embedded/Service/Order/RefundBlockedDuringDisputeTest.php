@@ -7,7 +7,7 @@ namespace Tests\Embedded\Service\Order;
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
 use App\Service\Dispute\Order\DisputeService;
-use App\Service\Order\OrderService;
+use App\Service\Security\Order\OrderService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;

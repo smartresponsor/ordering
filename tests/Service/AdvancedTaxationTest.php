@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Service;
 
-use App\Service\Order\Taxation\FlatTaxStrategy;
-use App\Service\Order\Taxation\ProgressiveTaxStrategy;
+use App\Service\Pricing\Order\FlatTaxStrategy;
+use App\Service\Pricing\Order\ProgressiveTaxStrategy;
 use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 

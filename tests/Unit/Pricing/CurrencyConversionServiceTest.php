@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing;
 
-use App\Service\Order\Pricing\CurrencyConversionService;
+use App\Service\Pricing\Order\CurrencyConversionService;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;

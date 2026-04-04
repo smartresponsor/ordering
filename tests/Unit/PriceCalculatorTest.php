@@ -6,9 +6,9 @@ namespace Tests\Unit;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
-use App\Service\Order\OrderPricing\PriceCalculator;
-use App\Service\Order\OrderPricing\Strategy\FlatPromotionStrategy;
-use App\Service\Order\OrderPricing\Strategy\FlatTaxationStrategy;
+use App\Service\Pricing\Order\PriceCalculator;
+use App\Service\Pricing\Order\FlatPromotionStrategy;
+use App\Service\Pricing\Order\FlatTaxationStrategy;
 use App\ValueObject\Money\Currency;
 use App\ValueObject\Inventory\Order\Quantity;
 use App\ValueObject\Inventory\Order\Sku;

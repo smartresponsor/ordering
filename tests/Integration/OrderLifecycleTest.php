@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Entity\Order;
-use App\Service\Order\OrderService;
+use App\Service\Security\Order\OrderService;
 use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

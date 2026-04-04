@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Pricing;
 
-use App\Service\Order\Pricing\DefaultTaxationStrategy;
+use App\Service\Pricing\Order\DefaultTaxationStrategy;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\TaxRate;
