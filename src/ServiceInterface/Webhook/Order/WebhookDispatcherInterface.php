@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Webhook\Order;
 
 interface WebhookDispatcherInterface
 {

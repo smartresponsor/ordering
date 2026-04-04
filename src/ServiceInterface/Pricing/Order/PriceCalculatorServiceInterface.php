@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Pricing\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
@@ -18,7 +18,7 @@ use App\ValueObject\Pricing\Order\Taxation;
 
 interface PriceCalculatorServiceInterface
 {
-    public function __construct(TaxationStrategyInterface $taxStrategy);
+    public function __construct(\App\ServiceInterface\Pricing\Order\TaxationStrategyInterface $taxStrategy);
 
     public function calculateItemPrice(OrderItem $orderItem, Taxation $taxation, ?Discount $discount = null): Price;
 

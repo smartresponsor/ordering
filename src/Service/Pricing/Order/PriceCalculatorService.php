@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Pricing\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
-use App\ServiceInterface\Order\PriceCalculatorServiceInterface;
+use App\ServiceInterface\Pricing\Order\PriceCalculatorServiceInterface;
 use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\Price;

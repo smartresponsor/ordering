@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\Order as OrderAggregate;
-use App\Event\Domain\Order\OrderCancelledEvent;
+use App\Entity\Order as OrderAggregate;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\Repository\Order\OrderRepository;
-use App\ServiceInterface\Order\OrderCancelledHandlerInterface;
+use App\ServiceInterface\Workflow\Order\OrderShippedHandlerInterface;
 
-final class OrderCancelledHandler implements OrderCancelledHandlerInterface
+final class OrderShippedHandler implements OrderShippedHandlerInterface
 {
     public function __construct(
         private readonly OrderRepository $orders,
@@ -22,13 +22,13 @@ final class OrderCancelledHandler implements OrderCancelledHandlerInterface
     ) {
     }
 
-    public function __invoke(OrderCancelledEvent $event): void
+    public function __invoke(OrderShippedEvent $event): void
     {
         $order = $this->orders->findById($event->orderId);
         if (!$order) {
             // ленивое создание, если агрегата нет (можно заменить на exception)
             $order = new OrderAggregate($event->orderId);
         }
-        $this->status->applyTransition($order, 'cancel');
+        $this->status->applyTransition($order, 'ship');
     }
 }

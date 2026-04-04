@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\Order as OrderAggregate;
+use App\Entity\Order as OrderAggregate;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Repository\Order\OrderRepository;
-use App\ServiceInterface\Order\OrderPlacedHandlerInterface;
+use App\ServiceInterface\Workflow\Order\OrderPlacedHandlerInterface;
 
 final class OrderPlacedHandler implements OrderPlacedHandlerInterface
 {

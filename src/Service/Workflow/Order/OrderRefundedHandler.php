@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\Order as OrderAggregate;
-use App\Event\Domain\Order\OrderPaidEvent;
+use App\Entity\Order as OrderAggregate;
+use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Repository\Order\OrderRepository;
-use App\ServiceInterface\Order\OrderPaidHandlerInterface;
+use App\ServiceInterface\Workflow\Order\OrderRefundedHandlerInterface;
 
-final class OrderPaidHandler implements OrderPaidHandlerInterface
+final class OrderRefundedHandler implements OrderRefundedHandlerInterface
 {
     public function __construct(
         private readonly OrderRepository $orders,
@@ -22,13 +22,13 @@ final class OrderPaidHandler implements OrderPaidHandlerInterface
     ) {
     }
 
-    public function __invoke(OrderPaidEvent $event): void
+    public function __invoke(OrderRefundedEvent $event): void
     {
         $order = $this->orders->findById($event->orderId);
         if (!$order) {
             // ленивое создание, если агрегата нет (можно заменить на exception)
             $order = new OrderAggregate($event->orderId);
         }
-        $this->status->applyTransition($order, 'pay');
+        $this->status->applyTransition($order, 'refund');
     }
 }

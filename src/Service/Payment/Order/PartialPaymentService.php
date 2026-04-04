@@ -7,12 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Payment\Order;
 
 use App\Entity\Order\OrderPaymentTransaction;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
+use App\ServiceInterface\Payment\Order\PartialPaymentServiceInterface;
 
-final class PartialPaymentService
+final class PartialPaymentService implements PartialPaymentServiceInterface
 {
     public function __construct(private OrderPaymentTransactionRepositoryInterface $payments)
     {

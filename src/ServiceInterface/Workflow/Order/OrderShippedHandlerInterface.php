@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Workflow\Order;
 
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\Repository\Order\OrderRepository;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Webhook;
 
-use App\ServiceInterface\Order\WebhookDispatcherInterface;
+use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
 
 final class NoopWebhookDispatcher implements WebhookDispatcherInterface
 {
