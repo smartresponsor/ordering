@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Transport\Order;
 
-use App\ServiceInterface\Order\HttpClientInterface;
-use App\ServiceInterface\Order\OrderClientInterface;
+use App\ServiceInterface\Transport\Order\HttpClientInterface;
+use App\ServiceInterface\Transport\Order\OrderClientInterface;
 
 final class OrderClient implements OrderClientInterface
 {

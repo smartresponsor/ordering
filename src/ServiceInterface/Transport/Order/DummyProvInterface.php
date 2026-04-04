@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * Owner: Marketing America Corp
+ */
 
-interface PaymentProviderInterface
+namespace App\ServiceInterface\Transport\Order;
+
+interface DummyProvInterface
 {
     public function authorize(string $orderId, int $amount, string $currency, array $meta = []): array;
 

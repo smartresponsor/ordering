@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Transport\Order;
 
-use App\Service\Order\Order;
+use App\Service\Transport\Order\Order;
 
 interface OrderClientInterface
 {

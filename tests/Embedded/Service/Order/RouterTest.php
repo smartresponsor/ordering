@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\DummyAdapter;
-use App\Service\Order\ProviderRouter;
-use App\Service\Order\StripeAdapter;
+use App\Service\Transport\Order\DummyAdapter;
+use App\Service\Transport\Order\ProviderRouter;
+use App\Service\Transport\Order\StripeAdapter;
 use App\ValueObject\Routing\Order\CanarySwitch;
 use App\ValueObject\Routing\Order\CostPolicy;
 use App\ValueObject\Routing\Order\HealthProbe;

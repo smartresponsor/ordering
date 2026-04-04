@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Service\Transport\Order;
 
-use App\ServiceInterface\Order\ProviderAdapterInterface;
+use App\ServiceInterface\Transport\Order\ProviderAdapterInterface;
 
-use App\ServiceInterface\Order\ProviderRouterInterface;
+use App\ServiceInterface\Transport\Order\ProviderRouterInterface;
 use App\ValueObject\Routing\Order\CanarySwitch;
 use App\ValueObject\Routing\Order\CostPolicy;
 use App\ValueObject\Routing\Order\HealthProbe;

@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Transport\Order;
 
-use App\ServiceInterface\Order\CarrierInterface;
-use App\ServiceInterface\Order\UPSCarrierInterface;
+use App\ServiceInterface\Transport\Order\CarrierInterface;
+use App\ServiceInterface\Transport\Order\UPSCarrierInterface;
 
 final class UPSCarrier implements CarrierInterface, UPSCarrierInterface
 {

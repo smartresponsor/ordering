@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Transport\Order;
 
 interface HttpClientInterface
 {

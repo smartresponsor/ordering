@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Transport\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
-use App\ServiceInterface\Order\CarrierInterface;
-use App\ServiceInterface\Order\ShipmentProcessorServiceInterface;
+use App\ServiceInterface\Transport\Order\CarrierInterface;
+use App\ServiceInterface\Transport\Order\ShipmentProcessorServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class ShipmentProcessorService implements ShipmentProcessorServiceInterface
