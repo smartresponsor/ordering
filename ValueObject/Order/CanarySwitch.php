@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Order;
+namespace App\ValueObject\Security\Order;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

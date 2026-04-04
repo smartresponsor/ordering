@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Security\Order;
 
 use App\Message\OrderEventMessage;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

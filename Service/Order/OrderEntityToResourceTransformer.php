@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Security\Order;
 
 use App\ApiResource\View\Order\OrderResource;
 use App\Entity\Order\Order as OrderEntity;

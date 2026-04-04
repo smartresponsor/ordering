@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Security\Order;
 
 use App\Entity\Order;
 use App\Message\Command\Order\OrderPartialRefundCommand;

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;

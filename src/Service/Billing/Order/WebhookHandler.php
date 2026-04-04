@@ -11,7 +11,7 @@ namespace App\Service\Billing\Order;
 
 use App\Entity\Order\Billing\OrderPaymentIntent;
 use App\Entity\Order\Billing\OrderTransaction;
-use App\ServiceInterface\Order\OrderIdempotencyGuardInterface;
+use App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
 use App\ServiceInterface\Order\OrderWebhookHandlerInterface;
 use App\ServiceInterface\Order\WebhookHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;

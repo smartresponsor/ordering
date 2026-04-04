@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order\Outbox;
+namespace App\Service\Outbox\Order;
 
 use App\ServiceInterface\Order\Outbox\DlqServiceInterface;
 

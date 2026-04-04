@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Security\Order;
 
 use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use App\Contract\Gateway\Order\TaxBreakdown;

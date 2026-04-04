@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Service\Order\WebhookVerifierHmac;
+use App\Service\Webhook\Order\WebhookVerifierHmac;
 
 final readonly class WebhookSignatureVerifier
 {

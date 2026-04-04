@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Security\Order;
 
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface as LegacyFactory;
 use ApiPlatform\Core\OpenApi\OpenApi;

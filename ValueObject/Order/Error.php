@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Order;
+namespace App\ValueObject\Security\Order;
 
 final class Error
 {

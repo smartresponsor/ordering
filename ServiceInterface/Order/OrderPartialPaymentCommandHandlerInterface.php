@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Security\Order;
 
 use App\Message\Legacy\Order\OrderPartialPaymentCommand;
 use App\Service\Order\Adapter\Payment\PaymentGatewayInterface;
