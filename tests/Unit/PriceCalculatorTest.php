@@ -10,8 +10,8 @@ use App\Service\Order\OrderPricing\PriceCalculator;
 use App\Service\Order\OrderPricing\Strategy\FlatPromotionStrategy;
 use App\Service\Order\OrderPricing\Strategy\FlatTaxationStrategy;
 use App\ValueObject\Money\Currency;
-use App\ValueObject\Order\Quantity;
-use App\ValueObject\Order\Sku;
+use App\ValueObject\Inventory\Order\Quantity;
+use App\ValueObject\Inventory\Order\Sku;
 use PHPUnit\Framework\TestCase;
 
 final class PriceCalculatorTest extends TestCase

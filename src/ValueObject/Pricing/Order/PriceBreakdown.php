@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Security\Order;
+namespace App\ValueObject\Pricing\Order;
 
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 
 final class PriceBreakdown
 {

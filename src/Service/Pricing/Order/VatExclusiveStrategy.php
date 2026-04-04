@@ -11,8 +11,8 @@ namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ServiceInterface\Pricing\Order\VatExclusiveStrategyInterface;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\Taxation;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\Taxation;
 
 class VatExclusiveStrategy implements VatExclusiveStrategyInterface, TaxationStrategyInterface
 {

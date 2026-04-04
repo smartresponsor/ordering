@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\TaxRate;
 
 interface TaxationConfigLoaderInterface
 {

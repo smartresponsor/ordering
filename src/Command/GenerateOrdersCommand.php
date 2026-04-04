@@ -7,7 +7,7 @@ namespace App\Command;
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
 use App\Factory\OrderFactory;
-use App\ValueObject\Order\OrderStatus;
+use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Proxy;
 use Symfony\Component\Console\Attribute\AsCommand;

@@ -17,7 +17,7 @@ use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;
 use App\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
-use App\ValueObject\Order\OrderStatus;
+use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 

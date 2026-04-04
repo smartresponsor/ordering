@@ -7,7 +7,7 @@ namespace Tests\Integration;
 use App\Entity\Order;
 use App\Service\Dispute\Order\DisputeService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

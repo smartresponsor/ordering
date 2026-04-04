@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\Taxation;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\Taxation;
 
 interface VatInclusiveStrategyInterface
 {

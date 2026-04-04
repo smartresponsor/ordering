@@ -16,8 +16,8 @@ use App\Entity\Order\OrderRefundLedger;
 use App\Event\Domain\Order\OrderFullyRefundedEvent;
 use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use App\ServiceInterface\Order\OrderServiceInterface;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\RefundAmount;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\RefundAmount;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

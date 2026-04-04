@@ -8,7 +8,7 @@ use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
 use App\Service\Shipment\Order\ShipmentService;
 use App\Subscriber\Event\Order\OrderShipmentSubscriber;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

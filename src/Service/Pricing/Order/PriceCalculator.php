@@ -13,9 +13,9 @@ use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
-use App\ValueObject\Order\Currency;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\Currency;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\TaxRate;
 
 class PriceCalculator implements \App\ServiceInterface\Pricing\Order\PriceCalculatorInterface
 {

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\PriceBreakdown;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\PriceBreakdown;
 
 interface AdvancedPriceCalculatorInterface
 {

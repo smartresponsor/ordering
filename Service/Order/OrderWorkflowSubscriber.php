@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Entity\Order\OrderPriceAudit;
-use App\ValueObject\Order\Currency;
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\Currency;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\TaxRate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 

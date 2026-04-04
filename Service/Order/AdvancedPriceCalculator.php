@@ -11,9 +11,9 @@ namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\PriceBreakdown;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\PriceBreakdown;
 
 final class AdvancedPriceCalculator
 {

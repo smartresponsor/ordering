@@ -6,9 +6,9 @@ namespace Tests\Unit;
 
 use App\Service\Order\Pricing\PriceCalculatorService;
 use App\Service\Order\Pricing\VatExclusiveStrategy;
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\Taxation;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\Taxation;
 use PHPUnit\Framework\TestCase;
 
 final class PriceCalculationTest extends TestCase

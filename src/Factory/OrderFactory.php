@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Entity\Order;
-use App\ValueObject\Order\OrderStatus;
+use App\ValueObject\OrderStatus;
 use Zenstruck\Foundry\ModelFactory;
 
 final class OrderFactory extends ModelFactory

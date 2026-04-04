@@ -15,7 +15,7 @@ use App\Entity\Order\Billing\OrderInvoice;
 use App\Entity\Order\Billing\OrderPaymentIntent;
 use App\Entity\Order\Billing\OrderTransaction;
 use App\Entity\Order;
-use App\ValueObject\Order\InvoiceNumber;
+use App\ValueObject\Billing\Order\InvoiceNumber;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class BillingService implements BillingServiceInterface, OrderBillingServiceInterface

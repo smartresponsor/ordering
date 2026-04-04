@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\ProgressiveTaxStrategyInterface;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 
 /**
  * Progressive brackets in major units. Example:

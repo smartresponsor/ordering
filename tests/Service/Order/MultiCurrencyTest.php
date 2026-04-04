@@ -11,7 +11,7 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Service\Pricing\Order\CurrencyConversionService;
 use App\Service\Pricing\Order\InMemoryRateProvider;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class MultiCurrencyTest extends TestCase

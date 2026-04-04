@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\FlatTaxStrategyInterface;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 
 final class FlatTaxStrategy implements FlatTaxStrategyInterface
 {

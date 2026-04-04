@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Security\Order;
+namespace App\ValueObject\Routing\Order;
 
 
 final class RouteDecision

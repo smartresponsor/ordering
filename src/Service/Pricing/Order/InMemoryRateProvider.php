@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\ExchangeRateProviderInterface;
-use App\ValueObject\Order\ExchangeRate;
+use App\ValueObject\Pricing\Order\ExchangeRate;
 
 final class InMemoryRateProvider implements ExchangeRateProviderInterface
 {

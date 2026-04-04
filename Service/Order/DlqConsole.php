@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Order\DlqRepositoryInterface;
-use App\ValueObject\Order\AuditLog;
+use App\ValueObject\Archival\Order\AuditLog;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

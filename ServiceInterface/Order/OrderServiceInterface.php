@@ -11,7 +11,7 @@ namespace App\ServiceInterface\Security\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderRefundLedger;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

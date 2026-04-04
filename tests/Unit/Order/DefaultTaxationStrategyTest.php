@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Order;
 
 use App\Service\Pricing\Order\DefaultTaxationStrategy;
-use App\ValueObject\Order\Currency;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\Currency;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\TaxRate;
 use PHPUnit\Framework\TestCase;
 
 final class DefaultTaxationStrategyTest extends TestCase

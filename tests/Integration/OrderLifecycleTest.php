@@ -6,7 +6,7 @@ namespace Tests\Integration;
 
 use App\Entity\Order;
 use App\Service\Order\OrderService;
-use App\ValueObject\Order\OrderStatus;
+use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

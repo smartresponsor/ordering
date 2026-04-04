@@ -6,7 +6,7 @@ namespace Tests\Service;
 
 use App\Service\Order\Taxation\FlatTaxStrategy;
 use App\Service\Order\Taxation\ProgressiveTaxStrategy;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class AdvancedTaxationTest extends TestCase

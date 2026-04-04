@@ -11,7 +11,7 @@ namespace App\ServiceInterface\Refund\Order;
 
 use App\Entity\Order;
 use App\Service\Refund\Order\RefundEligibilityService;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 
 interface OrderServiceHookInterface
 {

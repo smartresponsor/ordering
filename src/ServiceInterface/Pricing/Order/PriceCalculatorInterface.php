@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\ValueObject\Order\Currency;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\Currency;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\TaxRate;
 
 interface PriceCalculatorInterface
 {

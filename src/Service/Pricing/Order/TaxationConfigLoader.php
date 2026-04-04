@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\TaxRate;
 use Symfony\Component\Yaml\Yaml;
 
 class TaxationConfigLoader implements \App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface

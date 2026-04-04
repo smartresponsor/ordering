@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\VatInclusiveStrategyInterface;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\Taxation;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\Taxation;
 
 final class VatInclusiveStrategy implements VatInclusiveStrategyInterface
 {

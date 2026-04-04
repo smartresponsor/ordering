@@ -6,7 +6,7 @@ namespace Tests\Service;
 
 use App\Service\Order\Currency\CurrencyConversionService;
 use App\Service\Order\Currency\InMemoryRateProvider;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class MultiCurrencyTest extends TestCase

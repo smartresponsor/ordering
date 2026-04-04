@@ -7,12 +7,12 @@ namespace Tests\Embedded\Service\Order;
 use App\Service\Order\DummyAdapter;
 use App\Service\Order\ProviderRouter;
 use App\Service\Order\StripeAdapter;
-use App\ValueObject\Order\CanarySwitch;
-use App\ValueObject\Order\CostPolicy;
-use App\ValueObject\Order\HealthProbe;
-use App\ValueObject\Order\ProviderPolicy;
-use App\ValueObject\Order\QuotaPolicy;
-use App\ValueObject\Order\RouteContext;
+use App\ValueObject\Routing\Order\CanarySwitch;
+use App\ValueObject\Routing\Order\CostPolicy;
+use App\ValueObject\Routing\Order\HealthProbe;
+use App\ValueObject\Routing\Order\ProviderPolicy;
+use App\ValueObject\Routing\Order\QuotaPolicy;
+use App\ValueObject\Routing\Order\RouteContext;
 use PHPUnit\Framework\TestCase;
 
 final class RouterTest extends TestCase

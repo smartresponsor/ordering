@@ -9,7 +9,7 @@ use App\Entity\Order\OrderItem;
 use App\Integration\Inventory\InMemoryInventoryGateway;
 use App\Service\Inventory\Order\InventoryService;
 use App\Subscriber\Event\Order\InventorySubscriber;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

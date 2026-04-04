@@ -9,10 +9,10 @@ use App\Service\Order\Pricing\DefaultPromotionStrategy;
 use App\Service\Order\Pricing\DefaultTaxationStrategy;
 use App\Service\Order\Pricing\PriceCalculator;
 use App\Service\Order\Pricing\TaxationConfigLoader;
-use App\ValueObject\Order\Currency;
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\Money;
-use App\ValueObject\Order\TaxRate;
+use App\ValueObject\Pricing\Order\Currency;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\TaxRate;
 use PHPUnit\Framework\TestCase;
 
 final class PriceCalculatorTest extends TestCase

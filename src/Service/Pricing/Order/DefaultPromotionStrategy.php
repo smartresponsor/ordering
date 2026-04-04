@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
-use App\ValueObject\Order\Discount;
-use App\ValueObject\Order\Money;
+use App\ValueObject\Pricing\Order\Discount;
+use App\ValueObject\Pricing\Order\Money;
 
 class DefaultPromotionStrategy implements DefaultPromotionStrategyInterface
 {

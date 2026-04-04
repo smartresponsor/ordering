@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\ValueObject\Order\RouteContext;
-use App\ValueObject\Order\RouteDecision;
+use App\ValueObject\Routing\Order\RouteContext;
+use App\ValueObject\Routing\Order\RouteDecision;
 
 interface ProviderRouterInterface
 {
