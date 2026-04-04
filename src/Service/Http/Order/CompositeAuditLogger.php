@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Order\Http;
+namespace App\Service\Http\Order;
 
-use App\ServiceInterface\Order\Http\AuditLoggerInterface;
+use App\ServiceInterface\Http\Order\AuditLoggerInterface;
 
 final class CompositeAuditLogger implements AuditLoggerInterface
 {

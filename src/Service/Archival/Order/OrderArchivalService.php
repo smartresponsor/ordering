@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Archival\Order;
 
 final class OrderArchivalService implements App\AuditInterface\Archival\Order\OrderArchivalInterface
 {

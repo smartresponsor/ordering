@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Command\Operations\Order;
 
 use App\CommandInterface\Console\Order\AuditShipS3CommandInterface;
-use App\ServiceInterface\Order\Http\AuditShipInterface;
+use App\ServiceInterface\Http\Order\AuditShipInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order;
-use App\Service\Order\OrderArchivalService;
+use App\Service\Archival\Order\OrderArchivalService;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

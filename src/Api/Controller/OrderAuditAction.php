@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Api\Controller;
 
-use App\ServiceInterface\Order\OrderAuditTrailBuilderInterface;
+use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 

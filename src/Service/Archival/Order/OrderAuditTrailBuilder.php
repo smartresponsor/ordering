@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Archival\Order;
 
 use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
-use App\ServiceInterface\Order\OrderAuditTrail;
-use App\ServiceInterface\Order\OrderAuditTrailBuilderInterface;
+use App\ServiceInterface\Archival\Order\OrderAuditTrail;
+use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 
 final class OrderAuditTrailBuilder implements OrderAuditTrailBuilderInterface
 {

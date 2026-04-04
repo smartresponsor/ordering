@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Archival\Order;
 
 final class OrderAuditTrail
 {
@@ -12,9 +12,4 @@ final class OrderAuditTrail
         public array $events,
     ) {
     }
-}
-
-interface OrderAuditTrailBuilderInterface
-{
-    public function buildForOrder(string $orderId): OrderAuditTrail;
 }
