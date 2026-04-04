@@ -6,7 +6,7 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderShipment;
-use App\Service\Order\OrderRefundEligibilityService;
+use App\Service\Refund\Order\RefundEligibilityService;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -17,7 +17,7 @@ final class RefundAfterDeliveryPolicyTest extends KernelTestCase
     {
         self::bootKernel();
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
-        $elig = self::$kernel->getContainer()->get(OrderRefundEligibilityService::class);
+        $elig = self::$kernel->getContainer()->get(RefundEligibilityService::class);
 
         $order = new Order('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);

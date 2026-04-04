@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Refund\Order;
 
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;

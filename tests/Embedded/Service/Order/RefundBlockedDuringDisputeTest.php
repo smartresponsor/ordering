@@ -6,7 +6,7 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
-use App\Service\Order\OrderDisputeService;
+use App\Service\Dispute\Order\DisputeService;
 use App\Service\Order\OrderService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Order\Money;
@@ -23,7 +23,7 @@ final class RefundBlockedDuringDisputeTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new OrderDisputeSubscriber(new NullLogger()));
-        $disputes = new OrderDisputeService($em, $dispatcher);
+        $disputes = new DisputeService($em, $dispatcher);
 
         $order = new Order('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);

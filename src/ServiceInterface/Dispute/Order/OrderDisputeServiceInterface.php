@@ -7,8 +7,8 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Dispute\Order;
 
-interface OrderReturnPolicyServiceInterface extends ReturnPolicyServiceInterface
+interface OrderDisputeServiceInterface extends DisputeServiceInterface
 {
 }

@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Refund\Order;
 
-use App\ServiceInterface\Order\OrderReturnPolicyServiceInterface;
-use App\ServiceInterface\Order\ReturnPolicyServiceInterface;
+use App\ServiceInterface\Refund\Order\OrderReturnPolicyServiceInterface;
+use App\ServiceInterface\Refund\Order\ReturnPolicyServiceInterface;
 
 final class ReturnPolicyService implements ReturnPolicyServiceInterface, OrderReturnPolicyServiceInterface
 {

@@ -17,7 +17,7 @@ final class OrderPaymentService implements OrderPaymentServiceInterface
 {
     public function __construct(
         private readonly PartialPaymentService $partialPayments,
-        private readonly RefundService $refunds,
+        private readonly \App\Service\Refund\Order\OrderRefundService $refunds,
     ) {
     }
 

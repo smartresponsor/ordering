@@ -7,15 +7,15 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Refund\Order;
 
 use App\Entity\Order;
-use App\ServiceInterface\Order\OrderServiceHookInterface;
+use App\ServiceInterface\Refund\Order\OrderServiceHookInterface;
 use App\ValueObject\Order\Money;
 
 final class OrderServiceHook implements OrderServiceHookInterface
 {
-    public function __construct(private readonly OrderRefundEligibilityService $eligibility)
+    public function __construct(private readonly RefundEligibilityService $eligibility)
     {
     }
 

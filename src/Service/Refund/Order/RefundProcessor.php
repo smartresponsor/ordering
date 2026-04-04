@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Refund\Order;
 
-use App\ServiceInterface\Order\OrderPaymentGatewayInterface;
+use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Entity\Order\OrderRefundTransaction;
 use App\Event\Domain\Order\OrderRefundCompletedEvent;
-use App\ServiceInterface\Order\RefundProcessorInterface;
+use App\ServiceInterface\Refund\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

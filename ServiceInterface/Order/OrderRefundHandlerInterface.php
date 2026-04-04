@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Order;
 
 use App\Message\Command\Order\OrderRefundCommand;
-use App\Service\Order\RefundPolicyService;
+use App\Service\Refund\Order\RefundPolicyService;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface OrderRefundHandlerInterface

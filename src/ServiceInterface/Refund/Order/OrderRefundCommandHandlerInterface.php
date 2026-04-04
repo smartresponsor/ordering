@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Order;
+namespace App\ServiceInterface\Refund\Order;
 
 use App\Message\Legacy\Order\OrderRefundCommand;
-use App\Service\Order\OrderRefundService;
+use App\Service\Refund\Order\OrderRefundService;
 use App\Service\Order\TransactionalEventPublisher;
 
 interface OrderRefundCommandHandlerInterface

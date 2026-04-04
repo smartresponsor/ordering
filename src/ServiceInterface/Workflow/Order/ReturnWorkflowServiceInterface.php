@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Workflow\Order;
 
 use App\Entity\Order\OrderReturnRequest;
-use App\Service\Order\RefundProcessor;
+use App\Service\Refund\Order\RefundProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

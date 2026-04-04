@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Refund\Order;
 
 use App\Message\Legacy\Order\OrderRefundCommand;
-use App\ServiceInterface\Order\OrderRefundCommandHandlerInterface;
+use App\ServiceInterface\Refund\Order\OrderRefundCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

@@ -7,13 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Refund\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderReturnPolicy;
 use App\Entity\Order\OrderShipment;
-use App\ServiceInterface\Order\OrderRefundEligibilityServiceInterface;
-use App\ServiceInterface\Order\RefundEligibilityServiceInterface;
+use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
+use App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class RefundEligibilityService implements RefundEligibilityServiceInterface, OrderRefundEligibilityServiceInterface

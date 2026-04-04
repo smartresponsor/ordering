@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\RefundPolicyService;
+use App\Service\Refund\Order\RefundPolicyService;
 use PHPUnit\Framework\TestCase;
 
 final class RefundPolicyServiceTest extends TestCase

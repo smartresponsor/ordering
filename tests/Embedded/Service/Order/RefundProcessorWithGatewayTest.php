@@ -11,7 +11,7 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Entity\Order\OrderRefundTransaction;
 use App\Integration\Payment\StripeStubGateway;
-use App\Service\Order\RefundProcessor;
+use App\Service\Refund\Order\RefundProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\MessageBusInterface;

@@ -7,6 +7,8 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\ServiceInterface\Refund\Order;
 
-class_alias(DisputeService::class, OrderDisputeService::class);
+interface OrderReturnPolicyServiceInterface extends ReturnPolicyServiceInterface
+{
+}

@@ -6,7 +6,7 @@ namespace Tests\Integration;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
-use App\Service\Order\DisputeService;
+use App\Service\Dispute\Order\DisputeService;
 use App\Service\Order\OrderService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Order\Money;

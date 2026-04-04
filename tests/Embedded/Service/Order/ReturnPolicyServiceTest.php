@@ -9,21 +9,21 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Order\OrderReturnPolicyService;
+use App\Service\Refund\Order\ReturnPolicyService;
 use PHPUnit\Framework\TestCase;
 
 final class ReturnPolicyServiceTest extends TestCase
 {
     public function testAllowsWithinWindow(): void
     {
-        $svc = new OrderReturnPolicyService(14);
+        $svc = new ReturnPolicyService(14);
         $deliveredAt = new \DateTimeImmutable('-7 days');
         $this->assertTrue($svc->canReturn($deliveredAt));
     }
 
     public function testRejectsAfterWindow(): void
     {
-        $svc = new OrderReturnPolicyService(14);
+        $svc = new ReturnPolicyService(14);
         $deliveredAt = new \DateTimeImmutable('-20 days');
         $this->assertFalse($svc->canReturn($deliveredAt));
     }

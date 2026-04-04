@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Entity\Order;
-use App\Service\Order\DisputeService;
+use App\Service\Dispute\Order\DisputeService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;

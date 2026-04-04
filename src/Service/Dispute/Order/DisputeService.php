@@ -7,15 +7,15 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Order;
+namespace App\Service\Dispute\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderDispute;
 use App\Event\Domain\Order\OrderChargebackIssuedEvent;
 use App\Event\Domain\Order\OrderDisputeOpenedEvent;
 use App\Event\Domain\Order\OrderDisputeResolvedEvent;
-use App\ServiceInterface\Order\DisputeServiceInterface;
-use App\ServiceInterface\Order\OrderDisputeServiceInterface;
+use App\ServiceInterface\Dispute\Order\DisputeServiceInterface;
+use App\ServiceInterface\Dispute\Order\OrderDisputeServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
