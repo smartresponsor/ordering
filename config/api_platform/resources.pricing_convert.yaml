@@ -1,5 +1,5 @@
 resources:
-  App\ApiResource\Order\PricingConvertInput:
+  App\ApiResource\View\Order\PricingConvertInput:
     shortName: 'OrderPricingConvert'
     operations:
       - class: 'ApiPlatform\Metadata\Post'
