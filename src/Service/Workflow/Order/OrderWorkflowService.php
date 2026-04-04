@@ -11,7 +11,7 @@ namespace App\Service\Workflow\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
-use App\Service\Inventory\InventoryServiceInterface;
+use App\ServiceInterface\Inventory\InventoryServiceInterface;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
