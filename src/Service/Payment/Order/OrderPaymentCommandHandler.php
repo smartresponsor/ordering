@@ -7,11 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Payment\Order;
 
 use App\Message\Command\Order\OrderPaymentCommand;
-use App\Service\Order\Adapter\Payment\PaymentGatewayInterface;
-use App\ServiceInterface\Order\OrderPaymentCommandHandlerInterface;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\ServiceInterface\Payment\Order\OrderPaymentCommandHandlerInterface;
+use App\Service\Tx\TransactionalEventPublisher;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

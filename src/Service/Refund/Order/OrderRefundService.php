@@ -12,7 +12,7 @@ namespace App\Service\Refund\Order;
 use App\Entity\Order\OrderRefundTransaction;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use App\ServiceInterface\Refund\Order\RefundServiceInterface;
-use App\ServiceInterface\Order\PaymentGatewayInterface;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 
 final class OrderRefundService implements RefundServiceInterface
 {

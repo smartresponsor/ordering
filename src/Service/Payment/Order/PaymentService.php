@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Payment\Order;
 
-use App\ServiceInterface\Order\PaymentServiceInterface;
+use App\ServiceInterface\Payment\Order\PaymentServiceInterface;
 
 final class PaymentService implements PaymentServiceInterface
 {

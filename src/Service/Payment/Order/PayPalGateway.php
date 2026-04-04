@@ -7,20 +7,20 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Payment\Order;
 
-use App\ServiceInterface\Order\PaymentGatewayInterface;
-use App\ServiceInterface\Order\StripeGatewayInterface;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\ServiceInterface\Payment\Order\PayPalGatewayInterface;
 
-final class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface
+final class PayPalGateway implements PaymentGatewayInterface, PayPalGatewayInterface
 {
-    public function __construct(private ?string $apiKey = null)
+    public function __construct(private ?string $clientId = null, private ?string $secret = null)
     {
     }
 
     public function charge(string $orderId, string $amount, array $context = []): string
     {
-        return 'stripe_'.substr(hash('sha256', $orderId.$amount.microtime()), 0, 18);
+        return 'paypal_'.substr(hash('sha256', $orderId.$amount.microtime()), 0, 18);
     }
 
     public function refund(string $orderId, string $amount, array $context = []): string

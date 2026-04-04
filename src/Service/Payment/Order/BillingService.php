@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Service\Payment\Order;
 
-use App\ServiceInterface\Order\BillingServiceInterface;
-use App\ServiceInterface\Order\OrderBillingServiceInterface;
+use App\ServiceInterface\Payment\Order\BillingServiceInterface;
+use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
 use App\Entity\Order\Billing\OrderInvoice;
 use App\Entity\Order\Billing\OrderPaymentIntent;
 use App\Entity\Order\Billing\OrderTransaction;

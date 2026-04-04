@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Payment\Order;
 
 use App\Event\Domain\Order\OrderFullyPaidEvent;
 use App\Event\Domain\Order\OrderPartiallyPaidEvent;

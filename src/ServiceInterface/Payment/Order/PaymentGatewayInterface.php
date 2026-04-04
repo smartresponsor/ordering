@@ -7,12 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Payment\Order;
 
-interface PayPalGatewayInterface
+interface PaymentGatewayInterface
 {
-    public function __construct(?string $clientId = null, ?string $secret = null);
-
     public function charge(string $orderId, string $amount, array $context = []): string;
 
     public function refund(string $orderId, string $amount, array $context = []): string;
