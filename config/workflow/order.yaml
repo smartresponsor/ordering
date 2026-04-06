@@ -3,7 +3,7 @@ framework:
     order:
       type: 'state_machine'
       supports:
-        - App\Entity\Order\Order
+        - App\Entity\Order
       initial_marking: draft
       places:
         - draft
@@ -15,6 +15,7 @@ framework:
         - partially_refunded
         - refunded
         - completed
+        - cancelled
       transitions:
         place: { from: draft, to: placed }
         partial_pay: { from: [placed], to: partially_paid }
@@ -24,3 +25,4 @@ framework:
         partial_refund: { from: [paid, shipped], to: partially_refunded }
         refund: { from: [paid, partially_refunded, shipped], to: refunded }
         complete: { from: [shipped], to: completed }
+        cancel: { from: [draft, placed, partially_paid], to: cancelled }

@@ -8,15 +8,15 @@ use App\Entity\Order;
 
 final class OrderOutput
 {
-    public int $id;
+    public string $id;
     public string $status;
-    public int $grandTotal;
+    public string $grandTotal;
 
     public static function fromEntity(Order $order): self
     {
         $dto = new self();
-        $dto->id = $order->getId() ?? 0;
-        $dto->status = $order->getStatus()->value;
+        $dto->id = $order->getId();
+        $dto->status = $order->getStatus();
         $dto->grandTotal = $order->getGrandTotal();
 
         return $dto;

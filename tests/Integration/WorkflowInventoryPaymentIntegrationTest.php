@@ -42,6 +42,7 @@ final class WorkflowInventoryPaymentIntegrationTest extends TestCase
 
         $order = new Order();
         $order->setCurrency(new Currency('USD'));
+        $order->setGrandTotal('70.00');
         $em->persist($order);
 
         $item1 = new OrderItem($order, new Sku('SKU-1'), new Quantity(2), 1000); // $20
@@ -64,7 +65,7 @@ final class WorkflowInventoryPaymentIntegrationTest extends TestCase
         $svc->pay($order, 7000);
         $em->refresh($order);
 
-        $this->assertSame(OrderStatus::Paid->value, $order->getStatus()->value);
+        $this->assertSame(OrderStatus::Paid->value, $order->getStatus());
 
         $paidCount = (int) $em->createQuery('SELECT COUNT(p.id) FROM App\Entity\Order\OrderPayment p WHERE p.status = :s')
             ->setParameter('s', 'paid')->getSingleScalarResult();

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
 use App\Factory\OrderFactory;
 use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,7 +40,6 @@ final class GenerateOrdersCommand extends Command
         $count = (int) $input->getArgument('count');
         if ($count <= 0) {
             $io->error('Count must be > 0');
-
             return Command::FAILURE;
         }
 
@@ -60,7 +58,6 @@ final class GenerateOrdersCommand extends Command
             ];
             if (!isset($map[$statusOpt])) {
                 $io->error('Unknown status: '.$statusOpt);
-
                 return Command::FAILURE;
             }
             $forcedStatus = $map[$statusOpt];
@@ -69,38 +66,36 @@ final class GenerateOrdersCommand extends Command
         /** @var Proxy[] $proxies */
         $proxies = OrderFactory::createMany($count);
         $ids = [];
-        $paymentTotal = 0;
+        $paymentTotal = '0.00';
         foreach ($proxies as $proxy) {
             /** @var Order $order */
             $order = $proxy->object();
-            if ($forcedStatus) {
+            if ($forcedStatus instanceof OrderStatus) {
                 $order->setStatus($forcedStatus);
             }
             $this->em->persist($order);
             $this->em->flush();
             $ids[] = $order->getId();
 
-            if ($input->getOption('with-payment')) {
-                $p = new OrderPayment();
-                $p->setOrder($order);
-                $p->setAmount(1000);
-                $this->em->persist($p);
-                $paymentTotal += 1000;
+            if ((bool) $input->getOption('with-payment')) {
+                $order->applyPayment('1000.00', 'PAY-'.$order->getId(), true);
+                $paymentTotal = bcadd($paymentTotal, '1000.00', 2);
+                $this->em->persist($order);
             }
         }
         $this->em->flush();
 
-        $withPayments = $input->getOption('with-payment');
+        $withPayments = (bool) $input->getOption('with-payment');
         $io->success(sprintf(
             $withPayments ? 'Created %d orders with payments (Создано %d заказов с платежами)' : 'Created %d orders (Создано %d заказов)',
             count($ids), count($ids)
         ));
-        if ($forcedStatus) {
+        if ($forcedStatus instanceof OrderStatus) {
             $io->writeln(sprintf('Status: %s', $forcedStatus->value));
         }
-        $io->writeln('Payment amount: $1000');
+        $io->writeln('Payment amount: $1000.00');
         if ($withPayments) {
-            $io->writeln(sprintf('Payment total: $%d (Общий платёж: $%d)', $paymentTotal, $paymentTotal));
+            $io->writeln(sprintf('Payment total: $%s (Общий платёж: $%s)', $paymentTotal, $paymentTotal));
         }
         $io->writeln('IDs: ['.implode(', ', $ids).']');
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\OrderPayment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,13 +28,15 @@ final class ListOrdersCommand extends Command
         $payments = $this->em->getRepository(OrderPayment::class)->findAll();
         $io->writeln(sprintf('Orders: %d', count($orders)));
         foreach ($orders as $o) {
-            $io->writeln(sprintf('- Order #%d status=%s', $o->getId(), $o->getStatus()->value));
+            if (!$o instanceof Order) { continue; }
+            $io->writeln(sprintf('- Order #%s status=%s', $o->getId(), $o->getStatus()));
         }
-        $total = 0;
+        $total = '0.00';
         foreach ($payments as $p) {
-            $total += $p->getAmount();
+            if (!$p instanceof OrderPayment) { continue; }
+            $total = bcadd($total, $p->getAmount(), 2);
         }
-        $io->writeln(sprintf('Payments: %d, Total: $%d', count($payments), $total));
+        $io->writeln(sprintf('Payments: %d, Total: $%s', count($payments), $total));
 
         return Command::SUCCESS;
     }

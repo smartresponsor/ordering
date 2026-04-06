@@ -15,13 +15,14 @@ final readonly class OrderShipController
     {
     }
 
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(string $id): JsonResponse
     {
         $order = $this->em->find(Order::class, $id);
-        if (!$order) {
+        if (!$order instanceof Order) {
             return new JsonResponse(['message' => 'Order not found'], 404);
-        } $this->wf->ship($order);
+        }
+        $this->wf->ship($order);
 
-        return new JsonResponse(['status' => $order->getStatus()->value]);
+        return new JsonResponse(['status' => $order->getStatus()]);
     }
 }

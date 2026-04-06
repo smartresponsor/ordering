@@ -1,7 +1,8 @@
-App\Entity\Order\OrderEntity:
+App\Entity\Order:
   type: entity
   table: orders
   id:
     id:
-      type: integer
-      generator: { strategy: AUTO }
+      type: guid
+      generator:
+        strategy: NONE

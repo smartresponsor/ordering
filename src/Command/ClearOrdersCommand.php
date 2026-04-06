@@ -20,8 +20,8 @@ final class ClearOrdersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->createQuery('DELETE FROM App\Entity\Order\OrderShipment s')->execute();
-        $this->em->createQuery('DELETE FROM App\Entity\Order\OrderPayment p')->execute();
+        $this->em->createQuery('DELETE FROM App\Entity\OrderShipment s')->execute();
+        $this->em->createQuery('DELETE FROM App\Entity\OrderPayment p')->execute();
         $this->em->createQuery('DELETE FROM App\Entity\Order o')->execute();
         $output->writeln('Orders cleared');
 
