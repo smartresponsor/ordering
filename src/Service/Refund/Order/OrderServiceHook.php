@@ -10,12 +10,13 @@ declare(strict_types=1);
 namespace App\Service\Refund\Order;
 
 use App\Entity\Order;
+use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\OrderServiceHookInterface;
 use App\ValueObject\Pricing\Order\Money;
 
 final class OrderServiceHook implements OrderServiceHookInterface
 {
-    public function __construct(private readonly RefundEligibilityService $eligibility)
+    public function __construct(private readonly OrderRefundEligibilityServiceInterface $eligibility)
     {
     }
 

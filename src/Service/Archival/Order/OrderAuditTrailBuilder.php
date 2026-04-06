@@ -22,7 +22,7 @@ final class OrderAuditTrailBuilder implements OrderAuditTrailBuilderInterface
     public function buildForOrder(string $orderId): OrderAuditTrail
     {
         $events = [];
-        foreach ($this->repo->findByOrder($orderId, 1000, 0) as $e) {
+        foreach ($this->repo->findByOrderId($orderId) as $e) {
             $events[] = [
                 'eventId' => $e->eventId(),
                 'eventName' => $e->eventName(),

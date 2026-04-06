@@ -30,7 +30,7 @@ final readonly class OrderReadModelUpdater
         $view->setPaidTotal(number_format($paid, 2, '.', ''));
         $view->setRefundedTotal(number_format($ref, 2, '.', ''));
         $balance = max(0.0, (float) $grandTotal - $paid + $ref); // if refund reduces paid
-        $view->setGrandTotal($view->getGrandTotal()); // keep current grandTotal string
+        $view->setGrandTotal($grandTotal);
         $view->setStatus($balance <= 0.00001 ? 'paid' : $view->getStatus());
         $this->em->flush();
     }

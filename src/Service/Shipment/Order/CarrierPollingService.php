@@ -22,9 +22,9 @@ final class CarrierPollingService implements CarrierPollingServiceInterface
 
     public function __construct(
         #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
-        private OrderShipmentProjectionService $projection,
-        private OrderShipmentViewRepository $repo,
-        private LoggerInterface $logger,
+        private readonly OrderShipmentProjectionService $projection,
+        private readonly OrderShipmentViewRepository $repo,
+        private readonly LoggerInterface $logger,
     ) {
         foreach ($carriers as $carrier) {
             $this->carriers[strtolower($carrier->name())] = $carrier;
@@ -44,8 +44,21 @@ final class CarrierPollingService implements CarrierPollingServiceInterface
         if (null === $update) {
             return false;
         }
-        $this->projection->updateFromExternal($orderId, $carrier->name(), $trackingNumber, $update->status, $update->deliveredAt);
-        $this->logger->info('Carrier polled', ['carrier' => $carrier->name(), 'orderId' => $orderId, 'status' => $update->status]);
+
+        $normalizedStatus = strtolower($update->status);
+        $existing = $this->repo->find($orderId);
+        if (null !== $existing
+            && $existing->carrier() === $carrier->name()
+            && $existing->tracking() === $trackingNumber
+            && $existing->status() === $normalizedStatus
+            && $existing->deliveredAt()?->format(DATE_ATOM) === $update->deliveredAt?->format(DATE_ATOM)) {
+            $this->logger->debug('Carrier polling produced no shipment changes', ['carrier' => $carrier->name(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
+
+            return true;
+        }
+
+        $this->projection->updateFromExternal($orderId, $carrier->name(), $trackingNumber, $normalizedStatus, $update->deliveredAt);
+        $this->logger->info('Carrier polled', ['carrier' => $carrier->name(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
 
         return true;
     }
