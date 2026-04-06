@@ -18,7 +18,21 @@ final class OrderShipmentViewRepository
 
     public function find(string $orderId): ?OrderShipmentView
     {
-        return self::$views[$orderId] ?? null;
+        if (isset(self::$views[$orderId])) {
+            return self::$views[$orderId];
+        }
+
+        try {
+            $view = $this->em->find(OrderShipmentView::class, $orderId);
+        } catch (\Throwable) {
+            $view = null;
+        }
+
+        if ($view instanceof OrderShipmentView) {
+            self::$views[$orderId] = $view;
+        }
+
+        return $view;
     }
 
     public function save(OrderShipmentView $view): void

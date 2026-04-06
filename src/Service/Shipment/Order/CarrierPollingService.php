@@ -12,6 +12,7 @@ namespace App\Service\Shipment\Order;
 use App\Integration\Shipment\CarrierInterface;
 use App\Repository\Order\OrderShipmentViewRepository;
 use App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface;
+use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
@@ -22,7 +23,7 @@ final class CarrierPollingService implements CarrierPollingServiceInterface
 
     public function __construct(
         #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
-        private readonly OrderShipmentProjectionService $projection,
+        private readonly OrderShipmentProjectionServiceInterface $projection,
         private readonly OrderShipmentViewRepository $repo,
         private readonly LoggerInterface $logger,
     ) {

@@ -13,7 +13,7 @@ use App\Entity\Order\OrderShipmentView;
 use App\Repository\Order\OrderShipmentViewRepository;
 use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 
-final class OrderShipmentProjectionService implements OrderShipmentProjectionServiceInterface
+final readonly class OrderShipmentProjectionService implements OrderShipmentProjectionServiceInterface
 {
     public function __construct(private OrderShipmentViewRepository $repo)
     {
@@ -26,8 +26,15 @@ final class OrderShipmentProjectionService implements OrderShipmentProjectionSer
         string $status,
         ?\DateTimeImmutable $deliveredAt = null,
     ): void {
-        $view = $this->repo->find($orderId) ?? new OrderShipmentView($orderId, $carrier, $tracking, $status);
-        $view->update($carrier, $tracking, $status, $deliveredAt);
+        $normalizedStatus = strtolower($status);
+        $view = $this->repo->find($orderId);
+
+        if (null === $view) {
+            $view = new OrderShipmentView($orderId, $carrier, $tracking, $normalizedStatus, $deliveredAt);
+        } else {
+            $view->update($carrier, $tracking, $normalizedStatus, $deliveredAt);
+        }
+
         $this->repo->save($view);
     }
 }

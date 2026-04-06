@@ -19,7 +19,6 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        // Подпишемся на все основные события домена
         return [
             'order.placed' => 'onAny',
             'order.paid' => 'onAny',
@@ -32,35 +31,56 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface
     public function onAny(object $event): void
     {
         $orderId = $this->extract($event, ['orderId', 'getOrderId']);
-        if (!$orderId) {
+        if (null === $orderId) {
             return;
         }
 
-        $eventId = $this->extract($event, ['eventId', 'getEventId']) ?: Uuid::v7()->toRfc4122();
+        $eventId = $this->extract($event, ['eventId', 'getEventId']) ?? Uuid::v7()->toRfc4122();
         if ($this->repo->existsByEventId($eventId)) {
             return;
-        } // идемпотентность
+        }
 
         $name = $event::class;
         $payload = $this->normalizeEvent($event);
+        $occurredAt = $this->extractDate($event, ['occurredAt', 'getOccurredAt']) ?? new \DateTimeImmutable();
 
-        $record = new OrderEventRecord($eventId, $orderId, $name, $payload);
+        $record = new OrderEventRecord($eventId, $orderId, $name, $payload, $occurredAt);
         $this->repo->save($record);
 
         $action = (new \ReflectionClass($event))->getShortName();
         $audit = new OrderAuditLog(Uuid::v7()->toRfc4122(), $orderId, $action, json_encode($payload, JSON_UNESCAPED_SLASHES));
         $this->em->persist($audit);
-        // Без flush здесь — внеший unit-of-work контролирует транзакцию
     }
 
     private function extract(object $event, array $methods): ?string
     {
-        foreach ($methods as $m) {
-            if (method_exists($event, $m)) {
-                $v = $event->$m();
-                if (is_string($v) && '' !== $v) {
-                    return $v;
-                }
+        foreach ($methods as $method) {
+            if (!method_exists($event, $method)) {
+                continue;
+            }
+
+            $value = $event->$method();
+            if (is_scalar($value) && '' !== (string) $value) {
+                return (string) $value;
+            }
+        }
+
+        return null;
+    }
+
+    private function extractDate(object $event, array $methods): ?\DateTimeImmutable
+    {
+        foreach ($methods as $method) {
+            if (!method_exists($event, $method)) {
+                continue;
+            }
+
+            $value = $event->$method();
+            if ($value instanceof \DateTimeImmutable) {
+                return $value;
+            }
+            if ($value instanceof \DateTimeInterface) {
+                return \DateTimeImmutable::createFromInterface($value);
             }
         }
 
@@ -69,24 +89,26 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface
 
     private function normalizeEvent(object $event): array
     {
-        // Пытаемся аккуратно сериализовать объект события
         if (method_exists($event, 'toArray')) {
-            return $event->toArray();
+            $data = $event->toArray();
+
+            return is_array($data) ? $data : ['value' => $data];
         }
+
         $data = [];
-        foreach (get_object_vars($event) as $k => $v) {
-            $data[$k] = $this->normalizeValue($v);
+        foreach (get_object_vars($event) as $key => $value) {
+            $data[$key] = $this->normalizeValue($value);
         }
 
         return $data;
     }
 
-    private function normalizeValue(mixed $v): mixed
+    private function normalizeValue(mixed $value): mixed
     {
         return match (true) {
-            $v instanceof \DateTimeInterface => $v->format(DATE_ATOM),
-            is_object($v) => (array) $v,
-            default => $v,
+            $value instanceof \DateTimeInterface => $value->format(DATE_ATOM),
+            is_object($value) => (array) $value,
+            default => $value,
         };
     }
 }

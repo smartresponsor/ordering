@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Shipment\Order;
 
 use App\Repository\Order\OrderShipmentViewRepository;
-use App\Service\Shipment\Order\OrderShipmentProjectionService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
@@ -18,7 +17,7 @@ interface CarrierPollingServiceInterface
 {
     public function __construct(
         #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
-        OrderShipmentProjectionService $projection,
+        OrderShipmentProjectionServiceInterface $projection,
         OrderShipmentViewRepository $repo,
         LoggerInterface $logger,
     );

@@ -19,7 +19,15 @@ final class OrderEventRepository implements OrderEventRepositoryInterface
 
     public function existsByEventId(string $eventId): bool
     {
-        return isset(self::$records[$eventId]);
+        if (isset(self::$records[$eventId])) {
+            return true;
+        }
+
+        try {
+            return null !== $this->em->find(OrderEventRecord::class, $eventId);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     public function save(OrderEventRecord $record): void
@@ -30,9 +38,16 @@ final class OrderEventRepository implements OrderEventRepositoryInterface
 
     public function findByOrderId(string $orderId): array
     {
-        return array_values(array_filter(
+        $records = array_values(array_filter(
             self::$records,
             static fn (OrderEventRecord $record): bool => $record->orderId() === $orderId,
         ));
+
+        usort(
+            $records,
+            static fn (OrderEventRecord $left, OrderEventRecord $right): int => $left->occurredAt() <=> $right->occurredAt(),
+        );
+
+        return $records;
     }
 }
