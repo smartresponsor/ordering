@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command\Operations\Order;
 
 use App\ReadModel\Entity\OrderView;
-use App\ReadModel\Service\OrderReadModelUpdater;
+use App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'order:readmodel:sync', description: 'Recalculate OrderView for all or a single order')]
 final class SyncReadModelCommand extends Command
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly OrderReadModelUpdater $updater)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly OrderReadModelUpdaterInterface $updater)
     {
         parent::__construct();
     }

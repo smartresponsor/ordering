@@ -14,7 +14,5 @@ use App\ValueObject\Pricing\Order\Money;
 
 interface OrderServiceHookInterface
 {
-    public function __construct(OrderRefundEligibilityServiceInterface $eligibility);
-
     public function assertRefundAllowed(Order $order, Money $amount): void;
 }

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\ReadModel\Service;
 
 use App\ReadModel\Entity\OrderView;
+use App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final readonly class OrderReadModelUpdater
+final readonly class OrderReadModelUpdater implements OrderReadModelUpdaterInterface
 {
     public function __construct(
         private EntityManagerInterface $em,

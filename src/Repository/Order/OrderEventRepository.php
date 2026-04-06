@@ -43,6 +43,19 @@ final class OrderEventRepository implements OrderEventRepositoryInterface
             static fn (OrderEventRecord $record): bool => $record->orderId() === $orderId,
         ));
 
+        if ([] === $records) {
+            try {
+                $persisted = $this->em->getRepository(OrderEventRecord::class)->findBy(['orderId' => $orderId]);
+                foreach ($persisted as $record) {
+                    if ($record instanceof OrderEventRecord) {
+                        self::$records[$record->eventId()] = $record;
+                        $records[] = $record;
+                    }
+                }
+            } catch (\Throwable) {
+            }
+        }
+
         usort(
             $records,
             static fn (OrderEventRecord $left, OrderEventRecord $right): int => $left->occurredAt() <=> $right->occurredAt(),

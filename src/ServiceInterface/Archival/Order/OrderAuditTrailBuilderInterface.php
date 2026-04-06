@@ -9,11 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Archival\Order;
 
-use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
-
 interface OrderAuditTrailBuilderInterface
 {
-    public function __construct(OrderEventRepositoryInterface $repo);
-
     public function buildForOrder(string $orderId): OrderAuditTrail;
 }

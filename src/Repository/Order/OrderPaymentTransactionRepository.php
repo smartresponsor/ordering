@@ -26,8 +26,20 @@ final class OrderPaymentTransactionRepository implements OrderPaymentTransaction
     public function sumSucceededByOrder(string $orderId): string
     {
         $sum = '0.00';
+        $transactions = self::$transactions;
 
-        foreach (self::$transactions as $tx) {
+        if ([] === $transactions) {
+            try {
+                foreach ($this->em->getRepository(OrderPaymentTransaction::class)->findBy(['orderId' => $orderId]) as $tx) {
+                    if ($tx instanceof OrderPaymentTransaction) {
+                        $transactions[] = $tx;
+                    }
+                }
+            } catch (\Throwable) {
+            }
+        }
+
+        foreach ($transactions as $tx) {
             if ($tx->orderId() !== $orderId || 'succeeded' !== $tx->status()) {
                 continue;
             }

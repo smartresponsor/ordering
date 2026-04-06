@@ -38,3 +38,13 @@ services:
   App\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Repository\Order\OrderEventRepository'
   App\RepositoryInterface\Order\OutboxRepositoryInterface: '@App\Repository\Order\OutboxRepository'
   App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface: '@App\Repository\Order\OrderStockReservationRepository'
+  App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Repository\Order\OrderShipmentViewRepository'
+
+  App\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Service\Outbox\Order\OutboxRelay'
+  App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Service\Shipment\Order\OrderShipmentProjectionService'
+  App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Service\Shipment\Order\CarrierPollingService'
+  App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
+  App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
+  App\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Service\Refund\Order\OrderServiceHook'
+  App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\ReadModel\Service\OrderReadModelUpdater'
+  App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Service\Archival\Order\OrderAuditTrailBuilder'

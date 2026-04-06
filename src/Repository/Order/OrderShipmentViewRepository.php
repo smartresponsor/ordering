@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Repository\Order;
 
 use App\Entity\Order\OrderShipmentView;
+use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class OrderShipmentViewRepository
+final class OrderShipmentViewRepository implements OrderShipmentViewRepositoryInterface
 {
     /** @var array<string, OrderShipmentView> */
     private static array $views = [];

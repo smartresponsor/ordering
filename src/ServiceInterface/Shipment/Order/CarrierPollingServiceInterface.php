@@ -9,18 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Shipment\Order;
 
-use App\Repository\Order\OrderShipmentViewRepository;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-
 interface CarrierPollingServiceInterface
 {
-    public function __construct(
-        #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
-        OrderShipmentProjectionServiceInterface $projection,
-        OrderShipmentViewRepository $repo,
-        LoggerInterface $logger,
-    );
-
     public function poll(string $carrierName, string $orderId, string $trackingNumber): bool;
 }

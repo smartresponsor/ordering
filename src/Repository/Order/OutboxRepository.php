@@ -30,6 +30,19 @@ final class OutboxRepository implements OutboxRepositoryInterface
             static fn (OutboxMessage $message): bool => $message->isPending(),
         ));
 
+        if ([] === $pending) {
+            try {
+                $persisted = $this->em->getRepository(OutboxMessage::class)->findAll();
+                foreach ($persisted as $message) {
+                    if ($message instanceof OutboxMessage && $message->isPending()) {
+                        self::$messages[$message->messageId()] = $message;
+                        $pending[] = $message;
+                    }
+                }
+            } catch (\Throwable) {
+            }
+        }
+
         return array_slice($pending, 0, max(0, $limit));
     }
 

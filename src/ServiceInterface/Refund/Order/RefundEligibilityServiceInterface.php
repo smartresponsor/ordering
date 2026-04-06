@@ -10,11 +10,8 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Refund\Order;
 
 use App\Entity\Order;
-use Doctrine\ORM\EntityManagerInterface;
 
 interface RefundEligibilityServiceInterface
 {
-    public function __construct(EntityManagerInterface $em);
-
     public function canRefund(Order $order): bool;
 }

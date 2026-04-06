@@ -9,12 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Shipment\Order;
 
-use App\Repository\Order\OrderShipmentViewRepository;
-
 interface OrderShipmentProjectionServiceInterface
 {
-    public function __construct(OrderShipmentViewRepository $repo);
-
     public function updateFromExternal(
         string $orderId,
         string $carrier,
