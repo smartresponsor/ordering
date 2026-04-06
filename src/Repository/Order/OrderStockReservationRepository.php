@@ -10,7 +10,24 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderStockReservationRepository implements OrderStockReservationRepositoryInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-    public function save(OrderStockReservation $reservation): void { $this->em->persist($reservation); }
-    public function findActiveForSku(string $sku): array { return []; }
+    /** @var list<OrderStockReservation> */
+    private static array $reservations = [];
+
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
+    }
+
+    public function save(OrderStockReservation $reservation): void
+    {
+        self::$reservations[] = $reservation;
+        $this->em->persist($reservation);
+    }
+
+    public function findActiveForSku(string $sku): array
+    {
+        return array_values(array_filter(
+            self::$reservations,
+            static fn (OrderStockReservation $reservation): bool => $reservation->sku() === $sku && !$reservation->isReleased(),
+        ));
+    }
 }

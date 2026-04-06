@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
+use App\Entity\Order;
 use App\Entity\Order\OrderReturnPolicy;
 use App\Entity\Order\OrderShipment;
 use App\Event\Domain\Order\OrderDeliveredEvent;
@@ -27,28 +28,25 @@ final class ShipmentService implements ShipmentServiceInterface
 
     public function markShipped(string $orderId, string $tracking, ?string $carrier = null): void
     {
-        $shipment = $this->em->getRepository(OrderShipment::class)->findOneBy(['order' => $orderId]);
+        $order = $this->em->getRepository(Order::class)->find($orderId);
+        if (!$order instanceof Order) {
+            return;
+        }
+
+        $shipment = $this->em->getRepository(OrderShipment::class)->findOneBy(['order' => $order]);
         if (!$shipment instanceof OrderShipment) {
             return;
         }
 
         $shipment->markInTransit();
+        $shipment->setTrackingCode($tracking);
 
-        if (method_exists($shipment, 'setTrackingCode')) {
-            $shipment->setTrackingCode($tracking);
-        } else {
-            $ref = new \ReflectionObject($shipment);
-            foreach (['trackingCode', 'carrier'] as $name) {
-                if ($ref->hasProperty($name)) {
-                    $prop = $ref->getProperty($name);
-                    $prop->setAccessible(true);
-                    if ('trackingCode' === $name) {
-                        $prop->setValue($shipment, $tracking);
-                    } else {
-                        $prop->setValue($shipment, $carrier);
-                    }
-                }
-            }
+        if (null !== $carrier && method_exists($shipment, 'setCarrier')) {
+            $shipment->setCarrier($carrier);
+        }
+
+        if (method_exists($order, 'assignTracking')) {
+            $order->assignTracking($tracking);
         }
 
         $this->em->flush();

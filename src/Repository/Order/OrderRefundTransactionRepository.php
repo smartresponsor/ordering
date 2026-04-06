@@ -10,7 +10,31 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderRefundTransactionRepository implements OrderRefundTransactionRepositoryInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-    public function add(OrderRefundTransaction $tx): void { $this->em->persist($tx); }
-    public function sumByOrder(string $orderId): string { return '0.00'; }
+    /** @var list<OrderRefundTransaction> */
+    private static array $transactions = [];
+
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
+    }
+
+    public function add(OrderRefundTransaction $tx): void
+    {
+        self::$transactions[] = $tx;
+        $this->em->persist($tx);
+    }
+
+    public function sumByOrder(string $orderId): string
+    {
+        $sum = '0.00';
+
+        foreach (self::$transactions as $tx) {
+            if ($tx->orderId() !== $orderId) {
+                continue;
+            }
+
+            $sum = bcadd($sum, $tx->amount(), 2);
+        }
+
+        return $sum;
+    }
 }

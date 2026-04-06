@@ -9,7 +9,27 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class IdempotencyKeyRepository
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-    public function exists(string $key): bool { return false; }
-    public function save(IdempotencyKey $key): void { $this->em->persist($key); }
+    /** @var array<string, IdempotencyKey> */
+    private static array $keys = [];
+
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
+    }
+
+    public function exists(string $key): bool
+    {
+        $hash = hash('sha256', $key);
+
+        if (isset(self::$keys[$hash])) {
+            return true;
+        }
+
+        return null !== $this->em->getRepository(IdempotencyKey::class)->findOneBy(['keyHash' => $hash]);
+    }
+
+    public function save(IdempotencyKey $key): void
+    {
+        self::$keys[$key->keyHash()] = $key;
+        $this->em->persist($key);
+    }
 }

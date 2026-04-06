@@ -1,14 +1,20 @@
 #!/usr/bin/env php
 <?php
+
+declare(strict_types=1);
+
 require __DIR__.'/../vendor/autoload.php';
-use SmartResponsor\Order\Entity\Order\Order;
-use SmartResponsor\Order\Service\Order\OrderStateMachine;
-use SmartResponsor\Order\Webhook\NoopWebhookDispatcher;
-$flow = $argv[2] ?? 'basic';
-$sm = new OrderStateMachine(new NoopWebhookDispatcher());
-$id = 'ord_' . bin2hex(random_bytes(6));
-$o = new Order($id, 1999, 'USD', 'cus_001');
-if ($flow==='basic'){ $sm->place($o); $sm->confirm($o); $sm->fulfill($o); $sm->close($o); }
-elseif ($flow==='cancel'){ $sm->place($o); $sm->cancel($o); }
-elseif ($flow==='return'){ $sm->place($o); $sm->confirm($o); $sm->fulfill($o); $sm->return($o); }
-echo json_encode(['orderId'=>$o->id(),'final'=>$o->status()->value])."\n";
+
+use App\Entity\Order;
+
+$flow = $argv[1] ?? 'basic';
+$order = new Order('USD', '19.99');
+
+match ($flow) {
+    'basic' => $order->markPaid('19.99'),
+    'cancel' => $order->setStatus('cancelled'),
+    'return' => $order->markRefunded('19.99'),
+    default => $order->setStatus('draft'),
+};
+
+echo json_encode(['orderId' => $order->id(), 'final' => $order->status()], JSON_THROW_ON_ERROR).PHP_EOL;

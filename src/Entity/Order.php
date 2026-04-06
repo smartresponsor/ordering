@@ -162,6 +162,21 @@ class Order
         $this->touch();
     }
 
+    public function setTotal(string|int|float $grandTotal): void
+    {
+        $this->setGrandTotal($grandTotal);
+    }
+
+    public function setTotalAmount(string|int|float $grandTotal): void
+    {
+        $this->setGrandTotal($grandTotal);
+    }
+
+    public function setTaxAmount(string|int|float $taxTotal): void
+    {
+        $this->setTaxTotal($taxTotal);
+    }
+
     public function setSubtotal(string|int|float $subtotal): void
     {
         $this->subtotal = self::normalizeAmount(self::normalizeLegacyAmount($subtotal));
@@ -254,6 +269,12 @@ class Order
     public function markAsShipped(): void
     {
         $this->status = OrderStatus::Shipped->value;
+        $this->touch();
+    }
+
+    public function markAsCompleted(): void
+    {
+        $this->status = OrderStatus::Completed->value;
         $this->touch();
     }
 

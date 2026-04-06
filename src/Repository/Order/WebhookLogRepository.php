@@ -9,7 +9,21 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class WebhookLogRepository
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-    public function exists(string $key): bool { return false; }
-    public function add(WebhookLog $log): void { $this->em->persist($log); }
+    /** @var array<string, WebhookLog> */
+    private static array $logs = [];
+
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
+    }
+
+    public function exists(string $key): bool
+    {
+        return isset(self::$logs[$key]);
+    }
+
+    public function add(WebhookLog $log): void
+    {
+        self::$logs[$log->key()] = $log;
+        $this->em->persist($log);
+    }
 }
