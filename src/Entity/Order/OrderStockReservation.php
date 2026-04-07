@@ -6,7 +6,11 @@ namespace App\Entity\Order;
 
 final class OrderStockReservation
 {
-    private bool $released = false;
+    public const STATUS_RESERVED = 'reserved';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_RELEASED = 'released';
+
+    private string $status = self::STATUS_RESERVED;
 
     public function __construct(private string $orderId, private string $sku, private int $quantity)
     {
@@ -29,11 +33,26 @@ final class OrderStockReservation
 
     public function isReleased(): bool
     {
-        return $this->released;
+        return self::STATUS_RELEASED === $this->status;
+    }
+
+    public function status(): string
+    {
+        return $this->status;
     }
 
     public function release(): void
     {
-        $this->released = true;
+        $this->markReleased();
+    }
+
+    public function markFailed(): void
+    {
+        $this->status = self::STATUS_FAILED;
+    }
+
+    public function markReleased(): void
+    {
+        $this->status = self::STATUS_RELEASED;
     }
 }

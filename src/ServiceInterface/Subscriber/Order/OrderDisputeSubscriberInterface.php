@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\ServiceInterface\Subscriber\Order;
 
 use App\Event\Domain\Order\OrderChargebackIssuedEvent;
 use App\Event\Domain\Order\OrderDisputeOpenedEvent;

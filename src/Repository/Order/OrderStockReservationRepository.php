@@ -19,8 +19,24 @@ final class OrderStockReservationRepository implements OrderStockReservationRepo
 
     public function save(OrderStockReservation $reservation): void
     {
+        $this->add($reservation);
+    }
+
+    public function add(OrderStockReservation $reservation): void
+    {
         self::$reservations[] = $reservation;
         $this->em->persist($reservation);
+    }
+
+    public function findOne(string $orderId, string $sku): ?OrderStockReservation
+    {
+        foreach (self::$reservations as $reservation) {
+            if ($reservation->orderId() === $orderId && $reservation->sku() === $sku) {
+                return $reservation;
+            }
+        }
+
+        return null;
     }
 
     public function findActiveForSku(string $sku): array
