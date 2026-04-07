@@ -9,11 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use Doctrine\ORM\EntityManagerInterface;
-
 interface IdempotencyGuardInterface
 {
-    public function __construct(EntityManagerInterface $em);
-
     public function checkAndPersist(string $provider, string $eventId, string $payload): bool;
 }

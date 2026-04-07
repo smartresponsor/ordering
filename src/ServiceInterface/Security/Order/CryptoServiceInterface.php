@@ -11,8 +11,6 @@ namespace App\ServiceInterface\Security\Order;
 
 interface CryptoServiceInterface
 {
-    public function __construct(string $key);
-
     public function encrypt(string $plaintext): string;
 
     public function decrypt(string $encoded): string;

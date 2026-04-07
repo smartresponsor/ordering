@@ -11,9 +11,10 @@ namespace App\Service\Webhook\Order;
 
 use App\Entity\Order\WebhookLog;
 use App\Repository\Order\WebhookLogRepository;
+use App\ServiceInterface\Webhook\Order\WebhookIdempotencyServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class WebhookIdempotencyService
+final class WebhookIdempotencyService implements WebhookIdempotencyServiceInterface
 {
     public function __construct(
         private readonly WebhookLogRepository $logs,

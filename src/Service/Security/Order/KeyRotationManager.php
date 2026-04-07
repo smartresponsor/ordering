@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Security\Order\JwkRepositoryInterface;
+use App\ServiceInterface\Security\Order\KeyRotationManagerInterface;
 use App\ValueObject\Security\Order\JwkKey;
 
 /*
@@ -18,19 +19,18 @@ use App\ValueObject\Security\Order\JwkKey;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class KeyRotationManager
+final class KeyRotationManager implements KeyRotationManagerInterface
 {
-    private JwkRepositoryInterface $repo;
-    private SecretRotationPolicy $policy;
-
-    public function __construct(JwkRepositoryInterface $repo, SecretRotationPolicy $policy)
-    {
-        $this->repo = $repo;
-        $this->policy = $policy;
+    public function __construct(
+        private JwkRepositoryInterface $repo,
+        private SecretRotationPolicy $policy,
+    ) {
     }
 
     public function rotate(string $oldKid, string $newKid, string $publicPem, string $privatePem): void
     {
+        $this->policy->lifeSecond();
+
         // Deactivate old, add new active
         $this->repo->deactivate($oldKid);
         $new = new JwkKey($newKid, 'RS256', 'RSA', $publicPem, $privatePem, true);

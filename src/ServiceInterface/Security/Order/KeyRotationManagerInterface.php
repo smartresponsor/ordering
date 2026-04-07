@@ -8,11 +8,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\ServiceInterface\Security\Order\JwkRepositoryInterface;
-
 interface KeyRotationManagerInterface
 {
-    public function __construct(JwkRepositoryInterface $repo, SecretRotationPolicy $policy);
-
     public function rotate(string $oldKid, string $newKid, string $publicPem, string $privatePem): void;
 }

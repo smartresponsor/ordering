@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class CryptoService
+use App\ServiceInterface\Security\Order\CryptoServiceInterface;
+
+final class CryptoService implements CryptoServiceInterface
 {
     public function __construct(private readonly string $key)
     {
@@ -29,8 +31,12 @@ final class CryptoService
     public function decrypt(string $encoded): string
     {
         $raw = base64_decode($encoded, true);
-        $nonce = substr($raw, 0, 24);
-        $cipher = substr($raw, 24);
+        if (false === $raw || strlen($raw) < SODIUM_CRYPTO_SECRETBOX_NONCEBYTES) {
+            throw new \RuntimeException('Invalid ciphertext');
+        }
+
+        $nonce = substr($raw, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+        $cipher = substr($raw, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $plain = sodium_crypto_secretbox_open($cipher, $nonce, substr(hash('sha256', $this->key, true), 0, 32));
         if (false === $plain) {
             throw new \RuntimeException('Invalid ciphertext');

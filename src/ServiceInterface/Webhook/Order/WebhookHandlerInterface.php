@@ -9,17 +9,17 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Webhook\Order;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface WebhookHandlerInterface
 {
-    public function __construct(
-        EntityManagerInterface $em,
-        IdempotencyGuardInterface $guard,
-    );
-
+    /**
+     * @return array<string, string>
+     */
     public function handlePayment(Request $request): array;
 
+    /**
+     * @return array<string, string>
+     */
     public function handleRefund(Request $request): array;
 }

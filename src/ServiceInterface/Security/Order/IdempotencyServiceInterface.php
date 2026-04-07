@@ -9,11 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Repository\Order\IdempotencyKeyRepository;
-
 interface IdempotencyServiceInterface
 {
-    public function __construct(IdempotencyKeyRepository $repo);
-
     public function checkAndStore(string $key): bool;
 }

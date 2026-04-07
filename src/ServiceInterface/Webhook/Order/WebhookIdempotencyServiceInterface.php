@@ -9,15 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Webhook\Order;
 
-use App\Repository\Order\WebhookLogRepository;
-use Doctrine\ORM\EntityManagerInterface;
-
 interface WebhookIdempotencyServiceInterface
 {
-    public function __construct(
-        WebhookLogRepository $logs,
-        EntityManagerInterface $em,
-    );
-
     public function handleOnce(string $key, string $eventType, string $payload, callable $callback): bool;
 }

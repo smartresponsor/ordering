@@ -28,8 +28,8 @@ final class WebhookHandler implements WebhookHandlerInterface, OrderWebhookHandl
 
     public function handlePayment(Request $request): array
     {
-        $provider = $request->headers->get('X-Provider', 'mock');
-        $eventId = $request->headers->get('X-Event-Id', bin2hex(random_bytes(6)));
+        $provider = (string) $request->headers->get('X-Provider', 'mock');
+        $eventId = (string) $request->headers->get('X-Event-Id', bin2hex(random_bytes(6)));
         $payload = $request->getContent() ?: '{}';
 
         if (!$this->guard->checkAndPersist($provider, $eventId, $payload)) {
@@ -50,7 +50,7 @@ final class WebhookHandler implements WebhookHandlerInterface, OrderWebhookHandl
         // Update intent and create transaction
         if ('succeeded' === $data['status']) {
             $intent->markConfirmed();
-            $txn = new OrderTransaction($intent->getOrder(), 'tx_'.bin2hex(random_bytes(8)), $intent->getAmount(), $data['currency'] ?? 'USD');
+            $txn = new OrderTransaction($intent->getOrderId(), $intent->getAmount(), (string) ($data['currency'] ?? $intent->getCurrency()), 'tx_'.bin2hex(random_bytes(8)));
             $txn->confirm();
             $this->em->persist($txn);
         } else {
