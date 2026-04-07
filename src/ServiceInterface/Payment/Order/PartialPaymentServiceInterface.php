@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\OrderPaymentTransaction;
-use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
+use App\Entity\Order\OrderPaymentTransaction;
 
 interface PartialPaymentServiceInterface
 {
-    public function __construct(OrderPaymentTransactionRepositoryInterface $payments);
 
     public function applyPartial(string $orderId, string $amount, string $method, string $txId): OrderPaymentTransaction;
 

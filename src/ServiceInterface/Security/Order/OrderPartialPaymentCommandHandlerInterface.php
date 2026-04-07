@@ -10,17 +10,9 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Security\Order;
 
 use App\Message\Legacy\Order\OrderPartialPaymentCommand;
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Service\Payment\Order\PartialPaymentService;
-use App\Service\Security\Order\TransactionalEventPublisher;
 
 interface OrderPartialPaymentCommandHandlerInterface
 {
-    public function __construct(
-        PartialPaymentService $service,
-        PaymentGatewayInterface $gateway,
-        TransactionalEventPublisher $publisher,
-    );
 
     public function __invoke(OrderPartialPaymentCommand $cmd): void;
 }

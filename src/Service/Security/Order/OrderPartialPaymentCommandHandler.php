@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Message\Legacy\Order\OrderPartialPaymentCommand;
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Service\Payment\Order\PartialPaymentService;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Security\Order\OrderPartialPaymentCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

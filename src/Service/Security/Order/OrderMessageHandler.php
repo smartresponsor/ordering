@@ -37,15 +37,23 @@ final readonly class OrderMessageHandler implements OrderMessageHandlerInterface
         if (!$order) {
             return;
         }
+        $legacyId = $this->legacyNumericOrderId($order);
         $map = [
-            OrderPlacedEvent::class => fn () => new OrderPlacedEvent($order),
-            OrderPaidEvent::class => fn () => new OrderPaidEvent($order),
-            OrderShippedEvent::class => fn () => new OrderShippedEvent($order),
+            OrderPlacedEvent::class => fn () => new OrderPlacedEvent($legacyId),
+            OrderPaidEvent::class => fn () => new OrderPaidEvent($order->id(), $order->grandTotal(), $order->currency(), $order->id()),
+            OrderShippedEvent::class => fn () => new OrderShippedEvent($legacyId),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
-            OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order),
+            OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order, $order->refundedTotal()),
         ];
         if (isset($map[$m->eventName])) {
             $this->dispatcher->dispatch($map[$m->eventName](), $m->eventName);
         }
+    }
+
+    private function legacyNumericOrderId(Order $order): int
+    {
+        $digits = preg_replace('/\D+/', '', $order->id());
+
+        return is_string($digits) && $digits != '' ? (int) $digits : 0;
     }
 }

@@ -12,7 +12,7 @@ namespace App\Service\Payment\Order;
 use App\Message\Command\Order\OrderPaymentCommand;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\OrderPaymentCommandHandlerInterface;
-use App\Service\Tx\TransactionalEventPublisher;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
