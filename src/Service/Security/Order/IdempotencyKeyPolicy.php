@@ -23,9 +23,12 @@ final class IdempotencyKeyPolicy implements IdempotencyKeyPolicyInterface
         return $this->ttlSeconds;
     }
 
+    /** @param array<string, string|array<int, string>> $header */
     public function keyForHttp(string $method, string $path, string $body, array $header): string
     {
-        $canon = strtoupper($method).'|'.$path.'|'.hash('sha256', $body).'|'.($header['X-Idempotency-Token'] ?? '');
+        $token = $header['X-Idempotency-Token'] ?? '';
+        $normalizedToken = is_array($token) ? implode(',', $token) : $token;
+        $canon = strtoupper($method).'|'.$path.'|'.hash('sha256', $body).'|'.$normalizedToken;
 
         return hash('sha256', $canon);
     }

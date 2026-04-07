@@ -23,6 +23,7 @@ final class HttpIdempotencyGuard implements HttpIdempotencyGuardInterface
     ) {
     }
 
+    /** @param array<string, string|array<int, string>> $header */
     public function allow(string $method, string $path, string $body, array $header): bool
     {
         $key = $this->policy->keyForHttp($method, $path, $body, $header);

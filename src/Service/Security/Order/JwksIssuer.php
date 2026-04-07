@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Security\Order\JwkRepositoryInterface;
+use OpenSSLAsymmetricKey;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
@@ -29,16 +30,38 @@ final class JwksIssuer
             $keys[] = $this->toJwk($k->publicPem(), $k->kid(), $k->alg(), $k->type());
         }
 
-        return json_encode(['keys' => $keys], JSON_PRETTY_PRINT);
+        return json_encode(['keys' => $keys], JSON_PRETTY_PRINT) ?: '{"keys":[]}';
     }
 
+    /** @return array{kty:string,alg:string,use:string,kid:string,n:string,e:string} */
     private function toJwk(string $publicPem, string $kid, string $alg, string $type): array
     {
-        // RSA only for demo
-        $res = openssl_pkey_get_public($publicPem);
-        $detail = openssl_pkey_get_details($res);
-        $n = base64_encode($detail['rsa']['n']);
-        $e = base64_encode($detail['rsa']['e']);
+        $key = openssl_pkey_get_public($publicPem);
+        if (!$key instanceof OpenSSLAsymmetricKey) {
+            return [
+                'kty' => strtoupper($type),
+                'alg' => strtoupper($alg),
+                'use' => 'sig',
+                'kid' => $kid,
+                'n' => '',
+                'e' => '',
+            ];
+        }
+
+        $detail = openssl_pkey_get_details($key);
+        if (!is_array($detail) || !isset($detail['rsa']) || !is_array($detail['rsa'])) {
+            return [
+                'kty' => strtoupper($type),
+                'alg' => strtoupper($alg),
+                'use' => 'sig',
+                'kid' => $kid,
+                'n' => '',
+                'e' => '',
+            ];
+        }
+
+        $n = base64_encode((string) ($detail['rsa']['n'] ?? ''));
+        $e = base64_encode((string) ($detail['rsa']['e'] ?? ''));
 
         return [
             'kty' => strtoupper($type),

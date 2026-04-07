@@ -13,6 +13,7 @@ interface IdempotencyKeyPolicyInterface
 {
     public function ttlSeconds(): int;
 
+    /** @param array<string, string|array<int, string>> $header */
     public function keyForHttp(string $method, string $path, string $body, array $header): string;
 
     public function keyForWorker(string $topic, string $payload): string;

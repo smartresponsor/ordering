@@ -22,17 +22,14 @@ final class IdempotencyGuard implements IdempotencyGuardInterface, OrderIdempote
 
     public function checkAndPersist(string $provider, string $eventId, string $payload): bool
     {
-        $hash = hash('sha256', $payload);
+        $compositeKey = $provider.'|'.$eventId.'|'.hash('sha256', $payload);
         $repo = $this->em->getRepository(PaymentWebhookLog::class);
-        $exists = $repo->findOneBy(['provider' => $provider, 'eventId' => $eventId]);
-        if ($exists) {
+        $exists = $repo->findOneBy(['key' => $compositeKey]);
+        if (null !== $exists) {
             return false;
         }
-        $existsHash = $repo->findOneBy(['payloadHash' => $hash]);
-        if ($existsHash) {
-            return false;
-        }
-        $log = new PaymentWebhookLog($provider, $eventId, $hash);
+
+        $log = new PaymentWebhookLog($compositeKey);
         $this->em->persist($log);
         $this->em->flush();
 

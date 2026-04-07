@@ -13,11 +13,17 @@ namespace App\ServiceInterface\Security\Order;
 
 interface DlqRepositoryInterface
 {
-    /** @return array<int,array<string,mixed>> */
+    /**
+     * @param array{provider?: string, reason?: string} $filter
+     *
+     * @return list<array<string, mixed>>
+     */
     public function list(array $filter = []): array;
 
+    /** @return array<string, mixed>|null */
     public function get(string $dlqId): ?array;
 
+    /** @param array<string, mixed> $item */
     public function save(array $item): void;
 
     public function delete(string $dlqId): void;

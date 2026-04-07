@@ -26,10 +26,16 @@ final class FileJwkRepository implements JwkRepositoryInterface
         }
     }
 
+    /** @return list<JwkKey> */
     public function listActive(): array
     {
         $out = [];
-        foreach (glob($this->dir.DIRECTORY_SEPARATOR.'*.json') as $file) {
+        $matches = glob($this->dir.DIRECTORY_SEPARATOR.'*.json');
+        if (false === $matches) {
+            return $out;
+        }
+
+        foreach ($matches as $file) {
             $data = json_decode((string) file_get_contents($file), true);
             if (!is_array($data)) {
                 continue;
@@ -68,7 +74,7 @@ final class FileJwkRepository implements JwkRepositoryInterface
             'private_pem' => $key->privatePem(),
             'active' => $key->active(),
         ];
-        file_put_contents($file, json_encode($row, JSON_PRETTY_PRINT));
+        file_put_contents($file, json_encode($row, JSON_PRETTY_PRINT) ?: '{}');
     }
 
     public function deactivate(string $kid): void

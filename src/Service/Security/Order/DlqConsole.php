@@ -33,36 +33,41 @@ final class DlqConsole
         $this->audit->write('seed', ['count' => 3]);
     }
 
+    /** @param array{provider?: string, reason?: string} $filter */
     public function showList(array $filter = []): void
     {
         $list = $this->repo->list($filter);
-        echo json_encode($list, JSON_PRETTY_PRINT)."\n";
+        echo json_encode($list, JSON_PRETTY_PRINT)."
+";
     }
 
     public function requeue(string $id): void
     {
         $item = $this->repo->get($id);
         if (!$item) {
-            echo "Not found\n";
+            echo "Not found
+";
 
             return;
         }
-        // Demo: just delete from DLQ and log requeue
         $this->repo->delete($id);
         $this->audit->write('requeue', ['id' => $id]);
-        echo "REQUEUED: $id\n";
+        echo "REQUEUED: $id
+";
     }
 
     public function discard(string $id, string $reason): void
     {
         $item = $this->repo->get($id);
         if (!$item) {
-            echo "Not found\n";
+            echo "Not found
+";
 
             return;
         }
         $this->repo->delete($id);
         $this->audit->write('discard', ['id' => $id, 'reason' => $reason]);
-        echo "DISCARDED: $id reason=$reason\n";
+        echo "DISCARDED: $id reason=$reason
+";
     }
 }

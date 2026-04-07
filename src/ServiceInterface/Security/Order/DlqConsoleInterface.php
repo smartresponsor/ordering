@@ -14,6 +14,7 @@ interface DlqConsoleInterface
 {
     public function seed(): void;
 
+    /** @param array{provider?: string, reason?: string} $filter */
     public function showList(array $filter = []): void;
 
     public function requeue(string $id): void;

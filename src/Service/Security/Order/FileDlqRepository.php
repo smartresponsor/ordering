@@ -22,6 +22,11 @@ final class FileDlqRepository implements DlqRepositoryInterface
         }
     }
 
+    /**
+     * @param array{provider?: string, reason?: string} $filter
+     *
+     * @return list<array<string, mixed>>
+     */
     public function list(array $filter = []): array
     {
         $out = [];
@@ -57,6 +62,7 @@ final class FileDlqRepository implements DlqRepositoryInterface
         return $out;
     }
 
+    /** @return array<string, mixed>|null */
     public function get(string $dlqId): ?array
     {
         foreach ($this->list() as $row) {
@@ -68,13 +74,14 @@ final class FileDlqRepository implements DlqRepositoryInterface
         return null;
     }
 
+    /** @param array<string, mixed> $item */
     public function save(array $item): void
     {
         $lines = [];
         $exists = false;
 
         if (file_exists($this->file)) {
-            foreach (file($this->file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+            foreach ((file($this->file, FILE_IGNORE_NEW_LINES) ?: []) as $line) {
                 $row = json_decode((string) $line, true);
                 if (is_array($row) && (($row['dlq_id'] ?? '') === ($item['dlq_id'] ?? ''))) {
                     $lines[] = json_encode($item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}';
@@ -92,7 +99,9 @@ final class FileDlqRepository implements DlqRepositoryInterface
             $lines[] = json_encode($item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}';
         }
 
-        file_put_contents($this->file, implode("\n", $lines).(count($lines) > 0 ? "\n" : ''));
+        file_put_contents($this->file, implode("
+", $lines).(count($lines) > 0 ? "
+" : ''));
     }
 
     public function delete(string $dlqId): void
@@ -100,7 +109,7 @@ final class FileDlqRepository implements DlqRepositoryInterface
         $lines = [];
 
         if (file_exists($this->file)) {
-            foreach (file($this->file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+            foreach ((file($this->file, FILE_IGNORE_NEW_LINES) ?: []) as $line) {
                 $row = json_decode((string) $line, true);
                 if (is_array($row) && (($row['dlq_id'] ?? '') === $dlqId)) {
                     continue;
@@ -113,6 +122,8 @@ final class FileDlqRepository implements DlqRepositoryInterface
             }
         }
 
-        file_put_contents($this->file, implode("\n", $lines).(count($lines) > 0 ? "\n" : ''));
+        file_put_contents($this->file, implode("
+", $lines).(count($lines) > 0 ? "
+" : ''));
     }
 }

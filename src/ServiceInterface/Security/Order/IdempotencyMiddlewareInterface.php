@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Middleware\StackInterface;
+
 interface IdempotencyMiddlewareInterface
 {
     public function handle(Envelope $envelope, StackInterface $stack): Envelope;
