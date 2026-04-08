@@ -1,30 +1,22 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use SmartResponsor\Order\Infra\Persistence\PdoFactory;
-use SmartResponsor\Order\Infra\Redis\RedisFactory;
 
-$cfg = json_decode(file_get_contents(__DIR__.'/../config/outbox/redis.json'), true);
-$rps = (int)($cfg['replay']['rps'] ?? 10);
-$pdo = PdoFactory::fromEnv(getenv('DB_URL') ?: 'postgres://user:pass@localhost:5432/smartresponsor');
-$r = RedisFactory::fromConfig($cfg['redis'] ?? []);
-$dlq = ($cfg['queue']['dlq'] ?? 'outbox:dlq');
-$seen = []; $windowStart = microtime(true); $sentInWindow = 0;
+declare(strict_types=1);
 
-function rateGate(int $rps, float &$winStart, int &$sent){
-  $now = microtime(true);
-  if ($now - $winStart >= 1.0) { $winStart = $now; $sent = 0; }
-  if ($sent >= $rps) { usleep(100000); return rateGate($rps, $winStart, $sent); }
-  $sent++;
+$console = __DIR__ . '/console';
+
+if (!is_file($console)) {
+    fwrite(STDERR, "Unable to locate Symfony console at {$console}.\n");
+    exit(1);
 }
 
-while ($raw = $r->lPop($dlq)) {
-  rateGate($rps, $windowStart, $sentInWindow);
-  $msg = json_decode($raw, true) ?: [];
-  $id = $msg['id'] ?? '';
-  if (!$id || isset($seen[$id])) continue; // dedupe
-  $seen[$id] = true;
-  // Push back to main queue
-  $r->rPush($cfg['queue']['name'], json_encode($msg));
-  echo "[replay] $id\n";
+$batch = getenv('ORDER_DLQ_REQUEUE_BATCH');
+$command = sprintf('php %s order:dlq:requeue', escapeshellarg($console));
+
+if (is_string($batch) && '' !== trim($batch)) {
+    $command .= sprintf(' --batch=%d', max(1, (int) $batch));
 }
+
+passthru($command, $exitCode);
+
+exit((int) $exitCode);

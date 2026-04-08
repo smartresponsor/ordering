@@ -1,34 +1,43 @@
 #!/usr/bin/env php
 <?php
+
 declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * Owner: Marketing America Corp
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+require __DIR__.'/../vendor/autoload.php';
 
-require __DIR__ . '/../vendor/autoload.php';
+use App\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Service\Webhook\Order\WebhookVerifierRsa;
 
 $alg = $argv[1] ?? 'hmac';
-if ($alg === 'hmac') {
+$payload = $argv[3] ?? '{"ok":true}';
+$input = stream_get_contents(STDIN);
+
+if ('hmac' === $alg) {
     $secret = $argv[2] ?? 'secret';
-    $sig = trim(stream_get_contents(STDIN));
-    $payload = '{"ok":true}'; // demo payload; pipe actual payload if needed
+    $signature = trim($input);
     $verifier = new WebhookVerifierHmac();
-    echo $verifier->verify($payload, $secret, $sig) ? "OK\n" : "FAIL\n";
+    echo $verifier->verify($payload, $secret, $signature) ? "OK
+" : "FAIL
+";
     exit(0);
 }
-if ($alg === 'rsa') {
-    $publicPemPath = $argv[2] ?? __DIR__ . '/../var/key/public.pem';
-    $env = stream_get_contents(STDIN);
-    $payload = '{"ok":true}';
+
+if ('rsa' === $alg) {
+    $publicPemPath = $argv[2] ?? __DIR__.'/../var/key/public.pem';
+    $publicPem = @file_get_contents($publicPemPath);
+    if (false === $publicPem || '' === $publicPem) {
+        fwrite(STDERR, "Public key not found: {$publicPemPath}
+");
+        exit(1);
+    }
+
     $verifier = new WebhookVerifierRsa();
-    $publicPem = file_get_contents($publicPemPath);
-    echo $verifier->verify($payload, (string)$publicPem, $env) ? "OK\n" : "FAIL\n";
+    echo $verifier->verify($payload, (string) $publicPem, $input) ? "OK
+" : "FAIL
+";
     exit(0);
 }
-fwrite(STDERR, "Usage: webhook-verify.php hmac <secret> | rsa <public.pem>\n");
+
+fwrite(STDERR, "Usage: webhook-verify.php hmac <secret> [payload] | rsa <public.pem> [payload]
+");
 exit(2);

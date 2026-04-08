@@ -1,11 +1,22 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use SmartResponsor\Order\Observability\Metric;
-use SmartResponsor\Order\Observability\PaymentMetrics;
-$m = new Metric(__DIR__.'/../var/metric');
-$pm = new PaymentMetrics($m);
-$pm->providerLatencyMs(180+mt_rand(0,70), 'stripe', 'authorize');
-$pm->providerError('stripe','capture', (string)(200 + (mt_rand(0,10)==0?500:200)));
-$pm->webhookVerifyFail('stripe');
-echo "ok\n";
+
+declare(strict_types=1);
+
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+$console = __DIR__ . '/console';
+$format = $argv[1] ?? 'json';
+
+$command = sprintf(
+    'php %s order:metrics:export --format=%s',
+    escapeshellarg($console),
+    escapeshellarg($format),
+);
+
+passthru($command, $exitCode);
+exit($exitCode);

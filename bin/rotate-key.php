@@ -1,32 +1,43 @@
 #!/usr/bin/env php
 <?php
+
 declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * Owner: Marketing America Corp
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+require __DIR__.'/../vendor/autoload.php';
 
-require __DIR__ . '/../vendor/autoload.php';
+use App\Service\Security\Order\FileJwkRepository;
+use App\Service\Security\Order\KeyRotationManager;
+use App\Service\Security\Order\SecretRotationPolicy;
 
 $oldKid = $argv[1] ?? 'kid-demo';
 $newKid = $argv[2] ?? 'kid-next';
 
-$repo = new FileJwkRepository(__DIR__ . '/../var/jwk');
-
-// create new pair
+$repo = new FileJwkRepository(__DIR__.'/../var/jwk');
 $config = [
-  'private_key_bits' => 2048,
-  'private_key_type' => OPENSSL_KEYTYPE_RSA,
+    'private_key_bits' => 2048,
+    'private_key_type' => OPENSSL_KEYTYPE_RSA,
 ];
+
 $res = openssl_pkey_new($config);
+if (false === $res) {
+    fwrite(STDERR, "Unable to generate RSA key pair
+");
+    exit(1);
+}
+
+$privatePem = '';
 openssl_pkey_export($res, $privatePem);
 $detail = openssl_pkey_get_details($res);
-$publicPem = $detail['key'];
+$publicPem = is_array($detail) ? (string) ($detail['key'] ?? '') : '';
 
-$mgr = new KeyRotationManager($repo, new SecretRotationPolicy());
-$mgr->rotate($oldKid, $newKid, $publicPem, $privatePem);
-echo "Rotated: old=$oldKid -> new=$newKid\n";
+if ('' === $privatePem || '' === $publicPem) {
+    fwrite(STDERR, "Unable to export RSA key pair
+");
+    exit(1);
+}
+
+$manager = new KeyRotationManager($repo, new SecretRotationPolicy());
+$manager->rotate($oldKid, $newKid, $publicPem, $privatePem);
+
+echo "Rotated: old={$oldKid} -> new={$newKid}
+";

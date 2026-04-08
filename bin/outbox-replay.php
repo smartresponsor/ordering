@@ -1,19 +1,17 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use SmartResponsor\Order\Infra\Persistence\PdoFactory;
-use SmartResponsor\Order\Infra\Outbox\DLQRepository;
 
-$db = getenv('DB_URL') ?: 'postgres://user:pass@localhost:5432/smartresponsor';
-$pdo = PdoFactory::fromEnv($db);
-$dlq = new DLQRepository($pdo); $dlq->ensure();
-$rows = $dlq->fetchBatch(100);
-foreach ($rows as $r) {
-  try {
-    // TODO: publish to Kafka/SNS or back to outbox; here we just print
-    echo '[replay] '.$r['id'].' '.$r['topic']."\n";
-    $dlq->delete($r['id']);
-  } catch (Throwable $e) {
-    fwrite(STDERR, "replay fail ".$r['id'].": ".$e->getMessage()."\n");
-  }
-}
+declare(strict_types=1);
+
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+$console = __DIR__ . '/console';
+$batch = max(1, (int) ($argv[1] ?? 100));
+
+passthru(sprintf('php %s order:outbox:replay --limit=%d', escapeshellarg($console), $batch), $exitCode);
+
+exit($exitCode);

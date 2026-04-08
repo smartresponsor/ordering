@@ -1,8 +1,30 @@
 #!/usr/bin/env php
 <?php
-require __DIR__.'/../vendor/autoload.php';
-use SmartResponsor\Order\Security\JWT\JwksCache;
-$cfg = json_decode(file_get_contents(__DIR__.'/../config/security/jwt.json'), true);
-$jwks = new JwksCache($cfg['jwks_url'] ?? '', __DIR__.'/../var/security/jwks.json', (int)($cfg['cache_ttl_sec'] ?? 900));
-$jwks->refresh();
-echo "jwks refreshed\n";
+
+declare(strict_types=1);
+
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+use App\Service\Security\Order\FileJwkRepository;
+use App\Service\Security\Order\JwksIssuer;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$keyDir = __DIR__ . '/../var/security/jwk';
+$outputFile = __DIR__ . '/../var/security/jwks.json';
+
+$repository = new FileJwkRepository($keyDir);
+$issuer = new JwksIssuer($repository);
+$jwkSet = $issuer->issue();
+
+if (!is_dir(dirname($outputFile))) {
+    mkdir(dirname($outputFile), 0775, true);
+}
+
+file_put_contents($outputFile, $jwkSet);
+
+echo sprintf('jwks refreshed: %s%s', $outputFile, PHP_EOL);

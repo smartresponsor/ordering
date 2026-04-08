@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class JwtScopeVoter extends Voter
@@ -16,7 +17,7 @@ final class JwtScopeVoter extends Voter
         return self::ATTRIBUTE === $attribute || 'jwt_scope' === strtolower($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $scope = is_string($subject) && '' !== $subject ? $subject : null;
         if (null === $scope) {
