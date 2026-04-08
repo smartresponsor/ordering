@@ -1,30 +1,47 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 
-use SmartResponsor\Order\Import\{Importer,NdjsonReader,CsvReader,Validator,Mapper,ProgressStore,Reporter,IdempotencyIndex};
+declare(strict_types=1);
 
-function argvFlag(string $name): bool { global $argv; return in_array($name, $argv, true); }
-function argvValue(string $name, ?string $default=null): ?string { global $argv; $i = array_search($name, $argv, true); return ($i !== false && isset($argv[$i+1])) ? $argv[$i+1] : $default; }
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
 
-$input = argvValue('--input'); if (!$input) { fwrite(STDERR, "--input is required\n"); exit(2); }
-$format = strtolower(argvValue('--format','ndjson'));
-$dry = argvFlag('--dry-run');
-$base = dirname(__DIR__);
-$progress = new ProgressStore($base.'/var/progress/checkpoint.json');
-$report = new Reporter($base.'/var/report');
-$index = new IdempotencyIndex($base.'/var/index/seen.json');
+$console = __DIR__ . '/console';
+$projectRoot = dirname(__DIR__);
+$commandsOutput = [];
+$commandsExitCode = 0;
+@	exec(sprintf('php %s list --raw 2>NUL', escapeshellarg($console)), $commandsOutput, $commandsExitCode);
 
-$mapFile = $base.'/config/map/status-map.json';
-$map = json_decode(file_get_contents($mapFile), true);
-$mapper = new Mapper($map);
+$knownCandidates = [
+    'order:import',
+    'app:order:import',
+];
 
-$reader = match($format) {
-  'ndjson' => new NdjsonReader($input),
-  'csv' => new CsvReader($input),
-  default => throw new RuntimeException('unsupported format')
-};
+$resolvedCommand = null;
+foreach ($knownCandidates as $candidate) {
+    if (in_array($candidate, $commandsOutput, true)) {
+        $resolvedCommand = $candidate;
+        break;
+    }
+}
 
-$imp = new Importer($reader, new Validator(), $mapper, $progress, $report, $index, $dry);
-$imp->run();
-echo "DONE\n";
+if (null === $resolvedCommand) {
+    fwrite(STDERR, "Legacy bin/import.php importer has been retired from the current App runtime.\n");
+    fwrite(STDERR, "No canonical Symfony import command is registered in this slice.\n");
+    fwrite(STDERR, "Expected future command names: order:import or app:order:import\n");
+    fwrite(STDERR, "Project root: {$projectRoot}\n");
+    exit(1);
+}
+
+$arguments = array_slice($argv, 1);
+$command = sprintf('php %s %s', escapeshellarg($console), $resolvedCommand);
+
+foreach ($arguments as $argument) {
+    $command .= ' ' . escapeshellarg($argument);
+}
+
+passthru($command, $exitCode);
+exit($exitCode);

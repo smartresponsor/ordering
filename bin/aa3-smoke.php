@@ -1,42 +1,47 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 
-use SmartResponsor\Order\Payment\Router\{HealthScore,Quota2,DecisionLog,RouterAA3};
-use SmartResponsor\Order\Payment\Cost\BudgetGuard;
-use SmartResponsor\Order\Observability\RouterMetrics;
-use SmartResponsor\Order\Payment\PaymentProviderInterface;
+declare(strict_types=1);
 
-class DummyProv implements PaymentProviderInterface {
-  public function __construct(private string $name) {}
-  public function authorize(string $orderId, int $amount, string $currency, array $meta=[]): array { return ['provider'=>$this->name,'status'=>'ok']; }
-  public function capture(string $paymentId, int $amount): array { return ['status'=>'ok']; }
-  public function refund(string $paymentId, int $amount): array { return ['status'=>'ok']; }
-  public function verifyWebhook(string $payload, string $signatureHeader): bool { return true; }
-  public function mapEvent(array $event): array { return ['name'=>'x','payload'=>$event]; }
-}
+require __DIR__.'/../vendor/autoload.php';
 
-$redis = new Redis(); $redis->connect('127.0.0.1',6379);
-$cfg = json_decode(file_get_contents(__DIR__.'/../config/router/quotas-budgets.json'), true);
-$health = new HealthScore($redis);
-$quota = new Quota2($redis, (int)($cfg['quotas']['default_rpm'] ?? 12000));
-$budget = new BudgetGuard($redis, $cfg);
-$log = new DecisionLog(__DIR__.'/../var/router/decisions.ndjson');
-$metrics = new RouterMetrics(__DIR__.'/../var/metrics/router.prom');
+use App\Service\Transport\Order\DummyAdapter;
+use App\Service\Transport\Order\ProviderRouter;
+use App\Service\Transport\Order\StripeAdapter;
+use App\ValueObject\Routing\Order\CanarySwitch;
+use App\ValueObject\Routing\Order\CostPolicy;
+use App\ValueObject\Routing\Order\HealthProbe;
+use App\ValueObject\Routing\Order\ProviderPolicy;
+use App\ValueObject\Routing\Order\QuotaPolicy;
+use App\ValueObject\Routing\Order\RouteContext;
 
-$router = new RouterAA3(
-  [
-    ['name'=>'stripe','p'=>new DummyProv('stripe'),'w'=>100,'regions'=>['us','eu']],
-    ['name'=>'adyen','p'=>new DummyProv('adyen'),'w'=>60,'regions'=>['us','eu']],
-    ['name'=>'paypal','p'=>new DummyProv('paypal'),'w'=>30,'regions'=>['us']]
-  ],
-  $health, $quota, $budget, $cfg, $log, $metrics, 'us', ['provider'=>'adyen','pct'=>0], 'tenant_a'
+$router = new ProviderRouter(
+    [
+        'stripe' => new StripeAdapter(),
+        'dummy' => new DummyAdapter('dummy'),
+    ],
+    [
+        'stripe' => new HealthProbe(120, 0.02, 0.029),
+        'dummy' => new HealthProbe(240, 0.05, 0.010),
+    ],
+    [
+        'stripe' => 10.0,
+        'dummy' => 100.0,
+    ],
+    new ProviderPolicy(0.5, 0.3, 0.2, 400, 0.10),
+    new CanarySwitch(),
+    new QuotaPolicy(1000),
+    new CostPolicy(0.005, 0.050),
 );
 
-echo "[AA3 smoke] trying 200 ops...\n";
-$ok = 0; $fail = 0;
-for ($i=0; $i<200; $i++) {
-  try { $router->authorize('ord_'.$i, 1999, 'USD', []); $ok++; }
-  catch (Throwable $e) { $fail++; }
+echo "[AA3 smoke] trying 200 route selections...\n";
+$summary = [];
+
+for ($i = 0; $i < 200; ++$i) {
+    $decision = $router->select(new RouteContext('ord_'.$i, 'tenant_a', 'us', 'authorize', 1999, false));
+    $provider = $decision->provider();
+    $summary[$provider] = ($summary[$provider] ?? 0) + 1;
 }
-echo "ok=$ok fail=$fail\n";
+
+ksort($summary);
+echo json_encode(['iterations' => 200, 'providers' => $summary], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR)."\n";

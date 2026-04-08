@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 final class ValidSkuValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$value) {
             return;

@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\ServiceInterface\Payment\Order\BillingServiceInterface;
-use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
+use App\Entity\Order;
 use App\Entity\Order\Billing\OrderInvoice;
 use App\Entity\Order\Billing\OrderPaymentIntent;
 use App\Entity\Order\Billing\OrderTransaction;
-use App\Entity\Order;
-use App\ValueObject\Billing\Order\InvoiceNumber;
+use App\ServiceInterface\Payment\Order\BillingServiceInterface;
+use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class BillingService implements BillingServiceInterface, OrderBillingServiceInterface
@@ -28,9 +27,7 @@ final class BillingService implements BillingServiceInterface, OrderBillingServi
 
     public function generateInvoice(Order $order): OrderInvoice
     {
-        $total = method_exists($order, 'getTotal') ? (string) $order->getTotal() : '0.00';
-        $tax = '0.00';
-        $invoice = new OrderInvoice($order, InvoiceNumber::of(uniqid('INV-')), $total, $tax);
+        $invoice = new OrderInvoice($order->getId(), $order->getTotal(), $order->getCurrency());
         $this->em->persist($invoice);
         $this->em->flush();
 
@@ -40,7 +37,7 @@ final class BillingService implements BillingServiceInterface, OrderBillingServi
     public function createPaymentIntent(Order $order, string $amount): OrderPaymentIntent
     {
         $intentId = $this->processor->createIntentId();
-        $intent = new OrderPaymentIntent($order, $intentId, $amount);
+        $intent = new OrderPaymentIntent($order->getId(), $amount, $order->getCurrency(), 'stripe', $intentId);
         $this->em->persist($intent);
         $this->em->flush();
 

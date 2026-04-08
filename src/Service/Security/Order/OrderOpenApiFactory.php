@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface as LegacyFactory;
-use ApiPlatform\Core\OpenApi\OpenApi;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Model;
+use ApiPlatform\OpenApi\OpenApi;
 
-final class OrderOpenApiFactory implements OpenApiFactoryInterface, LegacyFactory
+final class OrderOpenApiFactory implements OpenApiFactoryInterface
 {
     public function __construct(private readonly OpenApiFactoryInterface $decorated)
     {

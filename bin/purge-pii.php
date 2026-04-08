@@ -1,13 +1,62 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use SmartResponsor\Order\Infra\Persistence\PdoFactory;
 
-$db = getenv('DB_URL') ?: 'postgres://user:pass@localhost:5432/smartresponsor';
-$pdo = PdoFactory::fromEnv($db);
+declare(strict_types=1);
 
-$pdo->exec("UPDATE order_entity SET meta = jsonb_strip_nulls(meta - 'pii' || jsonb_build_object('pii_redacted', true)) WHERE status IN ('closed','returned','canceled') AND updated_at < now() - interval '30 days'");
+require __DIR__.'/../vendor/autoload.php';
 
-$pdo->exec("UPDATE order_entity SET customer_id = 'anon_' || substr(encode(digest(id || customer_id, 'sha256'), 'hex'),1,12) WHERE updated_at < now() - interval '180 days' AND customer_id IS NOT NULL");
+use App\Service\Http\Order\Redactor;
 
-echo "PII purge done\n";
+function argvValue(array $argv, string $name, ?string $default = null): ?string
+{
+    $index = array_search($name, $argv, true);
+
+    return false !== $index && isset($argv[$index + 1]) ? $argv[$index + 1] : $default;
+}
+
+$inputPath = argvValue($argv, '--input');
+$outputPath = argvValue($argv, '--output');
+$policyPath = __DIR__.'/../config/pii/pii-policy.json';
+
+if (null === $inputPath) {
+    fwrite(STDERR, "Usage: purge-pii.php --input <json-file> [--output <json-file>]\n");
+    exit(2);
+}
+
+$raw = @file_get_contents($inputPath);
+if (false === $raw || '' === $raw) {
+    fwrite(STDERR, "Input file not found or empty: {$inputPath}\n");
+    exit(1);
+}
+
+$payload = json_decode($raw, true);
+if (!is_array($payload)) {
+    fwrite(STDERR, "Input must be a JSON object or array: {$inputPath}\n");
+    exit(1);
+}
+
+$policyRaw = @file_get_contents($policyPath);
+$policy = is_string($policyRaw) ? json_decode($policyRaw, true) : [];
+$policyFields = is_array($policy['fields'] ?? null) ? $policy['fields'] : [];
+
+$redactor = new Redactor();
+$redacted = $redactor->redactArray($payload);
+foreach ($policyFields as $field) {
+    if (is_string($field) && array_key_exists($field, $redacted)) {
+        $redacted[$field] = '***';
+    }
+}
+
+$json = json_encode($redacted, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+if (false === $json) {
+    fwrite(STDERR, "Failed to encode redacted payload\n");
+    exit(1);
+}
+
+if (null !== $outputPath) {
+    file_put_contents($outputPath, $json."\n");
+    echo "Redacted payload written to {$outputPath}\n";
+    exit(0);
+}
+
+echo $json."\n";

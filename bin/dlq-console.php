@@ -1,14 +1,11 @@
 #!/usr/bin/env php
 <?php
-declare(strict_types=1);
-/*
- * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
- * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
- * Owner: Marketing America Corp
- * This file is part of SmartResponsor (Order domain).
- */
 
-namespace SmartResponsor\Order;
+declare(strict_types=1);
+
+use App\Service\Security\Order\DlqConsole;
+use App\Service\Security\Order\FileDlqRepository;
+use App\ValueObject\Archival\Order\AuditLog;
 
 require __DIR__ . '/../vendor/autoload.php';
 

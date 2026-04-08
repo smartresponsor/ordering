@@ -1,14 +1,25 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use SmartResponsor\Order\Outbox\FileOutboxRepository;
-use SmartResponsor\Order\Telemetry\FileTelemetry;
-use SmartResponsor\Order\Worker\OutboxWorker;
-use SmartResponsor\Order\Webhook\NoopWebhookDispatcher;
-$dir = __DIR__ . '/../var';
-$repo = new FileOutboxRepository($dir.'/outbox');
-$telemetry = new FileTelemetry($dir.'/metric/metric.json');
-$worker = new OutboxWorker($repo, new NoopWebhookDispatcher(), $telemetry);
-$cycle = (int)($argv[2] ?? 1);
-for($i=0;$i<$cycle;$i++){ $worker->runCycle(); usleep(200000); }
-echo "OK\n";
+
+declare(strict_types=1);
+
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+$console = __DIR__ . '/console';
+$cycles = max(1, (int) ($argv[1] ?? 1));
+
+for ($cycle = 0; $cycle < $cycles; ++$cycle) {
+    passthru(sprintf('php %s order:outbox:run', escapeshellarg($console)), $exitCode);
+
+    if (0 !== $exitCode) {
+        exit($exitCode);
+    }
+
+    if ($cycle + 1 < $cycles) {
+        usleep(200000);
+    }
+}

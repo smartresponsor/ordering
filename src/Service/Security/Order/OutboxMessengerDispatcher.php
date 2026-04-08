@@ -26,14 +26,13 @@ final class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterf
     public function dispatchPending(int $limit = 100): int
     {
         $repo = $this->em->getRepository(OutboxMessage::class);
-        $messages = $repo->findBy(['status' => OutboxMessage::STATUS_PENDING], ['occurredAt' => 'ASC'], $limit);
+        $messages = array_filter(
+            $repo->findBy([], ['messageId' => 'ASC'], $limit),
+            static fn (mixed $message): bool => $message instanceof OutboxMessage && $message->isPending(),
+        );
         $count = 0;
 
         foreach ($messages as $message) {
-            if (!$message instanceof OutboxMessage) {
-                continue;
-            }
-
             $payload = $message->payload();
             $orderId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? '');
             $this->bus->dispatch(new OrderEventMessage($message->getTopic(), $orderId));

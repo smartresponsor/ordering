@@ -8,7 +8,7 @@ final readonly class OrderMessage
 {
     public function __construct(
         public string $eventName,
-        public int $orderId,
+        public string $orderId,
     ) {
     }
 }

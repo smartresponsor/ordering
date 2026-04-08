@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
+use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 
 final class OrderContextProcessor implements ProcessorInterface
 {
-    public function __invoke(array $record): array
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['extra']['order_component'] = true;
-
-        return $record;
+        return $record->with(extra: array_merge($record->extra, ['order_component' => true]));
     }
 }

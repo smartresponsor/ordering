@@ -1,42 +1,78 @@
 #!/usr/bin/env php
 <?php
+
+declare(strict_types=1);
+
+/*
+ * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
+ * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
+ * This file is part of SmartResponsor (Order domain).
+ */
+
+use App\Service\Transport\Order\DummyAdapter;
+use App\Service\Transport\Order\ProviderRouter;
+use App\Service\Transport\Order\StripeAdapter;
+use App\ValueObject\Routing\Order\CanarySwitch;
+use App\ValueObject\Routing\Order\CostPolicy;
+use App\ValueObject\Routing\Order\HealthProbe;
+use App\ValueObject\Routing\Order\ProviderPolicy;
+use App\ValueObject\Routing\Order\QuotaPolicy;
+use App\ValueObject\Routing\Order\RouteContext;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-use SmartResponsor\Order\Payment\Router\{HealthScore,Quota,DecisionLog,RouterAA};
-use SmartResponsor\Order\Payment\Cost\CostModel;
-use SmartResponsor\Order\Observability\RouterMetrics;
-use SmartResponsor\Order\Payment\PaymentProviderInterface;
+$iterations = max(1, (int) (getenv('N') ?: ($argv[1] ?? 50)));
+$mode = $argv[2] ?? 'demo';
+$policyPath = __DIR__ . '/../config/router/policy.json';
+$policyJson = file_get_contents($policyPath);
 
-class DummyProv implements PaymentProviderInterface {
-  public function __construct(private string $name, private float $failPct = 0.0, private int $minMs=10, private int $maxMs=30) {}
-  public function authorize(string $orderId, int $amount, string $currency, array $meta=[]): array { usleep(rand($this->minMs,$this->maxMs)*1000); if (rand(1,100) <= $this->failPct*100) throw new RuntimeException('dummy fail'); return ['provider'=>$this->name,'status'=>'ok']; }
-  public function capture(string $paymentId, int $amount): array { return ['status'=>'ok']; }
-  public function refund(string $paymentId, int $amount): array { return ['status'=>'ok']; }
-  public function verifyWebhook(string $payload, string $signatureHeader): bool { return true; }
-  public function mapEvent(array $event): array { return ['name'=>'x','payload'=>$event]; }
+if (false === $policyJson) {
+    fwrite(STDERR, sprintf('Unable to read router policy file: %s%s', $policyPath, PHP_EOL));
+    exit(1);
 }
 
-$redis = new Redis(); $redis->connect('127.0.0.1',6379);
-$health = new HealthScore($redis);
-$quota = new Quota($redis);
-$log = new DecisionLog(__DIR__.'/../var/router/decisions.ndjson');
-$metrics = new RouterMetrics(__DIR__.'/../var/metrics/router.prom');
-$cost = new CostModel(['stripe'=>30,'adyen'=>35,'paypal'=>45], 50);
-$region = getenv('REGION') ?: 'us';
-$canary = ['provider'=>getenv('CANARY_PROVIDER') ?: 'adyen', 'pct'=>(int)(getenv('CANARY_PCT') ?: 0)];
-
-$router = new RouterAA(
-  [
-    ['name'=>'stripe','p'=>new DummyProv('stripe', 0.02) ,'w'=>100,'regions'=>['us','eu']],
-    ['name'=>'adyen', 'p'=>new DummyProv('adyen', 0.03) ,'w'=>60 ,'regions'=>['us','eu']],
-    ['name'=>'paypal','p'=>new DummyProv('paypal',0.05) ,'w'=>30 ,'regions'=>['us']]
-  ],
-  $health, $quota, $cost, $log, $metrics, $region, $canary, 'tenant_a'
+$policyData = json_decode($policyJson, true, 512, JSON_THROW_ON_ERROR);
+$policy = new ProviderPolicy(
+    (float) $policyData['route']['weight_latency'],
+    (float) $policyData['route']['weight_error'],
+    (float) $policyData['route']['weight_cost'],
+    (int) $policyData['threshold']['p95_ms'],
+    (float) $policyData['threshold']['error_rate'],
 );
 
-$N = (int)(getenv('N') ?: 50);
-for ($i=0; $i<$N; $i++){
-  try { $router->authorize('ord_'.$i, 1999, 'USD', ['tenant'=>'tenant_a']); echo "."; }
-  catch (Throwable $e){ echo "x"; }
+$router = new ProviderRouter(
+    [
+        'stripe' => new StripeAdapter(),
+        'alt' => new DummyAdapter('alt'),
+    ],
+    [
+        'stripe' => new HealthProbe(220, 0.3, 0.019, 10000),
+        'alt' => new HealthProbe(260, 0.2, 0.022, 5000),
+    ],
+    [
+        'stripe' => 5.00,
+        'alt' => 0.00,
+    ],
+    $policy,
+    new CanarySwitch((int) ($policyData['canary']['seed'] ?? 42)),
+    new QuotaPolicy(),
+    new CostPolicy(),
+);
+
+$canaryMode = 'canary' === $mode;
+$selected = [];
+
+for ($iteration = 0; $iteration < $iterations; ++$iteration) {
+    $context = new RouteContext(sprintf('intent-aa-demo-%04d', $iteration + 1), 'us', 12.34, $canaryMode);
+    $decision = $router->select($context);
+    $provider = $decision->provider();
+    $selected[$provider] = ($selected[$provider] ?? 0) + 1;
+    echo sprintf("[%03d] provider=%s score=%0.6f%s", $iteration + 1, $provider, $decision->score(), PHP_EOL);
 }
-echo "\nDone\n";
+
+arsort($selected);
+echo 'Summary:' . PHP_EOL;
+
+foreach ($selected as $provider => $count) {
+    echo sprintf('- %s: %d%s', $provider, $count, PHP_EOL);
+}

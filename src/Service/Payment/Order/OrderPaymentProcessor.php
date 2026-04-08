@@ -22,7 +22,7 @@ final class OrderPaymentProcessor implements PaymentProcessorInterface
 
     public function capture(OrderPaymentIntent $intent): OrderTransaction
     {
-        $txn = new OrderTransaction($intent->getOrder(), 'tx_'.bin2hex(random_bytes(8)), $intent->getAmount(), 'USD');
+        $txn = new OrderTransaction($intent->getOrderId(), $intent->getAmount(), $intent->getCurrency(), 'tx_'.bin2hex(random_bytes(8)));
         $txn->confirm();
 
         return $txn;

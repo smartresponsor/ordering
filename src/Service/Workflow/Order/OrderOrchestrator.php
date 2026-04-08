@@ -28,25 +28,25 @@ final class OrderOrchestrator implements OrderOrchestratorInterface
 
     public function processOrder(Order $order): void
     {
-        // 1. Payment
         $this->paymentGateway->initiatePayment($order->getNumber(), (float) $order->getTotalAmount(), $order->getCurrency());
 
-        // 2. Shipment
         $tracking = $this->shipmentGateway->createShipment($order, 'DHL');
         if (method_exists($order, 'assignTracking')) {
             $order->assignTracking($tracking);
         }
 
-        // 3. Taxation
-        $breakdown = $this->taxationGateway->calculate($order, 'DE');
+        $breakdown = $this->taxationGateway->calculate(
+            $order->getNumber(),
+            [['price' => $order->getSubtotal(), 'quantity' => 1]],
+            ['country' => 'DE', 'currency' => $order->getCurrency()]
+        );
         if (method_exists($order, 'setTaxAmount')) {
-            $order->setTaxAmount($breakdown->taxAmount);
+            $order->setTaxAmount((string) ($breakdown['taxAmount'] ?? '0.00'));
         }
         if (method_exists($order, 'setTotalAmount')) {
-            $order->setTotalAmount($breakdown->total);
+            $order->setTotalAmount((string) ($breakdown['total'] ?? $order->getTotalAmount()));
         }
 
-        // 4. Finalization
         if (method_exists($order, 'markAsCompleted')) {
             $order->markAsCompleted();
         }
