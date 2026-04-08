@@ -11,48 +11,71 @@ use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
-final class OrderSaga
+final readonly class OrderSaga
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OrderPaymentGatewayInterface $payment,
-        private readonly OrderShipmentGatewayInterface $shipment,
-        private readonly OrderTaxationGatewayInterface $taxation,
-        private readonly ?LoggerInterface $logger = null,
+        private EntityManagerInterface $em,
+        private OrderPaymentGatewayInterface $payment,
+        private OrderShipmentGatewayInterface $shipment,
+        private OrderTaxationGatewayInterface $taxation,
+        private ?LoggerInterface $logger = null,
     ) {
     }
 
     public function execute(Order $order): void
     {
         try {
-            // payment
-            $this->payment->initiatePayment($order->getNumber(), (float) $order->getTotalAmount(), $order->getCurrency());
-            if (method_exists($order, 'markAsPaid')) {
-                $order->markAsPaid();
-            }
+            $amount = $order->getTotalAmount();
+            $currency = $order->getCurrency();
+            $orderId = $order->getNumber();
 
-            // shipment
-            $tracking = $this->shipment->createShipment($order, 'DHL');
-            if (method_exists($order, 'assignTracking')) {
-                $order->assignTracking($tracking);
-            }
+            $this->payment->charge($orderId, $amount, ['currency' => $currency]);
+            $order->markAsPaid();
 
-            // taxation
-            $b = $this->taxation->calculate($order, 'DE');
-            if (method_exists($order, 'setTaxAmount')) {
-                $order->setTaxAmount($b->taxAmount);
-            }
-            if (method_exists($order, 'setTotalAmount')) {
-                $order->setTotalAmount($b->total);
-            }
+            $tracking = $this->shipment->ship($orderId, 'DHL', ['currency' => $currency]);
+            $order->assignTracking($tracking);
+            $order->markAsShipped();
 
-            if (method_exists($order, 'markAsCompleted')) {
-                $order->markAsCompleted();
-            }
+            $taxBreakdown = $this->taxation->calculate($orderId, $this->buildLines($order), ['country' => 'DE', 'currency' => $currency]);
+            $taxAmount = $this->extractDecimal($taxBreakdown['taxAmount'] ?? $taxBreakdown['tax'] ?? null);
+            $totalAmount = $this->extractDecimal($taxBreakdown['total'] ?? $amount);
+            $order->setTaxAmount($taxAmount);
+            $order->setTotalAmount($totalAmount);
+
+            $order->markAsCompleted();
             $this->em->flush();
         } catch (\Throwable $e) {
             $this->logger?->error('OrderSaga failed', ['order' => $order->getNumber(), 'e' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    /** @return array<int, array<string, mixed>> */
+    private function buildLines(Order $order): array
+    {
+        $lines = [];
+
+        foreach ($order->getItems() as $item) {
+            $lines[] = [
+                'sku' => method_exists($item, 'getSku') ? $item->getSku() : null,
+                'quantity' => method_exists($item, 'getQuantity') ? $item->getQuantity() : null,
+                'price' => method_exists($item, 'getUnitPrice') ? $item->getUnitPrice() : null,
+            ];
+        }
+
+        if ([] === $lines) {
+            $lines[] = ['price' => $order->getSubtotal()];
+        }
+
+        return $lines;
+    }
+
+    private function extractDecimal(mixed $value): string
+    {
+        if (is_numeric($value)) {
+            return number_format((float) $value, 2, '.', '');
+        }
+
+        return '0.00';
     }
 }

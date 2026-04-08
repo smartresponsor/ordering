@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace App\Service\Subscriber\Order;
 
 use App\Entity\Order\OrderPriceAudit;
-use App\ValueObject\Pricing\Order\Currency;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\TaxRate;
+use App\ServiceInterface\Pricing\Order\OrderPricingInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\Uid\Uuid;
 
-final class OrderWorkflowSubscriber
+final readonly class OrderWorkflowSubscriber
 {
     public function __construct(
-        private \App\ServiceInterface\Pricing\Order\OrderPricingServiceInterface $pricing,
+        private OrderPricingInterface $pricing,
         private EntityManagerInterface $em,
     ) {
     }
@@ -22,26 +21,41 @@ final class OrderWorkflowSubscriber
     #[AsEventListener(event: 'order.placed')]
     public function onOrderPlaced(object $event): void
     {
-        $orderId = $event->orderId ?? 'unknown';
-        $lines = $event->lines ?? [5000, 5000];
-        $currency = new Currency('USD');
-        $discount = Discount::percent('10');
-        $tax = new TaxRate('20');
-
-        $detail = $this->pricing->calculate($lines, $currency, $discount, $tax);
-        $this->em->persist($detail);
+        $orderId = is_scalar($event->orderId ?? null) ? (string) $event->orderId : 'unknown';
+        $lines = $event->lines ?? [50.0, 50.0];
+        $base = $this->sumLines($lines);
+        $total = $this->pricing->price($base, 0.2);
 
         $audit = new OrderPriceAudit(
-            \Ramsey\Uuid\Uuid::uuid4()->toString(),
             $orderId,
-            $detail->currency()->code(),
-            $detail->subtotalMinor(),
-            $detail->discountMinor(),
-            $detail->taxMinor(),
-            $detail->totalMinor(),
-            'order.placed.snapshot'
+            'order.placed.snapshot',
+            [
+                'auditId' => Uuid::v7()->toRfc4122(),
+                'base' => $base,
+                'total' => $total,
+                'lineCount' => count($lines),
+                'currency' => 'USD',
+            ],
         );
+
         $this->em->persist($audit);
         $this->em->flush();
+    }
+
+    /** @param mixed $lines */
+    private function sumLines(mixed $lines): float
+    {
+        if (!is_iterable($lines)) {
+            return 0.0;
+        }
+
+        $total = 0.0;
+        foreach ($lines as $line) {
+            if (is_numeric($line)) {
+                $total += (float) $line;
+            }
+        }
+
+        return $total;
     }
 }
