@@ -12,11 +12,10 @@ namespace App\Service\Pricing\Order;
 use App\ServiceInterface\Pricing\Order\ExchangeRateProviderInterface;
 use App\ValueObject\Pricing\Order\ExchangeRate;
 
-final class InMemoryRateProvider implements ExchangeRateProviderInterface
+final readonly class InMemoryRateProvider implements ExchangeRateProviderInterface
 {
     /** @param array<string,float> $pairs  Format: "USD:EUR" => 0.92 */
-    public function __construct(private array $pairs)
-    {
+    public function __construct(private readonly array $pairs) {
     }
 
     public function getRate(string $baseCurrency, string $quoteCurrency): ExchangeRate

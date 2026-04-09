@@ -11,7 +11,7 @@ namespace App\Service\Security\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class SecretRotationPolicy
+final readonly class SecretRotationPolicy
 {
     private int $graceSecond;
     private int $lifeSecond;

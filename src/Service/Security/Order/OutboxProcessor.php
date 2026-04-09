@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OutboxProcessor implements OutboxProcessorInterface
+final readonly class OutboxProcessor implements OutboxProcessorInterface
 {
     public function __construct(
         private readonly OutboxMessageRepository $repo,

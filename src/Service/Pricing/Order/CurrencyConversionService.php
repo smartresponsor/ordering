@@ -14,7 +14,7 @@ use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use Symfony\Component\Yaml\Yaml;
 
-class CurrencyConversionService implements \App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface
+final readonly class CurrencyConversionService implements \App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface
 {
     private ExchangeRateProviderInterface $provider;
 

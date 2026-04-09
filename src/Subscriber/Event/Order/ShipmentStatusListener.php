@@ -10,8 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class ShipmentStatusListener implements EventSubscriberInterface
 {
-    public function __construct(private ShipmentService $service, private TransactionalEventPublisher $publisher)
-    {
+    public function __construct(private readonly ShipmentService $service, private readonly TransactionalEventPublisher $publisher) {
     }
 
     public static function getSubscribedEvents(): array

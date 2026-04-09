@@ -10,7 +10,7 @@ namespace App\ValueObject\Routing\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class HealthProbe
+final readonly class HealthProbe
 {
     private int $p95Ms;
     private float $errorRate;

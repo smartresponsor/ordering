@@ -10,7 +10,7 @@ namespace App\ValueObject\Routing\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class HealthScore
+final readonly class HealthScore
 {
     private float $value;
 

@@ -13,7 +13,7 @@ use App\Entity\Order\OrderItem;
 use App\ServiceInterface\Pricing\Order\FlatPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\PromotionStrategyInterface;
 
-class FlatPromotionStrategy implements PromotionStrategyInterface, FlatPromotionStrategyInterface
+readonly class FlatPromotionStrategy implements PromotionStrategyInterface, FlatPromotionStrategyInterface
 {
     public function __construct(private readonly int $percent = 10)
     {

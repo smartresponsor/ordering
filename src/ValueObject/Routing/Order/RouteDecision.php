@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\ValueObject\Routing\Order;
 
 
-final class RouteDecision
+final readonly class RouteDecision
 {
     private string $provider;
     private float $score;

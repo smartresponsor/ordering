@@ -9,7 +9,7 @@ use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class OrderShipmentSubscriber implements EventSubscriberInterface
+final readonly class OrderShipmentSubscriber implements EventSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

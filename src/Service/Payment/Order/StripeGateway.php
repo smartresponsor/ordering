@@ -12,10 +12,9 @@ namespace App\Service\Payment\Order;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\StripeGatewayInterface;
 
-final class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface
+final readonly class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface
 {
-    public function __construct(private ?string $apiKey = null)
-    {
+    public function __construct(private readonly ?string $apiKey = null) {
     }
 
     public function charge(string $orderId, string $amount, array $context = []): string

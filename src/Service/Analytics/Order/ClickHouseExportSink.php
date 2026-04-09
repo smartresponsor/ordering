@@ -6,7 +6,7 @@ namespace App\Service\Analytics\Order;
 
 use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
 
-final class ClickHouseExportSink implements ExportSinkInterface
+final readonly class ClickHouseExportSink implements ExportSinkInterface
 {
     public function __construct(
         private readonly string $endpoint,
@@ -22,10 +22,17 @@ final class ClickHouseExportSink implements ExportSinkInterface
         if ([] === $batch) {
             return;
         }
-        $payload = implode("\n", array_map(static fn (array $row) => json_encode($row, JSON_UNESCAPED_SLASHES), $batch));
+
+        $payload = implode(
+            "\n",
+            array_map(
+                static fn (array $row) => json_encode($row, JSON_UNESCAPED_SLASHES),
+                $batch,
+            ),
+        );
 
         $query = sprintf('INSERT INTO %s FORMAT JSONEachRow', $this->table);
-        $url = rtrim($this->endpoint, '/').'/';
+        $url = rtrim($this->endpoint, '/') . '/';
         $opts = [
             'http' => [
                 'method' => 'POST',
@@ -36,22 +43,24 @@ final class ClickHouseExportSink implements ExportSinkInterface
                 'ignore_errors' => true,
             ],
         ];
-        // Append query via GET parameter
-        $target = $url.'?query='.rawurlencode($query);
+
+        $target = $url . '?query=' . rawurlencode($query);
         $ctx = stream_context_create($opts);
         $resp = @file_get_contents($target, false, $ctx);
         if (false === $resp) {
             $err = error_get_last();
-            throw new \RuntimeException('ClickHouse export failed: '.($err['message'] ?? 'unknown error'));
+
+            throw new \RuntimeException('ClickHouse export failed: ' . ($err['message'] ?? 'unknown error'));
         }
-        // Optional: check HTTP status from $http_response_header
+
         if (!empty($http_response_header)) {
-            foreach ($http_response_header as $h) {
-                if (preg_match('#^HTTP/\S+\s+(\d{3})#', $h, $m)) {
-                    $code = (int) $m[1];
+            foreach ($http_response_header as $header) {
+                if (preg_match('#^HTTP/\S+\s+(\d{3})#', $header, $matches)) {
+                    $code = (int) $matches[1];
                     if ($code >= 400) {
-                        throw new \RuntimeException('ClickHouse HTTP error '.$code.': '.$resp);
+                        throw new \RuntimeException('ClickHouse HTTP error ' . $code . ': ' . $resp);
                     }
+
                     break;
                 }
             }

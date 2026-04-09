@@ -1,16 +1,25 @@
 <?php
 
 declare(strict_types=1);
+
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function (ContainerConfigurator $c): void {
-    $c->extension('framework', [
+return static function (ContainerConfigurator $configurator): void {
+    $configurator->extension('framework', [
         'workflows' => [
             'order' => [
                 'type' => 'state_machine',
-                'supports' => ['App\Entity\Order'],
+                'supports' => ['App\\Entity\\Order'],
                 'initial_marking' => 'draft',
-                'places' => ['draft', 'placed', 'paid', 'shipped', 'completed', 'cancelled', 'refunded'],
+                'places' => [
+                    'draft',
+                    'placed',
+                    'paid',
+                    'shipped',
+                    'completed',
+                    'cancelled',
+                    'refunded',
+                ],
                 'transitions' => [
                     'place' => ['from' => 'draft', 'to' => 'placed'],
                     'pay' => ['from' => 'placed', 'to' => 'paid'],

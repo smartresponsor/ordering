@@ -8,7 +8,7 @@ use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 
-final class OrderDemoDataService
+final readonly class OrderDemoDataService
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

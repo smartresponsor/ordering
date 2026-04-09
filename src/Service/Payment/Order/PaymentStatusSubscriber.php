@@ -11,7 +11,7 @@ use App\ServiceInterface\Payment\Order\PaymentStatusSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class PaymentStatusSubscriber implements EventSubscriberInterface, PaymentStatusSubscriberInterface
+readonly class PaymentStatusSubscriber implements EventSubscriberInterface, PaymentStatusSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

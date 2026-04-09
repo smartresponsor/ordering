@@ -15,13 +15,13 @@ use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
-final class OutboxRelay implements OutboxRelayInterface
+final readonly class OutboxRelay implements OutboxRelayInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private OutboxRepositoryInterface $repo,
-        private TransactionalEventPublisherInterface $publisher,
-        private LoggerInterface $logger,
+        private readonly EntityManagerInterface $em,
+        private readonly OutboxRepositoryInterface $repo,
+        private readonly TransactionalEventPublisherInterface $publisher,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

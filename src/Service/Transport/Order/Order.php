@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\Transport\Order;
 
-final class Order
+final readonly class Order
 {
     public function __construct(
-        public string $id,
-        public string $status,
-        public int $totalAmount,
-        public string $currency,
-        public ?string $customerId = null,
+        public readonly string $id,
+        public readonly string $status,
+        public readonly int $totalAmount,
+        public readonly string $currency,
+        public readonly ?string $customerId = null,
     ) {
     }
 

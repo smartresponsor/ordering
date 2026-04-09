@@ -6,13 +6,13 @@ namespace App\Service\Transport\Order;
 
 use App\ServiceInterface\Transport\Order\PaymentProviderInterface;
 
-final class DummyProv implements PaymentProviderInterface
+final readonly class DummyProv implements PaymentProviderInterface
 {
     public function __construct(
-        private string $name,
-        private float $failPct = 0.0,
-        private int $minMs = 10,
-        private int $maxMs = 30,
+        private readonly string $name,
+        private readonly float $failPct = 0.0,
+        private readonly int $minMs = 10,
+        private readonly int $maxMs = 30,
     ) {
     }
 

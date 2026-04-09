@@ -7,10 +7,9 @@ namespace App\Service\Webhook\Order;
 use App\ServiceInterface\Webhook\Order\PaymentWebhookListenerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class PaymentWebhookListener implements EventSubscriberInterface, PaymentWebhookListenerInterface
+final readonly class PaymentWebhookListener implements EventSubscriberInterface, PaymentWebhookListenerInterface
 {
-    public function __construct(private PaymentService $service, private TransactionalEventPublisher $publisher)
-    {
+    public function __construct(private readonly PaymentService $service, private readonly TransactionalEventPublisher $publisher) {
     }
 
     public static function getSubscribedEvents(): array

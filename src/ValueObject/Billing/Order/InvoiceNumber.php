@@ -7,7 +7,7 @@ namespace App\ValueObject\Billing\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
-final class InvoiceNumber
+final readonly class InvoiceNumber
 {
     #[ORM\Column(type: 'string', length: 64)]
     private string $value;

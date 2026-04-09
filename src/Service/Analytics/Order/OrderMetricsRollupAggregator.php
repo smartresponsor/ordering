@@ -9,7 +9,7 @@ use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\ServiceInterface\Analytics\Order\OrderMetricsRollupAggregatorInterface;
 
-final class OrderMetricsRollupAggregator implements OrderMetricsRollupAggregatorInterface
+final readonly class OrderMetricsRollupAggregator implements OrderMetricsRollupAggregatorInterface
 {
     public function __construct(private readonly OrderMetricsRollupViewRepository $repo)
     {

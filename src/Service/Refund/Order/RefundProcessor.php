@@ -16,12 +16,12 @@ use App\ServiceInterface\Refund\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class RefundProcessor implements RefundProcessorInterface
+final readonly class RefundProcessor implements RefundProcessorInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private MessageBusInterface $bus,
-        private OrderPaymentGatewayInterface $gateway,
+        private readonly EntityManagerInterface $em,
+        private readonly MessageBusInterface $bus,
+        private readonly OrderPaymentGatewayInterface $gateway,
     ) {
     }
 

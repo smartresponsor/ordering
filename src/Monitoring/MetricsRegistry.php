@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Monitoring;
 
-final class MetricsRegistry
+final readonly class MetricsRegistry
 {
     public function __construct(private readonly string $path)
     {

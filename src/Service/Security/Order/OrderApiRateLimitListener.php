@@ -10,10 +10,9 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 #[AsEventListener(event: 'kernel.request', priority: 8)]
-final class OrderApiRateLimitListener
+final readonly class OrderApiRateLimitListener
 {
-    public function __construct(private RateLimiterFactory $orderApiLimiter)
-    {
+    public function __construct(private readonly RateLimiterFactory $orderApiLimiter) {
     }
 
     public function __invoke(RequestEvent $event): void

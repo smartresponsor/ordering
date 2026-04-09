@@ -15,11 +15,11 @@ use App\ServiceInterface\Security\Order\IdempotencyStoreInterface;
 
 use App\ServiceInterface\Security\Order\HttpIdempotencyGuardInterface;
 
-final class HttpIdempotencyGuard implements HttpIdempotencyGuardInterface
+final readonly class HttpIdempotencyGuard implements HttpIdempotencyGuardInterface
 {
     public function __construct(
-        private IdempotencyKeyPolicy $policy,
-        private IdempotencyStoreInterface $store,
+        private readonly IdempotencyKeyPolicy $policy,
+        private readonly IdempotencyStoreInterface $store,
     ) {
     }
 

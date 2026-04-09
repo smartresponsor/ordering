@@ -16,12 +16,12 @@ use App\Service\Messaging\Order\TransactionalEventPublisher;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderPaymentCommandHandler implements OrderPaymentCommandHandlerInterface
+final readonly class OrderPaymentCommandHandler implements OrderPaymentCommandHandlerInterface
 {
     public function __construct(
-        private PaymentService $service,
-        private TransactionalEventPublisher $publisher,
-        private PaymentGatewayInterface $gateway,
+        private readonly PaymentService $service,
+        private readonly TransactionalEventPublisher $publisher,
+        private readonly PaymentGatewayInterface $gateway,
     ) {
     }
 

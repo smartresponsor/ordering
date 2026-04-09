@@ -13,10 +13,9 @@ use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
 use App\ServiceInterface\Archival\Order\OrderAuditTrail;
 use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 
-final class OrderAuditTrailBuilder implements OrderAuditTrailBuilderInterface
+final readonly class OrderAuditTrailBuilder implements OrderAuditTrailBuilderInterface
 {
-    public function __construct(private OrderEventRepositoryInterface $repo)
-    {
+    public function __construct(private readonly OrderEventRepositoryInterface $repo) {
     }
 
     public function buildForOrder(string $orderId): OrderAuditTrail

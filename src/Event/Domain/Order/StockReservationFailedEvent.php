@@ -8,7 +8,6 @@ use App\Entity\Order;
 
 final readonly class StockReservationFailedEvent
 {
-    public function __construct(public Order $order, public string $reason)
-    {
+    public function __construct(public readonly Order $order, public readonly string $reason) {
     }
 }

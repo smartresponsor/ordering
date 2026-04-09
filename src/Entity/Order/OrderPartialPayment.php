@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderPartialPayment
+final readonly class OrderPartialPayment
 {
     public function __construct(
-        private string $id,
-        private string $orderId,
-        private int $amountMinor,
-        private string $currency,
-        private string $paymentMethod,
-    ) {}
+        private readonly string $id,
+        private readonly string $orderId,
+        private readonly int $amountMinor,
+        private readonly string $currency,
+        private readonly string $paymentMethod,
+    ) {
+    }
 
-    public function id(): string { return $this->id; }
-    public function orderId(): string { return $this->orderId; }
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    public function orderId(): string
+    {
+        return $this->orderId;
+    }
 }

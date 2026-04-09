@@ -14,7 +14,7 @@ use App\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
 use App\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class MetricsProjectionService implements MetricsProjectionServiceInterface, OrderMetricsProjectionServiceInterface
+final readonly class MetricsProjectionService implements MetricsProjectionServiceInterface, OrderMetricsProjectionServiceInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

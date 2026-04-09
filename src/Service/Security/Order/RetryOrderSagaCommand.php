@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class RetryOrderSagaCommand
+final readonly class RetryOrderSagaCommand
 {
     public function __construct(public readonly int $orderId)
     {

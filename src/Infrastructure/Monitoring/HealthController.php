@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
-final class HealthController implements ServiceSubscriberInterface
+final readonly class HealthController implements ServiceSubscriberInterface
 {
     use ServiceSubscriberTrait;
 
@@ -29,7 +29,11 @@ final class HealthController implements ServiceSubscriberInterface
 
             return new JsonResponse(['status' => 'ok', 'db' => true], 200);
         } catch (\Throwable $e) {
-            return new JsonResponse(['status' => 'fail', 'db' => false, 'error' => $e->getMessage()], 500);
+            return new JsonResponse([
+                'status' => 'fail',
+                'db' => false,
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -47,7 +51,7 @@ final class HealthController implements ServiceSubscriberInterface
             $errors['db'] = $e->getMessage();
         }
 
-        if ($this->orderTransport) {
+        if (null !== $this->orderTransport) {
             try {
                 $this->orderTransport->get();
             } catch (\Throwable $e) {

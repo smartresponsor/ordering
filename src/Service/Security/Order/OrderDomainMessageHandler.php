@@ -14,10 +14,9 @@ use App\ServiceInterface\Security\Order\OrderDomainMessageHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class OrderDomainMessageHandler implements MessageHandlerInterface, OrderDomainMessageHandlerInterface
+final readonly class OrderDomainMessageHandler implements MessageHandlerInterface, OrderDomainMessageHandlerInterface
 {
-    public function __construct(private LoggerInterface $logger)
-    {
+    public function __construct(private readonly LoggerInterface $logger) {
     }
 
     public function __invoke(OrderDomainMessage $msg): void

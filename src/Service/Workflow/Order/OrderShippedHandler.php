@@ -9,26 +9,26 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order as OrderAggregate;
+use App\Entity\Order;
 use App\Event\Domain\Order\OrderShippedEvent;
-use App\Repository\Order\OrderRepository;
 use App\ServiceInterface\Workflow\Order\OrderShippedHandlerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-final class OrderShippedHandler implements OrderShippedHandlerInterface
+final readonly class OrderShippedHandler implements OrderShippedHandlerInterface
 {
     public function __construct(
-        private readonly OrderRepository $orders,
+        private readonly EntityManagerInterface $em,
         private readonly OrderStatusService $status,
     ) {
     }
 
     public function __invoke(OrderShippedEvent $event): void
     {
-        $order = $this->orders->findById($event->orderId);
-        if (!$order) {
-            // ленивое создание, если агрегата нет (можно заменить на exception)
-            $order = new OrderAggregate($event->orderId);
+        $order = $this->em->getRepository(Order::class)->findOneBy(['id' => $event->orderId]);
+        if (!$order instanceof Order) {
+            return;
         }
+
         $this->status->applyTransition($order, 'ship');
     }
 }

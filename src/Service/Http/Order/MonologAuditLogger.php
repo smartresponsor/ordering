@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use Psr\Log\LoggerInterface;
 
-final class MonologAuditLogger
+final readonly class MonologAuditLogger
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

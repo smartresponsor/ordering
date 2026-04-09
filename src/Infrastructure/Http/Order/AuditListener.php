@@ -9,7 +9,7 @@ use App\Service\Http\Order\Redactor;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class AuditListener
+final readonly class AuditListener
 {
     /** @var list<string> */
     private array $excludePath;

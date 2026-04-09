@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use App\ServiceInterface\Http\Order\AuditRotateInterface;
 
-final class AuditRotator implements AuditRotateInterface
+final readonly class AuditRotator implements AuditRotateInterface
 {
     public function __construct(private readonly string $projectDir)
     {

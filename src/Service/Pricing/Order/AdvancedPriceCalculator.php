@@ -15,11 +15,11 @@ use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\PriceBreakdown;
 
-final class AdvancedPriceCalculator
+final readonly class AdvancedPriceCalculator
 {
     public function __construct(
-        private CurrencyConversionServiceInterface $fx,
-        private bool $taxAfterDiscount = true,
+        private readonly CurrencyConversionServiceInterface $fx,
+        private readonly bool $taxAfterDiscount = true,
     ) {
     }
 
@@ -44,7 +44,14 @@ final class AdvancedPriceCalculator
         $discountMoney = $subtotal->subtract($discountedBase);
 
         $taxBase = $this->taxAfterDiscount ? $discountedBase : $subtotal;
-        $tax = $taxStrategy ? $taxStrategy->tax($taxBase) : Money::zero($displayCurrency);
+        $tax = Money::zero($displayCurrency);
+        if (null !== $taxStrategy) {
+            foreach ($items as $i) {
+                $item = new \App\Entity\Order\OrderItem((string) ($i['sku'] ?? 'sku'), (int) $i['quantity'], (int) $i['priceMinor'], strtoupper((string) ($i['currency'] ?? $displayCurrency)));
+                $taxMinor = $taxStrategy->taxFor($item, (int) $i['priceMinor']);
+                $tax = $tax->add(new Money(number_format($taxMinor / 100, 2, '.', ''), $displayCurrency));
+            }
+        }
         $total = $taxBase->add($tax);
 
         return new PriceBreakdown($subtotal, $discountMoney, $tax, $total);

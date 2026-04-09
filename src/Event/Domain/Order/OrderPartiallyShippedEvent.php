@@ -7,9 +7,9 @@ namespace App\Event\Domain\Order;
 final readonly class OrderPartiallyShippedEvent
 {
     public function __construct(
-        public string $orderId,
-        public int $count,
-        public ?string $note = null,
+        public readonly string $orderId,
+        public readonly int $count,
+        public readonly ?string $note = null,
     ) {
     }
 }

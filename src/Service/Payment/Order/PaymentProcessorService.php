@@ -15,7 +15,7 @@ use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\PaymentProcessorServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class PaymentProcessorService implements PaymentProcessorServiceInterface
+final readonly class PaymentProcessorService implements PaymentProcessorServiceInterface
 {
     public function __construct(
         private readonly PaymentGatewayInterface $gateway,

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -21,6 +22,7 @@ class VatExclusiveStrategy implements VatExclusiveStrategyInterface, TaxationStr
         if ('none' === $taxation->type || 0.0 === $taxation->rate) {
             return Money::zero($net->getCurrency());
         }
+
         $tax = bcmul($net->getAmount(), (string) $taxation->rate, 4);
 
         return new Money(number_format((float) $tax, 2, '.', ''), $net->getCurrency());

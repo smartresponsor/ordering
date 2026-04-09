@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class OrderPaymentCommand
+final readonly class OrderPaymentCommand
 {
-    public function __construct(public string $orderId, public string $amount)
-    {
+    public function __construct(public readonly string $orderId, public readonly string $amount) {
     }
 }

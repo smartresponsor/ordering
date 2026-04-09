@@ -10,7 +10,7 @@ use App\ServiceInterface\Analytics\Order\MetricsSubscriberInterface;
 use App\ServiceInterface\Analytics\Order\OrderMetricsSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-final class MetricsSubscriber implements MetricsSubscriberInterface, OrderMetricsSubscriberInterface
+final readonly class MetricsSubscriber implements MetricsSubscriberInterface, OrderMetricsSubscriberInterface
 {
     public function __construct(private readonly MetricsProjectionService $proj)
     {
@@ -19,7 +19,7 @@ final class MetricsSubscriber implements MetricsSubscriberInterface, OrderMetric
     #[AsEventListener(event: OrderPlacedEvent::class)]
     public function onPlaced(OrderPlacedEvent $e): void
     {
-        $this->proj->projectOrderPlaced($e->order, $e->order->getTotalAmount(), $e->order->getVendorId(), new \DateTimeImmutable('now'));
+        $this->proj->projectOrderPlaced((string) $e->orderId, '0.00', null, new \DateTimeImmutable('now'));
     }
 
     #[AsEventListener(event: OrderRefundedEvent::class)]

@@ -11,11 +11,11 @@ $bundles = [
 ];
 
 foreach ([
-    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class,
-    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class,
-    Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class,
-    Sentry\Symfony\Bundle\SentryBundle::class,
-    Symfony\Bundle\TwigBundle\TwigBundle::class,
+    'Doctrine\Bundle\DoctrineBundle\DoctrineBundle',
+    'Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle',
+    'Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle',
+    'Sentry\Symfony\Bundle\SentryBundle',
+    'Symfony\Bundle\TwigBundle\TwigBundle',
 ] as $optionalBundle) {
     if (class_exists($optionalBundle)) {
         $bundles[$optionalBundle] = ['all' => true];

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -21,10 +22,12 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @implements ProcessorInterface<OrderResource, OrderResource>
  */
-final class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcessorInterface
+final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcessorInterface
 {
-    public function __construct(private MessageBusInterface $bus, private EntityManagerInterface $em)
-    {
+    public function __construct(
+        private readonly MessageBusInterface $bus,
+        private readonly EntityManagerInterface $em,
+    ) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
@@ -37,7 +40,10 @@ final class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcess
             'customerId' => $data->customerId,
             'vendorId' => $data->vendorId,
             'currency' => $data->currency ?? 'USD',
-            'items' => array_map(fn ($i) => ['sku' => $i->sku, 'qty' => $i->qty, 'price' => $i->price], $data->items),
+            'items' => array_map(
+                static fn ($i) => ['sku' => $i->sku, 'qty' => $i->qty, 'price' => $i->price],
+                $data->items,
+            ),
             'placeAt' => $data->placeAt ?? (new \DateTimeImmutable())->format(DATE_ATOM),
         ];
 
@@ -45,17 +51,17 @@ final class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcess
         $this->em->flush(); // единая транзакция с outbox, если используется
 
         // Возвращаем облегчённый ресурс
-        $r = new OrderResource();
-        $r->id = $orderId;
-        $r->number = $payload['orderId'];
-        $r->status = 'placed';
-        $r->currency = $payload['currency'];
-        $r->grandTotal = '0.00';
-        $r->paidTotal = '0.00';
-        $r->refundedTotal = '0.00';
-        $r->customerId = $payload['customerId'];
-        $r->vendorId = $payload['vendorId'];
+        $resource = new OrderResource();
+        $resource->id = $orderId;
+        $resource->number = $payload['orderId'];
+        $resource->status = 'placed';
+        $resource->currency = $payload['currency'];
+        $resource->grandTotal = '0.00';
+        $resource->paidTotal = '0.00';
+        $resource->refundedTotal = '0.00';
+        $resource->customerId = $payload['customerId'];
+        $resource->vendorId = $payload['vendorId'];
 
-        return $r;
+        return $resource;
     }
 }

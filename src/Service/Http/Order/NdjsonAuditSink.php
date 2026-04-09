@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use App\ServiceInterface\Http\Order\AuditSinkInterface;
 
-final class NdjsonAuditSink implements AuditSinkInterface
+final readonly class NdjsonAuditSink implements AuditSinkInterface
 {
     private string $path;
 

@@ -8,7 +8,6 @@ use App\Entity\Order\OrderReturnPolicy;
 
 final readonly class OrderReturnWindowExpiredEvent
 {
-    public function __construct(public OrderReturnPolicy $policy)
-    {
+    public function __construct(public readonly OrderReturnPolicy $policy) {
     }
 }

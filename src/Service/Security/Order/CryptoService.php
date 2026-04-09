@@ -11,7 +11,7 @@ namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Security\Order\CryptoServiceInterface;
 
-final class CryptoService implements CryptoServiceInterface
+final readonly class CryptoService implements CryptoServiceInterface
 {
     public function __construct(private readonly string $key)
     {

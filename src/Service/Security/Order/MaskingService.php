@@ -11,7 +11,7 @@ namespace App\Service\Security\Order;
 
 use App\Support\Security\Order\SecureString;
 
-final class MaskingService
+final readonly class MaskingService
 {
     /** @var string[] */
     private array $maskKeys;

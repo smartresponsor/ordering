@@ -11,8 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsRollupProvider implements ProviderInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly EntityManagerInterface $em) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array

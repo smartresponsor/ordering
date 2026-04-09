@@ -10,7 +10,7 @@ use App\Repository\Outbox\OutboxMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OutboxPublisher
+final readonly class OutboxPublisher
 {
     private ?OutboxMessageRepository $repository;
     private ?EntityManagerInterface $em;

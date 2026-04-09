@@ -16,11 +16,11 @@ use App\ServiceInterface\Security\Order\TransactionalEventPublisherInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
-final class TransactionalEventPublisher implements TransactionalEventPublisherInterface
+final readonly class TransactionalEventPublisher implements TransactionalEventPublisherInterface
 {
     public function __construct(
-        private OutboxRepositoryInterface $outbox,
-        private MessageBusInterface $bus,
+        private readonly OutboxRepositoryInterface $outbox,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Inventory\Order;
 
-final class Sku
+final readonly class Sku
 {
     public function __construct(private readonly string $value)
     {

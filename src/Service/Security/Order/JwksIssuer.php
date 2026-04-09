@@ -14,7 +14,7 @@ use OpenSSLAsymmetricKey;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class JwksIssuer
+final readonly class JwksIssuer
 {
     private JwkRepositoryInterface $repo;
 

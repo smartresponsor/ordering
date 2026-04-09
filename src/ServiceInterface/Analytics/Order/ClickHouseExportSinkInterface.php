@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Analytics\Order;
 
-interface ClickHouseExportSinkInterface
+interface ClickHouseExportSinkInterface extends ExportSinkInterface
 {
-    public function push(array $batch): void;
-
-    public function flush(): void;
 }

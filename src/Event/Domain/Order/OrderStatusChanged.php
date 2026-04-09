@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Order;
 
-final class OrderStatusChanged
+final readonly class OrderStatusChanged
 {
     public function __construct(
         public readonly string $orderId,

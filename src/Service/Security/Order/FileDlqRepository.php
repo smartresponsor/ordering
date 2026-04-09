@@ -13,10 +13,9 @@ use App\ServiceInterface\Security\Order\DlqRepositoryInterface;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class FileDlqRepository implements DlqRepositoryInterface
+final readonly class FileDlqRepository implements DlqRepositoryInterface
 {
-    public function __construct(private string $file)
-    {
+    public function __construct(private readonly string $file) {
         if (!file_exists($this->file)) {
             touch($this->file);
         }

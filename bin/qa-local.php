@@ -4,17 +4,61 @@
 declare(strict_types=1);
 
 $steps = [
-    ['name' => 'Composer audit', 'command' => 'composer audit --no-interaction', 'optional' => false],
-    ['name' => 'PHP lint', 'command' => 'php -l src/Controller/OrderManagementController.php', 'optional' => false],
-    ['name' => 'YAML lint', 'command' => 'php bin/console lint:yaml config', 'optional' => false],
-    ['name' => 'Twig lint', 'command' => 'php bin/console lint:twig templates', 'optional' => false],
-    ['name' => 'Container lint', 'command' => 'php bin/console lint:container', 'optional' => false],
-    ['name' => 'Schema validate', 'command' => 'php bin/console doctrine:schema:validate -vvv', 'optional' => false],
-    ['name' => 'Unit tests', 'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFast', 'optional' => false],
-    ['name' => 'Functional tests', 'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack', 'optional' => false],
-    ['name' => 'Importmap audit', 'command' => 'php bin/console importmap:audit', 'optional' => true],
-    ['name' => 'Gitleaks', 'command' => 'gitleaks detect --no-banner --source .', 'optional' => true],
-    ['name' => 'Semgrep', 'command' => 'semgrep scan --config auto', 'optional' => true],
+    [
+        'name' => 'Composer audit',
+        'command' => 'composer audit --no-interaction',
+        'optional' => false,
+    ],
+    [
+        'name' => 'PHP lint',
+        'command' => 'php -l src/Controller/OrderManagementController.php',
+        'optional' => false,
+    ],
+    [
+        'name' => 'YAML lint',
+        'command' => 'php bin/console lint:yaml config',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Twig lint',
+        'command' => 'php bin/console lint:twig templates',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Container lint',
+        'command' => 'php bin/console lint:container',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Schema validate',
+        'command' => 'php bin/console doctrine:schema:validate -vvv',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Unit tests',
+        'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFast',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Functional tests',
+        'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack',
+        'optional' => false,
+    ],
+    [
+        'name' => 'Importmap audit',
+        'command' => 'php bin/console importmap:audit',
+        'optional' => true,
+    ],
+    [
+        'name' => 'Gitleaks',
+        'command' => 'gitleaks detect --no-banner --source .',
+        'optional' => true,
+    ],
+    [
+        'name' => 'Semgrep',
+        'command' => 'semgrep scan --config auto',
+        'optional' => true,
+    ],
 ];
 
 foreach ($steps as $step) {
@@ -26,6 +70,7 @@ foreach ($steps as $step) {
     }
 
     passthru($step['command'], $exitCode);
+
     if (0 !== $exitCode) {
         fwrite(STDERR, 'FAILED: '.$step['name'].PHP_EOL);
         exit($exitCode);
@@ -51,9 +96,5 @@ function commandIsAvailable(string $command): bool
     $where = strtoupper(substr(PHP_OS_FAMILY, 0, 3)) === 'WIN' ? 'where' : 'command -v';
     exec($where.' '.$binary, $output, $exitCode);
 
-    if (0 === $exitCode) {
-        return true;
-    }
-
-    return false;
+    return 0 === $exitCode;
 }

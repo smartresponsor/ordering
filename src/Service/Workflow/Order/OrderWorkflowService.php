@@ -21,7 +21,7 @@ use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 
-final class OrderWorkflowService implements OrderWorkflowServiceInterface
+final readonly class OrderWorkflowService implements OrderWorkflowServiceInterface
 {
     public function __construct(
         private readonly WorkflowInterface $workflow,

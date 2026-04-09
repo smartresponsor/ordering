@@ -10,15 +10,9 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Workflow\Order;
 
 use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Repository\Order\OrderRepository;
-use App\Service\Workflow\Order\OrderStatusService;
 
 interface OrderCancelledHandlerInterface
 {
-    public function __construct(
-        OrderRepository $orders,
-        OrderStatusService $status,
-    );
 
     public function __invoke(OrderCancelledEvent $event): void;
 }

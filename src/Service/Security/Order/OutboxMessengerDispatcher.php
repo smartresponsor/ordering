@@ -15,7 +15,7 @@ use App\ServiceInterface\Security\Order\OutboxMessengerDispatcherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterface
+final readonly class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -28,7 +28,8 @@ final class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterf
         $repo = $this->em->getRepository(OutboxMessage::class);
         $messages = array_filter(
             $repo->findBy([], ['messageId' => 'ASC'], $limit),
-            static fn (mixed $message): bool => $message instanceof OutboxMessage && $message->isPending(),
+            static fn (mixed $message): bool => $message instanceof OutboxMessage
+                && $message->isPending(),
         );
         $count = 0;
 

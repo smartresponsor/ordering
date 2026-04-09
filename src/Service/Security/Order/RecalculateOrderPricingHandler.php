@@ -14,10 +14,9 @@ use App\ServiceInterface\Security\Order\RecalculateOrderPricingHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class RecalculateOrderPricingHandler implements RecalculateOrderPricingHandlerInterface
+final readonly class RecalculateOrderPricingHandler implements RecalculateOrderPricingHandlerInterface
 {
-    public function __construct(private OrderPricingService $service)
-    {
+    public function __construct(private readonly OrderPricingService $service) {
     }
 
     public function __invoke(RecalculateOrderPricingCommand $cmd): void

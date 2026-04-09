@@ -18,7 +18,7 @@ use App\ServiceInterface\Shipment\Order\ShipmentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class ShipmentService implements ShipmentServiceInterface
+final readonly class ShipmentService implements ShipmentServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,

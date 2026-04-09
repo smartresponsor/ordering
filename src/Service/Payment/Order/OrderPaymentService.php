@@ -13,7 +13,7 @@ use App\Entity\Order\OrderPaymentTransaction;
 use App\Entity\Order\OrderRefundTransaction;
 use App\ServiceInterface\Payment\Order\OrderPaymentServiceInterface;
 
-final class OrderPaymentService implements OrderPaymentServiceInterface
+final readonly class OrderPaymentService implements OrderPaymentServiceInterface
 {
     public function __construct(
         private readonly PartialPaymentService $partialPayments,

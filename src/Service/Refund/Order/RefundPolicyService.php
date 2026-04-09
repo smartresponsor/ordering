@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-final class RefundPolicyService
+final readonly class RefundPolicyService
 {
     public function __construct(
-        private int $postDeliveryRefundDays = 14,
-        private bool $allowPartialAfterShipment = true,
+        private readonly int $postDeliveryRefundDays = 14,
+        private readonly bool $allowPartialAfterShipment = true,
     ) {
     }
 

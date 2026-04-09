@@ -16,17 +16,16 @@ use App\Message\Command\Order\OrderPartialPaymentCommand;
 use App\ServiceInterface\Security\Order\OrderPartialPaymentProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OrderPartialPaymentProcessor implements ProcessorInterface, OrderPartialPaymentProcessorInterface
+final readonly class OrderPartialPaymentProcessor implements ProcessorInterface, OrderPartialPaymentProcessorInterface
 {
-    public function __construct(private MessageBusInterface $bus)
-    {
+    public function __construct(private readonly MessageBusInterface $bus) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         /* @var OrderPartialPaymentInput $data */
         $this->bus->dispatch(new OrderPartialPaymentCommand(
-            $data->orderId, $data->amountMinor, $data->currency, $data->paymentMethod, $data->idempotencyKey
+            $uriVariables['id'] ?? $uriVariables['orderId'] ?? '', (int) round(((float) $data->amount) * 100), 'USD', 'manual', $data->externalRef
         ));
 
         return ['status' => 'accepted'];

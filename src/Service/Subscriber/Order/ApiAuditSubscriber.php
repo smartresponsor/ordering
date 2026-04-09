@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-final class ApiAuditSubscriber implements EventSubscriberInterface, ApiAuditSubscriberInterface
+final readonly class ApiAuditSubscriber implements EventSubscriberInterface, ApiAuditSubscriberInterface
 {
     public function __construct(
         private readonly LoggerInterface $orderAuditLogger,

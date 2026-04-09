@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use App\ServiceInterface\Http\Order\AuditSinkInterface;
 
-final class MonologAuditSink implements AuditSinkInterface
+final readonly class MonologAuditSink implements AuditSinkInterface
 {
     public function write(array $payload): void
     {

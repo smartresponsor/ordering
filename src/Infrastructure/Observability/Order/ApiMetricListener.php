@@ -7,7 +7,7 @@ namespace App\Infrastructure\Observability\Order;
 use App\Service\Observability\Order\MonologApiMetric;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class ApiMetricListener
+final readonly class ApiMetricListener
 {
     public function __construct(private readonly MonologApiMetric $metric)
     {

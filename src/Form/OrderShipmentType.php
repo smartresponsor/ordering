@@ -16,6 +16,8 @@ final class OrderShipmentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        parent::buildForm($builder, $options);
+
         $builder
             ->add('carrier', TextType::class, ['label' => 'Carrier'])
             ->add('note', TextareaType::class, [
@@ -28,6 +30,8 @@ final class OrderShipmentType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => OrderShipmentDTO::class,
         ]);

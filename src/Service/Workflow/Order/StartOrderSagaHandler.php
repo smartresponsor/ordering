@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(fromTransport: 'async')]
-final class StartOrderSagaHandler implements StartOrderSagaHandlerInterface
+final readonly class StartOrderSagaHandler implements StartOrderSagaHandlerInterface
 {
     public function __construct(private readonly EntityManagerInterface $em, private readonly OrderSaga $saga)
     {

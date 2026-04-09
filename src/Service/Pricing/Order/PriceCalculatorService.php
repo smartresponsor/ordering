@@ -17,7 +17,7 @@ use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\Price;
 use App\ValueObject\Pricing\Order\Taxation;
 
-class PriceCalculatorService implements PriceCalculatorServiceInterface
+readonly class PriceCalculatorService implements PriceCalculatorServiceInterface
 {
     public function __construct(private readonly \App\ServiceInterface\Pricing\Order\TaxationStrategyInterface $taxStrategy)
     {

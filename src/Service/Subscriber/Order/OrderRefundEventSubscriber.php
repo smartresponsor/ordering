@@ -10,7 +10,7 @@ use App\ServiceInterface\Subscriber\Order\OrderRefundEventSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-final class OrderRefundEventSubscriber implements OrderRefundEventSubscriberInterface
+final readonly class OrderRefundEventSubscriber implements OrderRefundEventSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

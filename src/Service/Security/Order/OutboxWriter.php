@@ -13,7 +13,7 @@ use App\Entity\Order\OutboxMessage;
 use App\ServiceInterface\Security\Order\OutboxWriterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class OutboxWriter implements OutboxWriterInterface
+final readonly class OutboxWriter implements OutboxWriterInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

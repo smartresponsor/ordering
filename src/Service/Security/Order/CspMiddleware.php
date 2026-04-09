@@ -11,7 +11,7 @@ namespace App\Service\Security\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class CspMiddleware
+final readonly class CspMiddleware
 {
     private string $policy;
 

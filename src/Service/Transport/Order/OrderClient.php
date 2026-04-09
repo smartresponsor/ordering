@@ -7,10 +7,9 @@ namespace App\Service\Transport\Order;
 use App\ServiceInterface\Transport\Order\HttpClientInterface;
 use App\ServiceInterface\Transport\Order\OrderClientInterface;
 
-final class OrderClient implements OrderClientInterface
+final readonly class OrderClient implements OrderClientInterface
 {
-    public function __construct(private HttpClientInterface $http)
-    {
+    public function __construct(private readonly HttpClientInterface $http) {
     }
 
     public function createOrder(int $totalAmount, string $currency, string $customerId): Order

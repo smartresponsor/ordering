@@ -11,8 +11,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 final readonly class WebhookHmacSubscriber
 {
     public function __construct(
-        private WebhookSignatureVerifier $verifier,
-        private string $header = 'X-Signature',
+        private readonly WebhookSignatureVerifier $verifier,
+        private readonly string $header = 'X-Signature',
     ) {
     }
 
@@ -31,7 +31,9 @@ final readonly class WebhookHmacSubscriber
         $signature = $request->headers->get($this->header);
         $payload = $request->getContent() ?: '';
         if (!$this->verifier->isValid($payload, $signature)) {
-            $event->setResponse(new JsonResponse(['error' => 'Invalid webhook signature'], 401));
+            $event->setResponse(new JsonResponse([
+                'error' => 'Invalid webhook signature',
+            ], 401));
         }
     }
 }

@@ -10,15 +10,9 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Workflow\Order;
 
 use App\Event\Domain\Order\OrderShippedEvent;
-use App\Repository\Order\OrderRepository;
-use App\Service\Workflow\Order\OrderStatusService;
 
 interface OrderShippedHandlerInterface
 {
-    public function __construct(
-        OrderRepository $orders,
-        OrderStatusService $status,
-    );
 
     public function __invoke(OrderShippedEvent $event): void;
 }

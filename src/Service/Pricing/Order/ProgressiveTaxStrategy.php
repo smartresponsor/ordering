@@ -16,7 +16,7 @@ use App\ValueObject\Pricing\Order\Money;
  * Progressive brackets in major units. Example:
  * [ [0, 100.00, 0.0], [100.00, 1000.00, 0.1], [1000.00, null, 0.2] ]
  */
-final class ProgressiveTaxStrategy implements ProgressiveTaxStrategyInterface
+final readonly class ProgressiveTaxStrategy implements ProgressiveTaxStrategyInterface
 {
     /** @var array<int,array{float,float|null,float}> */
     private array $brackets;

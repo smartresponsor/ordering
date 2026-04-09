@@ -10,8 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class PaymentWebhookListener implements EventSubscriberInterface
 {
-    public function __construct(private PaymentService $service, private TransactionalEventPublisher $publisher)
-    {
+    public function __construct(private readonly PaymentService $service, private readonly TransactionalEventPublisher $publisher) {
     }
 
     public static function getSubscribedEvents(): array

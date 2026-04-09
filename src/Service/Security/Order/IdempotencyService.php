@@ -13,7 +13,7 @@ use App\Entity\Order\IdempotencyKey;
 use App\Repository\Order\IdempotencyKeyRepository;
 use App\ServiceInterface\Security\Order\IdempotencyServiceInterface;
 
-final class IdempotencyService implements IdempotencyServiceInterface
+final readonly class IdempotencyService implements IdempotencyServiceInterface
 {
     public function __construct(private readonly IdempotencyKeyRepository $repo)
     {

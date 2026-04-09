@@ -6,7 +6,7 @@ namespace App\Service\Analytics\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-final class OrderMetricsViewRepository
+final readonly class OrderMetricsViewRepository
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

@@ -14,11 +14,11 @@ use App\ServiceInterface\Payment\Order\OrderPaymentReconciliationServiceInterfac
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
-final class OrderPaymentReconciliationService implements OrderPaymentReconciliationServiceInterface
+final readonly class OrderPaymentReconciliationService implements OrderPaymentReconciliationServiceInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private LoggerInterface $logger,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

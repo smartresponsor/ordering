@@ -6,7 +6,6 @@ namespace App\Message\Command;
 
 final readonly class StartOrderSagaCommand
 {
-    public function __construct(public string $orderId, public array $context = [])
-    {
+    public function __construct(public readonly string $orderId, public readonly array $context = []) {
     }
 }

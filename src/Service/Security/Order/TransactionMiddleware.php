@@ -12,7 +12,7 @@ namespace App\Service\Security\Order;
 use App\ServiceInterface\Security\Order\TransactionMiddlewareInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class TransactionMiddleware implements TransactionMiddlewareInterface
+final readonly class TransactionMiddleware implements TransactionMiddlewareInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

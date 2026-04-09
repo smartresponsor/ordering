@@ -7,10 +7,10 @@ namespace App\Event\Domain\Order;
 final readonly class OrderRefundInitiatedEvent
 {
     public function __construct(
-        public string $orderId,
-        public string $refundId,
-        public int $amountMinor,
-        public string $currency,
+        public readonly string $orderId,
+        public readonly string $refundId,
+        public readonly int $amountMinor,
+        public readonly string $currency,
     ) {
     }
 }

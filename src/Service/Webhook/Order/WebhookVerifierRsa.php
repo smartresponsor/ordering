@@ -22,11 +22,11 @@ final class WebhookVerifierRsa implements WebhookVerifierRsaInterface
             return false;
         }
 
-        $sig = base64_decode((string) ($data['sig'] ?? ''), true);
-        if (false === $sig) {
+        $signature = base64_decode((string) ($data['sig'] ?? ''), true);
+        if (false === $signature) {
             return false;
         }
 
-        return 1 === openssl_verify($payload, $sig, $publicPem, OPENSSL_ALGO_SHA256);
+        return 1 === openssl_verify($payload, $signature, $publicPem, OPENSSL_ALGO_SHA256);
     }
 }

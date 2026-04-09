@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-final class TaxRuleSet
+final readonly class TaxRuleSet
 {
     /** @param array<string,mixed> $rules */
     public function __construct(public readonly string $region, public readonly array $rules)

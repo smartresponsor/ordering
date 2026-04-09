@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Message\Command\Order;
 
-final class OrderCancelCommand
+final readonly class OrderCancelCommand
 {
-    public function __construct(public string $orderId)
-    {
+    public function __construct(public readonly string $orderId) {
     }
 }

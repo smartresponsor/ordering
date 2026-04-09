@@ -8,7 +8,7 @@ use App\ServiceInterface\Subscriber\Order\EmailSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: 'order.event', method: 'onOrderEvent')]
-final class EmailSubscriber implements EmailSubscriberInterface
+final readonly class EmailSubscriber implements EmailSubscriberInterface
 {
     public function onOrderEvent(array $payload): void
     {

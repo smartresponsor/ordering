@@ -15,11 +15,11 @@ use App\ServiceInterface\Security\Order\IdempotencyStoreInterface;
 
 use App\ServiceInterface\Security\Order\WorkerIdempotencyGuardInterface;
 
-final class WorkerIdempotencyGuard implements WorkerIdempotencyGuardInterface
+final readonly class WorkerIdempotencyGuard implements WorkerIdempotencyGuardInterface
 {
     public function __construct(
-        private IdempotencyKeyPolicy $policy,
-        private IdempotencyStoreInterface $store,
+        private readonly IdempotencyKeyPolicy $policy,
+        private readonly IdempotencyStoreInterface $store,
     ) {
     }
 

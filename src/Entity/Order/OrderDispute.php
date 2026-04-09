@@ -8,19 +8,19 @@ use App\Entity\Order as RootOrder;
 
 final class OrderDispute
 {
-    public const STATUS_OPEN = 'open';
-    public const STATUS_RESOLVED = 'resolved';
-    public const STATUS_CHARGEBACK_ISSUED = 'chargeback_issued';
+    public const string STATUS_OPEN = 'open';
+    public const string STATUS_RESOLVED = 'resolved';
+    public const string STATUS_CHARGEBACK_ISSUED = 'chargeback_issued';
 
     private string $status = self::STATUS_OPEN;
 
     private string $id;
 
     public function __construct(
-        private RootOrder|string $order,
-        private string $type,
-        private ?string $reason = null,
-        private ?string $externalId = null,
+        private readonly RootOrder|string $order,
+        private readonly string $type,
+        private readonly ?string $reason = null,
+        private readonly ?string $externalId = null,
     ) {
         $this->id = $this->externalId ?? sha1((is_string($this->order) ? $this->order : (string) $this->order->id()).'|'.$this->type.'|'.($this->reason ?? ''));
     }

@@ -14,7 +14,7 @@ use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\OrderServiceHookInterface;
 use App\ValueObject\Pricing\Order\Money;
 
-final class OrderServiceHook implements OrderServiceHookInterface
+final readonly class OrderServiceHook implements OrderServiceHookInterface
 {
     public function __construct(private readonly OrderRefundEligibilityServiceInterface $eligibility)
     {

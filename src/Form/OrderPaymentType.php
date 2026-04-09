@@ -16,6 +16,8 @@ final class OrderPaymentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        parent::buildForm($builder, $options);
+
         $builder
             ->add('amount', MoneyType::class, [
                 'currency' => false,
@@ -28,6 +30,8 @@ final class OrderPaymentType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => OrderPaymentDTO::class,
         ]);

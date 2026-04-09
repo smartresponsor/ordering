@@ -11,10 +11,9 @@ use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class IdempotencyMiddleware implements MiddlewareInterface
+final readonly class IdempotencyMiddleware implements MiddlewareInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly EntityManagerInterface $em) {
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope

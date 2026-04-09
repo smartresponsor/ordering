@@ -15,7 +15,7 @@ use App\ServiceInterface\Transport\Order\CarrierInterface;
 use App\ServiceInterface\Transport\Order\ShipmentProcessorServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class ShipmentProcessorService implements ShipmentProcessorServiceInterface
+final readonly class ShipmentProcessorService implements ShipmentProcessorServiceInterface
 {
     public function __construct(private readonly CarrierInterface $carrier, private readonly EntityManagerInterface $em)
     {
@@ -23,7 +23,7 @@ final class ShipmentProcessorService implements ShipmentProcessorServiceInterfac
 
     public function ship(Order $order, string $carrierName = 'UPS'): OrderShipment
     {
-        $tracking = $this->carrier->createShipment($carrierName, $order->getId() ?? 0);
+        $tracking = $this->carrier->ship($order->getId(), $carrierName);
         $shipment = new OrderShipment($order, $carrierName, $tracking);
         $shipment->markShipped($tracking);
         $this->em->persist($shipment);

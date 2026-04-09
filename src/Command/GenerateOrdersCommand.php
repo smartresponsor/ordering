@@ -27,6 +27,7 @@ final class GenerateOrdersCommand extends Command
 
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('count', InputArgument::OPTIONAL, 'How many orders to generate', 5)
             ->addOption('status', null, InputOption::VALUE_REQUIRED, 'Force status for all orders')
@@ -52,9 +53,13 @@ final class GenerateOrdersCommand extends Command
         if ($statusOpt) {
             $statusOpt = strtolower((string) $statusOpt);
             $map = [
-                'draft' => OrderStatus::Draft, 'placed' => OrderStatus::Placed, 'paid' => OrderStatus::Paid,
-                'shipped' => OrderStatus::Shipped, 'completed' => OrderStatus::Completed,
-                'cancelled' => OrderStatus::Cancelled, 'refunded' => OrderStatus::Refunded,
+                'draft' => OrderStatus::Draft,
+                'placed' => OrderStatus::Placed,
+                'paid' => OrderStatus::Paid,
+                'shipped' => OrderStatus::Shipped,
+                'completed' => OrderStatus::Completed,
+                'cancelled' => OrderStatus::Cancelled,
+                'refunded' => OrderStatus::Refunded,
             ];
             if (!isset($map[$statusOpt])) {
                 $io->error('Unknown status: '.$statusOpt);
@@ -88,7 +93,8 @@ final class GenerateOrdersCommand extends Command
         $withPayments = (bool) $input->getOption('with-payment');
         $io->success(sprintf(
             $withPayments ? 'Created %d orders with payments (Создано %d заказов с платежами)' : 'Created %d orders (Создано %d заказов)',
-            count($ids), count($ids)
+            count($ids),
+            count($ids),
         ));
         if ($forcedStatus instanceof OrderStatus) {
             $io->writeln(sprintf('Status: %s', $forcedStatus->value));

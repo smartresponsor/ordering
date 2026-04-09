@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-final class RateLimitHeaderMiddleware implements HttpKernelInterface
+final readonly class RateLimitHeaderMiddleware implements HttpKernelInterface
 {
     public function __construct(
-        private HttpKernelInterface $kernel,
-        private RateLimiterFactory $limiterFactory,
+        private readonly HttpKernelInterface $kernel,
+        private readonly RateLimiterFactory $limiterFactory,
     ) {
     }
 

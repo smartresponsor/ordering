@@ -8,7 +8,6 @@ use App\Entity\Order\OrderDispute;
 
 final readonly class OrderChargebackIssuedEvent
 {
-    public function __construct(public OrderDispute $dispute)
-    {
+    public function __construct(public readonly OrderDispute $dispute) {
     }
 }

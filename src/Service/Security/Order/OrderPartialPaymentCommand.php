@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class OrderPartialPaymentCommand
+final readonly class OrderPartialPaymentCommand
 {
     public function __construct(
-        public string $orderId,
-        public int $amountMinor,
-        public string $currency,
-        public string $paymentMethod,
-        public ?string $idempotencyKey = null,
+        public readonly string $orderId,
+        public readonly int $amountMinor,
+        public readonly string $currency,
+        public readonly string $paymentMethod,
+        public readonly ?string $idempotencyKey = null,
     ) {
     }
 }

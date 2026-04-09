@@ -11,7 +11,7 @@ namespace App\ValueObject\Security\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class JwkKey
+final readonly class JwkKey
 {
     private string $kid;
     private string $alg;

@@ -6,24 +6,22 @@ namespace App\Factory;
 
 use App\Entity\Order;
 use App\ValueObject\OrderStatus;
-use Zenstruck\Foundry\ModelFactory;
 
-final class OrderFactory extends ModelFactory
+final class OrderFactory
 {
-    protected function getDefaults(): array
+    /** @return list<OrderFactoryProxy> */
+    public static function createMany(int $count): array
     {
+        $proxies = [];
         $statuses = OrderStatus::cases();
 
-        return ['status' => $statuses[array_rand($statuses)]];
-    }
+        for ($i = 0; $i < $count; ++$i) {
+            $order = new Order();
+            $order->setStatus($statuses[array_rand($statuses)]);
+            $order->initAudit();
+            $proxies[] = new OrderFactoryProxy($order);
+        }
 
-    protected function initialize(): self
-    {
-        return $this->afterInstantiate(function (Order $order): void { $order->initAudit(); });
-    }
-
-    protected static function getClass(): string
-    {
-        return Order::class;
+        return $proxies;
     }
 }

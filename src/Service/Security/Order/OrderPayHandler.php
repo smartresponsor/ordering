@@ -17,11 +17,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'messenger.bus.commands')]
-final class OrderPayHandler implements OrderPayHandlerInterface
+final readonly class OrderPayHandler implements OrderPayHandlerInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private OutboxPublisher $outbox,
+        private readonly EntityManagerInterface $em,
+        private readonly OutboxPublisher $outbox,
     ) {
     }
 

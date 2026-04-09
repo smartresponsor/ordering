@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use App\ServiceInterface\Http\Order\AuditShipInterface;
 
-final class S3AuditShipper implements AuditShipInterface
+final readonly class S3AuditShipper implements AuditShipInterface
 {
     public function __construct(
         private readonly object $s3,

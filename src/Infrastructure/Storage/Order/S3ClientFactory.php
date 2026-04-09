@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Storage\Order;
 
-final class S3ClientFactory
+final readonly class S3ClientFactory
 {
     /** @param array<string, mixed> $config */
     public function __construct(private readonly array $config = [])
@@ -13,8 +13,8 @@ final class S3ClientFactory
 
     public function create(): object
     {
-        if (class_exists(\Aws\S3\S3Client::class)) {
-            return new \Aws\S3\S3Client($this->config);
+        if (class_exists('Aws\\S3\\S3Client')) {
+            return new ('Aws\\S3\\S3Client')($this->config);
         }
 
         return new class {

@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class JwtScopeVoter extends Voter
 {
-    public const ATTRIBUTE = 'JWT_SCOPE';
+    public const string ATTRIBUTE = 'JWT_SCOPE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {

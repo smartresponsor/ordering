@@ -7,7 +7,7 @@ namespace App\ValueObject\Pricing\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
-final class TaxRate
+final readonly class TaxRate
 {
     #[ORM\Column(type: 'decimal', precision: 5, scale: 2)]
     private string $percent;

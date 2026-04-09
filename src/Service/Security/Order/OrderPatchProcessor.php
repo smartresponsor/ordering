@@ -18,10 +18,9 @@ use App\Message\Command\Order\OrderShipmentCommand;
 use App\ServiceInterface\Security\Order\OrderPatchProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OrderPatchProcessor implements ProcessorInterface, OrderPatchProcessorInterface
+final readonly class OrderPatchProcessor implements ProcessorInterface, OrderPatchProcessorInterface
 {
-    public function __construct(private MessageBusInterface $bus)
-    {
+    public function __construct(private readonly MessageBusInterface $bus) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
@@ -40,7 +39,9 @@ final class OrderPatchProcessor implements ProcessorInterface, OrderPatchProcess
             $this->bus->dispatch(new OrderPaymentCommand($id, $data->paidTotal));
         }
         if (($data->status ?? null) === 'shipped') {
-            $this->bus->dispatch(new OrderShipmentCommand($id));
+            $carrier = $context['carrier'] ?? 'manual';
+            assert(\is_string($carrier) && '' !== $carrier);
+            $this->bus->dispatch(new OrderShipmentCommand($id, $carrier));
         }
 
         return $data;

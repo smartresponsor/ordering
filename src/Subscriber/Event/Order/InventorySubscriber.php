@@ -7,10 +7,11 @@ namespace App\Subscriber\Event\Order;
 use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class InventorySubscriber implements EventSubscriberInterface
+final readonly class InventorySubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly ?InventoryReservationServiceInterface $svc = null)
-    {
+    public function __construct(
+        private readonly ?InventoryReservationServiceInterface $svc = null,
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -40,11 +41,13 @@ final class InventorySubscriber implements EventSubscriberInterface
             if (!is_array($item)) {
                 continue;
             }
+
             $sku = $item['sku'] ?? null;
             $qty = $item['qty'] ?? null;
             if (!is_scalar($sku) || !is_scalar($qty)) {
                 continue;
             }
+
             $this->svc?->reserveOrFail($orderId, (string) $sku, (int) $qty);
         }
     }
@@ -75,11 +78,13 @@ final class InventorySubscriber implements EventSubscriberInterface
             if (!is_array($item)) {
                 continue;
             }
+
             $sku = $item['sku'] ?? null;
             $qty = $item['qty'] ?? null;
             if (!is_scalar($sku) || !is_scalar($qty)) {
                 continue;
             }
+
             $this->svc?->release($orderId, (string) $sku, (int) $qty);
         }
     }

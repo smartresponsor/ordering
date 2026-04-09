@@ -8,7 +8,7 @@ use App\ServiceInterface\Subscriber\Order\AnalyticsSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: 'order.event', method: 'onOrderEvent')]
-final class AnalyticsSubscriber implements AnalyticsSubscriberInterface
+final readonly class AnalyticsSubscriber implements AnalyticsSubscriberInterface
 {
     public function onOrderEvent(array $payload): void
     {

@@ -14,11 +14,11 @@ use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use App\ServiceInterface\Refund\Order\RefundServiceInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 
-final class OrderRefundService implements RefundServiceInterface
+final readonly class OrderRefundService implements RefundServiceInterface
 {
     public function __construct(
-        private PaymentGatewayInterface $gateway,
-        private OrderRefundTransactionRepositoryInterface $refunds,
+        private readonly PaymentGatewayInterface $gateway,
+        private readonly OrderRefundTransactionRepositoryInterface $refunds,
     ) {
     }
 

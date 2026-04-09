@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contract\Gateway\Order;
 
-final class TaxBreakdown
+final readonly class TaxBreakdown
 {
     public function __construct(
         public readonly string $subtotal,

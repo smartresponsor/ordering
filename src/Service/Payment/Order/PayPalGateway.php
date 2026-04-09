@@ -12,10 +12,9 @@ namespace App\Service\Payment\Order;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\PayPalGatewayInterface;
 
-final class PayPalGateway implements PaymentGatewayInterface, PayPalGatewayInterface
+final readonly class PayPalGateway implements PaymentGatewayInterface, PayPalGatewayInterface
 {
-    public function __construct(private ?string $clientId = null, private ?string $secret = null)
-    {
+    public function __construct(private readonly ?string $clientId = null, private readonly ?string $secret = null) {
     }
 
     public function charge(string $orderId, string $amount, array $context = []): string

@@ -32,7 +32,6 @@ services:
 
   Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'
 
-
   App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Repository\Order\OrderPaymentTransactionRepository'
   App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Repository\Order\OrderRefundTransactionRepository'
   App\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Repository\Order\OrderEventRepository'

@@ -18,10 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderPartialPaymentHandler implements OrderPartialPaymentHandlerInterface
+final readonly class OrderPartialPaymentHandler implements OrderPartialPaymentHandlerInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly EntityManagerInterface $em) {
     }
 
     public function __invoke(OrderPartialPaymentCommand $c): void
@@ -35,7 +34,7 @@ final class OrderPartialPaymentHandler implements OrderPartialPaymentHandlerInte
         }
 
         $pp = new OrderPartialPayment(
-            \Ramsey\Uuid\Uuid::uuid4()->toString(),
+            Uuid::v7()->toRfc4122(),
             $c->orderId,
             $c->amountMinor,
             $c->currency,
@@ -44,7 +43,7 @@ final class OrderPartialPaymentHandler implements OrderPartialPaymentHandlerInte
         $this->em->persist($pp);
 
         $evt = new OutboxMessage(
-            \Ramsey\Uuid\Uuid::uuid4()->toString(),
+            Uuid::v7()->toRfc4122(),
             'order.partial_paid',
             ['orderId' => $c->orderId, 'amountMinor' => $c->amountMinor, 'currency' => $c->currency]
         );

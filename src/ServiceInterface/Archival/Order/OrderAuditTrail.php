@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Archival\Order;
 
-final class OrderAuditTrail
+final readonly class OrderAuditTrail
 {
     public function __construct(
-        public string $orderId,
-        public int $totalEvents,
-        public array $events,
+        public readonly string $orderId,
+        public readonly int $totalEvents,
+        public readonly array $events,
     ) {
     }
 }

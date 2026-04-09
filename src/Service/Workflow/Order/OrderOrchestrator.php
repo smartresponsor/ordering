@@ -16,7 +16,7 @@ use App\Entity\Order;
 use App\ServiceInterface\Workflow\Order\OrderOrchestratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class OrderOrchestrator implements OrderOrchestratorInterface
+final readonly class OrderOrchestrator implements OrderOrchestratorInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -28,9 +28,9 @@ final class OrderOrchestrator implements OrderOrchestratorInterface
 
     public function processOrder(Order $order): void
     {
-        $this->paymentGateway->initiatePayment($order->getNumber(), (float) $order->getTotalAmount(), $order->getCurrency());
+        $this->paymentGateway->charge($order->getId(), (string) $order->getTotalAmount(), ['currency' => $order->getCurrency()]);
 
-        $tracking = $this->shipmentGateway->createShipment($order, 'DHL');
+        $tracking = $this->shipmentGateway->ship($order->getId(), 'DHL');
         if (method_exists($order, 'assignTracking')) {
             $order->assignTracking($tracking);
         }

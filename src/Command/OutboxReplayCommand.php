@@ -21,6 +21,7 @@ final class OutboxReplayCommand extends Command
 
     protected function configure(): void
     {
+        parent::configure();
         $this->addArgument('limit', InputArgument::OPTIONAL, 'Max messages per run', '100');
     }
 

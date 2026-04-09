@@ -6,7 +6,7 @@ namespace App\ValueObject\Pricing\Order;
 
 use App\ValueObject\Pricing\Order\Money;
 
-final class PriceBreakdown
+final readonly class PriceBreakdown
 {
     public function __construct(
         public readonly Money $subtotal,

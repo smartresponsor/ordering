@@ -27,6 +27,7 @@ final class AuditRotateCommand extends Command implements AuditRotateCommandInte
 
     protected function configure(): void
     {
+        parent::configure();
         $this->addOption('older-than-days', null, InputOption::VALUE_OPTIONAL, 'Rotate files older than N days (0 = before today)', '0');
         $this->addOption('no-gzip', null, InputOption::VALUE_NONE, 'Do not gzip rotated files');
     }

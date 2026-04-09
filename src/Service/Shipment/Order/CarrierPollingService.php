@@ -9,17 +9,17 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\Integration\Shipment\CarrierInterface;
+use App\ServiceInterface\Shipment\CarrierInterface;
 use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface;
 use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
-final class CarrierPollingService implements CarrierPollingServiceInterface
+final readonly class CarrierPollingService implements CarrierPollingServiceInterface
 {
     /** @var array<string, CarrierInterface> */
-    private array $carriers = [];
+    private array $carriers;
 
     public function __construct(
         #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
@@ -27,9 +27,12 @@ final class CarrierPollingService implements CarrierPollingServiceInterface
         private readonly OrderShipmentViewRepositoryInterface $repo,
         private readonly LoggerInterface $logger,
     ) {
+        $mappedCarriers = [];
         foreach ($carriers as $carrier) {
-            $this->carriers[strtolower($carrier->name())] = $carrier;
+            $mappedCarriers[strtolower($carrier->name())] = $carrier;
         }
+
+        $this->carriers = $mappedCarriers;
     }
 
     public function poll(string $carrierName, string $orderId, string $trackingNumber): bool

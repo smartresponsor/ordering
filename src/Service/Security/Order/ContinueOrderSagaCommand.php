@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class ContinueOrderSagaCommand
+final readonly class ContinueOrderSagaCommand
 {
     public function __construct(public readonly int $orderId, public readonly string $step)
     {

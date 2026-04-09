@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -12,10 +13,11 @@ namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Security\Order\IdempotencyKeyPolicyInterface;
 
-final class IdempotencyKeyPolicy implements IdempotencyKeyPolicyInterface
+final readonly class IdempotencyKeyPolicy implements IdempotencyKeyPolicyInterface
 {
-    public function __construct(private int $ttlSeconds = 600)
-    {
+    public function __construct(
+        private int $ttlSeconds = 600,
+    ) {
     }
 
     public function ttlSeconds(): int

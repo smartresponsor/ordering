@@ -15,7 +15,7 @@ use App\ServiceInterface\Analytics\Order\AuditLoggerServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Uid\Uuid;
 
-final class AuditLoggerService implements AuditLoggerServiceInterface
+final readonly class AuditLoggerService implements AuditLoggerServiceInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

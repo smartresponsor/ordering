@@ -14,10 +14,9 @@ use App\ServiceInterface\Refund\Order\OrderRefundCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderRefundCommandHandler implements OrderRefundCommandHandlerInterface
+final readonly class OrderRefundCommandHandler implements OrderRefundCommandHandlerInterface
 {
-    public function __construct(private OrderRefundService $service, private TransactionalEventPublisher $publisher)
-    {
+    public function __construct(private readonly OrderRefundService $service, private readonly TransactionalEventPublisher $publisher) {
     }
 
     public function __invoke(OrderRefundCommand $cmd): void

@@ -15,10 +15,9 @@ use App\Message\Command\Order\OrderCancelCommand;
 use App\ServiceInterface\Security\Order\OrderDeleteProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OrderDeleteProcessor implements ProcessorInterface, OrderDeleteProcessorInterface
+final readonly class OrderDeleteProcessor implements ProcessorInterface, OrderDeleteProcessorInterface
 {
-    public function __construct(private MessageBusInterface $bus)
-    {
+    public function __construct(private readonly MessageBusInterface $bus) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed

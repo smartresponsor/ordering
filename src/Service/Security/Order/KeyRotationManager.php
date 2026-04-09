@@ -19,11 +19,11 @@ use App\ValueObject\Security\Order\JwkKey;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class KeyRotationManager implements KeyRotationManagerInterface
+final readonly class KeyRotationManager implements KeyRotationManagerInterface
 {
     public function __construct(
-        private JwkRepositoryInterface $repo,
-        private SecretRotationPolicy $policy,
+        private readonly JwkRepositoryInterface $repo,
+        private readonly SecretRotationPolicy $policy,
     ) {
     }
 

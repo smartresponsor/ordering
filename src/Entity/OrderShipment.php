@@ -10,10 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'order_shipment')]
 class OrderShipment
 {
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_IN_TRANSIT = 'in_transit';
-    public const STATUS_DELIVERED = 'delivered';
-    public const STATUS_COMPLETED = 'completed';
+    public const string STATUS_PENDING = 'pending';
+    public const string STATUS_IN_TRANSIT = 'in_transit';
+    public const string STATUS_DELIVERED = 'delivered';
+    public const string STATUS_COMPLETED = 'completed';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

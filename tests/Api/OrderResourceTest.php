@@ -10,11 +10,22 @@ final class OrderResourceTest extends WebTestCase
 {
     public function testCreateAndFlow(): void
     {
-        $c = static::createClient();
-        $c->request('POST', '/orders', server: ['CONTENT_TYPE' => 'application/json'], content: json_encode(['currency' => 'USD', 'grandTotal' => '100.00']));
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/orders',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: json_encode(['currency' => 'USD', 'grandTotal' => '100.00']),
+        );
         self::assertResponseStatusCodeSame(201);
-        $id = json_decode($c->getResponse()->getContent(), true)['id'];
-        $c->request('POST', "/orders/$id/pay", server: ['CONTENT_TYPE' => 'application/json'], content: json_encode(['amount' => '40.00', 'externalRef' => 'api']));
+
+        $id = json_decode($client->getResponse()->getContent(), true)['id'];
+        $client->request(
+            'POST',
+            "/orders/$id/pay",
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: json_encode(['amount' => '40.00', 'externalRef' => 'api']),
+        );
         self::assertResponseIsSuccessful();
     }
 }

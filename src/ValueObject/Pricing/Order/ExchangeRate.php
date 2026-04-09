@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-final class ExchangeRate
+final readonly class ExchangeRate
 {
     public function __construct(
         private readonly string $baseCurrency,

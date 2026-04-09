@@ -6,13 +6,13 @@ namespace App\Api\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class OrderPartialPaymentInput
+final readonly class OrderPartialPaymentInput
 {
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Positive]
-        public string $amount = '0.00',
-        public ?string $externalRef = null,
+        public readonly string $amount = '0.00',
+        public readonly ?string $externalRef = null,
     ) {
     }
 }

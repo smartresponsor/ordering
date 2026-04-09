@@ -9,14 +9,26 @@ final class OrderReturnRequest
     private string $status = 'draft';
 
     public function __construct(
-        private string $id,
-        private string $orderId,
-        private int $amountMinor,
-        private string $currency,
-        private ?string $reason = null,
-    ) {}
+        private readonly string $id,
+        private readonly string $orderId,
+        private readonly int $amountMinor,
+        private readonly string $currency,
+        private readonly ?string $reason = null,
+    ) {
+    }
 
-    public function id(): string { return $this->id; }
-    public function approve(): void { $this->status = 'approved'; }
-    public function markRefunded(): void { $this->status = 'refunded'; }
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    public function approve(): void
+    {
+        $this->status = 'approved';
+    }
+
+    public function markRefunded(): void
+    {
+        $this->status = 'refunded';
+    }
 }

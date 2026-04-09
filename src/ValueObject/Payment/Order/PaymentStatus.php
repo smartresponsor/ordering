@@ -7,7 +7,7 @@ namespace App\ValueObject\Payment\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
-final class PaymentStatus
+final readonly class PaymentStatus
 {
     #[ORM\Column(type: 'string', length: 16)]
     private string $value;

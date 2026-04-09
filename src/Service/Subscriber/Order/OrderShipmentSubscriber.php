@@ -10,7 +10,7 @@ use App\ServiceInterface\Subscriber\Order\OrderShipmentSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-final class OrderShipmentSubscriber implements OrderShipmentSubscriberInterface
+final readonly class OrderShipmentSubscriber implements OrderShipmentSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

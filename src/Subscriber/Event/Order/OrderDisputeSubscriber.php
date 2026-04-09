@@ -10,7 +10,7 @@ use App\Event\Domain\Order\OrderDisputeResolvedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class OrderDisputeSubscriber implements EventSubscriberInterface
+final readonly class OrderDisputeSubscriber implements EventSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

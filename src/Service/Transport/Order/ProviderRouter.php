@@ -15,7 +15,7 @@ use App\ValueObject\Routing\Order\QuotaPolicy;
 use App\ValueObject\Routing\Order\RouteContext;
 use App\ValueObject\Routing\Order\RouteDecision;
 
-final class ProviderRouter implements ProviderRouterInterface
+final readonly class ProviderRouter implements ProviderRouterInterface
 {
     /** @var array<string, ProviderAdapterInterface> */
     private array $adapter;
@@ -35,10 +35,10 @@ final class ProviderRouter implements ProviderRouterInterface
         array $adapter,
         array $probe,
         array $canaryPercent,
-        private ProviderPolicy $policy,
-        private CanarySwitch $canarySwitch,
-        private QuotaPolicy $quotaPolicy,
-        private CostPolicy $costPolicy,
+        private readonly ProviderPolicy $policy,
+        private readonly CanarySwitch $canarySwitch,
+        private readonly QuotaPolicy $quotaPolicy,
+        private readonly CostPolicy $costPolicy,
     ) {
         $this->adapter = $adapter;
         $this->probe = $probe;

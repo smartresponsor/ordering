@@ -21,7 +21,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Uid\Uuid;
 
 #[AsMessageHandler]
-final class OrderRefundHandler implements OrderRefundHandlerInterface
+final readonly class OrderRefundHandler implements OrderRefundHandlerInterface
 {
     public function __construct(private readonly EntityManagerInterface $em, private readonly RefundPolicyService $policy)
     {

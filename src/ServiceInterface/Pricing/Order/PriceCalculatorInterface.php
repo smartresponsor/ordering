@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
+use App\Entity\Order;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
+use App\Entity\Order\OrderItem;
 use App\ValueObject\Pricing\Order\TaxRate;
 
 interface PriceCalculatorInterface
@@ -23,4 +25,7 @@ interface PriceCalculatorInterface
     );
 
     public function calculate(Money $subtotal, TaxRate $rate, ?Currency $targetCurrency = null): array;
+
+    /** @param OrderItem[] $items */
+    public function recalc(Order $order, array $items): void;
 }

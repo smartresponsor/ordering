@@ -6,14 +6,17 @@ namespace App\Entity\Order;
 
 final class OrderStockReservation
 {
-    public const STATUS_RESERVED = 'reserved';
-    public const STATUS_FAILED = 'failed';
-    public const STATUS_RELEASED = 'released';
+    public const string STATUS_RESERVED = 'reserved';
+    public const string STATUS_FAILED = 'failed';
+    public const string STATUS_RELEASED = 'released';
 
     private string $status = self::STATUS_RESERVED;
 
-    public function __construct(private string $orderId, private string $sku, private int $quantity)
-    {
+    public function __construct(
+        private readonly string $orderId,
+        private readonly string $sku,
+        private readonly int $quantity,
+    ) {
     }
 
     public function orderId(): string

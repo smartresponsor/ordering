@@ -21,7 +21,7 @@ use App\ValueObject\Pricing\Order\RefundAmount;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class OrderService implements OrderServiceInterface
+final readonly class OrderService implements OrderServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,

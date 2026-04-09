@@ -6,7 +6,7 @@ namespace App\Service\Analytics\Order;
 
 use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
 
-final class BigQueryExportSink implements ExportSinkInterface
+final readonly class BigQueryExportSink implements ExportSinkInterface
 {
     public function __construct(private readonly string $targetPath)
     {

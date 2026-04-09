@@ -7,7 +7,7 @@ namespace App\Message\Handler\Order;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderRefundHandler
+final readonly class OrderRefundHandler
 {
     public function __invoke(object $message): void
     {

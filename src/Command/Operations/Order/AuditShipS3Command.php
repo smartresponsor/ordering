@@ -27,6 +27,7 @@ final class AuditShipS3Command extends Command implements AuditShipS3CommandInte
 
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addOption('date', null, InputOption::VALUE_OPTIONAL, 'YYYY-MM-DD or "today"', 'today')
             ->addOption('bucket', null, InputOption::VALUE_OPTIONAL, 'Override S3 bucket')

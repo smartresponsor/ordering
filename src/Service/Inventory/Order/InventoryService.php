@@ -20,7 +20,7 @@ use App\ServiceInterface\Inventory\Order\InventoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class InventoryService implements InventoryServiceInterface
+final readonly class InventoryService implements InventoryServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,

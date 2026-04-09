@@ -7,8 +7,8 @@ namespace App\ApiResource\View\Order;
 final readonly class ReturnRequestOutput
 {
     public function __construct(
-        public string $returnRequestId,
-        public string $status,
+        public readonly string $returnRequestId,
+        public readonly string $status,
     ) {
     }
 }

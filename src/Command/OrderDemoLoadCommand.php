@@ -22,6 +22,7 @@ final class OrderDemoLoadCommand extends Command
 
     protected function configure(): void
     {
+        parent::configure();
         $this->addOption('count', null, InputOption::VALUE_REQUIRED, 'Number of demo orders to generate', 12);
     }
 

@@ -38,7 +38,7 @@ echo "[AA3 smoke] trying 200 route selections...\n";
 $summary = [];
 
 for ($i = 0; $i < 200; ++$i) {
-    $decision = $router->select(new RouteContext('ord_'.$i, 'tenant_a', 'us', 'authorize', 1999, false));
+    $decision = $router->select(new RouteContext('ord_'.$i, 'us', 19.99, false));
     $provider = $decision->provider();
     $summary[$provider] = ($summary[$provider] ?? 0) + 1;
 }

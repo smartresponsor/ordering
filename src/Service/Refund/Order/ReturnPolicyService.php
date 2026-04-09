@@ -12,10 +12,10 @@ namespace App\Service\Refund\Order;
 use App\ServiceInterface\Refund\Order\OrderReturnPolicyServiceInterface;
 use App\ServiceInterface\Refund\Order\ReturnPolicyServiceInterface;
 
-final class ReturnPolicyService implements ReturnPolicyServiceInterface, OrderReturnPolicyServiceInterface
+final readonly class ReturnPolicyService implements ReturnPolicyServiceInterface, OrderReturnPolicyServiceInterface
 {
     public function __construct(
-        private int $refundWindowDays = 14,
+        private readonly int $refundWindowDays = 14,
     ) {
     }
 

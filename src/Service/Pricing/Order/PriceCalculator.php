@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
+use App\Entity\Order;
+use App\Entity\Order\OrderItem;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
@@ -17,7 +19,7 @@ use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\TaxRate;
 
-class PriceCalculator implements \App\ServiceInterface\Pricing\Order\PriceCalculatorInterface
+readonly class PriceCalculator implements \App\ServiceInterface\Pricing\Order\PriceCalculatorInterface
 {
     public function __construct(
         private readonly DefaultPromotionStrategyInterface $promotions,
@@ -58,5 +60,29 @@ class PriceCalculator implements \App\ServiceInterface\Pricing\Order\PriceCalcul
             'tax' => $tax,
             'total' => $total,
         ];
+    }
+
+    /** @param OrderItem[] $items */
+    public function recalc(Order $order, array $items): void
+    {
+        $subtotal = Money::zero($order->getCurrency());
+
+        foreach ($items as $item) {
+            if (!method_exists($item, 'subtotalMoney')) {
+                continue;
+            }
+
+            /** @var Money $itemSubtotal */
+            $itemSubtotal = $item->subtotalMoney();
+            $subtotal = $subtotal->add($itemSubtotal);
+        }
+
+        $country = method_exists($order, 'getCountryCode') ? $order->getCountryCode() : null;
+        $rate = $this->taxConfig->defaultRateFor((string) ($country ?? 'US'));
+        $result = $this->calculate($subtotal, $rate);
+        $order->setSubtotal($result['subtotal']->getAmount());
+        $order->setDiscountTotal($result['discount']->getAmount());
+        $order->setTaxTotal($result['tax']->getAmount());
+        $order->setGrandTotal($result['total']->getAmount());
     }
 }

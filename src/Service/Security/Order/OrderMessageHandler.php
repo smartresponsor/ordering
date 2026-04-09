@@ -26,8 +26,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final readonly class OrderMessageHandler implements OrderMessageHandlerInterface
 {
     public function __construct(
-        private EventDispatcherInterface $dispatcher,
-        private EntityManagerInterface $em,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 

@@ -14,7 +14,7 @@ use App\ServiceInterface\Security\Order\IdempotencyGuardInterface;
 use App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class IdempotencyGuard implements IdempotencyGuardInterface, OrderIdempotencyGuardInterface
+final readonly class IdempotencyGuard implements IdempotencyGuardInterface, OrderIdempotencyGuardInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

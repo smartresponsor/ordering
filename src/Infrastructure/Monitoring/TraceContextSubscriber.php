@@ -9,32 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-final class TraceContextSubscriber implements EventSubscriberInterface
+final readonly class TraceContextSubscriber implements EventSubscriberInterface
 {
-    private object|null $tracer = null;
-
-    public function __construct(string $serviceName = 'order-component', string $otlpEndpoint = 'http://otel-collector:4318/v1/traces')
-    {
-        if (!class_exists(\OpenTelemetry\SDK\Trace\TracerProvider::class)
-            || !class_exists(\OpenTelemetry\Contrib\Otlp\SpanExporter::class)
-            || !class_exists(\OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor::class)
-            || !class_exists(\OpenTelemetry\SDK\Resource\ResourceInfo::class)
-            || !class_exists(\OpenTelemetry\SDK\Resource\Detectors\SdkProvided::class)
-            || !class_exists(\OpenTelemetry\SemConv\ResourceAttributes::class)
-            || !class_exists(\OpenTelemetry\API\Trace\SpanKind::class)) {
-            return;
-        }
-
-        $resource = \OpenTelemetry\SDK\Resource\ResourceInfo::merge(
-            \OpenTelemetry\SDK\Resource\ResourceInfo::create([\OpenTelemetry\SemConv\ResourceAttributes::SERVICE_NAME => $serviceName]),
-            (new \OpenTelemetry\SDK\Resource\Detectors\SdkProvided())->getResource(),
-        );
-        $exporter = new \OpenTelemetry\Contrib\Otlp\SpanExporter($otlpEndpoint, null, ['Content-Type' => 'application/x-protobuf']);
-        $provider = \OpenTelemetry\SDK\Trace\TracerProvider::builder()
-            ->addSpanProcessor(new \OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor($exporter))
-            ->setResource($resource)
-            ->build();
-        $this->tracer = $provider->getTracer('order-component');
+    public function __construct(
+        private readonly string $serviceName = 'order-component',
+        private readonly string $responseHeaderName = 'X-Trace-Id',
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -47,43 +27,38 @@ final class TraceContextSubscriber implements EventSubscriberInterface
 
     public function onRequest(RequestEvent $event): void
     {
-        if (null === $this->tracer || !is_callable([$this->tracer, 'spanBuilder'])) {
-            return;
-        }
-
         $request = $event->getRequest();
-        $builder = $this->tracer->spanBuilder($request->getMethod().' '.$request->getPathInfo());
-        if (!is_object($builder) || !is_callable([$builder, 'setSpanKind']) || !is_callable([$builder, 'startSpan'])) {
-            return;
-        }
+        $incomingTraceId = $request->headers->get($this->responseHeaderName)
+            ?? $request->headers->get('traceparent');
 
-        $spanKind = defined('OpenTelemetry\\API\\Trace\\SpanKind::KIND_SERVER') ? constant('OpenTelemetry\\API\\Trace\\SpanKind::KIND_SERVER') : 2;
-        $span = $builder->setSpanKind($spanKind)->startSpan();
-        if (!is_object($span) || !is_callable([$span, 'activate'])) {
-            return;
-        }
+        $traceId = is_string($incomingTraceId) && '' !== trim($incomingTraceId)
+            ? trim($incomingTraceId)
+            : $this->generateTraceId();
 
-        $scope = $span->activate();
-        $request->attributes->set('_otel_span', $span);
-        $request->attributes->set('_otel_scope', $scope);
+        $request->attributes->set('_trace_id', $traceId);
+        $request->attributes->set('_trace_service', $this->serviceName);
     }
 
     public function onResponse(ResponseEvent $event): void
     {
         $request = $event->getRequest();
-        $span = $request->attributes->get('_otel_span');
-        $scope = $request->attributes->get('_otel_scope');
-
-        if (!is_object($span) || !is_object($scope) || !is_callable([$scope, 'detach']) || !is_callable([$span, 'end'])) {
+        $traceId = $request->attributes->get('_trace_id');
+        if (!is_string($traceId) || '' === $traceId) {
             return;
         }
 
         $response = $event->getResponse();
-        if ($response instanceof Response && is_callable([$span, 'setAttribute'])) {
-            $span->setAttribute('http.status_code', $response->getStatusCode());
+        if ($response instanceof Response) {
+            $response->headers->set($this->responseHeaderName, $traceId);
+            $response->headers->set(
+                'X-Trace-Service',
+                (string) $request->attributes->get('_trace_service', $this->serviceName),
+            );
         }
+    }
 
-        $scope->detach();
-        $span->end();
+    private function generateTraceId(): string
+    {
+        return bin2hex(random_bytes(16));
     }
 }

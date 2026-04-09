@@ -13,8 +13,8 @@ use Symfony\Component\Uid\Uuid;
 final readonly class OrderWorkflowSubscriber
 {
     public function __construct(
-        private OrderPricingInterface $pricing,
-        private EntityManagerInterface $em,
+        private readonly OrderPricingInterface $pricing,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-final class Discount
+final readonly class Discount
 {
     private ?string $percent;
     private ?Money $fixed;

@@ -9,7 +9,7 @@ use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class OrderRefundEventSubscriber implements EventSubscriberInterface
+final readonly class OrderRefundEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

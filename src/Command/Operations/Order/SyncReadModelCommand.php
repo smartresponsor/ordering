@@ -23,6 +23,7 @@ final class SyncReadModelCommand extends Command
 
     protected function configure(): void
     {
+        parent::configure();
         $this->addArgument('orderId', InputArgument::OPTIONAL, 'Order ID to recalc (if omitted, all)');
     }
 

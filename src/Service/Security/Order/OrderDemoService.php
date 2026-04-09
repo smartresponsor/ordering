@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class OrderDemoService implements App\DemoInterface\Scenario\Order\OrderDemoServiceInterface
+use App\DemoInterface\Scenario\Order\OrderDemoServiceInterface;
+
+final class OrderDemoService implements OrderDemoServiceInterface
 {
     public function seed(): int
     {

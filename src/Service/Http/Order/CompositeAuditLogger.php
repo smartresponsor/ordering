@@ -6,7 +6,7 @@ namespace App\Service\Http\Order;
 
 use App\ServiceInterface\Http\Order\AuditLoggerInterface;
 
-final class CompositeAuditLogger implements AuditLoggerInterface
+final readonly class CompositeAuditLogger implements AuditLoggerInterface
 {
     public function __construct(private readonly SinkRouter $sinkRouter)
     {

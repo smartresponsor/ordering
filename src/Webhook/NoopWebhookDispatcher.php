@@ -6,7 +6,7 @@ namespace App\Webhook;
 
 use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
 
-final class NoopWebhookDispatcher implements WebhookDispatcherInterface
+final readonly class NoopWebhookDispatcher implements WebhookDispatcherInterface
 {
     public function dispatch(object $event): void
     {

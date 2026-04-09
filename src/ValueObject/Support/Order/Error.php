@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Support\Order;
 
-final class Error
+final readonly class Error
 {
-    public function __construct(public string $code, public string $message)
-    {
+    public function __construct(public readonly string $code, public readonly string $message) {
     }
 
     public static function fromArray(array $a): self

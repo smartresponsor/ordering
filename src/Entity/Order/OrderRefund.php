@@ -4,4 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderRefund extends \App\Entity\OrderRefund {}
+use App\Entity\OrderRefund as BaseOrderRefund;
+
+final class OrderRefund extends BaseOrderRefund
+{
+}

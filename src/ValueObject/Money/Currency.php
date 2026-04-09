@@ -6,8 +6,7 @@ namespace App\ValueObject\Money;
 
 final readonly class Currency
 {
-    public function __construct(public string $code)
-    {
+    public function __construct(public readonly string $code) {
         if (!preg_match('/^[A-Z]{3}$/', $code)) {
             throw new \InvalidArgumentException('ISO 4217');
         }

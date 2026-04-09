@@ -7,7 +7,7 @@ namespace App\OpenApi;
 use ApiPlatform\OpenApi\OpenApi;
 use App\ServiceInterface\OpenApi\Order\OrderOpenApiFactoryInterface;
 
-final class OrderOpenApiFactory implements OrderOpenApiFactoryInterface
+final readonly class OrderOpenApiFactory implements OrderOpenApiFactoryInterface
 {
     public function __construct(private readonly object $inner)
     {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-class Money
+readonly class Money
 {
-    private string $amount;
-    private Currency $currency;
+    private readonly string $amount;
+    private readonly Currency $currency;
 
     public function __construct(string $amount, Currency|string $currency)
     {

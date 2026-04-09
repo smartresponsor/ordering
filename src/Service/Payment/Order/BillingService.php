@@ -17,7 +17,7 @@ use App\ServiceInterface\Payment\Order\BillingServiceInterface;
 use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class BillingService implements BillingServiceInterface, OrderBillingServiceInterface
+final readonly class BillingService implements BillingServiceInterface, OrderBillingServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,

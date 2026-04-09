@@ -10,7 +10,7 @@ namespace App\ValueObject\Routing\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class CanarySwitch
+final readonly class CanarySwitch
 {
     private int $seed;
 

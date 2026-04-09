@@ -7,10 +7,10 @@ namespace App\Service\Security\Order;
 readonly class OrderPartialRefundCommand
 {
     public function __construct(
-        public string $orderId,
-        public string $amount,
-        public string $currency,
-        public ?string $reason = null,
+        public readonly string $orderId,
+        public readonly string $amount,
+        public readonly string $currency,
+        public readonly ?string $reason = null,
     ) {
     }
 }

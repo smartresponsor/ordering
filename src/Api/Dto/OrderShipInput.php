@@ -6,12 +6,12 @@ namespace App\Api\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class OrderShipInput
+final readonly class OrderShipInput
 {
     public function __construct(
         #[Assert\Positive]
-        public int $count = 1,
-        public ?string $note = null,
+        public readonly int $count = 1,
+        public readonly ?string $note = null,
     ) {
     }
 }

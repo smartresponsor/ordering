@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderAuditLog
+final readonly class OrderAuditLog
 {
     public function __construct(
-        private string $id,
-        private string $orderId,
-        private string $action,
-        private ?string $payload = null,
-    ) {}
+        private readonly string $id,
+        private readonly string $orderId,
+        private readonly string $action,
+        private readonly ?string $payload = null,
+    ) {
+    }
 
-    public function orderId(): string { return $this->orderId; }
+    public function orderId(): string
+    {
+        return $this->orderId;
+    }
 }

@@ -12,7 +12,7 @@ namespace App\Service\Analytics\Order;
 use App\ServiceInterface\Analytics\Order\OrderMetricsQueryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class OrderMetricsQueryService implements OrderMetricsQueryServiceInterface
+final readonly class OrderMetricsQueryService implements OrderMetricsQueryServiceInterface
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {

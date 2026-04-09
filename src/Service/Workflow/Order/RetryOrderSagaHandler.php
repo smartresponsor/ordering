@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(fromTransport: 'async')]
-final class RetryOrderSagaHandler implements RetryOrderSagaHandlerInterface
+final readonly class RetryOrderSagaHandler implements RetryOrderSagaHandlerInterface
 {
     public function __construct(private readonly EntityManagerInterface $em, private readonly OrderSaga $saga)
     {

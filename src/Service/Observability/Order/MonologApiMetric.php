@@ -6,7 +6,7 @@ namespace App\Service\Observability\Order;
 
 use Psr\Log\LoggerInterface;
 
-final class MonologApiMetric
+final readonly class MonologApiMetric
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

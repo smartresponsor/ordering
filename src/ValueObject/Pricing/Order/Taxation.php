@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-final class Taxation
+final readonly class Taxation
 {
     public function __construct(
         public readonly float $rate,

@@ -8,12 +8,12 @@ use App\Security\Jwt\JwtTenantResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-final class TenantKeyResolver
+final readonly class TenantKeyResolver
 {
     public function __construct(
-        private RequestStack $rs,
-        private TokenStorageInterface $ts,
-        private JwtTenantResolver $tenantResolver,
+        private readonly RequestStack $rs,
+        private readonly TokenStorageInterface $ts,
+        private readonly JwtTenantResolver $tenantResolver,
     ) {
     }
 

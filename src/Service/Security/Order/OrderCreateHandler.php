@@ -16,10 +16,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'messenger.bus.commands')]
-final class OrderCreateHandler implements OrderCreateHandlerInterface
+final readonly class OrderCreateHandler implements OrderCreateHandlerInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly EntityManagerInterface $em) {
     }
 
     public function __invoke(OrderCreateCommand $cmd): string

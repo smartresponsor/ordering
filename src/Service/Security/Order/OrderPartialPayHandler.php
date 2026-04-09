@@ -16,10 +16,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderPartialPayHandler implements OrderPartialPayHandlerInterface
+final readonly class OrderPartialPayHandler implements OrderPartialPayHandlerInterface
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly EntityManagerInterface $em) {
     }
 
     public function __invoke(OrderPartialPayCommand $cmd): void

@@ -7,9 +7,9 @@ namespace App\Event\Domain\Order;
 final readonly class OrderRefundCompletedEvent
 {
     public function __construct(
-        public string $orderId,
-        public ?string $refundId = null,
-        public ?string $amount = null,
+        public readonly string $orderId,
+        public readonly ?string $refundId = null,
+        public readonly ?string $amount = null,
     ) {
     }
 }

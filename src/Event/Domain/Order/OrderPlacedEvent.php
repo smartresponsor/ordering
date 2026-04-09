@@ -6,7 +6,6 @@ namespace App\Event\Domain\Order;
 
 final readonly class OrderPlacedEvent
 {
-    public function __construct(public int $orderId)
-    {
+    public function __construct(public readonly int $orderId) {
     }
 }

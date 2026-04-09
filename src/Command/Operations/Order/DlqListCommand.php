@@ -28,6 +28,7 @@ class DlqListCommand extends Command implements DlqListCommandInterface
 
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addOption('topic', null, InputOption::VALUE_OPTIONAL, 'Filter by topic')
             ->addOption('q', null, InputOption::VALUE_OPTIONAL, 'Search in payload/header')

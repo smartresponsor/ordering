@@ -10,7 +10,7 @@ namespace App\ValueObject\Routing\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class ProviderPolicy
+final readonly class ProviderPolicy
 {
     private float $weightLatency;
     private float $weightError;

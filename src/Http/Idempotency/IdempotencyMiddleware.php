@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-final class IdempotencyMiddleware implements HttpKernelInterface
+final readonly class IdempotencyMiddleware implements HttpKernelInterface
 {
     public function __construct(
-        private HttpKernelInterface $kernel,
-        private CacheItemPoolInterface $cache,
-        private int $ttl = 60,
+        private readonly HttpKernelInterface $kernel,
+        private readonly CacheItemPoolInterface $cache,
+        private readonly int $ttl = 60,
     ) {
     }
 

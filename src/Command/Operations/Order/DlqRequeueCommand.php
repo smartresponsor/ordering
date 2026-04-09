@@ -28,6 +28,7 @@ class DlqRequeueCommand extends Command implements DlqRequeueCommandInterface
 
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('id', InputArgument::IS_ARRAY, 'Message ULID(s) to requeue')
             ->addOption('reset-attempt', null, InputOption::VALUE_NONE, 'Reset attempt counter to 0 (default true)')

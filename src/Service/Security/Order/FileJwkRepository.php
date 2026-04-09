@@ -14,7 +14,7 @@ use App\ValueObject\Security\Order\JwkKey;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class FileJwkRepository implements JwkRepositoryInterface
+final readonly class FileJwkRepository implements JwkRepositoryInterface
 {
     private string $dir;
 

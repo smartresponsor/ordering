@@ -17,12 +17,12 @@ use App\ServiceInterface\Security\Order\OrderPartialPaymentCommandHandlerInterfa
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderPartialPaymentCommandHandler implements OrderPartialPaymentCommandHandlerInterface
+final readonly class OrderPartialPaymentCommandHandler implements OrderPartialPaymentCommandHandlerInterface
 {
     public function __construct(
-        private PartialPaymentService $service,
-        private PaymentGatewayInterface $gateway,
-        private TransactionalEventPublisher $publisher,
+        private readonly PartialPaymentService $service,
+        private readonly PaymentGatewayInterface $gateway,
+        private readonly TransactionalEventPublisher $publisher,
     ) {
     }
 

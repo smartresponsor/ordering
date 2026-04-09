@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-final class RecalculateOrderPricingCommand
+final readonly class RecalculateOrderPricingCommand
 {
-    public function __construct(public string $orderId)
-    {
+    public function __construct(public readonly string $orderId) {
     }
 }

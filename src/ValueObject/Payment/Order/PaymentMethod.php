@@ -7,10 +7,10 @@ namespace App\ValueObject\Payment\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
-class PaymentMethod
+readonly class PaymentMethod
 {
     #[ORM\Column(type: 'string', length: 32)]
-    private string $value;
+    private readonly string $value;
 
     private function __construct(string $v)
     {

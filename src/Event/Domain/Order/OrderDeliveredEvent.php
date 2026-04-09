@@ -8,7 +8,6 @@ use App\Entity\Order\OrderShipment;
 
 final readonly class OrderDeliveredEvent
 {
-    public function __construct(public OrderShipment $shipment)
-    {
+    public function __construct(public readonly OrderShipment $shipment) {
     }
 }

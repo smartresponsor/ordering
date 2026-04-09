@@ -12,7 +12,7 @@ use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\ServiceInterface\Analytics\Order\OrderMetricsProjectorInterface;
 
-final class OrderMetricsProjector implements OrderMetricsProjectorInterface
+final readonly class OrderMetricsProjector implements OrderMetricsProjectorInterface
 {
     public function __construct(private readonly OrderMetricsViewRepository $repo)
     {

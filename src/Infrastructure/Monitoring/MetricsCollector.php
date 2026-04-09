@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Monitoring;
 
-final class MetricsCollector
+final readonly class MetricsCollector
 {
-    private object|null $registry = null;
+    private object|null $registry;
 
     public function __construct(object|null $registry = null)
     {
@@ -16,9 +16,11 @@ final class MetricsCollector
             return;
         }
 
-        if (class_exists(\Prometheus\CollectorRegistry::class) && class_exists(\Prometheus\Storage\InMemory::class)) {
+        if (class_exists('Prometheus\\CollectorRegistry') && class_exists('Prometheus\\Storage\\InMemory')) {
             /** @var object $collectorRegistry */
-            $collectorRegistry = new \Prometheus\CollectorRegistry(new \Prometheus\Storage\InMemory());
+            $collectorClass = 'Prometheus\\CollectorRegistry';
+            $storageClass = 'Prometheus\\Storage\\InMemory';
+            $collectorRegistry = new $collectorClass(new $storageClass());
             $this->registry = $collectorRegistry;
         }
     }
@@ -51,12 +53,13 @@ final class MetricsCollector
 
     public function render(): string
     {
-        if (null === $this->registry || !class_exists(\Prometheus\RenderTextFormat::class) || !is_callable([$this->registry, 'getMetricFamilySamples'])) {
+        if (null === $this->registry || !class_exists('Prometheus\\RenderTextFormat') || !is_callable([$this->registry, 'getMetricFamilySamples'])) {
             return '';
         }
 
         /** @var object $renderer */
-        $renderer = new \Prometheus\RenderTextFormat();
+        $rendererClass = 'Prometheus\\RenderTextFormat';
+        $renderer = new $rendererClass();
         if (!is_callable([$renderer, 'render'])) {
             return '';
         }

@@ -13,7 +13,7 @@ $console = __DIR__ . '/console';
 $projectRoot = dirname(__DIR__);
 $commandsOutput = [];
 $commandsExitCode = 0;
-@	exec(sprintf('php %s list --raw 2>NUL', escapeshellarg($console)), $commandsOutput, $commandsExitCode);
+@exec(sprintf('php %s list --raw 2>NUL', escapeshellarg($console)), $commandsOutput, $commandsExitCode);
 
 $knownCandidates = [
     'order:import',

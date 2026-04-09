@@ -10,8 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class ReadinessController
 {
-    public function __construct(private TransportInterface $asyncTransport)
-    {
+    public function __construct(private readonly TransportInterface $asyncTransport) {
     }
 
     #[Route('/readiness', name: 'readiness', methods: ['GET'])]

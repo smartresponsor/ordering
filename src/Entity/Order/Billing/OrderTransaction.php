@@ -9,10 +9,10 @@ final class OrderTransaction
     private string $status = 'pending';
 
     public function __construct(
-        private string $orderId,
-        private string $amount,
-        private string $currency,
-        private string $reference,
+        private readonly string $orderId,
+        private readonly string $amount,
+        private readonly string $currency,
+        private readonly string $reference,
     ) {
     }
 

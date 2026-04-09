@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Message\Command\Order;
 
-final class OrderRefundCommand
+final readonly class OrderRefundCommand
 {
     public function __construct(
-        public string $orderId,
-        public int $amountMinor,
-        public string $currency,
-        public ?string $reason = null,
-        public ?string $paymentRef = null,
-        public ?string $idempotencyKey = null,
+        public readonly string $orderId,
+        public readonly int $amountMinor,
+        public readonly string $currency,
+        public readonly ?string $reason = null,
+        public readonly ?string $paymentRef = null,
+        public readonly ?string $idempotencyKey = null,
     ) {
     }
 }

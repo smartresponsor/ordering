@@ -19,7 +19,7 @@ use App\ServiceInterface\Dispute\Order\OrderDisputeServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class DisputeService implements DisputeServiceInterface, OrderDisputeServiceInterface
+final readonly class DisputeService implements DisputeServiceInterface, OrderDisputeServiceInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $em,

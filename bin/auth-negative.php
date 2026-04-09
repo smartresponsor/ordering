@@ -8,6 +8,7 @@ require __DIR__.'/../vendor/autoload.php';
 function base64UrlDecode(string $value): string
 {
     $padding = 4 - (strlen($value) % 4);
+
     if ($padding < 4) {
         $value .= str_repeat('=', $padding);
     }
@@ -18,9 +19,16 @@ function base64UrlDecode(string $value): string
 /**
  * @return array{ok:bool,error?:string,claims?:array<string,mixed>}
  */
-function verifyJwt(string $jwt, string $publicPem, string $issuer, string $audience, int $leeway, string $expectedKid): array
-{
+function verifyJwt(
+    string $jwt,
+    string $publicPem,
+    string $issuer,
+    string $audience,
+    int $leeway,
+    string $expectedKid,
+): array {
     $parts = explode('.', $jwt);
+
     if (3 !== count($parts)) {
         return ['ok' => false, 'error' => 'malformed'];
     }
@@ -38,7 +46,13 @@ function verifyJwt(string $jwt, string $publicPem, string $issuer, string $audie
     }
 
     $signature = base64UrlDecode($encodedSignature);
-    $verified = openssl_verify($encodedHeader.'.'.$encodedPayload, $signature, $publicPem, OPENSSL_ALGO_SHA256);
+    $verified = openssl_verify(
+        $encodedHeader.'.'.$encodedPayload,
+        $signature,
+        $publicPem,
+        OPENSSL_ALGO_SHA256,
+    );
+
     if (1 !== $verified) {
         return ['ok' => false, 'error' => 'bad_signature'];
     }
@@ -76,6 +90,7 @@ function reportCase(string $name, bool $ok): bool
 }
 
 $config = json_decode((string) file_get_contents(__DIR__.'/../config/security/jwt.json'), true);
+
 if (!is_array($config)) {
     fwrite(STDERR, "Unable to read config/security/jwt.json\n");
     exit(2);
@@ -93,23 +108,57 @@ $valid = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.
 $result = verifyJwt($valid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('valid token', true === $result['ok']);
 
-$expired = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test1 '.escapeshellarg($issuer).' '.escapeshellarg($audience).' user_123 -10'));
+$expired = trim((string) shell_exec(
+    'php '
+    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
+    .' test1 '
+    .escapeshellarg($issuer)
+    .' '
+    .escapeshellarg($audience)
+    .' user_123 -10',
+));
 $result = verifyJwt($expired, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('expired token', false === $result['ok'] && 'expired' === ($result['error'] ?? null));
 
-$future = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test1 '.escapeshellarg($issuer).' '.escapeshellarg($audience).' user_123 300 9999'));
+$future = trim((string) shell_exec(
+    'php '
+    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
+    .' test1 '
+    .escapeshellarg($issuer)
+    .' '
+    .escapeshellarg($audience)
+    .' user_123 300 9999',
+));
 $result = verifyJwt($future, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('nbf future', false === $result['ok'] && 'nbf_future' === ($result['error'] ?? null));
 
-$wrongAudience = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test1 '.escapeshellarg($issuer).' WRONGAUD'));
+$wrongAudience = trim((string) shell_exec(
+    'php '
+    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
+    .' test1 '
+    .escapeshellarg($issuer)
+    .' WRONGAUD',
+));
 $result = verifyJwt($wrongAudience, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong audience', false === $result['ok'] && 'bad_aud' === ($result['error'] ?? null));
 
-$wrongIssuer = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test1 https://bad-issuer '.escapeshellarg($audience))) ;
+$wrongIssuer = trim((string) shell_exec(
+    'php '
+    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
+    .' test1 https://bad-issuer '
+    .escapeshellarg($audience),
+));
 $result = verifyJwt($wrongIssuer, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong issuer', false === $result['ok'] && 'bad_iss' === ($result['error'] ?? null));
 
-$unknownKid = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test2 '.escapeshellarg($issuer).' '.escapeshellarg($audience)));
+$unknownKid = trim((string) shell_exec(
+    'php '
+    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
+    .' test2 '
+    .escapeshellarg($issuer)
+    .' '
+    .escapeshellarg($audience),
+));
 $result = verifyJwt($unknownKid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('unknown kid', false === $result['ok'] && 'kid_not_found' === ($result['error'] ?? null));
 

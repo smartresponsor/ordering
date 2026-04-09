@@ -6,7 +6,7 @@ namespace App\ValueObject\Pricing\Order;
 
 use App\ValueObject\Pricing\Order\Money;
 
-final class Price
+final readonly class Price
 {
     public function __construct(
         public readonly Money $base,

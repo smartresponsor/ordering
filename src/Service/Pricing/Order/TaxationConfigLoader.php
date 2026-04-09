@@ -12,7 +12,7 @@ namespace App\Service\Pricing\Order;
 use App\ValueObject\Pricing\Order\TaxRate;
 use Symfony\Component\Yaml\Yaml;
 
-class TaxationConfigLoader implements \App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface
+final readonly class TaxationConfigLoader implements \App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface
 {
     private array $config;
 

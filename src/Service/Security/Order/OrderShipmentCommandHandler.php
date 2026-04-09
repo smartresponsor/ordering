@@ -14,12 +14,12 @@ use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class OrderShipmentCommandHandler
+final readonly class OrderShipmentCommandHandler
 {
     public function __construct(
-        private \App\Service\Shipment\Order\ShipmentService $service,
-        private TransactionalEventPublisher $publisher,
-        private CarrierInterface $carrier,
+        private readonly \App\Service\Shipment\Order\ShipmentService $service,
+        private readonly TransactionalEventPublisher $publisher,
+        private readonly CarrierInterface $carrier,
     ) {
     }
 

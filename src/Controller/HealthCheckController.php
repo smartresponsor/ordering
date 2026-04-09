@@ -11,8 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class HealthCheckController
 {
-    public function __construct(private EntityManagerInterface $em, private TransportInterface $asyncTransport)
-    {
+    public function __construct(private readonly EntityManagerInterface $em, private readonly TransportInterface $asyncTransport) {
     }
 
     #[Route('/healthz', name: 'healthz', methods: ['GET'])]

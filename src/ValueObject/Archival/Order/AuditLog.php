@@ -11,7 +11,7 @@ namespace App\ValueObject\Archival\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final class AuditLog
+final readonly class AuditLog
 {
     private string $file;
 

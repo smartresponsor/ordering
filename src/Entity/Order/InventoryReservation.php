@@ -8,10 +8,10 @@ use App\Entity\Order as RootOrder;
 
 final class InventoryReservation
 {
-    public const STATE_RESERVED = 'reserved';
-    public const STATE_RELEASED = 'released';
-    public const STATE_CONSUMED = 'consumed';
-    public const STATE_FAILED = 'failed';
+    public const string STATE_RESERVED = 'reserved';
+    public const string STATE_RELEASED = 'released';
+    public const string STATE_CONSUMED = 'consumed';
+    public const string STATE_FAILED = 'failed';
 
     private string $orderId;
     private string $reservationKey;

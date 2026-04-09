@@ -9,11 +9,11 @@ final class OrderPaymentIntent
     private string $status = 'pending';
 
     public function __construct(
-        private string $orderId,
-        private string $amount,
-        private string $currency,
-        private string $gateway,
-        private ?string $intentId = null,
+        private readonly string $orderId,
+        private readonly string $amount,
+        private readonly string $currency,
+        private readonly string $gateway,
+        private readonly ?string $intentId = null,
     ) {
         $this->intentId ??= 'pi_'.bin2hex(random_bytes(8));
     }

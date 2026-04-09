@@ -1,19 +1,47 @@
 #!/usr/bin/env php
 <?php
-// Test only: mint RS256 tokens from test key
-$priv = file_get_contents(__DIR__.'/../tests/keys/test-private.pem');
+
+declare(strict_types=1);
+
+$privateKeyPath = __DIR__.'/../tests/keys/test-private.pem';
+$privateKey = @file_get_contents($privateKeyPath);
+if (false === $privateKey || '' === $privateKey) {
+    fwrite(STDERR, sprintf("Private key not found: %s\n", $privateKeyPath));
+    exit(1);
+}
+
 $kid = $argv[1] ?? 'test1';
-$iss = $argv[2] ?? 'https://issuer.example';
-$aud = $argv[3] ?? 'smartresponsor';
-$sub = $argv[4] ?? 'user_123';
-$ttl = (int)($argv[5] ?? 300);
-$nbfShift = (int)($argv[6] ?? 0); // seconds shift to future
-$hdr = ['typ'=>'JWT','alg'=>'RS256','kid'=>$kid];
+$issuer = $argv[2] ?? 'https://issuer.example';
+$audience = $argv[3] ?? 'smartresponsor';
+$subject = $argv[4] ?? 'user_123';
+$ttl = (int) ($argv[5] ?? 300);
+$nbfShift = (int) ($argv[6] ?? 0);
+
+$header = [
+    'typ' => 'JWT',
+    'alg' => 'RS256',
+    'kid' => $kid,
+];
+
 $now = time();
-$pl = ['iss'=>$iss,'aud'=>$aud,'sub'=>$sub,'iat'=>$now,'nbf'=>$now + $nbfShift,'exp'=>$now + $ttl];
-$h = rtrim(strtr(base64_encode(json_encode($hdr)), '+/', '-_'), '=');
-$p = rtrim(strtr(base64_encode(json_encode($pl)), '+/', '-_'), '=');
-$data = $h.'.'.$p;
-openssl_sign($data, $sig, $priv, OPENSSL_ALGO_SHA256);
-$s = rtrim(strtr(base64_encode($sig), '+/', '-_'), '=');
-echo $data.'.'.$s."\n";
+$payload = [
+    'iss' => $issuer,
+    'aud' => $audience,
+    'sub' => $subject,
+    'iat' => $now,
+    'nbf' => $now + $nbfShift,
+    'exp' => $now + $ttl,
+];
+
+$encodedHeader = rtrim(strtr(base64_encode((string) json_encode($header, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
+$encodedPayload = rtrim(strtr(base64_encode((string) json_encode($payload, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
+$signingInput = $encodedHeader.'.'.$encodedPayload;
+
+$signature = '';
+if (!openssl_sign($signingInput, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
+    fwrite(STDERR, "Unable to sign JWT payload.\n");
+    exit(1);
+}
+
+$encodedSignature = rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
+fwrite(STDOUT, $signingInput.'.'.$encodedSignature.PHP_EOL);

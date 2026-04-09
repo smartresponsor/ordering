@@ -13,7 +13,7 @@ use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\Money;
 
-class DefaultPromotionStrategy implements DefaultPromotionStrategyInterface
+readonly class DefaultPromotionStrategy implements DefaultPromotionStrategyInterface
 {
     public function __construct(private readonly ?Discount $discount = null)
     {

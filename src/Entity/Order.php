@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\ValueObject\OrderStatus;
 use App\ValueObject\Pricing\Order\Money;
+use App\Contract\Domain\RecordsDomainEvents;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'orders')]
-class Order
+class Order implements RecordsDomainEvents
 {
     #[ORM\Id]
     #[ORM\Column(type: 'guid', unique: true)]
@@ -76,6 +77,9 @@ class Order
     /** @var Collection<int, OrderItem> */
     private Collection $items;
 
+    /** @var list<object> */
+    private array $releasedEvents = [];
+
     public function __construct(mixed $arg1 = 'USD', mixed $arg2 = '0.00', ?string $arg3 = null, ?string $arg4 = null)
     {
         $now = new \DateTimeImmutable();
@@ -112,6 +116,11 @@ class Order
         $this->subtotal = $this->grandTotal;
     }
 
+    public static function create(string $currency = 'USD', string|int|float $grandTotal = '0.00'): self
+    {
+        return new self($currency, $grandTotal);
+    }
+
     public function initAudit(): void
     {
         if (!isset($this->createdAt)) {
@@ -120,29 +129,98 @@ class Order
         $this->touch();
     }
 
-    public function getId(): string { return $this->id; }
-    public function id(): string { return $this->id; }
-    public function getNumber(): string { return $this->number; }
-    public function getCurrency(): string { return $this->currency; }
-    public function currency(): string { return $this->currency; }
-    public function getStatus(): string { return $this->status; }
-    public function status(): string { return $this->status; }
-    public function getGrandTotal(): string { return $this->grandTotal; }
-    public function grandTotal(): string { return $this->grandTotal; }
-    public function getTotal(): string { return $this->grandTotal; }
-    public function getTotalAmount(): string { return $this->grandTotal; }
-    public function getPaidTotal(): string { return $this->paidTotal; }
-    public function paidTotal(): string { return $this->paidTotal; }
-    public function getRefundedTotal(): string { return $this->refundedTotal; }
-    public function refundedTotal(): string { return $this->refundedTotal; }
-    public function getSubtotal(): string { return $this->subtotal; }
-    public function getDiscountTotal(): string { return $this->discountTotal; }
-    public function getTaxTotal(): string { return $this->taxTotal; }
-    public function getCreatedAt(): \DateTimeImmutable { return $this->createdAt; }
-    public function getUpdatedAt(): \DateTimeImmutable { return $this->updatedAt; }
-    public function getCustomerId(): ?string { return $this->customerId; }
-    public function getVendorId(): ?string { return $this->vendorId; }
-    public function getTrackingCode(): ?string { return $this->trackingCode; }
+    public function getId(): string
+    {
+        return $this->id;
+    }
+    public function id(): string
+    {
+        return $this->id;
+    }
+    public function getNumber(): string
+    {
+        return $this->number;
+    }
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+    public function currency(): string
+    {
+        return $this->currency;
+    }
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+    public function status(): string
+    {
+        return $this->status;
+    }
+    public function getGrandTotal(): string
+    {
+        return $this->grandTotal;
+    }
+    public function grandTotal(): string
+    {
+        return $this->grandTotal;
+    }
+    public function getTotal(): string
+    {
+        return $this->grandTotal;
+    }
+    public function getTotalAmount(): string
+    {
+        return $this->grandTotal;
+    }
+    public function getPaidTotal(): string
+    {
+        return $this->paidTotal;
+    }
+    public function paidTotal(): string
+    {
+        return $this->paidTotal;
+    }
+    public function getRefundedTotal(): string
+    {
+        return $this->refundedTotal;
+    }
+    public function refundedTotal(): string
+    {
+        return $this->refundedTotal;
+    }
+    public function getSubtotal(): string
+    {
+        return $this->subtotal;
+    }
+    public function getDiscountTotal(): string
+    {
+        return $this->discountTotal;
+    }
+    public function getTaxTotal(): string
+    {
+        return $this->taxTotal;
+    }
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+    public function getCustomerId(): ?string
+    {
+        return $this->customerId;
+    }
+    public function getVendorId(): ?string
+    {
+        return $this->vendorId;
+    }
+    public function getTrackingCode(): ?string
+    {
+        return $this->trackingCode;
+    }
 
     public function setStatus(OrderStatus|string $status): void
     {
@@ -196,13 +274,25 @@ class Order
     }
 
     /** @return Collection<int, OrderPayment> */
-    public function getPayments(): Collection { return $this->payments; }
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
     /** @return Collection<int, OrderRefund> */
-    public function getRefunds(): Collection { return $this->refunds; }
+    public function getRefunds(): Collection
+    {
+        return $this->refunds;
+    }
     /** @return Collection<int, OrderShipment> */
-    public function getShipments(): Collection { return $this->shipments; }
+    public function getShipments(): Collection
+    {
+        return $this->shipments;
+    }
     /** @return Collection<int, OrderItem> */
-    public function getItems(): Collection { return $this->items; }
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
 
     public function addItem(OrderItem $item): void
     {
@@ -219,6 +309,7 @@ class Order
         $this->payments->add($payment);
         $this->paidTotal = bcadd($this->paidTotal, $normalizedAmount, 2);
         $this->status = bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value;
+        $this->recordEvent(new \App\Event\Domain\Order\OrderPaidEvent($this->id));
         $this->touch();
         return $payment;
     }
@@ -232,6 +323,7 @@ class Order
         if (bccomp($this->refundedTotal, $this->paidTotal, 2) >= 0) {
             $this->status = OrderStatus::Refunded->value;
         }
+        $this->recordEvent(new \App\Event\Domain\Order\OrderRefundedEvent($this, $normalizedAmount));
         $this->touch();
         return $refund;
     }
@@ -242,6 +334,7 @@ class Order
         $this->shipments->add($shipment);
         $this->trackingCode = $trackingCode;
         $this->status = OrderStatus::Shipped->value;
+        $this->recordEvent(new \App\Event\Domain\Order\OrderShippedEvent($this->id));
         $this->touch();
         return $shipment;
     }
@@ -255,7 +348,10 @@ class Order
         $this->touch();
     }
 
-    public function markAsPaid(): void { $this->markPaid(); }
+    public function markAsPaid(): void
+    {
+        $this->markPaid();
+    }
 
     public function markRefunded(?string $amount = null): void
     {
@@ -282,6 +378,26 @@ class Order
     {
         $this->trackingCode = $tracking;
         $this->touch();
+    }
+
+
+    public function applyPartialPayment(string $amount, ?string $externalRef = null, bool $isPartial = true, string $gateway = 'stripe'): OrderPayment
+    {
+        return $this->applyPayment($amount, $externalRef ?? ('PAY-'.$this->id), $isPartial, $gateway);
+    }
+
+    /** @return list<object> */
+    public function releaseEvents(): array
+    {
+        $events = $this->releasedEvents;
+        $this->releasedEvents = [];
+
+        return $events;
+    }
+
+    private function recordEvent(object $event): void
+    {
+        $this->releasedEvents[] = $event;
     }
 
     private function touch(): void

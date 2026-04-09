@@ -16,6 +16,8 @@ final class OrderCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        parent::buildForm($builder, $options);
+
         $builder
             ->add('currency', TextType::class, ['label' => 'Currency'])
             ->add('grandTotal', MoneyType::class, [
@@ -29,6 +31,8 @@ final class OrderCreateType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => OrderCreateDTO::class,
         ]);

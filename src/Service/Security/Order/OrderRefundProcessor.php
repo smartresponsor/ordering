@@ -15,17 +15,16 @@ use App\Api\Dto\OrderRefundInput;
 use App\Message\Command\Order\OrderRefundCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class OrderRefundProcessor implements ProcessorInterface
+final readonly class OrderRefundProcessor implements ProcessorInterface
 {
-    public function __construct(private MessageBusInterface $bus)
-    {
+    public function __construct(private readonly MessageBusInterface $bus) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         /* @var OrderRefundInput $data */
         $this->bus->dispatch(new OrderRefundCommand(
-            $data->orderId, $data->amountMinor, $data->currency, $data->reason, $data->paymentRef, $data->idempotencyKey
+            $uriVariables['id'] ?? $uriVariables['orderId'] ?? '', (int) round(((float) $data->amount) * 100), 'USD', $data->reason, null, null
         ));
 
         return ['status' => 'accepted'];

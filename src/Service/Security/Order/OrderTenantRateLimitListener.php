@@ -12,11 +12,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 #[AsEventListener(event: 'kernel.request', priority: 9)]
-final class OrderTenantRateLimitListener implements OrderTenantRateLimitListenerInterface
+final readonly class OrderTenantRateLimitListener implements OrderTenantRateLimitListenerInterface
 {
     public function __construct(
-        private RateLimiterFactory $orderApiTenantLimiter,
-        private TenantKeyResolver $keyResolver,
+        private readonly RateLimiterFactory $orderApiTenantLimiter,
+        private readonly TenantKeyResolver $keyResolver,
     ) {
     }
 

@@ -15,25 +15,42 @@ use App\Event\Domain\Order\OrderRefundInitiatedEvent;
 use App\Service\Refund\Order\RefundProcessor;
 use App\ServiceInterface\Workflow\Order\ReturnWorkflowServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Uuid;
 
-final class ReturnWorkflowService implements ReturnWorkflowServiceInterface
+final readonly class ReturnWorkflowService implements ReturnWorkflowServiceInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private RefundProcessor $refund,
-        private MessageBusInterface $bus,
+        private readonly EntityManagerInterface $em,
+        private readonly RefundProcessor $refund,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 
-    public function createReturnAndRefund(string $orderId, int $amountMinor, string $currency, ?string $reason = null): OrderReturnRequest
-    {
-        $return = new OrderReturnRequest(Uuid::uuid4()->toString(), $orderId, $amountMinor, $currency, $reason);
+    public function createReturnAndRefund(
+        string $orderId,
+        int $amountMinor,
+        string $currency,
+        ?string $reason = null,
+    ): OrderReturnRequest {
+        $return = new OrderReturnRequest(
+            Uuid::v7()->toRfc4122(),
+            $orderId,
+            $amountMinor,
+            $currency,
+            $reason,
+        );
         $return->approve();
         $this->em->persist($return);
 
-        $tx = new OrderRefundTransaction(Uuid::uuid4()->toString(), $orderId, $return->id(), 'PAY-'.$orderId, $amountMinor, $currency);
+        $tx = new OrderRefundTransaction(
+            Uuid::v7()->toRfc4122(),
+            $orderId,
+            $return->id(),
+            'PAY-'.$orderId,
+            $amountMinor,
+            $currency,
+        );
         $this->em->persist($tx);
         $this->em->flush();
 

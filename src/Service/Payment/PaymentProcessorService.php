@@ -10,8 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class PaymentProcessorService
 {
-    public function __construct(private PaymentGatewayInterface $gateway, private EntityManagerInterface $em)
-    {
+    public function __construct(private readonly PaymentGatewayInterface $gateway, private readonly EntityManagerInterface $em) {
     }
 
     public function charge(Order $order, int $amount, string $gatewayName = 'stripe'): OrderPayment

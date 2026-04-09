@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\ValueObject\Routing\Order;
 
 
-final class RouteContext
+final readonly class RouteContext
 {
     private string $intentId;
     private string $region;

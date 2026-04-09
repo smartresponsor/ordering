@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Api\State;
 
-final class OrderPriceProvider
+final readonly class OrderPriceProvider
 {
     public function __construct(private readonly mixed $connection)
     {

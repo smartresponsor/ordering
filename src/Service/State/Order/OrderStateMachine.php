@@ -9,7 +9,7 @@ use App\Event\Domain\Order\OrderStatusChanged;
 use App\ServiceInterface\State\Order\OrderStateMachineInterface;
 use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
 
-final class OrderStateMachine implements OrderStateMachineInterface
+final readonly class OrderStateMachine implements OrderStateMachineInterface
 {
     public function __construct(private WebhookDispatcherInterface $dispatcher)
     {

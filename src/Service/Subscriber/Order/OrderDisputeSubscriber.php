@@ -11,7 +11,7 @@ use App\ServiceInterface\Subscriber\Order\OrderDisputeSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-final class OrderDisputeSubscriber implements OrderDisputeSubscriberInterface
+final readonly class OrderDisputeSubscriber implements OrderDisputeSubscriberInterface
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

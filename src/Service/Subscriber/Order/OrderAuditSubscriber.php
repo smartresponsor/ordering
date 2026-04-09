@@ -14,8 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 final readonly class OrderAuditSubscriber implements EventSubscriberInterface, OrderAuditSubscriberInterface
 {
-    public function __construct(private EntityManagerInterface $em, private OrderEventRepositoryInterface $repo)
-    {
+    public function __construct(private readonly EntityManagerInterface $em, private readonly OrderEventRepositoryInterface $repo) {
     }
 
     public static function getSubscribedEvents(): array
