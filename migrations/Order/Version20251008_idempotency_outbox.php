@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace OrderComponent\Migrations\Order;
 
 use Doctrine\DBAL\Schema\Schema;
