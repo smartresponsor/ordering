@@ -11,7 +11,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class AnalyticsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
     }
 
     public static function getSubscribedEvents(): array

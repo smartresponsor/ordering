@@ -309,7 +309,7 @@ class Order implements RecordsDomainEvents
         $this->payments->add($payment);
         $this->paidTotal = bcadd($this->paidTotal, $normalizedAmount, 2);
         $this->status = bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value;
-        $this->recordEvent(new \App\Event\Domain\Order\OrderPaidEvent($this->id));
+        $this->recordEvent(new \App\Event\Domain\Order\OrderPaidEvent($this->id, $normalizedAmount, $this->currency, $externalRef));
         $this->touch();
         return $payment;
     }

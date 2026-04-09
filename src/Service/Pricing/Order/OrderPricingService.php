@@ -15,4 +15,15 @@ final class OrderPricingService implements \App\ServiceInterface\Pricing\Order\O
     {
         return round($base * (1.0 + max(0.0, $rate)), 2);
     }
+
+    public function calculate(string $orderId): void
+    {
+        if ('' === trim($orderId)) {
+            return;
+        }
+
+        // Compatibility hook for handler paths that only carry an order id.
+        // The concrete pricing contract in this slice is float-based, so this
+        // method intentionally stays side-effect free for now.
+    }
 }

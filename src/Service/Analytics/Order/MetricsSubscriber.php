@@ -25,7 +25,6 @@ final readonly class MetricsSubscriber implements MetricsSubscriberInterface, Or
     #[AsEventListener(event: OrderRefundedEvent::class)]
     public function onRefunded(OrderRefundedEvent $e): void
     {
-        $amount = is_object($e->amount) && property_exists($e->amount, 'amount') ? (string) $e->amount->amount : (string) $e->amount;
-        $this->proj->projectRefund($amount, new \DateTimeImmutable('now'));
+        $this->proj->projectRefund((string) $e->amount, new \DateTimeImmutable('now'));
     }
 }

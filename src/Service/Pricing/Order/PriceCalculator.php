@@ -38,7 +38,7 @@ readonly class PriceCalculator implements \App\ServiceInterface\Pricing\Order\Pr
     {
         $discount = $this->promotions->discount($subtotal);
         $taxBase = $subtotal->subtract($discount);
-        $tax = $this->taxation->tax($taxBase, $rate);
+        $tax = $this->taxation->compute($taxBase, $rate);
         $total = $taxBase->add($tax);
 
         $scale = $this->taxConfig->rounding();
@@ -78,7 +78,7 @@ readonly class PriceCalculator implements \App\ServiceInterface\Pricing\Order\Pr
         }
 
         $country = method_exists($order, 'getCountryCode') ? $order->getCountryCode() : null;
-        $rate = $this->taxConfig->defaultRateFor((string) ($country ?? 'US'));
+        $rate = $this->taxConfig->rateFor((string) ($country ?? 'US'));
         $result = $this->calculate($subtotal, $rate);
         $order->setSubtotal($result['subtotal']->getAmount());
         $order->setDiscountTotal($result['discount']->getAmount());
