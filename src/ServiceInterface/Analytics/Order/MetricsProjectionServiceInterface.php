@@ -16,7 +16,7 @@ interface MetricsProjectionServiceInterface
 {
     public function __construct(EntityManagerInterface $em);
 
-    public function projectOrderPlaced(Order $order, string $amount, string $vendorId, \DateTimeImmutable $at): void;
+    public function projectOrderPlaced(string $orderId, string $amount, ?string $vendorId, \DateTimeImmutable $at): void;
 
     public function projectRefund(string $amount, \DateTimeImmutable $at): void;
 }

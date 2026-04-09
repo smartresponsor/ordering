@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
-use App\Entity\Order;
 use App\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
 use App\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,14 +61,16 @@ final readonly class MetricsProjectionService implements MetricsProjectionServic
         return $obj;
     }
 
-    public function projectOrderPlaced(Order $order, string $amount, string $vendorId, \DateTimeImmutable $at): void
+    public function projectOrderPlaced(string $orderId, string $amount, ?string $vendorId, \DateTimeImmutable $at): void
     {
         $day = new \DateTimeImmutable($at->format('Y-m-d'));
         $this->em->wrapInTransaction(function () use ($day, $amount, $vendorId): void {
             $d = $this->getOrCreateDay($day);
             $d->addOrder($amount);
-            $v = $this->getOrCreateVendor($vendorId, $day);
-            $v->addOrder($amount);
+            if (null !== $vendorId) {
+                $v = $this->getOrCreateVendor($vendorId, $day);
+                $v->addOrder($amount);
+            }
         });
     }
 

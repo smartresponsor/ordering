@@ -21,7 +21,7 @@ final readonly class AnalyticsSubscriber implements EventSubscriberInterface
 
     public function onPaid(OrderPaidEvent $e): void
     {
-        $this->em->persist(new AnalyticsRecord('paid', $e->orderId));
+        $this->em->persist(new AnalyticsRecord('paid', (string) $e->orderId));
         $this->em->flush();
     }
 }

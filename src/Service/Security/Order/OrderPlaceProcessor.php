@@ -51,17 +51,19 @@ final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPla
         $this->em->flush(); // единая транзакция с outbox, если используется
 
         // Возвращаем облегчённый ресурс
-        $resource = new OrderResource();
-        $resource->id = $orderId;
-        $resource->number = $payload['orderId'];
-        $resource->status = 'placed';
-        $resource->currency = $payload['currency'];
-        $resource->grandTotal = '0.00';
-        $resource->paidTotal = '0.00';
-        $resource->refundedTotal = '0.00';
-        $resource->customerId = $payload['customerId'];
-        $resource->vendorId = $payload['vendorId'];
-
-        return $resource;
+        return new OrderResource(
+            id: $orderId,
+            number: $payload['orderId'],
+            status: 'placed',
+            currency: $payload['currency'],
+            total: null,
+            grandTotal: '0.00',
+            paidTotal: '0.00',
+            refundedTotal: '0.00',
+            customerId: $payload['customerId'],
+            vendorId: $payload['vendorId'],
+            items: $payload['items'],
+            placeAt: $payload['placeAt'],
+        );
     }
 }

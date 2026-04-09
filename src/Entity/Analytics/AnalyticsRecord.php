@@ -18,10 +18,10 @@ class AnalyticsRecord
     #[ORM\Column(type: 'string', length: 64)]
     private string $type;
 
-    #[ORM\Column(type: 'integer')]
-    private int $orderId;
+    #[ORM\Column(type: 'string', length: 64)]
+    private string $orderId;
 
-    public function __construct(string $type, int $orderId)
+    public function __construct(string $type, string $orderId)
     {
         $this->id = null;
         $this->type = $type;

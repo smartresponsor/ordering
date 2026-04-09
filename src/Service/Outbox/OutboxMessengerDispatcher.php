@@ -29,7 +29,10 @@ final readonly class OutboxMessengerDispatcher
 
         foreach ($messages as $message) {
             $payload = json_decode($message->getPayload(), true, 512, JSON_THROW_ON_ERROR);
-            $orderId = (int) ($payload['orderId'] ?? $payload['aggregateId'] ?? 0);
+            $orderId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? '0');
+            if ('' === $orderId) {
+                $orderId = '0';
+            }
             $this->bus->dispatch(new OrderEventMessage($message->getEventType(), $orderId));
             $message->markDispatched();
             ++$count;

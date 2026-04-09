@@ -41,7 +41,7 @@ final readonly class OrderMessageHandler implements OrderMessageHandlerInterface
         $map = [
             OrderPlacedEvent::class => fn () => new OrderPlacedEvent($legacyId),
             OrderPaidEvent::class => fn () => new OrderPaidEvent($order->id(), $order->grandTotal(), $order->currency(), $order->id()),
-            OrderShippedEvent::class => fn () => new OrderShippedEvent($legacyId),
+            OrderShippedEvent::class => fn () => new OrderShippedEvent((string) $legacyId),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
             OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order, $order->refundedTotal()),
         ];
