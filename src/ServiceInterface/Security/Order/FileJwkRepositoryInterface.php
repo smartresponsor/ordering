@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
+use App\ValueObject\Security\Order\JwkKey;
+
 interface FileJwkRepositoryInterface
 {
     public function listActive(): array;

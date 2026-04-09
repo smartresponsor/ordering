@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -55,7 +56,7 @@ final readonly class ShipmentService implements ShipmentServiceInterface
     public function markDelivered(OrderShipment $shipment, \DateTimeInterface $at): void
     {
         $shipment->markDelivered($at);
-        // create/update return policy
+
         $policy = $this->em->getRepository(OrderReturnPolicy::class)->findOneBy(['shipment' => $shipment]);
         if (!$policy) {
             $policy = new OrderReturnPolicy($shipment, 14);
@@ -63,6 +64,7 @@ final readonly class ShipmentService implements ShipmentServiceInterface
         } else {
             $policy->setDeliveredRecalculate();
         }
+
         $this->em->flush();
         $this->events->dispatch(new OrderDeliveredEvent($shipment));
     }

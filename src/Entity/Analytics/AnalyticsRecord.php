@@ -13,7 +13,7 @@ class AnalyticsRecord
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 64)]
     private string $type;
@@ -21,8 +21,9 @@ class AnalyticsRecord
     #[ORM\Column(type: 'integer')]
     private int $orderId;
 
-    public function __construct(string $type, string $orderId)
+    public function __construct(string $type, int $orderId)
     {
+        $this->id = null;
         $this->type = $type;
         $this->orderId = $orderId;
     }

@@ -14,7 +14,9 @@ final readonly class S3ClientFactory
     public function create(): object
     {
         if (class_exists('Aws\\S3\\S3Client')) {
-            return new ('Aws\\S3\\S3Client')($this->config);
+            $class = 'Aws\\S3\\S3Client';
+
+            return new $class($this->config);
         }
 
         return new class {

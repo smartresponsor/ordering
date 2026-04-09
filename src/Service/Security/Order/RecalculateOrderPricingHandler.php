@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Message\Command\Order\RecalculateOrderPricingCommand;
+use App\Service\Pricing\Order\OrderPricingService;
 use App\ServiceInterface\Security\Order\RecalculateOrderPricingHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

@@ -43,7 +43,15 @@ final readonly class FileJwkRepository implements JwkRepositoryInterface
             if (!($data['active'] ?? false)) {
                 continue;
             }
-            $out[] = new JwkKey($data['kid'], $data['alg'], $data['type'], $data['public_pem'], $data['private_pem'] ?? null, (bool) $data['active']);
+
+            $out[] = new JwkKey(
+                $data['kid'],
+                $data['alg'],
+                $data['type'],
+                $data['public_pem'],
+                $data['private_pem'] ?? null,
+                (bool) $data['active'],
+            );
         }
 
         return $out;
@@ -55,12 +63,20 @@ final readonly class FileJwkRepository implements JwkRepositoryInterface
         if (!file_exists($file)) {
             return null;
         }
+
         $data = json_decode((string) file_get_contents($file), true);
         if (!is_array($data)) {
             return null;
         }
 
-        return new JwkKey($data['kid'], $data['alg'], $data['type'], $data['public_pem'], $data['private_pem'] ?? null, (bool) $data['active']);
+        return new JwkKey(
+            $data['kid'],
+            $data['alg'],
+            $data['type'],
+            $data['public_pem'],
+            $data['private_pem'] ?? null,
+            (bool) $data['active'],
+        );
     }
 
     public function save(JwkKey $key): void
@@ -83,6 +99,7 @@ final readonly class FileJwkRepository implements JwkRepositoryInterface
         if (!$key) {
             return;
         }
+
         $inactive = new JwkKey($key->kid(), $key->alg(), $key->type(), $key->publicPem(), $key->privatePem(), false);
         $this->save($inactive);
     }

@@ -7,9 +7,9 @@ namespace App\Entity;
 use App\ValueObject\Pricing\Order\Sku;
 use App\ValueObject\Pricing\Order\Quantity;
 
-final class OrderItem
+final readonly class OrderItem
 {
-    private ?Order $order = null;
+    private ?Order $order;
     private string $sku;
     private int $quantity;
     private string $basePrice;
@@ -24,6 +24,7 @@ final class OrderItem
             $basePrice = $arg4;
             $currency = 'USD';
         } else {
+            $this->order = null;
             $sku = $arg1;
             $quantity = $arg2;
             $basePrice = $arg3;

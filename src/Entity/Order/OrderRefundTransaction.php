@@ -6,15 +6,15 @@ namespace App\Entity\Order;
 
 use Symfony\Component\Uid\Uuid;
 
-final class OrderRefundTransaction
+final readonly class OrderRefundTransaction
 {
     private string $id;
     private string $orderId;
     private string $refundId;
-    private ?string $paymentRef = null;
+    private ?string $paymentRef;
     private string $amount;
     private string $currency;
-    private ?string $reason = null;
+    private ?string $reason;
 
     public function __construct(
         string $arg1,
@@ -29,6 +29,7 @@ final class OrderRefundTransaction
             $this->orderId = (string) $arg2;
             $this->refundId = $arg3 ?? '';
             $this->paymentRef = $arg4;
+            $this->reason = null;
             $this->amount = number_format($arg5 / 100, 2, '.', '');
             $this->currency = strtoupper($arg6 ?? 'USD');
 
@@ -39,6 +40,7 @@ final class OrderRefundTransaction
         $this->orderId = $arg1;
         $this->amount = number_format((float) $arg2, 2, '.', '');
         $this->refundId = $arg3 ?? '';
+        $this->paymentRef = null;
         $this->reason = $arg4;
         $this->currency = 'USD';
     }

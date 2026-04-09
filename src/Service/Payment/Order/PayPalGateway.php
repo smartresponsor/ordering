@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -14,7 +15,10 @@ use App\ServiceInterface\Payment\Order\PayPalGatewayInterface;
 
 final readonly class PayPalGateway implements PaymentGatewayInterface, PayPalGatewayInterface
 {
-    public function __construct(private readonly ?string $clientId = null, private readonly ?string $secret = null) {
+    public function __construct(
+        private readonly ?string $clientId = null,
+        private readonly ?string $secret = null,
+    ) {
     }
 
     public function charge(string $orderId, string $amount, array $context = []): string

@@ -51,16 +51,64 @@ class OrderShipment
         $this->shippedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int { return $this->id; }
-    public function getOrder(): Order { return $this->order; }
-    public function getCarrier(): string { return $this->carrier; }
-    public function getTrackingCode(): ?string { return $this->trackingCode; }
-    public function setTrackingCode(string $trackingCode): void { $this->trackingCode = $trackingCode; }
-    public function getShippedAt(): \DateTimeImmutable { return $this->shippedAt; }
-    public function getDeliveredAt(): ?\DateTimeImmutable { return $this->deliveredAt; }
-    public function getStatus(): string { return $this->status; }
-    public function markInTransit(): void { $this->status = self::STATUS_IN_TRANSIT; }
-    public function markDelivered(?\DateTimeInterface $at = null): void { $this->status = self::STATUS_DELIVERED; $this->deliveredAt = $at ? \DateTimeImmutable::createFromInterface($at) : new \DateTimeImmutable(); }
-    public function markCompleted(): void { $this->status = self::STATUS_COMPLETED; }
-    public function markShipped(): void { $this->markInTransit(); }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getOrder(): Order
+    {
+        return $this->order;
+    }
+
+    public function getCarrier(): string
+    {
+        return $this->carrier;
+    }
+
+    public function getTrackingCode(): ?string
+    {
+        return $this->trackingCode;
+    }
+
+    public function setTrackingCode(string $trackingCode): void
+    {
+        $this->trackingCode = $trackingCode;
+    }
+
+    public function getShippedAt(): \DateTimeImmutable
+    {
+        return $this->shippedAt;
+    }
+
+    public function getDeliveredAt(): ?\DateTimeImmutable
+    {
+        return $this->deliveredAt;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function markInTransit(): void
+    {
+        $this->status = self::STATUS_IN_TRANSIT;
+    }
+
+    public function markDelivered(?\DateTimeInterface $at = null): void
+    {
+        $this->status = self::STATUS_DELIVERED;
+        $this->deliveredAt = $at ? \DateTimeImmutable::createFromInterface($at) : new \DateTimeImmutable();
+    }
+
+    public function markCompleted(): void
+    {
+        $this->status = self::STATUS_COMPLETED;
+    }
+
+    public function markShipped(): void
+    {
+        $this->markInTransit();
+    }
 }

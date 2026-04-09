@@ -15,7 +15,8 @@ final class RateLimit
 {
     private int $capacity;
     private float $refillPerSecond;
-    /** @var array<string,array{token:float,time:int}> */
+
+    /** @var array<string, array{token: float, time: int}> */
     private array $bucket = [];
 
     public function __construct(int $capacity = 10, float $refillPerSecond = 5.0)
@@ -27,17 +28,19 @@ final class RateLimit
     public function allow(string $key): bool
     {
         $now = time();
-        $b = $this->bucket[$key] ?? ['token' => (float) $this->capacity, 'time' => $now];
-        $elapsed = max(0, $now - $b['time']);
-        $b['token'] = min((float) $this->capacity, $b['token'] + $elapsed * $this->refillPerSecond);
-        $b['time'] = $now;
-        if ($b['token'] < 1.0) {
-            $this->bucket[$key] = $b;
+        $bucket = $this->bucket[$key] ?? ['token' => (float) $this->capacity, 'time' => $now];
+        $elapsed = max(0, $now - $bucket['time']);
+        $bucket['token'] = min((float) $this->capacity, $bucket['token'] + $elapsed * $this->refillPerSecond);
+        $bucket['time'] = $now;
+
+        if ($bucket['token'] < 1.0) {
+            $this->bucket[$key] = $bucket;
 
             return false;
         }
-        $b['token'] -= 1.0;
-        $this->bucket[$key] = $b;
+
+        $bucket['token'] -= 1.0;
+        $this->bucket[$key] = $bucket;
 
         return true;
     }

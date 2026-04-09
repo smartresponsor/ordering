@@ -15,7 +15,7 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
     }
 
     /**
-     * @param array<int,array<string,mixed>> $batch
+     * @param array<int, array<string, mixed>> $batch
      */
     public function push(array $batch): void
     {
@@ -24,7 +24,8 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
         }
 
         $payload = implode(
-            "\n",
+            "
+",
             array_map(
                 static fn (array $row) => json_encode($row, JSON_UNESCAPED_SLASHES),
                 $batch,
@@ -32,7 +33,7 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
         );
 
         $query = sprintf('INSERT INTO %s FORMAT JSONEachRow', $this->table);
-        $url = rtrim($this->endpoint, '/') . '/';
+        $url = rtrim($this->endpoint, '/').'/';
         $opts = [
             'http' => [
                 'method' => 'POST',
@@ -44,13 +45,13 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
             ],
         ];
 
-        $target = $url . '?query=' . rawurlencode($query);
+        $target = $url.'?query='.rawurlencode($query);
         $ctx = stream_context_create($opts);
         $resp = @file_get_contents($target, false, $ctx);
         if (false === $resp) {
             $err = error_get_last();
 
-            throw new \RuntimeException('ClickHouse export failed: ' . ($err['message'] ?? 'unknown error'));
+            throw new \RuntimeException('ClickHouse export failed: '.($err['message'] ?? 'unknown error'));
         }
 
         if (!empty($http_response_header)) {
@@ -58,7 +59,7 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
                 if (preg_match('#^HTTP/\S+\s+(\d{3})#', $header, $matches)) {
                     $code = (int) $matches[1];
                     if ($code >= 400) {
-                        throw new \RuntimeException('ClickHouse HTTP error ' . $code . ': ' . $resp);
+                        throw new \RuntimeException('ClickHouse HTTP error '.$code.': '.$resp);
                     }
 
                     break;
