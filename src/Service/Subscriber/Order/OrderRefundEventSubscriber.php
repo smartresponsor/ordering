@@ -22,7 +22,7 @@ final readonly class OrderRefundEventSubscriber implements OrderRefundEventSubsc
         $this->logger->info('Order partially refunded', [
             'orderId' => $e->order->getId(),
             'amount' => $e->refundAmount,
-            'currency' => $e->currency,
+            'currency' => method_exists($e->order, 'getCurrency') ? $e->order->getCurrency() : null,
         ]);
     }
 
@@ -32,7 +32,7 @@ final readonly class OrderRefundEventSubscriber implements OrderRefundEventSubsc
         $this->logger->info('Order fully refunded', [
             'orderId' => $e->order->getId(),
             'totalRefunded' => $e->totalRefunded,
-            'currency' => $e->currency,
+            'currency' => method_exists($e->order, 'getCurrency') ? $e->order->getCurrency() : null,
         ]);
     }
 }

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Archival\Order;
 
-use App\AuditInterface\Archival\Order\OrderArchivalInterface;
+use App\ServiceInterface\Archival\Order\OrderArchivalServiceInterface;
 
-final class OrderArchivalService implements OrderArchivalInterface
+final class OrderArchivalService implements OrderArchivalServiceInterface
 {
     public function archive(string $aggregateId): bool
     {

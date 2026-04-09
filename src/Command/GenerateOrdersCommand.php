@@ -8,7 +8,7 @@ use App\Entity\Order;
 use App\Factory\OrderFactory;
 use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\Proxy;
+use App\Factory\OrderFactoryProxy;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -68,7 +68,7 @@ final class GenerateOrdersCommand extends Command
             $forcedStatus = $map[$statusOpt];
         }
 
-        /** @var Proxy[] $proxies */
+        /** @var OrderFactoryProxy[] $proxies */
         $proxies = OrderFactory::createMany($count);
         $ids = [];
         $paymentTotal = '0.00';

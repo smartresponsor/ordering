@@ -28,7 +28,7 @@ final readonly class OrderRefundEventSubscriber implements EventSubscriberInterf
         $this->logger->info('Order partially refunded', [
             'orderId' => method_exists($event->order, 'getId') ? $event->order->getId() : null,
             'amount' => $event->refundAmount,
-            'currency' => $event->currency,
+            'currency' => method_exists($event->order, 'getCurrency') ? $event->order->getCurrency() : null,
         ]);
     }
 
@@ -37,7 +37,7 @@ final readonly class OrderRefundEventSubscriber implements EventSubscriberInterf
         $this->logger->info('Order fully refunded', [
             'orderId' => method_exists($event->order, 'getId') ? $event->order->getId() : null,
             'totalRefunded' => $event->totalRefunded,
-            'currency' => $event->currency,
+            'currency' => method_exists($event->order, 'getCurrency') ? $event->order->getCurrency() : null,
         ]);
     }
 }
