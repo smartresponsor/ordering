@@ -334,7 +334,7 @@ class Order implements RecordsDomainEvents
         $this->shipments->add($shipment);
         $this->trackingCode = $trackingCode;
         $this->status = OrderStatus::Shipped->value;
-        $this->recordEvent(new \App\Event\Domain\Order\OrderShippedEvent($this->id));
+        $this->recordEvent(new \App\Event\Domain\Order\OrderShippedEvent((string) $this->id));
         $this->touch();
         return $shipment;
     }

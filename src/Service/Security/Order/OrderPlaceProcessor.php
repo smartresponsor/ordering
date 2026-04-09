@@ -53,7 +53,7 @@ final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPla
         // Возвращаем облегчённый ресурс
         return new OrderResource(
             id: $orderId,
-            number: $payload['orderId'],
+            number: (string) $payload['orderId'],
             status: 'placed',
             currency: $payload['currency'],
             total: null,

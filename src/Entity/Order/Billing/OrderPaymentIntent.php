@@ -13,9 +13,11 @@ final class OrderPaymentIntent
         private readonly string $amount,
         private readonly string $currency,
         private readonly string $gateway,
-        private readonly ?string $intentId = null,
+        private ?string $intentId = null,
     ) {
-        $this->intentId ??= 'pi_'.bin2hex(random_bytes(8));
+        if (null === $this->intentId) {
+            $this->intentId = 'pi_' . bin2hex(random_bytes(8));
+        }
     }
 
     public function getOrderId(): string

@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final readonly class OrderEventRecord
+final class OrderEventRecord
 {
     public function __construct(
         private readonly string $eventId,
         private readonly string $orderId,
         private readonly string $eventName,
         private readonly array $payload = [],
-        private readonly ?\DateTimeImmutable $occurredAt = null,
+        private ?\DateTimeImmutable $occurredAt = null,
     ) {
-        $this->occurredAt ??= new \DateTimeImmutable();
+        if (null === $this->occurredAt) {
+            $this->occurredAt = new \DateTimeImmutable();
+        }
     }
 
     public function eventId(): string
