@@ -6,6 +6,7 @@ namespace App\Message\Command\Order;
 
 final readonly class OrderCancelCommand
 {
-    public function __construct(public readonly string $orderId) {
+    public function __construct(public string $orderId)
+    {
     }
 }

@@ -7,6 +7,7 @@ namespace App\Service\Outbox;
 use App\Entity\Outbox\OutboxMessage;
 use App\Message\OrderEventMessage;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OutboxMessengerDispatcher
@@ -18,7 +19,7 @@ final readonly class OutboxMessengerDispatcher
     }
 
     /**
-     * @throws \Symfony\Component\Messenger\Exception\ExceptionInterface
+     * @throws ExceptionInterface
      * @throws \JsonException
      */
     public function dispatchPending(int $limit = 100): int

@@ -1,7 +1,7 @@
 {
-  "issuer": "https://issuer.example",
-  "audience": "smartresponsor",
-  "jwks_url": "file://tests/jwks/test-jwks.json",
-  "cache_ttl_sec": 900,
-  "leeway_sec": 30
+    "issuer": "https://issuer.example",
+    "audience": "smartresponsor",
+    "jwks_url": "file://tests/jwks/test-jwks.json",
+    "cache_ttl_sec": 900,
+    "leeway_sec": 30
 }

@@ -13,8 +13,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 final readonly class ApiAuditSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly LoggerInterface $orderAuditLogger,
-        private readonly TokenStorageInterface $tokens,
+        private LoggerInterface $orderAuditLogger,
+        private TokenStorageInterface $tokens,
     ) {
     }
 
@@ -33,7 +33,7 @@ final readonly class ApiAuditSubscriber implements EventSubscriberInterface
         $response = $event->getResponse();
         $token = $this->tokens->getToken();
         $user = $token?->getUser();
-        $userId = is_object($user) && method_exists($user, 'getUserIdentifier') ? (string) $user->getUserIdentifier() : 'anon';
+        $userId = is_object($user) && method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : 'anon';
 
         $this->orderAuditLogger->info('api', [
             'ip' => $request->getClientIp(),

@@ -15,8 +15,8 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 final readonly class OrderTenantRateLimitListener implements OrderTenantRateLimitListenerInterface
 {
     public function __construct(
-        private readonly RateLimiterFactory $orderApiTenantLimiter,
-        private readonly TenantKeyResolver $keyResolver,
+        private RateLimiterFactory $orderApiTenantLimiter,
+        private TenantKeyResolver $keyResolver,
     ) {
     }
 
@@ -28,7 +28,7 @@ final readonly class OrderTenantRateLimitListener implements OrderTenantRateLimi
         }
 
         $key = $this->keyResolver->key();
-        $limit = $this->orderApiTenantLimiter->create($key)->consume(1);
+        $limit = $this->orderApiTenantLimiter->create($key)->consume();
 
         if (!$limit->isAccepted()) {
             throw new TooManyRequestsHttpException(60, 'Tenant rate limit exceeded');

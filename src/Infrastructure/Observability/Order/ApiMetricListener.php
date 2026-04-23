@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final readonly class ApiMetricListener
 {
-    public function __construct(private readonly MonologApiMetric $metric)
+    public function __construct(private MonologApiMetric $metric)
     {
     }
 

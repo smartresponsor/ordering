@@ -1,5 +1,4 @@
-
-stages: [chaos]
+stages: [ chaos ]
 chaos:
   stage: chaos
   script:

@@ -18,7 +18,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[AsMessageHandler]
 final readonly class OrderEventMessageHandler implements OrderEventMessageHandlerInterface
 {
-    public function __construct(private readonly EventDispatcherInterface $dispatcher) {
+    public function __construct(private EventDispatcherInterface $dispatcher)
+    {
     }
 
     public function __invoke(OrderEventMessage $m): void

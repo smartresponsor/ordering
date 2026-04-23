@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Event\Order;
 
-use App\Service\Shipment\Order\ShipmentService;
 use App\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Service\Shipment\Order\ShipmentService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class ShipmentStatusListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly ShipmentService $service, private readonly TransactionalEventPublisher $publisher) {
+    public function __construct(private ShipmentService $service, private TransactionalEventPublisher $publisher)
+    {
     }
 
     public static function getSubscribedEvents(): array

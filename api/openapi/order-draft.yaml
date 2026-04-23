@@ -1,1 +1,4 @@
-openapi: 3.0.3\ninfo:\n  title: SmartResponsor Order API (draft)\n  version: 0.1.0\npaths:\n  /api/order/{orderId}/transition/confirm:\n    post:\n      summary: Confirm order\n
+openapi:
+    3.0.3\ninfo:\n  title:
+        SmartResponsor Order API (draft)\n  version:
+            0.1.0\npaths:\n  /api/order/{orderId}/transition/confirm:\n    post:\n      summary: Confirm order\n

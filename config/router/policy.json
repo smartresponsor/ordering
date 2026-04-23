@@ -1,15 +1,15 @@
 {
-  "route": {
-    "weight_latency": 0.5,
-    "weight_error": 0.3,
-    "weight_cost": 0.2
-  },
-  "threshold": {
-    "p95_ms": 500,
-    "error_rate": 5.0
-  },
-  "canary": {
-    "enabled": true,
-    "seed": 42
-  }
+    "route": {
+        "weight_latency": 0.5,
+        "weight_error": 0.3,
+        "weight_cost": 0.2
+    },
+    "threshold": {
+        "p95_ms": 500,
+        "error_rate": 5.0
+    },
+    "canary": {
+        "enabled": true,
+        "seed": 42
+    }
 }

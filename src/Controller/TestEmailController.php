@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class TestEmailController
@@ -29,6 +30,6 @@ final class TestEmailController
             'subject' => $subject,
             'message' => $message,
             'note' => 'Mailer transport is not wired in this repository slice.',
-        ], JsonResponse::HTTP_ACCEPTED);
+        ], Response::HTTP_ACCEPTED);
     }
 }

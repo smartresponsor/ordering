@@ -30,6 +30,6 @@ final readonly class OrderEventProjectorSubscriber implements EventSubscriberInt
 
     public function onOrderShipped(OrderShippedEvent $event): void
     {
-        $this->projector->project((string) $event->orderId, 'shipped');
+        $this->projector->project($event->orderId, 'shipped');
     }
 }

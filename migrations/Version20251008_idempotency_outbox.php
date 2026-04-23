@@ -10,7 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20251008_idempotency_outbox extends AbstractMigration
 {
     public function getDescription(): string
-    { return 'Create idempotency_key and outbox_message'; }
+    {
+        return 'Create idempotency_key and outbox_message';
+    }
 
     public function up(Schema $schema): void
     {

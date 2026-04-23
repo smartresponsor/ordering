@@ -6,7 +6,7 @@ namespace App\Service\Security\Order;
 
 readonly class FlakyCommand
 {
-    public function __construct(public readonly string $id)
+    public function __construct(public string $id)
     {
     }
 }

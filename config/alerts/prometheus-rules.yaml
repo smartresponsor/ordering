@@ -1,13 +1,13 @@
 groups:
-- name: order-async
-  rules:
-  - alert: QueueBacklogAgeHigh
-    expr: max_over_time(queue_backlog_age_seconds[5m]) > 30
-    for: 10m
-    labels: {severity: page}
-    annotations: {summary: "Queue backlog age > 30s (sustained)"}
-  - alert: TenantRateLimitHit
-    expr: increase(tenant_rate_limit_exceeded_total[5m]) > 10
-    for: 5m
-    labels: {severity: warn}
-    annotations: {summary: "Tenant rate limit exceeded repeatedly"}
+    -   name: order-async
+        rules:
+            -   alert: QueueBacklogAgeHigh
+                expr: max_over_time(queue_backlog_age_seconds[5m]) > 30
+                for: 10m
+                labels: { severity: page }
+                annotations: { summary: "Queue backlog age > 30s (sustained)" }
+            -   alert: TenantRateLimitHit
+                expr: increase(tenant_rate_limit_exceeded_total[5m]) > 10
+                for: 5m
+                labels: { severity: warn }
+                annotations: { summary: "Tenant rate limit exceeded repeatedly" }

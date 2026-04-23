@@ -14,7 +14,8 @@ use App\ValueObject\Pricing\Order\Money;
 
 final readonly class FlatTaxStrategy implements FlatTaxStrategyInterface
 {
-    public function __construct(private readonly float $rate) {
+    public function __construct(private float $rate)
+    {
         if ($rate < 0 || $rate > 1) {
             throw new \InvalidArgumentException('Invalid tax rate');
         }

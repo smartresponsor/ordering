@@ -12,7 +12,6 @@ namespace App\Service\Refund\Order;
 
 use App\Message\Legacy\Order\OrderRefundCommand;
 use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\Service\Refund\Order\OrderRefundService;
 use App\ServiceInterface\Refund\Order\OrderRefundCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -20,8 +19,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final readonly class OrderRefundCommandHandler implements OrderRefundCommandHandlerInterface
 {
     public function __construct(
-        private readonly OrderRefundService $service,
-        private readonly TransactionalEventPublisher $publisher,
+        private OrderRefundService $service,
+        private TransactionalEventPublisher $publisher,
     ) {
     }
 

@@ -8,6 +8,7 @@ use App\Entity\Order;
 
 final readonly class OrderRefundedEvent
 {
-    public function __construct(public readonly Order $order, public readonly string $amount) {
+    public function __construct(public Order $order, public string $amount)
+    {
     }
 }

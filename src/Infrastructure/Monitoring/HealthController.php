@@ -16,8 +16,8 @@ final readonly class HealthController implements ServiceSubscriberInterface
     use ServiceSubscriberTrait;
 
     public function __construct(
-        private readonly Connection $db,
-        private readonly ?TransportInterface $orderTransport = null,
+        private Connection $db,
+        private ?TransportInterface $orderTransport = null,
     ) {
     }
 

@@ -26,7 +26,7 @@ final readonly class OrderApiRateLimitListener
         }
 
         $key = $request->getClientIp() ?? 'anon';
-        $limit = $this->orderApiLimiter->create($key)->consume(1);
+        $limit = $this->orderApiLimiter->create($key)->consume();
         if (!$limit->isAccepted()) {
             throw new TooManyRequestsHttpException(null, 'Order API rate limit exceeded.');
         }

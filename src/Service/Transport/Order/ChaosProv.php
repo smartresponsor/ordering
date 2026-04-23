@@ -9,12 +9,12 @@ use App\ServiceInterface\Transport\Order\PaymentProviderInterface;
 final readonly class ChaosProv implements PaymentProviderInterface
 {
     public function __construct(
-        private readonly string $name,
-        private readonly float $failPct = 0.0,
-        private readonly int $minMs = 10,
-        private readonly int $maxMs = 30,
-        private readonly float $timeoutPct = 0.0,
-        private readonly int $timeoutMs = 500,
+        private string $name,
+        private float $failPct = 0.0,
+        private int $minMs = 10,
+        private int $maxMs = 30,
+        private float $timeoutPct = 0.0,
+        private int $timeoutMs = 500,
     ) {
     }
 

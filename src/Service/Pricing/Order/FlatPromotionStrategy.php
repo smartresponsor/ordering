@@ -15,7 +15,7 @@ use App\ServiceInterface\Pricing\Order\PromotionStrategyInterface;
 
 readonly class FlatPromotionStrategy implements PromotionStrategyInterface, FlatPromotionStrategyInterface
 {
-    public function __construct(private readonly int $percent = 10)
+    public function __construct(private int $percent = 10)
     {
     }
 

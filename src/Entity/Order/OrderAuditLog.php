@@ -7,10 +7,10 @@ namespace App\Entity\Order;
 final readonly class OrderAuditLog
 {
     public function __construct(
-        private readonly string $id,
-        private readonly string $orderId,
-        private readonly string $action,
-        private readonly ?string $payload = null,
+        private string $id,
+        private string $orderId,
+        private string $action,
+        private ?string $payload = null,
     ) {
     }
 

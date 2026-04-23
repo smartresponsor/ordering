@@ -8,7 +8,7 @@ final class OrderReturnPolicy
 {
     private ?\DateTimeImmutable $deliveredAt = null;
 
-    public function __construct(private OrderShipment $shipment, private int $daysWindow = 14)
+    public function __construct(private readonly OrderShipment $shipment, private readonly int $daysWindow = 14)
     {
         $this->setDeliveredRecalculate();
     }

@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Order;
 use App\Factory\OrderFactory;
 use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Factory\OrderFactoryProxy;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -41,6 +39,7 @@ final class GenerateOrdersCommand extends Command
         $count = (int) $input->getArgument('count');
         if ($count <= 0) {
             $io->error('Count must be > 0');
+
             return Command::FAILURE;
         }
 
@@ -63,17 +62,16 @@ final class GenerateOrdersCommand extends Command
             ];
             if (!isset($map[$statusOpt])) {
                 $io->error('Unknown status: '.$statusOpt);
+
                 return Command::FAILURE;
             }
             $forcedStatus = $map[$statusOpt];
         }
 
-        /** @var OrderFactoryProxy[] $proxies */
         $proxies = OrderFactory::createMany($count);
         $ids = [];
         $paymentTotal = '0.00';
         foreach ($proxies as $proxy) {
-            /** @var Order $order */
             $order = $proxy->object();
             if ($forcedStatus instanceof OrderStatus) {
                 $order->setStatus($forcedStatus);
@@ -82,8 +80,8 @@ final class GenerateOrdersCommand extends Command
             $this->em->flush();
             $ids[] = $order->getId();
 
-            if ((bool) $input->getOption('with-payment')) {
-                $order->applyPayment('1000.00', 'PAY-'.$order->getId(), true);
+            if ($input->getOption('with-payment')) {
+                $order->applyPayment('1000.00', 'PAY-'.$order->getId());
                 $paymentTotal = bcadd($paymentTotal, '1000.00', 2);
                 $this->em->persist($order);
             }

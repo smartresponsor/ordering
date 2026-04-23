@@ -20,10 +20,10 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class OutboxProcessor implements OutboxProcessorInterface
 {
     public function __construct(
-        private readonly OutboxMessageRepository $repo,
-        private readonly EntityManagerInterface $em,
-        private readonly MessageBusInterface $bus,
-        private readonly LoggerInterface $logger,
+        private OutboxMessageRepository $repo,
+        private EntityManagerInterface $em,
+        private MessageBusInterface $bus,
+        private LoggerInterface $logger,
     ) {
     }
 

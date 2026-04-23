@@ -15,8 +15,8 @@ final class OrderEntityToResourceTransformer implements OrderEntityToResourceTra
         return new OrderResource(
             id: $e->getId(),
             status: $e->getStatus(),
-            currency: method_exists($e, 'getCurrency') ? (string) $e->getCurrency() : null,
-            total: method_exists($e, 'getTotal') ? (string) $e->getTotal() : null,
+            currency: method_exists($e, 'getCurrency') ? $e->getCurrency() : null,
+            total: method_exists($e, 'getTotal') ? $e->getTotal() : null,
         );
     }
 }

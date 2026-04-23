@@ -26,7 +26,11 @@ final readonly class Client
         return $headers;
     }
 
-    /** @return array{id:string,status:string,totalAmount:int,currency:string,customerId?:string} */
+    /**
+     * @return array{id:string,status:string,totalAmount:int,currency:string,customerId?:string}
+     *
+     * @throws \JsonException
+     */
     public function createOrder(int $totalAmount, string $currency, string $customerId, array $meta = []): array
     {
         [$code, $body] = Http::req(

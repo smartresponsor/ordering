@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Transport\Order;
 
 use App\ServiceInterface\Transport\Order\ProviderAdapterInterface;
-
 use App\ServiceInterface\Transport\Order\ProviderRouterInterface;
 use App\ValueObject\Routing\Order\CanarySwitch;
 use App\ValueObject\Routing\Order\CostPolicy;
@@ -35,10 +34,10 @@ final readonly class ProviderRouter implements ProviderRouterInterface
         array $adapter,
         array $probe,
         array $canaryPercent,
-        private readonly ProviderPolicy $policy,
-        private readonly CanarySwitch $canarySwitch,
-        private readonly QuotaPolicy $quotaPolicy,
-        private readonly CostPolicy $costPolicy,
+        private ProviderPolicy $policy,
+        private CanarySwitch $canarySwitch,
+        private QuotaPolicy $quotaPolicy,
+        private CostPolicy $costPolicy,
     ) {
         $this->adapter = $adapter;
         $this->probe = $probe;

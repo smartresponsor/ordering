@@ -12,15 +12,15 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 final readonly class IdempotencyMiddleware implements HttpKernelInterface
 {
     public function __construct(
-        private readonly HttpKernelInterface $kernel,
-        private readonly CacheItemPoolInterface $cache,
-        private readonly int $ttl = 60,
+        private HttpKernelInterface $kernel,
+        private CacheItemPoolInterface $cache,
+        private int $ttl = 60,
     ) {
     }
 
     public function handle(Request $request, int $type = self::MAIN_REQUEST, bool $catch = true): Response
     {
-        $key = (string) ($request->headers->get('Idempotency-Key') ?? '');
+        $key = $request->headers->get('Idempotency-Key') ?? '';
         if ('' !== $key) {
             $item = $this->cache->getItem($key);
             $cached = $item->isHit() ? $item->get() : null;

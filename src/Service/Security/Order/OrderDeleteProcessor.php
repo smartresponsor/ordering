@@ -17,10 +17,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderDeleteProcessor implements ProcessorInterface, OrderDeleteProcessorInterface
 {
-    public function __construct(private readonly MessageBusInterface $bus) {
+    public function __construct(private MessageBusInterface $bus)
+    {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): null
     {
         $id = $uriVariables['id'] ?? null;
         if ($id) {

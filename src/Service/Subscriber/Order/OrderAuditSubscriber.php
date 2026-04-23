@@ -14,7 +14,8 @@ use Symfony\Component\Uid\Uuid;
 
 final readonly class OrderAuditSubscriber implements EventSubscriberInterface, OrderAuditSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly OrderEventRepositoryInterface $repo) {
+    public function __construct(private EntityManagerInterface $em, private OrderEventRepositoryInterface $repo)
+    {
     }
 
     public static function getSubscribedEvents(): array
@@ -47,7 +48,7 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface, O
         $record = new OrderEventRecord($eventId, $orderId, $name, $payload, $occurredAt);
         $this->repo->save($record);
 
-        $action = (new \ReflectionClass($event))->getShortName();
+        $action = new \ReflectionClass($event)->getShortName();
         $audit = new OrderAuditLog(Uuid::v7()->toRfc4122(), $orderId, $action, json_encode($payload, JSON_UNESCAPED_SLASHES));
         $this->em->persist($audit);
     }
@@ -95,10 +96,9 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface, O
             return is_array($data) ? $data : ['value' => $data];
         }
 
-        $data = [];
-        foreach (get_object_vars($event) as $key => $value) {
-            $data[$key] = $this->normalizeValue($value);
-        }
+        $data = array_map(function ($value) {
+            return $this->normalizeValue($value);
+        }, get_object_vars($event));
 
         return $data;
     }

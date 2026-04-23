@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Transport\Order\DummyAdapter;
 use App\Service\Transport\Order\ProviderRouter;
@@ -38,11 +38,11 @@ echo "[AA3 smoke] trying 200 route selections...\n";
 $summary = [];
 
 for ($i = 0; $i < 200; ++$i) {
-    $context = new RouteContext('ord_'.$i, 'us', 19.99, false);
+    $context = new RouteContext('ord_' . $i, 'us', 19.99, false);
     $decision = $router->select($context);
     $provider = $decision->provider();
     $summary[$provider] = ($summary[$provider] ?? 0) + 1;
 }
 
 ksort($summary);
-echo json_encode(['iterations' => 200, 'providers' => $summary], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR)."\n";
+echo json_encode(['iterations' => 200, 'providers' => $summary], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR) . "\n";

@@ -6,6 +6,7 @@ namespace App\Service\Security\Order;
 
 final readonly class OrderPaymentCommand
 {
-    public function __construct(public readonly string $orderId, public readonly string $amount) {
+    public function __construct(public string $orderId, public string $amount)
+    {
     }
 }

@@ -9,5 +9,6 @@ use App\Entity\Order\OrderRefundTransaction;
 interface OrderRefundTransactionRepositoryInterface
 {
     public function add(OrderRefundTransaction $tx): void;
+
     public function sumByOrder(string $orderId): string;
 }

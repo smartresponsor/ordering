@@ -15,7 +15,7 @@ use App\ServiceInterface\Refund\Order\ReturnPolicyServiceInterface;
 final readonly class ReturnPolicyService implements ReturnPolicyServiceInterface, OrderReturnPolicyServiceInterface
 {
     public function __construct(
-        private readonly int $refundWindowDays = 14,
+        private int $refundWindowDays = 14,
     ) {
     }
 

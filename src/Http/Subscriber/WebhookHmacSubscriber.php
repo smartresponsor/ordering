@@ -11,8 +11,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 final readonly class WebhookHmacSubscriber
 {
     public function __construct(
-        private readonly WebhookSignatureVerifier $verifier,
-        private readonly string $header = 'X-Signature',
+        private WebhookSignatureVerifier $verifier,
+        private string $header = 'X-Signature',
     ) {
     }
 

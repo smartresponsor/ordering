@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Analytics\Order;
 
-use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface MetricsProjectionServiceInterface

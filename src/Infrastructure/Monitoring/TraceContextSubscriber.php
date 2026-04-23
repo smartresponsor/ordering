@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Infrastructure\Monitoring;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final readonly class TraceContextSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly string $serviceName = 'order-component',
-        private readonly string $responseHeaderName = 'X-Trace-Id',
+        private string $serviceName = 'order-component',
+        private string $responseHeaderName = 'X-Trace-Id',
     ) {
     }
 
@@ -48,13 +47,11 @@ final readonly class TraceContextSubscriber implements EventSubscriberInterface
         }
 
         $response = $event->getResponse();
-        if ($response instanceof Response) {
-            $response->headers->set($this->responseHeaderName, $traceId);
-            $response->headers->set(
-                'X-Trace-Service',
-                (string) $request->attributes->get('_trace_service', $this->serviceName),
-            );
-        }
+        $response->headers->set($this->responseHeaderName, $traceId);
+        $response->headers->set(
+            'X-Trace-Service',
+            (string) $request->attributes->get('_trace_service', $this->serviceName),
+        );
     }
 
     private function generateTraceId(): string

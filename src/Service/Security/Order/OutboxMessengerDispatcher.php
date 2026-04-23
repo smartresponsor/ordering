@@ -18,8 +18,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly MessageBusInterface $bus,
+        private EntityManagerInterface $em,
+        private MessageBusInterface $bus,
     ) {
     }
 

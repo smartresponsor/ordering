@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Http\Order\Redactor;
 
@@ -16,7 +16,7 @@ function argvValue(array $argv, string $name, ?string $default = null): ?string
 
 $inputPath = argvValue($argv, '--input');
 $outputPath = argvValue($argv, '--output');
-$policyPath = __DIR__.'/../config/pii/pii-policy.json';
+$policyPath = __DIR__ . '/../config/pii/pii-policy.json';
 
 if (null === $inputPath) {
     fwrite(STDERR, "Usage: purge-pii.php --input <json-file> [--output <json-file>]\n");
@@ -54,9 +54,9 @@ if (false === $json) {
 }
 
 if (null !== $outputPath) {
-    file_put_contents($outputPath, $json."\n");
+    file_put_contents($outputPath, $json . "\n");
     echo "Redacted payload written to {$outputPath}\n";
     exit(0);
 }
 
-echo $json."\n";
+echo $json . "\n";

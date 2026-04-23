@@ -22,8 +22,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final readonly class DisputeService implements DisputeServiceInterface, OrderDisputeServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly EventDispatcherInterface $events,
+        private EntityManagerInterface $em,
+        private EventDispatcherInterface $events,
     ) {
     }
 

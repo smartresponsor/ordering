@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsAggregateViewRepository
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 

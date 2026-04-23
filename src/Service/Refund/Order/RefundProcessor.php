@@ -19,9 +19,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class RefundProcessor implements RefundProcessorInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly MessageBusInterface $bus,
-        private readonly OrderPaymentGatewayInterface $gateway,
+        private EntityManagerInterface $em,
+        private MessageBusInterface $bus,
+        private OrderPaymentGatewayInterface $gateway,
     ) {
     }
 
@@ -34,6 +34,6 @@ final readonly class RefundProcessor implements RefundProcessorInterface
         $this->em->persist($tx);
         $this->em->flush();
 
-        $this->bus->dispatch(new OrderRefundCompletedEvent($tx->orderId(), (string) $tx->id(), $tx->amount(), 'USD'));
+        $this->bus->dispatch(new OrderRefundCompletedEvent($tx->orderId(), $tx->id(), $tx->amount(), 'USD'));
     }
 }

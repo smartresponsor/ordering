@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 final readonly class TenantKeyResolver
 {
     public function __construct(
-        private readonly RequestStack $rs,
-        private readonly TokenStorageInterface $ts,
-        private readonly JwtTenantResolver $tenantResolver,
+        private RequestStack $rs,
+        private TokenStorageInterface $ts,
+        private JwtTenantResolver $tenantResolver,
     ) {
     }
 

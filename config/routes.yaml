@@ -1,15 +1,15 @@
 order_controller:
-  resource: ../src/Controller/OrderController.php
-  type: attribute
+    resource: ../src/Controller/OrderController.php
+    type: attribute
 
 order_management_controller:
-  resource: ../src/Controller/OrderManagementController.php
-  type: attribute
+    resource: ../src/Controller/OrderManagementController.php
+    type: attribute
 
 health_check_controller:
-  resource: ../src/Controller/HealthCheckController.php
-  type: attribute
+    resource: ../src/Controller/HealthCheckController.php
+    type: attribute
 
 readiness_controller:
-  resource: ../src/Controller/ReadinessController.php
-  type: attribute
+    resource: ../src/Controller/ReadinessController.php
+    type: attribute

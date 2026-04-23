@@ -15,7 +15,7 @@ use App\ServiceInterface\Security\Order\IdempotencyServiceInterface;
 
 final readonly class IdempotencyService implements IdempotencyServiceInterface
 {
-    public function __construct(private readonly IdempotencyKeyRepository $repo)
+    public function __construct(private IdempotencyKeyRepository $repo)
     {
     }
 

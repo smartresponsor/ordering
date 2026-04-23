@@ -21,8 +21,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 final readonly class WebhookHandler implements WebhookHandlerInterface, OrderWebhookHandlerInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OrderIdempotencyGuardInterface $guard,
+        private EntityManagerInterface $em,
+        private OrderIdempotencyGuardInterface $guard,
     ) {
     }
 

@@ -1,13 +1,13 @@
 groups:
-- name: payments
-  rules:
-  - alert: PaymentProviderErrorSpike
-    expr: sum(rate(payment_provider_error_total[5m])) by (provider) > 5
-    for: 10m
-    labels: {severity: page}
-    annotations: {summary: "Payment provider error spike", description: "Investigate provider status or recent deploys"}
-  - alert: PaymentWebhookVerifyFail
-    expr: increase(payment_webhook_verify_fail_total[15m]) > 0
-    for: 10m
-    labels: {severity: warn}
-    annotations: {summary: "Webhook signature verification failures"}
+    -   name: payments
+        rules:
+            -   alert: PaymentProviderErrorSpike
+                expr: sum(rate(payment_provider_error_total[5m])) by (provider) > 5
+                for: 10m
+                labels: { severity: page }
+                annotations: { summary: "Payment provider error spike", description: "Investigate provider status or recent deploys" }
+            -   alert: PaymentWebhookVerifyFail
+                expr: increase(payment_webhook_verify_fail_total[15m]) > 0
+                for: 10m
+                labels: { severity: warn }
+                annotations: { summary: "Webhook signature verification failures" }

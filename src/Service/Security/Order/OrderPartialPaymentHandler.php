@@ -20,7 +20,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class OrderPartialPaymentHandler implements OrderPartialPaymentHandlerInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function __invoke(OrderPartialPaymentCommand $c): void

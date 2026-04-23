@@ -16,8 +16,8 @@ use App\ServiceInterface\Payment\Order\PayPalGatewayInterface;
 final readonly class PayPalGateway implements PaymentGatewayInterface, PayPalGatewayInterface
 {
     public function __construct(
-        private readonly ?string $clientId = null,
-        private readonly ?string $secret = null,
+        private ?string $clientId = null,
+        private ?string $secret = null,
     ) {
     }
 

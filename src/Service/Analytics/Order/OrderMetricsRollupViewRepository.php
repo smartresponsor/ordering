@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsRollupViewRepository
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 
@@ -22,7 +22,7 @@ final readonly class OrderMetricsRollupViewRepository
     public function upsert(string $vendorId, string $periodType, string $periodValue, callable $mutator): OrderMetricsRollupView
     {
         $view = $this->findOne($vendorId, $periodType, $periodValue)
-          ?? new OrderMetricsRollupView($vendorId, $periodType, $periodValue);
+            ?? new OrderMetricsRollupView($vendorId, $periodType, $periodValue);
         $mutator($view);
         $view->recomputeLtv();
         $view->updatedAt = new \DateTimeImmutable('now');

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'order_metrics_projection')]
-#[ORM\Index(columns: ['date'], name: 'idx_omp_date')]
+#[ORM\Index(name: 'idx_omp_date', columns: ['date'])]
 class OrderMetricsProjection
 {
     #[ORM\Id]

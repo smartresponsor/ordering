@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use ApiPlatform\OpenApi\OpenApi;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Model;
+use ApiPlatform\OpenApi\OpenApi;
 
 final readonly class OrderOpenApiFactory implements OpenApiFactoryInterface
 {
-    public function __construct(private readonly OpenApiFactoryInterface $decorated)
+    public function __construct(private OpenApiFactoryInterface $decorated)
     {
     }
 

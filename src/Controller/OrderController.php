@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/order')]
 final readonly class OrderController
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly ValidatorInterface $validator) {
+    public function __construct(private EntityManagerInterface $em, private ValidatorInterface $validator)
+    {
     }
 
     #[Route('', name: 'order_create', methods: ['POST'])]

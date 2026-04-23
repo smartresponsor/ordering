@@ -23,7 +23,7 @@ use Symfony\Component\Uid\Uuid;
 #[AsMessageHandler]
 final readonly class OrderRefundHandler implements OrderRefundHandlerInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly RefundPolicyService $policy)
+    public function __construct(private EntityManagerInterface $em, private RefundPolicyService $policy)
     {
     }
 

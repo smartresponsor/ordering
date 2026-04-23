@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
 final class OutboxMessage
@@ -14,7 +13,7 @@ final class OutboxMessage
     private array $payload;
     private int $attempts = 0;
     private bool $sent = false;
-    private ?DateTimeImmutable $availableAt = null;
+    private ?\DateTimeImmutable $availableAt = null;
 
     public function __construct(string $arg1, string|array $arg2, ?array $arg3 = null)
     {
@@ -66,7 +65,7 @@ final class OutboxMessage
     public function markFailed(int $delaySeconds = 0): void
     {
         ++$this->attempts;
-        $this->availableAt = (new DateTimeImmutable())->modify(
+        $this->availableAt = new \DateTimeImmutable()->modify(
             sprintf('+%d seconds', max(0, $delaySeconds)),
         );
     }
@@ -74,6 +73,6 @@ final class OutboxMessage
     public function isPending(): bool
     {
         return !$this->sent
-            && (null === $this->availableAt || $this->availableAt <= new DateTimeImmutable());
+            && (null === $this->availableAt || $this->availableAt <= new \DateTimeImmutable());
     }
 }

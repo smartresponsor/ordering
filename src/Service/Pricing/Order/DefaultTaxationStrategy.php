@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
+use App\ServiceInterface\Pricing\Order\DefaultTaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\TaxRate;
 
-class DefaultTaxationStrategy implements \App\ServiceInterface\Pricing\Order\DefaultTaxationStrategyInterface
+class DefaultTaxationStrategy implements DefaultTaxationStrategyInterface
 {
     public function tax(Money $taxBase, TaxRate $rate): Money
     {

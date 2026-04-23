@@ -7,8 +7,8 @@ namespace App\ValueObject\Pricing\Order;
 final readonly class Taxation
 {
     public function __construct(
-        public readonly float $rate,
-        public readonly string $type,
+        public float $rate,
+        public string $type,
     ) {
         if ($this->rate < 0 || $this->rate > 1) {
             throw new \InvalidArgumentException('Invalid tax rate');

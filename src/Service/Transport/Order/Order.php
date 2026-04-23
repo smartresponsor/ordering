@@ -7,11 +7,11 @@ namespace App\Service\Transport\Order;
 final readonly class Order
 {
     public function __construct(
-        public readonly string $id,
-        public readonly string $status,
-        public readonly int $totalAmount,
-        public readonly string $currency,
-        public readonly ?string $customerId = null,
+        public string $id,
+        public string $status,
+        public int $totalAmount,
+        public string $currency,
+        public ?string $customerId = null,
     ) {
     }
 

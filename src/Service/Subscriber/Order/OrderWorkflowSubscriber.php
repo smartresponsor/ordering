@@ -13,8 +13,8 @@ use Symfony\Component\Uid\Uuid;
 final readonly class OrderWorkflowSubscriber
 {
     public function __construct(
-        private readonly OrderPricingInterface $pricing,
-        private readonly EntityManagerInterface $em,
+        private OrderPricingInterface $pricing,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -42,7 +42,6 @@ final readonly class OrderWorkflowSubscriber
         $this->em->flush();
     }
 
-    /** @param mixed $lines */
     private function sumLines(mixed $lines): float
     {
         if (!is_iterable($lines)) {

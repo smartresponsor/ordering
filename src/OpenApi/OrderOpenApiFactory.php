@@ -9,7 +9,7 @@ use App\ServiceInterface\OpenApi\Order\OrderOpenApiFactoryInterface;
 
 final readonly class OrderOpenApiFactory implements OrderOpenApiFactoryInterface
 {
-    public function __construct(private readonly object $inner)
+    public function __construct(private object $inner)
     {
     }
 

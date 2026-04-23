@@ -1,23 +1,23 @@
 groups:
-- name: order-chaos
-  rules:
-  - alert: RetrySpike
-    expr: increase(retry_total[5m]) > 100
-    for: 10m
-    labels: {severity: warn}
-    annotations: {summary: "Retry spike (>100/5m)", runbook_url: "https://runbook/chaos"}
-  - alert: BreakerOpen
-    expr: increase(breaker_state_change_total{state="OPEN"}[5m]) > 0
-    for: 5m
-    labels: {severity: page}
-    annotations: {summary: "Circuit opened", runbook_url: "https://runbook/chaos"}
-  - alert: DLQRateHigh
-    expr: (increase(dlq_insert_total[15m]) / clamp_min(increase(processed_total[15m]),1)) > 0.001
-    for: 15m
-    labels: {severity: page}
-    annotations: {summary: "DLQ rate > 0.1% over 15m"}
-  - alert: BacklogAgeHigh
-    expr: max_over_time(queue_backlog_age_seconds[10m]) > 30
-    for: 10m
-    labels: {severity: page}
-    annotations: {summary: "Backlog age > 30s (sustained)"}
+    -   name: order-chaos
+        rules:
+            -   alert: RetrySpike
+                expr: increase(retry_total[5m]) > 100
+                for: 10m
+                labels: { severity: warn }
+                annotations: { summary: "Retry spike (>100/5m)", runbook_url: "https://runbook/chaos" }
+            -   alert: BreakerOpen
+                expr: increase(breaker_state_change_total{state="OPEN"}[5m]) > 0
+                for: 5m
+                labels: { severity: page }
+                annotations: { summary: "Circuit opened", runbook_url: "https://runbook/chaos" }
+            -   alert: DLQRateHigh
+                expr: (increase(dlq_insert_total[15m]) / clamp_min(increase(processed_total[15m]),1)) > 0.001
+                for: 15m
+                labels: { severity: page }
+                annotations: { summary: "DLQ rate > 0.1% over 15m" }
+            -   alert: BacklogAgeHigh
+                expr: max_over_time(queue_backlog_age_seconds[10m]) > 30
+                for: 10m
+                labels: { severity: page }
+                annotations: { summary: "Backlog age > 30s (sustained)" }

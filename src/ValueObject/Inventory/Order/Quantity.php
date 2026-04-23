@@ -6,7 +6,7 @@ namespace App\ValueObject\Inventory\Order;
 
 final readonly class Quantity
 {
-    public function __construct(private readonly int $value)
+    public function __construct(private int $value)
     {
         if ($this->value < 0) {
             throw new \InvalidArgumentException('Quantity cannot be negative.');

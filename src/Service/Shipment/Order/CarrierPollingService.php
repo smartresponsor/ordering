@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\ServiceInterface\Shipment\CarrierInterface;
 use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
+use App\ServiceInterface\Shipment\CarrierInterface;
 use App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface;
 use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 use Psr\Log\LoggerInterface;
@@ -23,9 +23,9 @@ final readonly class CarrierPollingService implements CarrierPollingServiceInter
 
     public function __construct(
         #[TaggedIterator('order.shipment.carrier')] iterable $carriers,
-        private readonly OrderShipmentProjectionServiceInterface $projection,
-        private readonly OrderShipmentViewRepositoryInterface $repo,
-        private readonly LoggerInterface $logger,
+        private OrderShipmentProjectionServiceInterface $projection,
+        private OrderShipmentViewRepositoryInterface $repo,
+        private LoggerInterface $logger,
     ) {
         $mappedCarriers = [];
         foreach ($carriers as $carrier) {

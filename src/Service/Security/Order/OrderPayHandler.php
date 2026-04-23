@@ -20,8 +20,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final readonly class OrderPayHandler implements OrderPayHandlerInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OutboxPublisher $outbox,
+        private EntityManagerInterface $em,
+        private OutboxPublisher $outbox,
     ) {
     }
 

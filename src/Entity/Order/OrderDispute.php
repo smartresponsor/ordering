@@ -22,7 +22,7 @@ final class OrderDispute
         private readonly ?string $reason = null,
         private readonly ?string $externalId = null,
     ) {
-        $this->id = $this->externalId ?? sha1((is_string($this->order) ? $this->order : (string) $this->order->id()).'|'.$this->type.'|'.($this->reason ?? ''));
+        $this->id = $this->externalId ?? sha1((is_string($this->order) ? $this->order : $this->order->id()).'|'.$this->type.'|'.($this->reason ?? ''));
     }
 
     public function resolve(): void

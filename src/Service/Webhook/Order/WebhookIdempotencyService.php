@@ -17,8 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 final readonly class WebhookIdempotencyService implements WebhookIdempotencyServiceInterface
 {
     public function __construct(
-        private readonly WebhookLogRepository $logs,
-        private readonly EntityManagerInterface $em,
+        private WebhookLogRepository $logs,
+        private EntityManagerInterface $em,
     ) {
     }
 

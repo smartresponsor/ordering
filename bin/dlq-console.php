@@ -21,8 +21,12 @@ if ($cmd === 'seed') {
 if ($cmd === 'list') {
     $filter = [];
     foreach ($argv as $arg) {
-        if (str_starts_with($arg, '--provider=')) { $filter['provider'] = substr($arg, 11); }
-        if (str_starts_with($arg, '--reason=')) { $filter['reason'] = substr($arg, 9); }
+        if (str_starts_with($arg, '--provider=')) {
+            $filter['provider'] = substr($arg, 11);
+        }
+        if (str_starts_with($arg, '--reason=')) {
+            $filter['reason'] = substr($arg, 9);
+        }
     }
     $ui->showList($filter);
     exit(0);
@@ -30,7 +34,9 @@ if ($cmd === 'list') {
 if ($cmd === 'requeue') {
     $id = 'UNKNOWN';
     foreach ($argv as $arg) {
-        if (str_starts_with($arg, '--id=')) { $id = substr($arg, 5); }
+        if (str_starts_with($arg, '--id=')) {
+            $id = substr($arg, 5);
+        }
     }
     $ui->requeue($id);
     exit(0);
@@ -39,8 +45,12 @@ if ($cmd === 'discard') {
     $id = 'UNKNOWN';
     $reason = 'unspecified';
     foreach ($argv as $arg) {
-        if (str_starts_with($arg, '--id=')) { $id = substr($arg, 5); }
-        if (str_starts_with($arg, '--reason=')) { $reason = substr($arg, 9); }
+        if (str_starts_with($arg, '--id=')) {
+            $id = substr($arg, 5);
+        }
+        if (str_starts_with($arg, '--reason=')) {
+            $reason = substr($arg, 9);
+        }
     }
     $ui->discard($id, $reason);
     exit(0);

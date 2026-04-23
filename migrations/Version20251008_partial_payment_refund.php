@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -8,7 +9,9 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20251008_partial_payment_refund extends AbstractMigration
 {
     public function getDescription(): string
-    { return 'Create order_partial_payment and order_refund tables'; }
+    {
+        return 'Create order_partial_payment and order_refund tables';
+    }
 
     public function up(Schema $schema): void
     {

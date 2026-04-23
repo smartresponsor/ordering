@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace OrderComponent\Migrations\Order;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -8,7 +9,9 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20251008_pricing_taxation extends AbstractMigration
 {
     public function getDescription(): string
-    { return 'Create order_price_detail table (pricing/taxation snapshot)'; }
+    {
+        return 'Create order_price_detail table (pricing/taxation snapshot)';
+    }
 
     public function up(Schema $schema): void
     {
@@ -24,5 +27,7 @@ final class Version20251008_pricing_taxation extends AbstractMigration
     }
 
     public function down(Schema $schema): void
-    { $this->addSql('DROP TABLE order_price_detail'); }
+    {
+        $this->addSql('DROP TABLE order_price_detail');
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Message\Command;
 
 final readonly class RetryOrderSagaCommand
 {
-    public function __construct(public readonly string $orderId, public readonly int $attempt = 1, public readonly array $context = []) {
+    public function __construct(public string $orderId, public int $attempt = 1, public array $context = [])
+    {
     }
 }

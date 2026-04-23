@@ -7,8 +7,8 @@ namespace App\Message;
 final readonly class OrderMessage
 {
     public function __construct(
-        public readonly string $eventName,
-        public readonly string $orderId,
+        public string $eventName,
+        public string $orderId,
     ) {
     }
 }

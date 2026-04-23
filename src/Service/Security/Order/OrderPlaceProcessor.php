@@ -25,12 +25,12 @@ use Symfony\Component\Uid\Uuid;
 final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcessorInterface
 {
     public function __construct(
-        private readonly MessageBusInterface $bus,
-        private readonly EntityManagerInterface $em,
+        private MessageBusInterface $bus,
+        private EntityManagerInterface $em,
     ) {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): OrderResource
     {
         \assert($data instanceof OrderResource);
         $orderId = Uuid::v7()->toRfc4122();
@@ -44,7 +44,7 @@ final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPla
                 static fn ($i) => ['sku' => $i->sku, 'qty' => $i->qty, 'price' => $i->price],
                 $data->items,
             ),
-            'placeAt' => $data->placeAt ?? (new \DateTimeImmutable())->format(DATE_ATOM),
+            'placeAt' => $data->placeAt ?? new \DateTimeImmutable()->format(DATE_ATOM),
         ];
 
         $this->bus->dispatch(new OrderPlaceCommand($payload));

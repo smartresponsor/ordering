@@ -3,12 +3,12 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Security\Order\FileJwkRepository;
 use App\ValueObject\Security\Order\JwkKey;
 
-$dir = __DIR__.'/../var/key';
+$dir = __DIR__ . '/../var/key';
 if (!is_dir($dir)) {
     mkdir($dir, 0777, true);
 }
@@ -21,26 +21,26 @@ $config = [
 
 $res = openssl_pkey_new($config);
 if (false === $res) {
-    fwrite(STDERR, "Unable to generate RSA key pair
-");
+    fwrite(STDERR, 'Unable to generate RSA key pair
+');
     exit(1);
 }
 
 $privatePem = '';
 openssl_pkey_export($res, $privatePem);
 $detail = openssl_pkey_get_details($res);
-$publicPem = is_array($detail) ? (string) ($detail['key'] ?? '') : '';
+$publicPem = is_array($detail) ? (string)($detail['key'] ?? '') : '';
 
 if ('' === $privatePem || '' === $publicPem) {
-    fwrite(STDERR, "Unable to export RSA key pair
-");
+    fwrite(STDERR, 'Unable to export RSA key pair
+');
     exit(1);
 }
 
-file_put_contents($dir.'/private.pem', $privatePem);
-file_put_contents($dir.'/public.pem', $publicPem);
+file_put_contents($dir . '/private.pem', $privatePem);
+file_put_contents($dir . '/public.pem', $publicPem);
 
-$repo = new FileJwkRepository(__DIR__.'/../var/jwk');
+$repo = new FileJwkRepository(__DIR__ . '/../var/jwk');
 $key = new JwkKey($kid, 'RS256', 'RSA', $publicPem, $privatePem, true);
 $repo->save($key);
 

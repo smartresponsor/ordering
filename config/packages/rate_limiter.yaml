@@ -1,16 +1,16 @@
 framework:
-  rate_limiter:
-    order_api_write:
-      policy: 'token_bucket'
-      limit: 60
-      rate: { interval: '1 minute', amount: 60 }
-      cache_pool: 'cache.rate_limiter'
-    order_api_read:
-      policy: 'sliding_window'
-      limit: 600
-      interval: '1 minute'
-      cache_pool: 'cache.rate_limiter'
+    rate_limiter:
+        order_api_write:
+            policy: 'token_bucket'
+            limit: 60
+            rate: { interval: '1 minute', amount: 60 }
+            cache_pool: 'cache.rate_limiter'
+        order_api_read:
+            policy: 'sliding_window'
+            limit: 600
+            interval: '1 minute'
+            cache_pool: 'cache.rate_limiter'
 
 services:
-  cache.rate_limiter:
-    parent: cache.app
+    cache.rate_limiter:
+        parent: cache.app

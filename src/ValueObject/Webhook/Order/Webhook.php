@@ -12,7 +12,7 @@ final class Webhook
         foreach (explode(',', $sigHeader) as $kv) {
             $kv = trim($kv);
             if (str_contains($kv, '=')) {
-                [$k,$v] = explode('=', $kv, 2);
+                [$k, $v] = explode('=', $kv, 2);
                 $parts[$k] = $v;
             }
         }

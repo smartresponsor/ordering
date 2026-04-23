@@ -1,4 +1,4 @@
 services:
-  App\Service\SensitiveData\CryptoService:
-    arguments:
-      $key: '%env(string:APP_CRYPTO_KEY)%'
+    App\Service\SensitiveData\CryptoService:
+        arguments:
+            $key: '%env(string:APP_CRYPTO_KEY)%'

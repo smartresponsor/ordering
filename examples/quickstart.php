@@ -14,5 +14,5 @@ $client = new Client($base);
 $order = $client->createOrder(1999, 'USD', 'cus_php');
 
 printf("order %s\n", $order['id']);
-$client->transition((string) $order['id'], 'confirm', 'php-qstart-1');
+$client->transition((string)$order['id'], 'confirm', 'php-qstart-1');
 echo "confirmed\n";

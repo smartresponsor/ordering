@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\ServiceInterface\Security\Order\JwkRepositoryInterface;
-use OpenSSLAsymmetricKey;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
@@ -37,7 +36,7 @@ final readonly class JwksIssuer
     private function toJwk(string $publicPem, string $kid, string $alg, string $type): array
     {
         $key = openssl_pkey_get_public($publicPem);
-        if (!$key instanceof OpenSSLAsymmetricKey) {
+        if (!$key instanceof \OpenSSLAsymmetricKey) {
             return [
                 'kty' => strtoupper($type),
                 'alg' => strtoupper($alg),

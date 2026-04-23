@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'vendor_revenue_view')]
-#[ORM\Index(columns: ['vendor_id', 'date'], name: 'idx_vendor_rev_vendor_date')]
+#[ORM\Index(name: 'idx_vendor_rev_vendor_date', columns: ['vendor_id', 'date'])]
 class VendorRevenueView
 {
     #[ORM\Id]

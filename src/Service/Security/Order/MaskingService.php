@@ -26,7 +26,7 @@ final readonly class MaskingService
     {
         $masked = [];
         foreach ($data as $k => $v) {
-            $lk = strtolower((string) $k);
+            $lk = strtolower($k);
             if (in_array($lk, $this->maskKeys, true)) {
                 $masked[$k] = is_string($v) ? SecureString::mask($v, 2) : '***';
             } elseif (is_array($v)) {

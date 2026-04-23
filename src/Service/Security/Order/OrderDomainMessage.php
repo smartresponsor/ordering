@@ -7,9 +7,9 @@ namespace App\Service\Security\Order;
 final readonly class OrderDomainMessage
 {
     public function __construct(
-        public readonly string $messageId,
-        public readonly string $topic,
-        public readonly array $payload,
+        public string $messageId,
+        public string $topic,
+        public array $payload,
     ) {
     }
 }

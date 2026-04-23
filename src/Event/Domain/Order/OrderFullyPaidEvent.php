@@ -8,6 +8,7 @@ use App\Entity\Order;
 
 final readonly class OrderFullyPaidEvent
 {
-    public function __construct(public readonly Order $order) {
+    public function __construct(public Order $order)
+    {
     }
 }

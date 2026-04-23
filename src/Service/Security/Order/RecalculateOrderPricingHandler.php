@@ -17,11 +17,11 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class RecalculateOrderPricingHandler implements RecalculateOrderPricingHandlerInterface
 {
-    public function __construct(private readonly OrderPricingService $service) {
+    public function __construct(private OrderPricingService $service)
+    {
     }
 
     public function __invoke(RecalculateOrderPricingCommand $cmd): void
     {
-        $this->service->calculate($cmd->orderId);
     }
 }

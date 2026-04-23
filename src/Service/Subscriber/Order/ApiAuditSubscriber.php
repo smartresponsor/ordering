@@ -14,8 +14,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 final readonly class ApiAuditSubscriber implements EventSubscriberInterface, ApiAuditSubscriberInterface
 {
     public function __construct(
-        private readonly LoggerInterface $orderAuditLogger,
-        private readonly TokenStorageInterface $tokens,
+        private LoggerInterface $orderAuditLogger,
+        private TokenStorageInterface $tokens,
     ) {
     }
 

@@ -10,7 +10,7 @@ final readonly class NdjsonAuditSink implements AuditSinkInterface
 {
     private string $path;
 
-    public function __construct(private readonly string $projectDir)
+    public function __construct(private string $projectDir)
     {
         $this->path = rtrim($this->projectDir, '/\\').'/var/log/order-audit.ndjson';
     }

@@ -17,8 +17,8 @@ use Symfony\Component\Workflow\WorkflowInterface;
 final readonly class OrderStatusService implements OrderStatusServiceInterface
 {
     public function __construct(
-        private readonly WorkflowInterface $orderWorkflow,
-        private readonly EntityManagerInterface $em,
+        private WorkflowInterface $orderWorkflow,
+        private EntityManagerInterface $em,
     ) {
     }
 

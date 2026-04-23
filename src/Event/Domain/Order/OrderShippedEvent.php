@@ -6,7 +6,7 @@ namespace App\Event\Domain\Order;
 
 final readonly class OrderShippedEvent
 {
-    public function __construct(public readonly string $orderId)
+    public function __construct(public string $orderId)
     {
     }
 }

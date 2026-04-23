@@ -14,9 +14,9 @@ $batch = getenv('ORDER_OUTBOX_BATCH');
 $command = sprintf('php %s order:outbox:dispatch', escapeshellarg($console));
 
 if (is_string($batch) && '' !== trim($batch)) {
-    $command .= sprintf(' --batch=%d', max(1, (int) $batch));
+    $command .= sprintf(' --batch=%d', max(1, (int)$batch));
 }
 
 passthru($command, $exitCode);
 
-exit((int) $exitCode);
+exit($exitCode);

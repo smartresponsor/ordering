@@ -9,8 +9,8 @@ use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
 final readonly class ClickHouseExportSink implements ExportSinkInterface
 {
     public function __construct(
-        private readonly string $endpoint,
-        private readonly string $table = 'order_metrics_aggregate_view',
+        private string $endpoint,
+        private string $table = 'order_metrics_aggregate_view',
     ) {
     }
 
@@ -24,8 +24,8 @@ final readonly class ClickHouseExportSink implements ExportSinkInterface
         }
 
         $payload = implode(
-            "
-",
+            '
+',
             array_map(
                 static fn (array $row) => json_encode($row, JSON_UNESCAPED_SLASHES),
                 $batch,

@@ -47,6 +47,6 @@ final readonly class OrderMessageHandler
     {
         $digits = preg_replace('/\D+/', '', $order->id());
 
-        return is_string($digits) && $digits !== '' ? (int) $digits : 0;
+        return is_string($digits) && '' !== $digits ? (int) $digits : 0;
     }
 }

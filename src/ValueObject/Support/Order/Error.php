@@ -6,7 +6,8 @@ namespace App\ValueObject\Support\Order;
 
 final readonly class Error
 {
-    public function __construct(public readonly string $code, public readonly string $message) {
+    public function __construct(public string $code, public string $message)
+    {
     }
 
     public static function fromArray(array $a): self

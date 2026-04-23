@@ -13,7 +13,8 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final readonly class IdempotencyMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
@@ -23,7 +24,7 @@ final readonly class IdempotencyMiddleware implements MiddlewareInterface
 
         $found = $this->em->getRepository(IdempotencyKey::class)->find($key);
         if ($found) {
-            return $envelope->with(new HandledStamp(null, static::class));
+            return $envelope->with(new HandledStamp(null, self::class));
         }
 
         $this->em->persist(new IdempotencyKey($key));

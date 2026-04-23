@@ -6,6 +6,7 @@ namespace App\Service\Security\Order;
 
 final readonly class OrderShipmentCommand
 {
-    public function __construct(public readonly string $orderId, public readonly string $carrier) {
+    public function __construct(public string $orderId, public string $carrier)
+    {
     }
 }

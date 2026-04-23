@@ -8,7 +8,7 @@ use App\ServiceInterface\Http\Order\AuditLoggerInterface;
 
 final readonly class CompositeAuditLogger implements AuditLoggerInterface
 {
-    public function __construct(private readonly SinkRouter $sinkRouter)
+    public function __construct(private SinkRouter $sinkRouter)
     {
     }
 

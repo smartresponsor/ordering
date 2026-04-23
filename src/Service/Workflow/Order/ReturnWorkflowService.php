@@ -21,9 +21,9 @@ use Symfony\Component\Uid\Uuid;
 final readonly class ReturnWorkflowService implements ReturnWorkflowServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly RefundProcessor $refund,
-        private readonly MessageBusInterface $bus,
+        private EntityManagerInterface $em,
+        private RefundProcessor $refund,
+        private MessageBusInterface $bus,
     ) {
     }
 

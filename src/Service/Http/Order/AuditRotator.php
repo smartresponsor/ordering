@@ -8,7 +8,7 @@ use App\ServiceInterface\Http\Order\AuditRotateInterface;
 
 final readonly class AuditRotator implements AuditRotateInterface
 {
-    public function __construct(private readonly string $projectDir)
+    public function __construct(private string $projectDir)
     {
     }
 

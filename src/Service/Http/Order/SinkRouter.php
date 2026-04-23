@@ -10,7 +10,7 @@ use App\ServiceInterface\Http\Order\SinkRouterInterface;
 final readonly class SinkRouter implements SinkRouterInterface
 {
     /** @param iterable<AuditSinkInterface> $sinks */
-    public function __construct(private readonly iterable $sinks = [])
+    public function __construct(private iterable $sinks = [])
     {
     }
 

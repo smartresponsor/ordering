@@ -1,58 +1,58 @@
 {
-  "regions": [
-    "us",
-    "eu"
-  ],
-  "quotas": {
-    "default_rpm": 12000,
-    "per_region": {
-      "us": {
-        "per_provider_rpm": {
-          "stripe": 18000,
-          "adyen": 9000,
-          "paypal": 7200
-        },
-        "per_tenant_rpm": {
-          "tenant_a": {
-            "stripe": 7200,
-            "adyen": 4800,
-            "paypal": 3600
-          },
-          "tenant_b": {
-            "stripe": 3600,
-            "adyen": 2400
-          }
+    "regions": [
+        "us",
+        "eu"
+    ],
+    "quotas": {
+        "default_rpm": 12000,
+        "per_region": {
+            "us": {
+                "per_provider_rpm": {
+                    "stripe": 18000,
+                    "adyen": 9000,
+                    "paypal": 7200
+                },
+                "per_tenant_rpm": {
+                    "tenant_a": {
+                        "stripe": 7200,
+                        "adyen": 4800,
+                        "paypal": 3600
+                    },
+                    "tenant_b": {
+                        "stripe": 3600,
+                        "adyen": 2400
+                    }
+                }
+            },
+            "eu": {
+                "per_provider_rpm": {
+                    "stripe": 12000,
+                    "adyen": 9000
+                },
+                "per_tenant_rpm": {
+                    "tenant_a": {
+                        "stripe": 4800,
+                        "adyen": 3600
+                    }
+                }
+            }
         }
-      },
-      "eu": {
-        "per_provider_rpm": {
-          "stripe": 12000,
-          "adyen": 9000
-        },
-        "per_tenant_rpm": {
-          "tenant_a": {
-            "stripe": 4800,
-            "adyen": 3600
-          }
-        }
-      }
-    }
-  },
-  "budgets": {
-    "max_cost_cents_per_txn": 50,
-    "tenant_per_minute_cents": {
-      "tenant_a": {
-        "us": 5000,
-        "eu": 4000
-      },
-      "tenant_b": {
-        "us": 2000
-      }
     },
-    "cost_cents_per_provider": {
-      "stripe": 30,
-      "adyen": 35,
-      "paypal": 45
+    "budgets": {
+        "max_cost_cents_per_txn": 50,
+        "tenant_per_minute_cents": {
+            "tenant_a": {
+                "us": 5000,
+                "eu": 4000
+            },
+            "tenant_b": {
+                "us": 2000
+            }
+        },
+        "cost_cents_per_provider": {
+            "stripe": 30,
+            "adyen": 35,
+            "paypal": 45
+        }
     }
-  }
 }

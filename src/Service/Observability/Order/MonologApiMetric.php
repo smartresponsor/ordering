@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 
 final readonly class MonologApiMetric
 {
-    public function __construct(private readonly LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
     }
 

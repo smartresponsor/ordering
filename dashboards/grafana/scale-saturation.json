@@ -1,32 +1,32 @@
 {
-  "title": "Order \u2014 Scale & Saturation",
-  "panels": [
-    {
-      "type": "graph",
-      "title": "API inflight",
-      "targets": [
+    "title": "Order \u2014 Scale & Saturation",
+    "panels": [
         {
-          "expr": "sum(http_inflight_requests)"
-        }
-      ]
-    },
-    {
-      "type": "graph",
-      "title": "Worker backlog age p95",
-      "targets": [
+            "type": "graph",
+            "title": "API inflight",
+            "targets": [
+                {
+                    "expr": "sum(http_inflight_requests)"
+                }
+            ]
+        },
         {
-          "expr": "quantile_over_time(0.95, queue_backlog_age_seconds[10m])"
-        }
-      ]
-    },
-    {
-      "type": "graph",
-      "title": "Shedding rate",
-      "targets": [
+            "type": "graph",
+            "title": "Worker backlog age p95",
+            "targets": [
+                {
+                    "expr": "quantile_over_time(0.95, queue_backlog_age_seconds[10m])"
+                }
+            ]
+        },
         {
-          "expr": "sum(rate(app_shed_total[5m]))"
+            "type": "graph",
+            "title": "Shedding rate",
+            "targets": [
+                {
+                    "expr": "sum(rate(app_shed_total[5m]))"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

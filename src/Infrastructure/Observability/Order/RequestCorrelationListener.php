@@ -18,7 +18,7 @@ final class RequestCorrelationListener
         }
 
         $request = $event->getRequest();
-        $id = (string) ($request->headers->get('X-Correlation-Id') ?? '');
+        $id = $request->headers->get('X-Correlation-Id') ?? '';
         if ('' === $id) {
             $id = bin2hex(random_bytes(8));
         }

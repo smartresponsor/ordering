@@ -7,11 +7,11 @@ namespace App\Entity\Order;
 final readonly class OrderPartialPayment
 {
     public function __construct(
-        private readonly string $id,
-        private readonly string $orderId,
-        private readonly int $amountMinor,
-        private readonly string $currency,
-        private readonly string $paymentMethod,
+        private string $id,
+        private string $orderId,
+        private int $amountMinor,
+        private string $currency,
+        private string $paymentMethod,
     ) {
     }
 

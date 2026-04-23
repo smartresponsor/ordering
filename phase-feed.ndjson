@@ -1,18 +1,108 @@
-{"phase": "01_0", "tag": "order-ac-01_0", "message": "01_0-jwk-repository", "timestamp": "2025-10-21T00:51:03.193371"}
-{"phase": "02_0", "tag": "order-ac-02_0", "message": "02_0-jwks-issuer", "timestamp": "2025-10-21T00:51:03.193391"}
-{"phase": "03_0", "tag": "order-ac-03_0", "message": "03_0-webhook-signer-hmac", "timestamp": "2025-10-21T00:51:03.193396"}
-{"phase": "04_0", "tag": "order-ac-04_0", "message": "04_0-webhook-verifier-hmac", "timestamp": "2025-10-21T00:51:03.193401"}
-{"phase": "05_0", "tag": "order-ac-05_0", "message": "05_0-webhook-signer-rsa", "timestamp": "2025-10-21T00:51:03.193405"}
-{"phase": "06_0", "tag": "order-ac-06_0", "message": "06_0-webhook-verifier-rsa", "timestamp": "2025-10-21T00:51:03.193410"}
-{"phase": "07_0", "tag": "order-ac-07_0", "message": "07_0-secret-rotation-policy", "timestamp": "2025-10-21T00:51:03.193415"}
-{"phase": "08_0", "tag": "order-ac-08_0", "message": "08_0-key-rotation-manager", "timestamp": "2025-10-21T00:51:03.193422"}
-{"phase": "09_0", "tag": "order-ac-09_0", "message": "09_0-csp-middleware", "timestamp": "2025-10-21T00:51:03.193427"}
-{"phase": "10_0", "tag": "order-ac-10_0", "message": "10_0-rate-limit", "timestamp": "2025-10-21T00:51:03.193430"}
-{"phase": "11_0", "tag": "order-ac-11_0", "message": "11_0-sql-postgres-key-store", "timestamp": "2025-10-21T00:51:03.193433"}
-{"phase": "12_0", "tag": "order-ac-12_0", "message": "12_0-sql-mysql-audit-projection", "timestamp": "2025-10-21T00:51:03.193436"}
-{"phase": "13_0", "tag": "order-ac-13_0", "message": "13_0-cli-jwk-generate", "timestamp": "2025-10-21T00:51:03.193438"}
-{"phase": "14_0", "tag": "order-ac-14_0", "message": "14_0-cli-jwks-serve", "timestamp": "2025-10-21T00:51:03.193441"}
-{"phase": "15_0", "tag": "order-ac-15_0", "message": "15_0-cli-webhook-sign", "timestamp": "2025-10-21T00:51:03.193443"}
-{"phase": "16_0", "tag": "order-ac-16_0", "message": "16_0-cli-webhook-verify", "timestamp": "2025-10-21T00:51:03.193462"}
-{"phase": "17_0", "tag": "order-ac-17_0", "message": "17_0-cli-rotate-key", "timestamp": "2025-10-21T00:51:03.193466"}
-{"phase": "18_0", "tag": "order-ac-18_0", "message": "18_0-test-suite", "timestamp": "2025-10-21T00:51:03.193471"}
+{
+    "phase": "01_0",
+    "tag": "order-ac-01_0",
+    "message": "01_0-jwk-repository",
+    "timestamp": "2025-10-21T00:51:03.193371"
+}
+{
+    "phase": "02_0",
+    "tag": "order-ac-02_0",
+    "message": "02_0-jwks-issuer",
+    "timestamp": "2025-10-21T00:51:03.193391"
+}
+{
+    "phase": "03_0",
+    "tag": "order-ac-03_0",
+    "message": "03_0-webhook-signer-hmac",
+    "timestamp": "2025-10-21T00:51:03.193396"
+}
+{
+    "phase": "04_0",
+    "tag": "order-ac-04_0",
+    "message": "04_0-webhook-verifier-hmac",
+    "timestamp": "2025-10-21T00:51:03.193401"
+}
+{
+    "phase": "05_0",
+    "tag": "order-ac-05_0",
+    "message": "05_0-webhook-signer-rsa",
+    "timestamp": "2025-10-21T00:51:03.193405"
+}
+{
+    "phase": "06_0",
+    "tag": "order-ac-06_0",
+    "message": "06_0-webhook-verifier-rsa",
+    "timestamp": "2025-10-21T00:51:03.193410"
+}
+{
+    "phase": "07_0",
+    "tag": "order-ac-07_0",
+    "message": "07_0-secret-rotation-policy",
+    "timestamp": "2025-10-21T00:51:03.193415"
+}
+{
+    "phase": "08_0",
+    "tag": "order-ac-08_0",
+    "message": "08_0-key-rotation-manager",
+    "timestamp": "2025-10-21T00:51:03.193422"
+}
+{
+    "phase": "09_0",
+    "tag": "order-ac-09_0",
+    "message": "09_0-csp-middleware",
+    "timestamp": "2025-10-21T00:51:03.193427"
+}
+{
+    "phase": "10_0",
+    "tag": "order-ac-10_0",
+    "message": "10_0-rate-limit",
+    "timestamp": "2025-10-21T00:51:03.193430"
+}
+{
+    "phase": "11_0",
+    "tag": "order-ac-11_0",
+    "message": "11_0-sql-postgres-key-store",
+    "timestamp": "2025-10-21T00:51:03.193433"
+}
+{
+    "phase": "12_0",
+    "tag": "order-ac-12_0",
+    "message": "12_0-sql-mysql-audit-projection",
+    "timestamp": "2025-10-21T00:51:03.193436"
+}
+{
+    "phase": "13_0",
+    "tag": "order-ac-13_0",
+    "message": "13_0-cli-jwk-generate",
+    "timestamp": "2025-10-21T00:51:03.193438"
+}
+{
+    "phase": "14_0",
+    "tag": "order-ac-14_0",
+    "message": "14_0-cli-jwks-serve",
+    "timestamp": "2025-10-21T00:51:03.193441"
+}
+{
+    "phase": "15_0",
+    "tag": "order-ac-15_0",
+    "message": "15_0-cli-webhook-sign",
+    "timestamp": "2025-10-21T00:51:03.193443"
+}
+{
+    "phase": "16_0",
+    "tag": "order-ac-16_0",
+    "message": "16_0-cli-webhook-verify",
+    "timestamp": "2025-10-21T00:51:03.193462"
+}
+{
+    "phase": "17_0",
+    "tag": "order-ac-17_0",
+    "message": "17_0-cli-rotate-key",
+    "timestamp": "2025-10-21T00:51:03.193466"
+}
+{
+    "phase": "18_0",
+    "tag": "order-ac-18_0",
+    "message": "18_0-test-suite",
+    "timestamp": "2025-10-21T00:51:03.193471"
+}

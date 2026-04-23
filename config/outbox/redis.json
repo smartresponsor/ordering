@@ -1,19 +1,19 @@
 {
-  "redis": {
-    "host": "127.0.0.1",
-    "port": 6379,
-    "db": 0
-  },
-  "queue": {
-    "name": "outbox:queue",
-    "dlq": "outbox:dlq",
-    "max_attempts": 5
-  },
-  "replay": {
-    "rps": 10
-  },
-  "idempotency": {
-    "ttl_sec": 3600,
-    "header": "Idempotency-Key"
-  }
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "db": 0
+    },
+    "queue": {
+        "name": "outbox:queue",
+        "dlq": "outbox:dlq",
+        "max_attempts": 5
+    },
+    "replay": {
+        "rps": 10
+    },
+    "idempotency": {
+        "ttl_sec": 3600,
+        "header": "Idempotency-Key"
+    }
 }

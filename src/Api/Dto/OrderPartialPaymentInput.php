@@ -11,8 +11,8 @@ final readonly class OrderPartialPaymentInput
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Positive]
-        public readonly string $amount = '0.00',
-        public readonly ?string $externalRef = null,
+        public string $amount = '0.00',
+        public ?string $externalRef = null,
     ) {
     }
 }

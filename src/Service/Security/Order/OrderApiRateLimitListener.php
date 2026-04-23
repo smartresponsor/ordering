@@ -12,7 +12,8 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 #[AsEventListener(event: 'kernel.request', priority: 8)]
 final readonly class OrderApiRateLimitListener
 {
-    public function __construct(private readonly RateLimiterFactory $orderApiLimiter) {
+    public function __construct(private RateLimiterFactory $orderApiLimiter)
+    {
     }
 
     public function __invoke(RequestEvent $event): void
@@ -23,7 +24,7 @@ final readonly class OrderApiRateLimitListener
         }
 
         $key = $request->getClientIp() ?? 'anon';
-        $limit = $this->orderApiLimiter->create($key)->consume(1);
+        $limit = $this->orderApiLimiter->create($key)->consume();
 
         if (false === $limit->isAccepted()) {
             throw new TooManyRequestsHttpException(60, 'Rate limit exceeded for /api/orders');

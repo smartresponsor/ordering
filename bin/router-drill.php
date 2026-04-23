@@ -21,7 +21,7 @@ use App\ValueObject\Routing\Order\RouteContext;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$iterations = max(1, (int) (getenv('N') ?: ($argv[1] ?? 50)));
+$iterations = max(1, (int)(getenv('N') ?: ($argv[1] ?? 50)));
 $mode = $argv[2] ?? 'demo';
 $policyPath = __DIR__ . '/../config/router/policy.json';
 $policyJson = file_get_contents($policyPath);
@@ -33,11 +33,11 @@ if (false === $policyJson) {
 
 $policyData = json_decode($policyJson, true, 512, JSON_THROW_ON_ERROR);
 $policy = new ProviderPolicy(
-    (float) $policyData['route']['weight_latency'],
-    (float) $policyData['route']['weight_error'],
-    (float) $policyData['route']['weight_cost'],
-    (int) $policyData['threshold']['p95_ms'],
-    (float) $policyData['threshold']['error_rate'],
+    (float)$policyData['route']['weight_latency'],
+    (float)$policyData['route']['weight_error'],
+    (float)$policyData['route']['weight_cost'],
+    (int)$policyData['threshold']['p95_ms'],
+    (float)$policyData['threshold']['error_rate'],
 );
 
 $router = new ProviderRouter(
@@ -54,7 +54,7 @@ $router = new ProviderRouter(
         'alt' => 0.00,
     ],
     $policy,
-    new CanarySwitch((int) ($policyData['canary']['seed'] ?? 42)),
+    new CanarySwitch((int)($policyData['canary']['seed'] ?? 42)),
     new QuotaPolicy(),
     new CostPolicy(),
 );
@@ -67,7 +67,7 @@ for ($iteration = 0; $iteration < $iterations; ++$iteration) {
     $decision = $router->select($context);
     $provider = $decision->provider();
     $selected[$provider] = ($selected[$provider] ?? 0) + 1;
-    echo sprintf("[%03d] provider=%s score=%0.6f%s", $iteration + 1, $provider, $decision->score(), PHP_EOL);
+    echo sprintf('[%03d] provider=%s score=%0.6f%s', $iteration + 1, $provider, $decision->score(), PHP_EOL);
 }
 
 arsort($selected);

@@ -12,7 +12,7 @@ namespace App\ValueObject\Pricing\Order;
 final readonly class TaxRuleSet
 {
     /** @param array<string,mixed> $rules */
-    public function __construct(public readonly string $region, public readonly array $rules)
+    public function __construct(public string $region, public array $rules)
     {
     }
 }

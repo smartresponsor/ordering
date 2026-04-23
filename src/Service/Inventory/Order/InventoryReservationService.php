@@ -17,8 +17,8 @@ use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
 final readonly class InventoryReservationService implements InventoryReservationServiceInterface
 {
     public function __construct(
-        private readonly InventoryGatewayInterface $gateway,
-        private readonly OrderStockReservationRepositoryInterface $repo,
+        private InventoryGatewayInterface $gateway,
+        private OrderStockReservationRepositoryInterface $repo,
     ) {
     }
 

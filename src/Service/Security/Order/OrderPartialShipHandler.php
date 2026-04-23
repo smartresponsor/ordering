@@ -18,7 +18,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class OrderPartialShipHandler implements OrderPartialShipHandlerInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function __invoke(OrderPartialShipCommand $cmd): void
@@ -29,7 +30,7 @@ final readonly class OrderPartialShipHandler implements OrderPartialShipHandlerI
         }
         $order->shipItems($cmd->count, $cmd->note);
 
-        foreach ($order->releaseEvents() as $event) {
+        foreach ($order->releaseEvents() as $ignored) {
             // outbox write (упрощённо)
         }
 

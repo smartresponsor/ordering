@@ -9,12 +9,12 @@ use App\ServiceInterface\Http\Order\AuditShipInterface;
 final readonly class S3AuditShipper implements AuditShipInterface
 {
     public function __construct(
-        private readonly object $s3,
-        private readonly string $projectDir,
-        private readonly string $defaultBucket,
-        private readonly string $prefix = 'order/',
-        private readonly string $sse = 'AES256',
-        private readonly string $kmsKey = '',
+        private object $s3,
+        private string $projectDir,
+        private string $defaultBucket,
+        private string $prefix = 'order/',
+        private string $sse = 'AES256',
+        private string $kmsKey = '',
     ) {
     }
 

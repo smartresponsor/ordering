@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 function base64UrlDecode(string $value): string
 {
@@ -13,7 +13,7 @@ function base64UrlDecode(string $value): string
         $value .= str_repeat('=', $padding);
     }
 
-    return (string) base64_decode(strtr($value, '-_', '+/'), true);
+    return (string)base64_decode(strtr($value, '-_', '+/'), true);
 }
 
 /**
@@ -24,9 +24,10 @@ function verifyJwt(
     string $publicPem,
     string $issuer,
     string $audience,
-    int $leeway,
+    int    $leeway,
     string $expectedKid,
-): array {
+): array
+{
     $parts = explode('.', $jwt);
 
     if (3 !== count($parts)) {
@@ -47,7 +48,7 @@ function verifyJwt(
 
     $signature = base64UrlDecode($encodedSignature);
     $verified = openssl_verify(
-        $encodedHeader.'.'.$encodedPayload,
+        $encodedHeader . '.' . $encodedPayload,
         $signature,
         $publicPem,
         OPENSSL_ALGO_SHA256,
@@ -58,9 +59,9 @@ function verifyJwt(
     }
 
     $now = time();
-    $exp = (int) ($claims['exp'] ?? 0);
-    $nbf = (int) ($claims['nbf'] ?? 0);
-    $iss = (string) ($claims['iss'] ?? '');
+    $exp = (int)($claims['exp'] ?? 0);
+    $nbf = (int)($claims['nbf'] ?? 0);
+    $iss = (string)($claims['iss'] ?? '');
     $aud = $claims['aud'] ?? '';
 
     if ($exp > 0 && $exp + $leeway < $now) {
@@ -84,80 +85,80 @@ function verifyJwt(
 
 function reportCase(string $name, bool $ok): bool
 {
-    echo ($ok ? '[PASS] ' : '[FAIL] ').$name.PHP_EOL;
+    echo ($ok ? '[PASS] ' : '[FAIL] ') . $name . PHP_EOL;
 
     return $ok;
 }
 
-$config = json_decode((string) file_get_contents(__DIR__.'/../config/security/jwt.json'), true);
+$config = json_decode((string)file_get_contents(__DIR__ . '/../config/security/jwt.json'), true);
 
 if (!is_array($config)) {
     fwrite(STDERR, "Unable to read config/security/jwt.json\n");
     exit(2);
 }
 
-$issuer = (string) ($config['issuer'] ?? 'https://issuer.example');
-$audience = (string) ($config['audience'] ?? 'smartresponsor');
-$leeway = (int) ($config['leeway_sec'] ?? 30);
-$publicPemPath = __DIR__.'/../tests/keys/test-public.pem';
-$publicPem = (string) file_get_contents($publicPemPath);
+$issuer = (string)($config['issuer'] ?? 'https://issuer.example');
+$audience = (string)($config['audience'] ?? 'smartresponsor');
+$leeway = (int)($config['leeway_sec'] ?? 30);
+$publicPemPath = __DIR__ . '/../tests/keys/test-public.pem';
+$publicPem = (string)file_get_contents($publicPemPath);
 
 $pass = true;
 
-$valid = trim((string) shell_exec('php '.escapeshellarg(__DIR__.'/jwt-mint-test.php').' test1'));
+$valid = trim((string)shell_exec('php ' . escapeshellarg(__DIR__ . '/jwt-mint-test.php') . ' test1'));
 $result = verifyJwt($valid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('valid token', true === $result['ok']);
 
-$expired = trim((string) shell_exec(
+$expired = trim((string)shell_exec(
     'php '
-    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
-    .' test1 '
-    .escapeshellarg($issuer)
-    .' '
-    .escapeshellarg($audience)
-    .' user_123 -10',
+    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
+    . ' test1 '
+    . escapeshellarg($issuer)
+    . ' '
+    . escapeshellarg($audience)
+    . ' user_123 -10',
 ));
 $result = verifyJwt($expired, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('expired token', false === $result['ok'] && 'expired' === ($result['error'] ?? null));
 
-$future = trim((string) shell_exec(
+$future = trim((string)shell_exec(
     'php '
-    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
-    .' test1 '
-    .escapeshellarg($issuer)
-    .' '
-    .escapeshellarg($audience)
-    .' user_123 300 9999',
+    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
+    . ' test1 '
+    . escapeshellarg($issuer)
+    . ' '
+    . escapeshellarg($audience)
+    . ' user_123 300 9999',
 ));
 $result = verifyJwt($future, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('nbf future', false === $result['ok'] && 'nbf_future' === ($result['error'] ?? null));
 
-$wrongAudience = trim((string) shell_exec(
+$wrongAudience = trim((string)shell_exec(
     'php '
-    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
-    .' test1 '
-    .escapeshellarg($issuer)
-    .' WRONGAUD',
+    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
+    . ' test1 '
+    . escapeshellarg($issuer)
+    . ' WRONGAUD',
 ));
 $result = verifyJwt($wrongAudience, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong audience', false === $result['ok'] && 'bad_aud' === ($result['error'] ?? null));
 
-$wrongIssuer = trim((string) shell_exec(
+$wrongIssuer = trim((string)shell_exec(
     'php '
-    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
-    .' test1 https://bad-issuer '
-    .escapeshellarg($audience),
+    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
+    . ' test1 https://bad-issuer '
+    . escapeshellarg($audience),
 ));
 $result = verifyJwt($wrongIssuer, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong issuer', false === $result['ok'] && 'bad_iss' === ($result['error'] ?? null));
 
-$unknownKid = trim((string) shell_exec(
+$unknownKid = trim((string)shell_exec(
     'php '
-    .escapeshellarg(__DIR__.'/jwt-mint-test.php')
-    .' test2 '
-    .escapeshellarg($issuer)
-    .' '
-    .escapeshellarg($audience),
+    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
+    . ' test2 '
+    . escapeshellarg($issuer)
+    . ' '
+    . escapeshellarg($audience),
 ));
 $result = verifyJwt($unknownKid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('unknown kid', false === $result['ok'] && 'kid_not_found' === ($result['error'] ?? null));

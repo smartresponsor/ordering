@@ -1,13 +1,13 @@
 groups:
-- name: scale
-  rules:
-  - alert: HighInflight
-    expr: sum(http_inflight_requests) > 500
-    for: 10m
-    labels: {severity: warn}
-    annotations: {summary: "Inflight > 500"}
-  - alert: SheddingTooHigh
-    expr: sum(rate(app_shed_total[5m])) > 5
-    for: 10m
-    labels: {severity: page}
-    annotations: {summary: "App shedding >5/s"}
+    -   name: scale
+        rules:
+            -   alert: HighInflight
+                expr: sum(http_inflight_requests) > 500
+                for: 10m
+                labels: { severity: warn }
+                annotations: { summary: "Inflight > 500" }
+            -   alert: SheddingTooHigh
+                expr: sum(rate(app_shed_total[5m])) > 5
+                for: 10m
+                labels: { severity: page }
+                annotations: { summary: "App shedding >5/s" }

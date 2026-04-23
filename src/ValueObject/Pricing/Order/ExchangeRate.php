@@ -7,9 +7,9 @@ namespace App\ValueObject\Pricing\Order;
 final readonly class ExchangeRate
 {
     public function __construct(
-        private readonly string $baseCurrency,
-        private readonly string $quoteCurrency,
-        private readonly float $rate,
+        private string $baseCurrency,
+        private string $quoteCurrency,
+        private float $rate,
     ) {
         if ($this->rate <= 0) {
             throw new \InvalidArgumentException('Exchange rate must be positive.');

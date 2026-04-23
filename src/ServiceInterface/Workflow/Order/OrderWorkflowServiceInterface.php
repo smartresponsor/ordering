@@ -11,10 +11,10 @@ namespace App\ServiceInterface\Workflow\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;
+use App\ServiceInterface\Inventory\InventoryServiceInterface;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;

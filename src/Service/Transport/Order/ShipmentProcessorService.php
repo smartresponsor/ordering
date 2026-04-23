@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class ShipmentProcessorService implements ShipmentProcessorServiceInterface
 {
-    public function __construct(private readonly CarrierInterface $carrier, private readonly EntityManagerInterface $em)
+    public function __construct(private CarrierInterface $carrier, private EntityManagerInterface $em)
     {
     }
 

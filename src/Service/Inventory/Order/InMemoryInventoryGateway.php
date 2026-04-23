@@ -26,13 +26,7 @@ final class InMemoryInventoryGateway implements InventoryGatewayInterface
 
     public function checkAvailability(array $lines): bool
     {
-        foreach ($lines as $sku => $qty) {
-            if (($this->stock[$sku] ?? 0) < $qty) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all($lines, fn ($qty, $sku) => ($this->stock[$sku] ?? 0) >= $qty);
     }
 
     public function reserve(string $reservationKey, array $lines): bool

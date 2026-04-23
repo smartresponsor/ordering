@@ -6,7 +6,7 @@ namespace App\Service\Security\Order;
 
 final readonly class ContinueOrderSagaCommand
 {
-    public function __construct(public readonly int $orderId, public readonly string $step)
+    public function __construct(public int $orderId, public string $step)
     {
     }
 }

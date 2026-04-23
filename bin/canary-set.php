@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 $provider = getenv('PROVIDER') ?: 'adyen';
 $region = getenv('REGION') ?: 'us';
-$pct = (int) (getenv('PCT') ?: 5);
-$file = __DIR__.'/../var/router/canary.json';
+$pct = (int)(getenv('PCT') ?: 5);
+$file = __DIR__ . '/../var/router/canary.json';
 $directory = dirname($file);
 
 if ($pct < 0 || $pct > 100) {
@@ -31,7 +31,7 @@ $config[$region] = [
     'pct' => $pct,
 ];
 
-$result = file_put_contents($file, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL);
+$result = file_put_contents($file, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
 if (false === $result) {
     fwrite(STDERR, sprintf("Unable to write canary config to %s\n", $file));
     exit(1);

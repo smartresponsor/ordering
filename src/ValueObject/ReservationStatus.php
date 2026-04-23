@@ -7,8 +7,8 @@ namespace App\ValueObject;
 final readonly class ReservationStatus
 {
     private function __construct(
-        public readonly bool $success,
-        public readonly ?string $reason = null,
+        public bool $success,
+        public ?string $reason = null,
     ) {
     }
 

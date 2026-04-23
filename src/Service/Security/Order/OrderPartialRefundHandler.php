@@ -18,7 +18,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class OrderPartialRefundHandler implements OrderPartialRefundHandlerInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function __invoke(OrderPartialRefundCommand $cmd): void
@@ -29,7 +30,7 @@ final readonly class OrderPartialRefundHandler implements OrderPartialRefundHand
         }
         $order->refundPartial($cmd->amount, $cmd->reason, true);
 
-        foreach ($order->releaseEvents() as $event) {
+        foreach ($order->releaseEvents() as $ignored) {
             // outbox write (упрощённо)
         }
 

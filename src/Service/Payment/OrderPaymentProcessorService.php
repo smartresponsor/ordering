@@ -12,8 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 final readonly class OrderPaymentProcessorService
 {
     public function __construct(
-        private readonly PaymentGatewayInterface $gateway,
-        private readonly EntityManagerInterface $em,
+        private PaymentGatewayInterface $gateway,
+        private EntityManagerInterface $em,
     ) {
     }
 

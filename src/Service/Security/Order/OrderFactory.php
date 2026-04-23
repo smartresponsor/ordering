@@ -10,7 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderFactory implements OrderFactoryInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function create(float $total = 100.00): Order

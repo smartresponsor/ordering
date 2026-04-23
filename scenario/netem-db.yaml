@@ -1,14 +1,14 @@
 # scenario.yaml
 steady_state:
-  api_p95_ms: 250
-  error_rate_pct: 0.5
-  backlog_age_p95_s: 30
+    api_p95_ms: 250
+    error_rate_pct: 0.5
+    backlog_age_p95_s: 30
 experiment:
-  name: netem-db-latency-loss
-  fault: netem
-  params: { delay_ms: 150, loss_pct: 2 }
-  duration_s: 300
-  measure: [api_p95_ms, error_rate_pct]
+    name: netem-db-latency-loss
+    fault: netem
+    params: { delay_ms: 150, loss_pct: 2 }
+    duration_s: 300
+    measure: [ api_p95_ms, error_rate_pct ]
 pass:
-  - api_p95_ms <= 250
-  - error_rate_pct <= 0.5
+    - api_p95_ms <= 250
+    - error_rate_pct <= 0.5

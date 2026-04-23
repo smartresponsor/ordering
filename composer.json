@@ -38,7 +38,12 @@
     "symfony/uid": "^8.0",
     "symfony/validator": "^8.0",
     "symfony/workflow": "^8.0",
-    "symfony/yaml": "^8.0"
+    "symfony/yaml": "^8.0",
+      "ext-bcmath": "*",
+      "ext-curl": "*",
+      "ext-zlib": "*",
+      "ext-redis": "*",
+      "ext-sodium": "*"
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^4.3",

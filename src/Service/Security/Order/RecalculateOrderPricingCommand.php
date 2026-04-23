@@ -6,6 +6,7 @@ namespace App\Service\Security\Order;
 
 final readonly class RecalculateOrderPricingCommand
 {
-    public function __construct(public readonly string $orderId) {
+    public function __construct(public string $orderId)
+    {
     }
 }

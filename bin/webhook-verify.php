@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Webhook\Order\WebhookVerifierHmac;
 use App\Service\Webhook\Order\WebhookVerifierRsa;
@@ -16,14 +16,14 @@ if ('hmac' === $alg) {
     $secret = $argv[2] ?? 'secret';
     $signature = trim($input);
     $verifier = new WebhookVerifierHmac();
-    echo $verifier->verify($payload, $secret, $signature) ? "OK
-" : "FAIL
-";
+    echo $verifier->verify($payload, $secret, $signature) ? 'OK
+' : 'FAIL
+';
     exit(0);
 }
 
 if ('rsa' === $alg) {
-    $publicPemPath = $argv[2] ?? __DIR__.'/../var/key/public.pem';
+    $publicPemPath = $argv[2] ?? __DIR__ . '/../var/key/public.pem';
     $publicPem = @file_get_contents($publicPemPath);
     if (false === $publicPem || '' === $publicPem) {
         fwrite(STDERR, "Public key not found: {$publicPemPath}
@@ -32,12 +32,12 @@ if ('rsa' === $alg) {
     }
 
     $verifier = new WebhookVerifierRsa();
-    echo $verifier->verify($payload, (string) $publicPem, $input) ? "OK
-" : "FAIL
-";
+    echo $verifier->verify($payload, $publicPem, $input) ? 'OK
+' : 'FAIL
+';
     exit(0);
 }
 
-fwrite(STDERR, "Usage: webhook-verify.php hmac <secret> [payload] | rsa <public.pem> [payload]
-");
+fwrite(STDERR, 'Usage: webhook-verify.php hmac <secret> [payload] | rsa <public.pem> [payload]
+');
 exit(2);

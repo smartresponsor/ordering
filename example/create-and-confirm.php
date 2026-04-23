@@ -12,5 +12,5 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $client = new Client('https://api.smartresponsor.local');
 $order = $client->createOrder(1999, 'USD', 'cus_001');
-$client->transition((string) $order['id'], 'confirm', Idempotency::key());
+$client->transition((string)$order['id'], 'confirm', Idempotency::key());
 echo "OK\n";

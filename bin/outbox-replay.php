@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 
 $console = __DIR__ . '/console';
-$batch = max(1, (int) ($argv[1] ?? 100));
+$batch = max(1, (int)($argv[1] ?? 100));
 
 passthru(sprintf('php %s order:outbox:replay --limit=%d', escapeshellarg($console), $batch), $exitCode);
 

@@ -26,27 +26,27 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-order}
       POSTGRES_DB: ${POSTGRES_DB:-orderdb}
     healthcheck:
-      test: ["CMD-SHELL","pg_isready -U $$POSTGRES_USER"]
+      test: [ "CMD-SHELL","pg_isready -U $$POSTGRES_USER" ]
       interval: 5s
       timeout: 3s
       retries: 10
-    ports: ["5432:5432"]
+    ports: [ "5432:5432" ]
   rabbitmq:
     image: rabbitmq:3.13-management
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-user}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-pass}
-    ports: ["5672:5672","15672:15672"]
+    ports: [ "5672:5672","15672:15672" ]
     healthcheck:
-      test: ["CMD","rabbitmq-diagnostics","ping"]
+      test: [ "CMD","rabbitmq-diagnostics","ping" ]
       interval: 10s
       timeout: 5s
       retries: 10
   redis:
     image: redis:7.4-alpine
-    ports: ["6379:6379"]
+    ports: [ "6379:6379" ]
     healthcheck:
-      test: ["CMD","redis-cli","ping"]
+      test: [ "CMD","redis-cli","ping" ]
       interval: 10s
       timeout: 3s
       retries: 10
@@ -56,20 +56,20 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio123}
-    ports: ["9000:9000","9001:9001"]
+    ports: [ "9000:9000","9001:9001" ]
     healthcheck:
-      test: ["CMD","curl","-f","http://localhost:9000/minio/health/ready"]
+      test: [ "CMD","curl","-f","http://localhost:9000/minio/health/ready" ]
       interval: 10s
       timeout: 5s
       retries: 10
   mailpit:
     image: axllent/mailpit:latest
-    ports: ["1025:1025","8025:8025"]
+    ports: [ "1025:1025","8025:8025" ]
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: "true"
       MP_SMTP_AUTH_ALLOW_INSECURE: "true"
     healthcheck:
-      test: ["CMD","wget","-qO-","http://localhost:8025/healthz"]
+      test: [ "CMD","wget","-qO-","http://localhost:8025/healthz" ]
       interval: 10s
       timeout: 3s
       retries: 5

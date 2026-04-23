@@ -7,9 +7,9 @@ namespace App\Message\Command;
 final readonly class OrderPayCommand
 {
     public function __construct(
-        public readonly string $orderId,
-        public readonly string $amount,
-        public readonly string $externalRef,
+        public string $orderId,
+        public string $amount,
+        public string $externalRef,
     ) {
     }
 }

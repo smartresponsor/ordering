@@ -28,12 +28,16 @@ final class ListOrdersCommand extends Command
         $payments = $this->em->getRepository(OrderPayment::class)->findAll();
         $io->writeln(sprintf('Orders: %d', count($orders)));
         foreach ($orders as $o) {
-            if (!$o instanceof Order) { continue; }
+            if (!$o instanceof Order) {
+                continue;
+            }
             $io->writeln(sprintf('- Order #%s status=%s', $o->getId(), $o->getStatus()));
         }
         $total = '0.00';
         foreach ($payments as $p) {
-            if (!$p instanceof OrderPayment) { continue; }
+            if (!$p instanceof OrderPayment) {
+                continue;
+            }
             $total = bcadd($total, $p->getAmount(), 2);
         }
         $io->writeln(sprintf('Payments: %d, Total: $%s', count($payments), $total));

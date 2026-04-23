@@ -1,5 +1,5 @@
 doctrine:
-  dbal:
-    url: '%env(resolve:DATABASE_URL)%'
-  orm:
-    auto_mapping: false
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_mapping: false

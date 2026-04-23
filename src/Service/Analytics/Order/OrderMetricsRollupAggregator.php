@@ -11,7 +11,7 @@ use App\ServiceInterface\Analytics\Order\OrderMetricsRollupAggregatorInterface;
 
 final readonly class OrderMetricsRollupAggregator implements OrderMetricsRollupAggregatorInterface
 {
-    public function __construct(private readonly OrderMetricsRollupViewRepository $repo)
+    public function __construct(private OrderMetricsRollupViewRepository $repo)
     {
     }
 

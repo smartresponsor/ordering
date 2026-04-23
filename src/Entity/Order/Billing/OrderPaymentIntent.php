@@ -16,7 +16,7 @@ final class OrderPaymentIntent
         private ?string $intentId = null,
     ) {
         if (null === $this->intentId) {
-            $this->intentId = 'pi_' . bin2hex(random_bytes(8));
+            $this->intentId = 'pi_'.bin2hex(random_bytes(8));
         }
     }
 

@@ -1,26 +1,26 @@
 {
-  "providers": [
-    {
-      "name": "stripe",
-      "weight": 100,
-      "enabled": true
-    },
-    {
-      "name": "adyen",
-      "weight": 20,
-      "enabled": false
-    },
-    {
-      "name": "paypal",
-      "weight": 10,
-      "enabled": false
+    "providers": [
+        {
+            "name": "stripe",
+            "weight": 100,
+            "enabled": true
+        },
+        {
+            "name": "adyen",
+            "weight": 20,
+            "enabled": false
+        },
+        {
+            "name": "paypal",
+            "weight": 10,
+            "enabled": false
+        }
+    ],
+    "policy": {
+        "retry": {
+            "max": 2,
+            "backoff_ms": 100
+        },
+        "failover": "on_exception"
     }
-  ],
-  "policy": {
-    "retry": {
-      "max": 2,
-      "backoff_ms": 100
-    },
-    "failover": "on_exception"
-  }
 }

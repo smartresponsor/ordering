@@ -6,7 +6,7 @@ namespace App\Monitoring;
 
 final readonly class MetricsRegistry
 {
-    public function __construct(private readonly string $path)
+    public function __construct(private string $path)
     {
     }
 

@@ -13,7 +13,7 @@ final class Redactor
     {
         $masked = [];
         foreach ($data as $key => $value) {
-            if ($this->isSensitive((string) $key)) {
+            if ($this->isSensitive($key)) {
                 $masked[$key] = '***';
             } elseif (is_array($value)) {
                 $masked[$key] = $this->redactArray($value);
@@ -28,12 +28,7 @@ final class Redactor
     private function isSensitive(string $key): bool
     {
         $lookup = strtolower($key);
-        foreach (['token', 'secret', 'password', 'card', 'iban', 'pan'] as $needle) {
-            if (str_contains($lookup, $needle)) {
-                return true;
-            }
-        }
 
-        return false;
+        return array_any(['token', 'secret', 'password', 'card', 'iban', 'pan'], fn ($needle) => str_contains($lookup, $needle));
     }
 }

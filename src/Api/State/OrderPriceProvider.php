@@ -6,7 +6,7 @@ namespace App\Api\State;
 
 final readonly class OrderPriceProvider
 {
-    public function __construct(private readonly mixed $connection)
+    public function __construct(private mixed $connection)
     {
     }
 

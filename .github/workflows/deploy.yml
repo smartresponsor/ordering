@@ -335,7 +335,7 @@ jobs:
   release_publish:
     name: Publish Release (GHCR OCI + Docker tags)
     runs-on: ubuntu-latest
-    needs: [deploy_prod]
+    needs: [ deploy_prod ]
     if: startsWith(github.ref, 'refs/tags/v')
     env:
       TAG: ${{ github.ref_name }}
@@ -392,7 +392,7 @@ jobs:
     name: Cleanup caches
     runs-on: ubuntu-latest
     if: always()
-    needs: [qa, helm_lint_package, docker_build, deploy_staging, deploy_prod, release_publish]
+    needs: [ qa, helm_lint_package, docker_build, deploy_staging, deploy_prod, release_publish ]
     steps:
       - name: Docker prune & caches cleanup
         run: |

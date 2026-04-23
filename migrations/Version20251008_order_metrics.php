@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -8,7 +9,9 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20251008_order_metrics extends AbstractMigration
 {
     public function getDescription(): string
-    { return 'Create order_metrics projection table'; }
+    {
+        return 'Create order_metrics projection table';
+    }
 
     public function up(Schema $schema): void
     {
@@ -25,5 +28,7 @@ final class Version20251008_order_metrics extends AbstractMigration
     }
 
     public function down(Schema $schema): void
-    { $this->addSql('DROP TABLE order_metrics'); }
+    {
+        $this->addSql('DROP TABLE order_metrics');
+    }
 }

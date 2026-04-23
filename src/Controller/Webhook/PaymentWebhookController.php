@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class PaymentWebhookController
 {
-    public function __construct(private readonly WebhookHandler $handler) {
+    public function __construct(private WebhookHandler $handler)
+    {
     }
 
     /**

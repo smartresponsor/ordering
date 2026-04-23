@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-$privateKeyPath = __DIR__.'/../tests/keys/test-private.pem';
+$privateKeyPath = __DIR__ . '/../tests/keys/test-private.pem';
 $privateKey = @file_get_contents($privateKeyPath);
 if (false === $privateKey || '' === $privateKey) {
     fwrite(STDERR, sprintf("Private key not found: %s\n", $privateKeyPath));
@@ -14,8 +14,8 @@ $kid = $argv[1] ?? 'test1';
 $issuer = $argv[2] ?? 'https://issuer.example';
 $audience = $argv[3] ?? 'smartresponsor';
 $subject = $argv[4] ?? 'user_123';
-$ttl = (int) ($argv[5] ?? 300);
-$nbfShift = (int) ($argv[6] ?? 0);
+$ttl = (int)($argv[5] ?? 300);
+$nbfShift = (int)($argv[6] ?? 0);
 
 $header = [
     'typ' => 'JWT',
@@ -33,9 +33,9 @@ $payload = [
     'exp' => $now + $ttl,
 ];
 
-$encodedHeader = rtrim(strtr(base64_encode((string) json_encode($header, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
-$encodedPayload = rtrim(strtr(base64_encode((string) json_encode($payload, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
-$signingInput = $encodedHeader.'.'.$encodedPayload;
+$encodedHeader = rtrim(strtr(base64_encode((string)json_encode($header, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
+$encodedPayload = rtrim(strtr(base64_encode((string)json_encode($payload, JSON_THROW_ON_ERROR)), '+/', '-_'), '=');
+$signingInput = $encodedHeader . '.' . $encodedPayload;
 
 $signature = '';
 if (!openssl_sign($signingInput, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
@@ -44,4 +44,4 @@ if (!openssl_sign($signingInput, $signature, $privateKey, OPENSSL_ALGO_SHA256)) 
 }
 
 $encodedSignature = rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
-fwrite(STDOUT, $signingInput.'.'.$encodedSignature.PHP_EOL);
+fwrite(STDOUT, $signingInput . '.' . $encodedSignature . PHP_EOL);

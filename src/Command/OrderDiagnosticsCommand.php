@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,7 +29,7 @@ final class OrderDiagnosticsCommand extends Command
         $io->definitionList(
             ['Database platform' => $platform::class],
             ['Orders table exists' => $connection->createSchemaManager()->tablesExist(['orders']) ? 'yes' : 'no'],
-            ['Pending migrations' => class_exists(\Doctrine\Migrations\DependencyFactory::class) ? 'check with doctrine:migrations:status' : 'bundle unavailable'],
+            ['Pending migrations' => class_exists(DependencyFactory::class) ? 'check with doctrine:migrations:status' : 'bundle unavailable'],
         );
 
         return Command::SUCCESS;

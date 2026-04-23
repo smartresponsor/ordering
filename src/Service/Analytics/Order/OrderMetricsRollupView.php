@@ -17,8 +17,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             uriTemplate: '/vendors/{vendorId}/metrics/rollup',
-            provider: OrderMetricsRollupProvider::class,
-            normalizationContext: ['groups' => ['metricsRoll:read']]
+            normalizationContext: ['groups' => ['metricsRoll:read']],
+            provider: OrderMetricsRollupProvider::class
         ),
     ]
 )]

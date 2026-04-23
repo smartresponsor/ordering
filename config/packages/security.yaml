@@ -1,17 +1,17 @@
 security:
-  providers:
-    app_user_provider:
-      memory: ~
+    providers:
+        app_user_provider:
+            memory: ~
 
-  firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
-    main:
-      lazy: true
-      stateless: false
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            stateless: false
 
-  access_control:
-    - { path: ^/manage, roles: PUBLIC_ACCESS }
-    - { path: ^/order/health, roles: PUBLIC_ACCESS }
-    - { path: ^/order, roles: PUBLIC_ACCESS }
+    access_control:
+        - { path: ^/manage, roles: PUBLIC_ACCESS }
+        - { path: ^/order/health, roles: PUBLIC_ACCESS }
+        - { path: ^/order, roles: PUBLIC_ACCESS }

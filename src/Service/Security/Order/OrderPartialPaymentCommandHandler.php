@@ -20,9 +20,9 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final readonly class OrderPartialPaymentCommandHandler implements OrderPartialPaymentCommandHandlerInterface
 {
     public function __construct(
-        private readonly PartialPaymentService $service,
-        private readonly PaymentGatewayInterface $gateway,
-        private readonly TransactionalEventPublisher $publisher,
+        private PartialPaymentService $service,
+        private PaymentGatewayInterface $gateway,
+        private TransactionalEventPublisher $publisher,
     ) {
     }
 

@@ -12,7 +12,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class OrderPartialPayHandler
 {
-    public function __construct(private readonly EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
     public function __invoke(OrderPartialPayCommand $cmd): void
@@ -21,7 +22,7 @@ final readonly class OrderPartialPayHandler
         if (!$order) {
             throw new \RuntimeException('Order not found');
         }
-        $order->applyPartialPayment($cmd->amount, $cmd->externalRef, true);
+        $order->applyPartialPayment($cmd->amount, $cmd->externalRef);
 
         foreach ($order->releaseEvents() as $ignored) {
             // тут пишем в outbox (упрощено — пропущено для краткости)

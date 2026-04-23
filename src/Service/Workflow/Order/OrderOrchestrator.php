@@ -19,16 +19,16 @@ use Doctrine\ORM\EntityManagerInterface;
 final readonly class OrderOrchestrator implements OrderOrchestratorInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OrderPaymentGatewayInterface $paymentGateway,
-        private readonly OrderShipmentGatewayInterface $shipmentGateway,
-        private readonly OrderTaxationGatewayInterface $taxationGateway,
+        private EntityManagerInterface $em,
+        private OrderPaymentGatewayInterface $paymentGateway,
+        private OrderShipmentGatewayInterface $shipmentGateway,
+        private OrderTaxationGatewayInterface $taxationGateway,
     ) {
     }
 
     public function processOrder(Order $order): void
     {
-        $this->paymentGateway->charge($order->getId(), (string) $order->getTotalAmount(), ['currency' => $order->getCurrency()]);
+        $this->paymentGateway->charge($order->getId(), $order->getTotalAmount(), ['currency' => $order->getCurrency()]);
 
         $tracking = $this->shipmentGateway->ship($order->getId(), 'DHL');
         if (method_exists($order, 'assignTracking')) {

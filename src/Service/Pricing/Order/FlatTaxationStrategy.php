@@ -10,10 +10,12 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\Entity\Order\OrderItem;
+use App\ServiceInterface\Pricing\Order\FlatTaxationStrategyInterface;
+use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 
-readonly class FlatTaxationStrategy implements \App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface, \App\ServiceInterface\Pricing\Order\FlatTaxationStrategyInterface
+readonly class FlatTaxationStrategy implements LegacyTaxationStrategyInterface, FlatTaxationStrategyInterface
 {
-    public function __construct(private readonly float $rate = 0.2)
+    public function __construct(private float $rate = 0.2)
     {
     }
 

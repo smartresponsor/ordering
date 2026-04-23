@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
+
 namespace OrderComponent\Order\Migrations;
+
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+
 final class Version20251015Core extends AbstractMigration
 {
     public function up(Schema $schema): void
@@ -26,6 +29,7 @@ final class Version20251015Core extends AbstractMigration
         $reservations->setPrimaryKey(['id']);
         $reservations->addForeignKeyConstraint('order_items', ['order_item_id'], ['id']);
     }
+
     public function down(Schema $schema): void
     {
         $schema->dropTable('reservations');

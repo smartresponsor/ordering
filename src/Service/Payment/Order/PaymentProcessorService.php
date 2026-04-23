@@ -11,15 +11,15 @@ namespace App\Service\Payment\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderPayment;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\PaymentProcessorServiceInterface;
+use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class PaymentProcessorService implements PaymentProcessorServiceInterface
 {
     public function __construct(
-        private readonly PaymentGatewayInterface $gateway,
-        private readonly EntityManagerInterface $em,
+        private PaymentGatewayInterface $gateway,
+        private EntityManagerInterface $em,
     ) {
     }
 

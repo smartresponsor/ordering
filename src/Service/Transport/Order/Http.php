@@ -7,10 +7,12 @@ namespace App\Service\Transport\Order;
 final readonly class Http
 {
     /**
-     * @param array<string, string> $headers
+     * @param array<string, string>            $headers
      * @param array<string, mixed>|string|null $payload
      *
      * @return array{0:int,1:string}
+     *
+     * @throws \JsonException
      */
     public static function req(
         string $method,

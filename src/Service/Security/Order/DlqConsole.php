@@ -17,8 +17,8 @@ use App\ValueObject\Archival\Order\AuditLog;
 final readonly class DlqConsole
 {
     public function __construct(
-        private readonly DlqRepositoryInterface $repo,
-        private readonly AuditLog $audit,
+        private DlqRepositoryInterface $repo,
+        private AuditLog $audit,
     ) {
     }
 

@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Message\Command\Order\OrderShipmentCommand;
-use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
+use App\Service\Shipment\Order\ShipmentService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 final readonly class OrderShipmentCommandHandler
 {
     public function __construct(
-        private readonly \App\Service\Shipment\Order\ShipmentService $service,
-        private readonly TransactionalEventPublisher $publisher,
-        private readonly CarrierInterface $carrier,
+        private ShipmentService $service,
+        private TransactionalEventPublisher $publisher,
+        private CarrierInterface $carrier,
     ) {
     }
 

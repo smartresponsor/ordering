@@ -12,8 +12,8 @@ namespace App\Service\Refund\Order;
 final readonly class RefundPolicyService
 {
     public function __construct(
-        private readonly int $postDeliveryRefundDays = 14,
-        private readonly bool $allowPartialAfterShipment = true,
+        private int $postDeliveryRefundDays = 14,
+        private bool $allowPartialAfterShipment = true,
     ) {
     }
 

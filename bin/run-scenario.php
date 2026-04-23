@@ -21,10 +21,10 @@ if (!is_array($config)) {
 }
 
 $experiment = is_array($config['experiment'] ?? null) ? $config['experiment'] : [];
-$name = (string) ($experiment['name'] ?? 'unnamed');
-$fault = (string) ($experiment['fault'] ?? '');
+$name = (string)($experiment['name'] ?? 'unnamed');
+$fault = (string)($experiment['fault'] ?? '');
 $params = is_array($experiment['params'] ?? null) ? $experiment['params'] : [];
-$duration = (int) ($experiment['duration_s'] ?? 60);
+$duration = (int)($experiment['duration_s'] ?? 60);
 
 fwrite(STDOUT, sprintf("Scenario: %s\n", $name));
 
@@ -38,13 +38,13 @@ $runCommand = static function (string $command): void {
 
 switch ($fault) {
     case 'netem':
-        $delay = (int) ($params['delay_ms'] ?? 150);
-        $loss = (int) ($params['loss_pct'] ?? 2);
+        $delay = (int)($params['delay_ms'] ?? 150);
+        $loss = (int)($params['loss_pct'] ?? 2);
         $runCommand(sprintf('DELAY_MS=%d LOSS_PCT=%d ./bin/fault-netem.sh', $delay, $loss));
         break;
 
     case 'kill_db':
-        $faultDuration = (int) ($params['dur'] ?? 90);
+        $faultDuration = (int)($params['dur'] ?? 90);
         $runCommand(sprintf('DUR=%d ./bin/fault-kill-db.sh', $faultDuration));
         break;
 
@@ -60,13 +60,13 @@ switch ($fault) {
 fwrite(STDOUT, sprintf("Hold for duration: %ds\n", $duration));
 sleep($duration);
 
-$p95 = (int) (getenv('P95_MS') ?: 230);
-$errorRate = (float) (getenv('ERROR_RATE_PCT') ?: 0.2);
+$p95 = (int)(getenv('P95_MS') ?: 230);
+$errorRate = (float)(getenv('ERROR_RATE_PCT') ?: 0.2);
 
-fwrite(STDOUT, (string) json_encode([
-    'p95_ms' => $p95,
-    'error_rate_pct' => $errorRate,
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL);
+fwrite(STDOUT, json_encode([
+        'p95_ms' => $p95,
+        'error_rate_pct' => $errorRate,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
 
 $targetP95 = 250;
 $errorBudget = 0.5;

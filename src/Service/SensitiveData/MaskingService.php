@@ -21,7 +21,7 @@ final readonly class MaskingService
     {
         $masked = [];
         foreach ($data as $key => $value) {
-            $lookup = strtolower((string) $key);
+            $lookup = strtolower($key);
             if (in_array($lookup, $this->maskKeys, true)) {
                 $masked[$key] = is_string($value) ? $this->maskString($value) : '***';
                 continue;

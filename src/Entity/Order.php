@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Contract\Domain\RecordsDomainEvents;
+use App\Event\Domain\Order\OrderPaidEvent;
+use App\Event\Domain\Order\OrderRefundedEvent;
+use App\Event\Domain\Order\OrderShippedEvent;
 use App\ValueObject\OrderStatus;
 use App\ValueObject\Pricing\Order\Money;
-use App\Contract\Domain\RecordsDomainEvents;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -63,15 +66,15 @@ class Order implements RecordsDomainEvents
     private \DateTimeImmutable $updatedAt;
 
     /** @var Collection<int, OrderPayment> */
-    #[ORM\OneToMany(mappedBy: 'order', targetEntity: OrderPayment::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: OrderPayment::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $payments;
 
     /** @var Collection<int, OrderRefund> */
-    #[ORM\OneToMany(mappedBy: 'order', targetEntity: OrderRefund::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: OrderRefund::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $refunds;
 
     /** @var Collection<int, OrderShipment> */
-    #[ORM\OneToMany(mappedBy: 'order', targetEntity: OrderShipment::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: OrderShipment::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $shipments;
 
     /** @var Collection<int, OrderItem> */
@@ -97,6 +100,7 @@ class Order implements RecordsDomainEvents
             $this->currency = strtoupper((string) $arg2->getCurrency());
             $this->grandTotal = self::normalizeAmount($arg2->getAmount());
             $this->subtotal = $this->grandTotal;
+
             return;
         }
 
@@ -106,6 +110,7 @@ class Order implements RecordsDomainEvents
             $this->customerId = $arg4;
             $this->grandTotal = self::normalizeAmount(self::normalizeLegacyAmount($arg2));
             $this->subtotal = $this->grandTotal;
+
             return;
         }
 
@@ -133,90 +138,112 @@ class Order implements RecordsDomainEvents
     {
         return $this->id;
     }
+
     public function id(): string
     {
         return $this->id;
     }
+
     public function getNumber(): string
     {
         return $this->number;
     }
+
     public function getCurrency(): string
     {
         return $this->currency;
     }
+
     public function currency(): string
     {
         return $this->currency;
     }
+
     public function getStatus(): string
     {
         return $this->status;
     }
+
     public function status(): string
     {
         return $this->status;
     }
+
     public function getGrandTotal(): string
     {
         return $this->grandTotal;
     }
+
     public function grandTotal(): string
     {
         return $this->grandTotal;
     }
+
     public function getTotal(): string
     {
         return $this->grandTotal;
     }
+
     public function getTotalAmount(): string
     {
         return $this->grandTotal;
     }
+
     public function getPaidTotal(): string
     {
         return $this->paidTotal;
     }
+
     public function paidTotal(): string
     {
         return $this->paidTotal;
     }
+
     public function getRefundedTotal(): string
     {
         return $this->refundedTotal;
     }
+
     public function refundedTotal(): string
     {
         return $this->refundedTotal;
     }
+
     public function getSubtotal(): string
     {
         return $this->subtotal;
     }
+
     public function getDiscountTotal(): string
     {
         return $this->discountTotal;
     }
+
     public function getTaxTotal(): string
     {
         return $this->taxTotal;
     }
+
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
+
     public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
+
     public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
+
     public function getVendorId(): ?string
     {
         return $this->vendorId;
     }
+
     public function getTrackingCode(): ?string
     {
         return $this->trackingCode;
@@ -278,16 +305,19 @@ class Order implements RecordsDomainEvents
     {
         return $this->payments;
     }
+
     /** @return Collection<int, OrderRefund> */
     public function getRefunds(): Collection
     {
         return $this->refunds;
     }
+
     /** @return Collection<int, OrderShipment> */
     public function getShipments(): Collection
     {
         return $this->shipments;
     }
+
     /** @return Collection<int, OrderItem> */
     public function getItems(): Collection
     {
@@ -309,8 +339,9 @@ class Order implements RecordsDomainEvents
         $this->payments->add($payment);
         $this->paidTotal = bcadd($this->paidTotal, $normalizedAmount, 2);
         $this->status = bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value;
-        $this->recordEvent(new \App\Event\Domain\Order\OrderPaidEvent($this->id, $normalizedAmount, $this->currency, $externalRef));
+        $this->recordEvent(new OrderPaidEvent($this->id, $normalizedAmount, $this->currency, $externalRef));
         $this->touch();
+
         return $payment;
     }
 
@@ -323,8 +354,9 @@ class Order implements RecordsDomainEvents
         if (bccomp($this->refundedTotal, $this->paidTotal, 2) >= 0) {
             $this->status = OrderStatus::Refunded->value;
         }
-        $this->recordEvent(new \App\Event\Domain\Order\OrderRefundedEvent($this, $normalizedAmount));
+        $this->recordEvent(new OrderRefundedEvent($this, $normalizedAmount));
         $this->touch();
+
         return $refund;
     }
 
@@ -334,8 +366,9 @@ class Order implements RecordsDomainEvents
         $this->shipments->add($shipment);
         $this->trackingCode = $trackingCode;
         $this->status = OrderStatus::Shipped->value;
-        $this->recordEvent(new \App\Event\Domain\Order\OrderShippedEvent((string) $this->id));
+        $this->recordEvent(new OrderShippedEvent($this->id));
         $this->touch();
+
         return $shipment;
     }
 
@@ -380,7 +413,6 @@ class Order implements RecordsDomainEvents
         $this->touch();
     }
 
-
     public function applyPartialPayment(string $amount, ?string $externalRef = null, bool $isPartial = true, string $gateway = 'stripe'): OrderPayment
     {
         return $this->applyPayment($amount, $externalRef ?? ('PAY-'.$this->id), $isPartial, $gateway);
@@ -418,6 +450,7 @@ class Order implements RecordsDomainEvents
         if (is_int($amount) && $amount > 1000) {
             return number_format($amount / 100, 2, '.', '');
         }
+
         return is_scalar($amount) ? $amount : '0.00';
     }
 }

@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 final readonly class InventorySubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly ?InventoryReservationServiceInterface $svc = null,
+        private ?InventoryReservationServiceInterface $svc = null,
     ) {
     }
 

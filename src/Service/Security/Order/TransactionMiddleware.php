@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class TransactionMiddleware implements TransactionMiddlewareInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 
@@ -24,6 +24,8 @@ final readonly class TransactionMiddleware implements TransactionMiddlewareInter
      * @param callable(EntityManagerInterface):T $fn
      *
      * @return T
+     *
+     * @throws \Throwable
      */
     public function run(callable $fn)
     {

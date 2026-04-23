@@ -1,8 +1,8 @@
 App\Entity\Order:
-  type: entity
-  table: orders
-  id:
+    type: entity
+    table: orders
     id:
-      type: guid
-      generator:
-        strategy: NONE
+        id:
+            type: guid
+            generator:
+                strategy: NONE

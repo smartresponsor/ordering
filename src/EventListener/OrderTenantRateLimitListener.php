@@ -28,7 +28,7 @@ final readonly class OrderTenantRateLimitListener
             return;
         }
 
-        $limit = $this->orderApiTenantLimiter->create($this->keyResolver->key())->consume(1);
+        $limit = $this->orderApiTenantLimiter->create($this->keyResolver->key())->consume();
         if (!$limit->isAccepted()) {
             throw new TooManyRequestsHttpException(null, 'Order tenant rate limit exceeded.');
         }

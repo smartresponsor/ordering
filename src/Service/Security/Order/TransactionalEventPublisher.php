@@ -19,8 +19,8 @@ use Symfony\Component\Uid\Uuid;
 final readonly class TransactionalEventPublisher implements TransactionalEventPublisherInterface
 {
     public function __construct(
-        private readonly OutboxRepositoryInterface $outbox,
-        private readonly MessageBusInterface $bus,
+        private OutboxRepositoryInterface $outbox,
+        private MessageBusInterface $bus,
     ) {
     }
 

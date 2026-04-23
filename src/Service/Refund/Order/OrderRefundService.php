@@ -11,14 +11,14 @@ namespace App\Service\Refund\Order;
 
 use App\Entity\Order\OrderRefundTransaction;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
-use App\ServiceInterface\Refund\Order\RefundServiceInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\ServiceInterface\Refund\Order\RefundServiceInterface;
 
 final readonly class OrderRefundService implements RefundServiceInterface
 {
     public function __construct(
-        private readonly PaymentGatewayInterface $gateway,
-        private readonly OrderRefundTransactionRepositoryInterface $refunds,
+        private PaymentGatewayInterface $gateway,
+        private OrderRefundTransactionRepositoryInterface $refunds,
     ) {
     }
 

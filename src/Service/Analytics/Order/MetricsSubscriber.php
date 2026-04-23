@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 final readonly class MetricsSubscriber implements MetricsSubscriberInterface, OrderMetricsSubscriberInterface
 {
-    public function __construct(private readonly MetricsProjectionService $proj)
+    public function __construct(private MetricsProjectionService $proj)
     {
     }
 
@@ -25,6 +25,6 @@ final readonly class MetricsSubscriber implements MetricsSubscriberInterface, Or
     #[AsEventListener(event: OrderRefundedEvent::class)]
     public function onRefunded(OrderRefundedEvent $e): void
     {
-        $this->proj->projectRefund((string) $e->amount, new \DateTimeImmutable('now'));
+        $this->proj->projectRefund($e->amount, new \DateTimeImmutable('now'));
     }
 }

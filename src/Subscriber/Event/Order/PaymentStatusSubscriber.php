@@ -12,7 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 readonly class PaymentStatusSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LoggerInterface $logger) {
+    public function __construct(private LoggerInterface $logger)
+    {
     }
 
     public static function getSubscribedEvents(): array

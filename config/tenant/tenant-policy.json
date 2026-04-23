@@ -1,17 +1,17 @@
 {
-  "default": {
-    "maxWorkers": 4,
-    "rps": 200,
-    "burst": 50
-  },
-  "tenant_a": {
-    "maxWorkers": 8,
-    "rps": 500,
-    "burst": 200
-  },
-  "tenant_b": {
-    "maxWorkers": 2,
-    "rps": 100,
-    "burst": 20
-  }
+    "default": {
+        "maxWorkers": 4,
+        "rps": 200,
+        "burst": 50
+    },
+    "tenant_a": {
+        "maxWorkers": 8,
+        "rps": 500,
+        "burst": 200
+    },
+    "tenant_b": {
+        "maxWorkers": 2,
+        "rps": 100,
+        "burst": 20
+    }
 }

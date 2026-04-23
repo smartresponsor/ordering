@@ -21,7 +21,7 @@ use App\ValueObject\Routing\Order\RouteContext;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$iterations = max(1, (int) ($argv[1] ?? 1000));
+$iterations = max(1, (int)($argv[1] ?? 1000));
 $canaryMode = in_array('--canary', $argv, true);
 
 $router = new ProviderRouter(
@@ -62,9 +62,9 @@ for ($i = 0; $i < $iterations; ++$i) {
 $seconds = microtime(true) - $start;
 
 echo json_encode([
-    'iterations' => $iterations,
-    'seconds' => $seconds,
-    'routes_per_second' => $iterations / max(0.001, $seconds),
-    'canary' => $canaryMode,
-    'providers' => $counts,
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
+        'iterations' => $iterations,
+        'seconds' => $seconds,
+        'routes_per_second' => $iterations / max(0.001, $seconds),
+        'canary' => $canaryMode,
+        'providers' => $counts,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;

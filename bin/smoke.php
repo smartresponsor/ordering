@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Entity\Order;
 
@@ -17,4 +17,4 @@ match ($flow) {
     default => $order->setStatus('draft'),
 };
 
-echo json_encode(['orderId' => $order->id(), 'final' => $order->status()], JSON_THROW_ON_ERROR).PHP_EOL;
+echo json_encode(['orderId' => $order->id(), 'final' => $order->status()], JSON_THROW_ON_ERROR) . PHP_EOL;

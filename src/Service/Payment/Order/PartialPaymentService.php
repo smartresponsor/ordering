@@ -15,7 +15,8 @@ use App\ServiceInterface\Payment\Order\PartialPaymentServiceInterface;
 
 final readonly class PartialPaymentService implements PartialPaymentServiceInterface
 {
-    public function __construct(private readonly OrderPaymentTransactionRepositoryInterface $payments) {
+    public function __construct(private OrderPaymentTransactionRepositoryInterface $payments)
+    {
     }
 
     public function applyPartial(string $orderId, string $amount, string $method, string $txId): OrderPaymentTransaction

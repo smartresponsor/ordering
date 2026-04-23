@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Webhook\Order\WebhookSignerHmac;
 use App\Service\Webhook\Order\WebhookSignerRsa;
@@ -26,8 +26,8 @@ if ('hmac' === $algorithm) {
 }
 
 if ('rsa' === $algorithm) {
-    $privatePemPath = $argv[3] ?? __DIR__.'/../var/key/private.pem';
-    $publicPemPath = $argv[4] ?? __DIR__.'/../var/key/public.pem';
+    $privatePemPath = $argv[3] ?? __DIR__ . '/../var/key/private.pem';
+    $publicPemPath = $argv[4] ?? __DIR__ . '/../var/key/public.pem';
     $kid = $argv[5] ?? 'kid-demo';
 
     $privatePem = @file_get_contents($privatePemPath);
@@ -44,8 +44,8 @@ if ('rsa' === $algorithm) {
 
     $signer = new WebhookSignerRsa();
     $verifier = new WebhookVerifierRsa();
-    $signature = $signer->sign($payload, (string) $privatePem, $kid);
-    $verified = $verifier->verify($payload, (string) $publicPem, $signature);
+    $signature = $signer->sign($payload, $privatePem, $kid);
+    $verified = $verifier->verify($payload, $publicPem, $signature);
 
     fwrite(STDOUT, $verified ? "VALID\n" : "INVALID\n");
     fwrite(STDOUT, sprintf("signature=%s\n", $signature));

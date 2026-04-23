@@ -26,8 +26,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final readonly class OrderMessageHandler implements OrderMessageHandlerInterface
 {
     public function __construct(
-        private readonly EventDispatcherInterface $dispatcher,
-        private readonly EntityManagerInterface $em,
+        private EventDispatcherInterface $dispatcher,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -54,6 +54,6 @@ final readonly class OrderMessageHandler implements OrderMessageHandlerInterface
     {
         $digits = preg_replace('/\D+/', '', $order->id());
 
-        return is_string($digits) && $digits != '' ? (int) $digits : 0;
+        return is_string($digits) && '' != $digits ? (int) $digits : 0;
     }
 }

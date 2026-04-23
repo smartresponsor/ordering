@@ -1,1 +1,1 @@
-export default { server:{ port:5175 } };
+export default {server: {port: 5175}};

@@ -12,10 +12,12 @@ final class Version20251017210811 extends AbstractMigration
     {
         return 'Order Component — Phase 13: Messaging & Async (RabbitMQ) Contracts migration';
     }
+
     public function up(Schema $schema): void
     {
         // No-op for scaffold
     }
+
     public function down(Schema $schema): void
     {
         // No-op

@@ -81,17 +81,17 @@ function collectViolations(): array
     }
 
     foreach ([
-        'src/Port',
-        'src/Adaptor',
-        'src/Infra',
-        'src/opr',
-        'src/Order',
-        'src/OrderInterface',
-        'src/Ordering',
-        'src/OrderingInterface',
-        'src/Domain',
-        'src/DomainInterface',
-    ] as $path) {
+                 'src/Port',
+                 'src/Adaptor',
+                 'src/Infra',
+                 'src/opr',
+                 'src/Order',
+                 'src/OrderInterface',
+                 'src/Ordering',
+                 'src/OrderingInterface',
+                 'src/Domain',
+                 'src/DomainInterface',
+             ] as $path) {
         if (is_dir($path)) {
             $violations['src_forbidden'][] = $path;
         }
@@ -135,7 +135,7 @@ function collectViolations(): array
         if (preg_match('/stub/i', $content) === 1) {
             $violations['stub_token'][] = $file;
         }
-        if (preg_match('/catch\s*\([^)]*\)\s*\{\s*\}/s', $content) === 1) {
+        if (preg_match('/catch\s*\([^)]*\)\s*\{\s*}/', $content) === 1) {
             $violations['empty_catch'][] = $file;
         }
     }
@@ -169,6 +169,6 @@ if (is_string($writePath) && $writePath !== '') {
 }
 
 if ($failOnViolations && $total > 0) {
-    fwrite(STDERR, sprintf("owner canon violations detected: %d%s", $total, PHP_EOL));
+    fwrite(STDERR, sprintf('owner canon violations detected: %d%s', $total, PHP_EOL));
     exit(1);
 }

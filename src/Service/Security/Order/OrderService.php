@@ -24,8 +24,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final readonly class OrderService implements OrderServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly EventDispatcherInterface $events,
+        private EntityManagerInterface $em,
+        private EventDispatcherInterface $events,
     ) {
     }
 
@@ -39,16 +39,24 @@ final readonly class OrderService implements OrderServiceInterface
         $payments = $this->em->getRepository(OrderPayment::class)->findBy(['order' => $order], ['id' => 'DESC']);
         $left = $refund->getAmount();
         foreach ($payments as $p) {
-            if (!$p instanceof OrderPayment) { continue; }
-            if (!in_array($p->getStatus(), ['captured', 'paid', 'succeeded'], true)) { continue; }
+            if (!$p instanceof OrderPayment) {
+                continue;
+            }
+            if (!in_array($p->getStatus(), ['captured', 'paid', 'succeeded'], true)) {
+                continue;
+            }
             $can = bcsub($p->getAmount(), $p->getRefundedAmount(), 2);
-            if (bccomp($can, '0.00', 2) <= 0) { continue; }
+            if (bccomp($can, '0.00', 2) <= 0) {
+                continue;
+            }
             $take = 1 === bccomp($left, $can, 2) ? $can : $left;
             if (1 === bccomp($take, '0.00', 2)) {
                 $p->addRefundedAmount($take);
                 $left = bcsub($left, $take, 2);
             }
-            if (0 === bccomp($left, '0.00', 2)) { break; }
+            if (0 === bccomp($left, '0.00', 2)) {
+                break;
+            }
         }
 
         $order->markRefunded($refund->getAmount());
@@ -57,6 +65,7 @@ final readonly class OrderService implements OrderServiceInterface
         if (0 === bccomp($order->getRefundedTotal(), $order->getPaidTotal(), 2)) {
             $this->events->dispatch(new OrderFullyRefundedEvent($order, $order->getRefundedTotal(), (string) $refund->getCurrency()));
         }
+
         return $ledger;
     }
 
@@ -75,6 +84,7 @@ final readonly class OrderService implements OrderServiceInterface
         $order->ship($carrier, $tracking);
         $this->em->persist($order);
         $this->em->flush();
+
         return $tracking;
     }
 
@@ -91,6 +101,7 @@ final readonly class OrderService implements OrderServiceInterface
         $order->refund(number_format($amount, 2, '.', ''));
         $this->em->persist($order);
         $this->em->flush();
+
         return true;
     }
 }

@@ -11,7 +11,7 @@ use App\ServiceInterface\Analytics\Order\OrderMetricsAggregatorInterface;
 
 final readonly class OrderMetricsAggregator implements OrderMetricsAggregatorInterface
 {
-    public function __construct(private readonly OrderMetricsAggregateViewRepository $repo)
+    public function __construct(private OrderMetricsAggregateViewRepository $repo)
     {
     }
 

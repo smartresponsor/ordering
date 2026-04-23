@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory\Order;
 
-use App\Entity\Order\InventoryReservation;
 use App\Entity\Order;
+use App\Entity\Order\InventoryReservation;
 use App\Event\Domain\Order\StockConsumedEvent;
 use App\Event\Domain\Order\StockReleasedEvent;
 use App\Event\Domain\Order\StockReservationFailedEvent;
@@ -23,9 +23,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final readonly class InventoryService implements InventoryServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly EventDispatcherInterface $events,
-        private readonly InventoryGatewayInterface $gateway,
+        private EntityManagerInterface $em,
+        private EventDispatcherInterface $events,
+        private InventoryGatewayInterface $gateway,
     ) {
     }
 

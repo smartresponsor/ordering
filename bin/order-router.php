@@ -33,14 +33,14 @@ if (false === $policyJson) {
 $policyData = json_decode($policyJson, true, 512, JSON_THROW_ON_ERROR);
 
 $policy = new ProviderPolicy(
-    (float) $policyData['route']['weight_latency'],
-    (float) $policyData['route']['weight_error'],
-    (float) $policyData['route']['weight_cost'],
-    (int) $policyData['threshold']['p95_ms'],
-    (float) $policyData['threshold']['error_rate'],
+    (float)$policyData['route']['weight_latency'],
+    (float)$policyData['route']['weight_error'],
+    (float)$policyData['route']['weight_cost'],
+    (int)$policyData['threshold']['p95_ms'],
+    (float)$policyData['threshold']['error_rate'],
 );
 
-$canarySwitch = new CanarySwitch((int) ($policyData['canary']['seed'] ?? 42));
+$canarySwitch = new CanarySwitch((int)($policyData['canary']['seed'] ?? 42));
 $quota = new QuotaPolicy();
 $cost = new CostPolicy();
 

@@ -22,15 +22,13 @@ use App\ValueObject\Security\Order\JwkKey;
 final readonly class KeyRotationManager implements KeyRotationManagerInterface
 {
     public function __construct(
-        private readonly JwkRepositoryInterface $repo,
-        private readonly SecretRotationPolicy $policy,
+        private JwkRepositoryInterface $repo,
+        private SecretRotationPolicy $policy,
     ) {
     }
 
     public function rotate(string $oldKid, string $newKid, string $publicPem, string $privatePem): void
     {
-        $this->policy->lifeSecond();
-
         // Deactivate old, add new active
         $this->repo->deactivate($oldKid);
         $new = new JwkKey($newKid, 'RS256', 'RSA', $publicPem, $privatePem, true);

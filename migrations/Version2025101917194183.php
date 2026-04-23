@@ -8,14 +8,21 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version2025101917194183 extends AbstractMigration
 {
-    public function getDescription(): string { return 'Phase 54 — PCI Readiness'; }
-    public function up(Schema $schema): void {
+    public function getDescription(): string
+    {
+        return 'Phase 54 — PCI Readiness';
+    }
+
+    public function up(Schema $schema): void
+    {
         $this->addSql(<<<'SQL'
 CREATE TABLE IF NOT EXISTS order_pci_meta (k VARCHAR(64) PRIMARY KEY, v TEXT NOT NULL)
 SQL
         );
     }
-    public function down(Schema $schema): void {
+
+    public function down(Schema $schema): void
+    {
         $this->addSql(<<<'SQL'
 DROP TABLE IF EXISTS order_pci_meta
 SQL

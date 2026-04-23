@@ -18,7 +18,7 @@ final readonly class InMemoryRateProvider implements ExchangeRateProviderInterfa
     /**
      * @param array<string, float> $pairs Format: "USD:EUR" => 0.92
      */
-    public function __construct(private readonly array $pairs)
+    public function __construct(private array $pairs)
     {
     }
 
@@ -36,7 +36,7 @@ final readonly class InMemoryRateProvider implements ExchangeRateProviderInterfa
         return new ExchangeRate(
             strtoupper($baseCurrency),
             strtoupper($quoteCurrency),
-            (float) $this->pairs[$key],
+            $this->pairs[$key],
         );
     }
 }

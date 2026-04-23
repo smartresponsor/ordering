@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\ValueObject\Pricing\Order\Sku;
 use App\ValueObject\Pricing\Order\Quantity;
+use App\ValueObject\Pricing\Order\Sku;
 
 final readonly class OrderItem
 {
@@ -44,6 +44,7 @@ final readonly class OrderItem
         if (is_object($basePrice) && method_exists($basePrice, 'getAmount') && method_exists($basePrice, 'getCurrency')) {
             $this->basePrice = number_format((float) $basePrice->getAmount(), 2, '.', '');
             $this->currency = strtoupper((string) $basePrice->getCurrency());
+
             return;
         }
 
@@ -55,9 +56,28 @@ final readonly class OrderItem
         $this->currency = strtoupper((string) $currency);
     }
 
-    public function getSku(): string { return $this->sku; }
-    public function getQuantity(): int { return $this->quantity; }
-    public function getBasePrice(): string { return $this->basePrice; }
-    public function getCurrency(): string { return $this->currency; }
-    public function getUnitPrice(): string { return $this->basePrice; }
+    public function getSku(): string
+    {
+        return $this->sku;
+    }
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
+    public function getBasePrice(): string
+    {
+        return $this->basePrice;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    public function getUnitPrice(): string
+    {
+        return $this->basePrice;
+    }
 }

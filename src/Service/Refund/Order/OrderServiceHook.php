@@ -16,7 +16,7 @@ use App\ValueObject\Pricing\Order\Money;
 
 final readonly class OrderServiceHook implements OrderServiceHookInterface
 {
-    public function __construct(private readonly OrderRefundEligibilityServiceInterface $eligibility)
+    public function __construct(private OrderRefundEligibilityServiceInterface $eligibility)
     {
     }
 

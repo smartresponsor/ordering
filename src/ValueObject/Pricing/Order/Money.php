@@ -6,8 +6,8 @@ namespace App\ValueObject\Pricing\Order;
 
 readonly class Money
 {
-    private readonly string $amount;
-    private readonly Currency $currency;
+    private string $amount;
+    private Currency $currency;
 
     public function __construct(string $amount, Currency|string $currency)
     {
@@ -77,6 +77,6 @@ readonly class Money
 
     public function __toString(): string
     {
-        return $this->amount.' '.(string) $this->currency;
+        return $this->amount.' '.$this->currency;
     }
 }

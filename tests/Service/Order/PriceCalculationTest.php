@@ -25,11 +25,11 @@ final class PriceCalculationTest extends TestCase
         $taxMoney = new Money('20.00', 'USD');
         $totalBeforeDiscount = $base->add($taxMoney);
         $discounted = $discount->apply($totalBeforeDiscount);
-        $this->assertSame('108.000000', $discounted->getAmount());
+        static::assertSame('108.000000', $discounted->getAmount());
 
         // For full integration we'd need OrderItem; here we assert VO arithmetic
-        $this->assertSame('120.000000', $totalBeforeDiscount->getAmount());
-        self::assertInstanceOf(PriceCalculatorService::class, $svc);
+        static::assertSame('120.000000', $totalBeforeDiscount->getAmount());
+
         self::assertSame('vat', $tax->type);
     }
 }

@@ -22,17 +22,16 @@ final class InventoryReservation
     private string $state = self::STATE_RESERVED;
 
     /**
-     * @param RootOrder|string $order
      * @param array<string, int>|string $reservationKeyOrSku
-     * @param array<string, int>|int $linesOrQuantity
+     * @param array<string, int>|int    $linesOrQuantity
      */
     public function __construct(
-        private RootOrder|string $order,
+        private readonly RootOrder|string $order,
         array|string $reservationKeyOrSku,
         array|int $linesOrQuantity,
     ) {
         if ($order instanceof RootOrder) {
-            $this->orderId = (string) $order->id();
+            $this->orderId = $order->id();
             $this->reservationKey = (string) $reservationKeyOrSku;
             $this->lines = is_array($linesOrQuantity) ? $linesOrQuantity : [];
 

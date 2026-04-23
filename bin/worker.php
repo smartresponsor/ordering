@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-$console = __DIR__.'/console';
+$console = __DIR__ . '/console';
 if (!is_file($console)) {
     fwrite(STDERR, "bin/console not found\n");
     exit(1);
@@ -18,10 +18,10 @@ $cmd = [
     PHP_BINARY,
     $console,
     'order:outbox:process',
-    '--tenant='.$tenant,
-    '--topic='.$topic,
-    '--concurrency='.$concurrency,
-    '--cycles='.$cycles,
+    '--tenant=' . $tenant,
+    '--topic=' . $topic,
+    '--concurrency=' . $concurrency,
+    '--cycles=' . $cycles,
 ];
 
 passthru(implode(' ', array_map('escapeshellarg', $cmd)), $exitCode);

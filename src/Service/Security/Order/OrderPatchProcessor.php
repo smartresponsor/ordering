@@ -20,10 +20,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderPatchProcessor implements ProcessorInterface, OrderPatchProcessorInterface
 {
-    public function __construct(private readonly MessageBusInterface $bus) {
+    public function __construct(private MessageBusInterface $bus)
+    {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): OrderResource
     {
         \assert($data instanceof OrderResource);
         $id = $uriVariables['id'] ?? $data->id ?? null;
@@ -40,7 +41,7 @@ final readonly class OrderPatchProcessor implements ProcessorInterface, OrderPat
         }
         if (($data->status ?? null) === 'shipped') {
             $carrier = $context['carrier'] ?? 'manual';
-            assert(\is_string($carrier) && '' !== $carrier);
+            \assert(\is_string($carrier) && '' !== $carrier);
             $this->bus->dispatch(new OrderShipmentCommand($id, $carrier));
         }
 

@@ -14,6 +14,7 @@ final class RateLimiterMiddleware implements MiddlewareInterface
     {
         $this->interval = 1.0 / max(1, $maxPerSecond);
     }
+
     private float $interval;
     private float $lastTs = 0.0;
 

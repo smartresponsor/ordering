@@ -7,9 +7,9 @@ namespace App\Event\Domain\Order;
 final readonly class OrderStatusChanged
 {
     public function __construct(
-        public readonly string $orderId,
-        public readonly string $fromStatus,
-        public readonly string $toStatus,
+        public string $orderId,
+        public string $fromStatus,
+        public string $toStatus,
     ) {
     }
 }

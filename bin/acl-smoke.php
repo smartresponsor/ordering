@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$mapPath = __DIR__.'/../config/acl/role-action-map.json';
-$map = json_decode((string) file_get_contents($mapPath), true);
+$mapPath = __DIR__ . '/../config/acl/role-action-map.json';
+$map = json_decode((string)file_get_contents($mapPath), true);
 if (!is_array($map)) {
     fwrite(STDERR, "ACL map is invalid\n");
     exit(1);

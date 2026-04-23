@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 $host = getenv('REDIS_HOST') ?: '127.0.0.1';
-$port = (int) (getenv('REDIS_PORT') ?: 6379);
+$port = (int)(getenv('REDIS_PORT') ?: 6379);
 $pattern = getenv('BUDGET_KEY_PATTERN') ?: 'budget:*';
 
 if (!class_exists(Redis::class)) {
@@ -26,7 +26,7 @@ if (false === $keys) {
 
 $deleted = 0;
 foreach ($keys as $key) {
-    $deleted += (int) $redis->del((string) $key);
+    $deleted += (int)$redis->del((string)$key);
 }
 
 fwrite(STDOUT, sprintf("budget keys cleared: %d\n", $deleted));

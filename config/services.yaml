@@ -1,49 +1,49 @@
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
+    _defaults:
+        autowire: true
+        autoconfigure: true
 
-  App\Controller\OrderController:
-    tags: ['controller.service_arguments']
+    App\Controller\OrderController:
+        tags: [ 'controller.service_arguments' ]
 
-  App\Controller\OrderManagementController:
-    tags: ['controller.service_arguments']
+    App\Controller\OrderManagementController:
+        tags: [ 'controller.service_arguments' ]
 
-  App\Controller\HealthCheckController:
-    tags: ['controller.service_arguments']
+    App\Controller\HealthCheckController:
+        tags: [ 'controller.service_arguments' ]
 
-  App\Controller\ReadinessController:
-    tags: ['controller.service_arguments']
+    App\Controller\ReadinessController:
+        tags: [ 'controller.service_arguments' ]
 
-  App\Form\:
-    resource: '../src/Form/'
+    App\Form\:
+        resource: '../src/Form/'
 
-  App\Service\:
-    resource: '../src/Service/'
-    exclude:
-      - '../src/Service/Tx/'
+    App\Service\:
+        resource: '../src/Service/'
+        exclude:
+            - '../src/Service/Tx/'
 
-  App\Command\OrderDemoLoadCommand: ~
-  App\Command\OrderDemoResetCommand: ~
-  App\Command\OrderDiagnosticsCommand: ~
-  App\Command\OrderReportCommand: ~
+    App\Command\OrderDemoLoadCommand: ~
+    App\Command\OrderDemoResetCommand: ~
+    App\Command\OrderDiagnosticsCommand: ~
+    App\Command\OrderReportCommand: ~
 
-  App\DataFixtures\OrderDemoFixtures: ~
+    App\DataFixtures\OrderDemoFixtures: ~
 
-  Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'
+    Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'
 
-  App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Repository\Order\OrderPaymentTransactionRepository'
-  App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Repository\Order\OrderRefundTransactionRepository'
-  App\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Repository\Order\OrderEventRepository'
-  App\RepositoryInterface\Order\OutboxRepositoryInterface: '@App\Repository\Order\OutboxRepository'
-  App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface: '@App\Repository\Order\OrderStockReservationRepository'
-  App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Repository\Order\OrderShipmentViewRepository'
+    App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Repository\Order\OrderPaymentTransactionRepository'
+    App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Repository\Order\OrderRefundTransactionRepository'
+    App\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Repository\Order\OrderEventRepository'
+    App\RepositoryInterface\Order\OutboxRepositoryInterface: '@App\Repository\Order\OutboxRepository'
+    App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface: '@App\Repository\Order\OrderStockReservationRepository'
+    App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Repository\Order\OrderShipmentViewRepository'
 
-  App\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Service\Outbox\Order\OutboxRelay'
-  App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Service\Shipment\Order\OrderShipmentProjectionService'
-  App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Service\Shipment\Order\CarrierPollingService'
-  App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
-  App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
-  App\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Service\Refund\Order\OrderServiceHook'
-  App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\ReadModel\Service\OrderReadModelUpdater'
-  App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Service\Archival\Order\OrderAuditTrailBuilder'
+    App\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Service\Outbox\Order\OutboxRelay'
+    App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Service\Shipment\Order\OrderShipmentProjectionService'
+    App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Service\Shipment\Order\CarrierPollingService'
+    App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
+    App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
+    App\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Service\Refund\Order\OrderServiceHook'
+    App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\ReadModel\Service\OrderReadModelUpdater'
+    App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Service\Archival\Order\OrderAuditTrailBuilder'

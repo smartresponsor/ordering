@@ -12,14 +12,14 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 final readonly class RateLimitHeaderMiddleware implements HttpKernelInterface
 {
     public function __construct(
-        private readonly HttpKernelInterface $kernel,
-        private readonly RateLimiterFactory $limiterFactory,
+        private HttpKernelInterface $kernel,
+        private RateLimiterFactory $limiterFactory,
     ) {
     }
 
     public function handle(Request $request, int $type = self::MAIN_REQUEST, bool $catch = true): Response
     {
-        $limit = $this->limiterFactory->create((string) ($request->getClientIp() ?? 'anon'))->consume();
+        $limit = $this->limiterFactory->create($request->getClientIp() ?? 'anon')->consume();
         $response = $this->kernel->handle($request, $type, $catch);
         $response->headers->set('X-RateLimit-Limit', (string) $limit->getLimit());
         $response->headers->set('X-RateLimit-Remaining', (string) $limit->getRemainingTokens());

@@ -16,10 +16,10 @@ final readonly class AuditListener
 
     /** @param list<string> $excludePath */
     public function __construct(
-        private readonly MonologAuditLogger $logger,
-        private readonly Redactor $redactor,
-        private readonly float $sampleRatio = 1.0,
-        private readonly int $maxBodyBytes = 2048,
+        private MonologAuditLogger $logger,
+        private Redactor $redactor,
+        private float $sampleRatio = 1.0,
+        private int $maxBodyBytes = 2048,
         array $excludePath = [],
     ) {
         $this->excludePath = array_values($excludePath);
@@ -64,12 +64,6 @@ final readonly class AuditListener
 
     private function shouldLog(string $path): bool
     {
-        foreach ($this->excludePath as $prefix) {
-            if ('' !== $prefix && str_starts_with($path, $prefix)) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all($this->excludePath, fn ($prefix) => '' === $prefix || !str_starts_with($path, $prefix));
     }
 }

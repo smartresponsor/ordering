@@ -18,10 +18,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderPartialPaymentProcessor implements ProcessorInterface, OrderPartialPaymentProcessorInterface
 {
-    public function __construct(private readonly MessageBusInterface $bus) {
+    public function __construct(private MessageBusInterface $bus)
+    {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): array
     {
         /* @var OrderPartialPaymentInput $data */
         $this->bus->dispatch(new OrderPartialPaymentCommand(

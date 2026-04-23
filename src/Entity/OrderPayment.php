@@ -54,21 +54,80 @@ class OrderPayment
         $this->capturedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int { return $this->id; }
-    public function getOrder(): ?Order { return $this->order; }
-    public function setOrder(Order $order): void { $this->order = $order; }
-    public function getGateway(): string { return $this->gateway; }
-    public function getAmount(): string { return $this->amount; }
-    public function setAmount(string|int|float $amount): void { $this->amount = self::normalizeAmount($amount); }
-    public function getCurrency(): string { return $this->currency; }
-    public function getCapturedAt(): \DateTimeImmutable { return $this->capturedAt; }
-    public function getReference(): ?string { return $this->externalRef; }
-    public function setReference(string $reference): void { $this->externalRef = $reference; }
-    public function getStatus(): string { return $this->status; }
-    public function setStatus(string $status): void { $this->status = strtolower($status); }
-    public function markPaid(): void { $this->status = 'paid'; }
-    public function getRefundedAmount(): string { return $this->refundedAmount; }
-    public function addRefundedAmount(string|int|float $amount): void { $this->refundedAmount = bcadd($this->refundedAmount, self::normalizeAmount($amount), 2); }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order): void
+    {
+        $this->order = $order;
+    }
+
+    public function getGateway(): string
+    {
+        return $this->gateway;
+    }
+
+    public function getAmount(): string
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(string|int|float $amount): void
+    {
+        $this->amount = self::normalizeAmount($amount);
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    public function getCapturedAt(): \DateTimeImmutable
+    {
+        return $this->capturedAt;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->externalRef;
+    }
+
+    public function setReference(string $reference): void
+    {
+        $this->externalRef = $reference;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = strtolower($status);
+    }
+
+    public function markPaid(): void
+    {
+        $this->status = 'paid';
+    }
+
+    public function getRefundedAmount(): string
+    {
+        return $this->refundedAmount;
+    }
+
+    public function addRefundedAmount(string|int|float $amount): void
+    {
+        $this->refundedAmount = bcadd($this->refundedAmount, self::normalizeAmount($amount), 2);
+    }
 
     private static function normalizeAmount(string|int|float $amount): string
     {

@@ -21,7 +21,7 @@ final readonly class CanarySwitch
 
     public function allow(string $intentId, float $percent): bool
     {
-        $h = crc32($intentId.':'.(string) $this->seed);
+        $h = crc32($intentId.':'.$this->seed);
         $mod = $h % 10000; // 0..9999
         $threshold = (int) round($percent * 100.0);
 

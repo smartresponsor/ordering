@@ -9,9 +9,9 @@ use App\Entity\Order;
 final readonly class OrderFullyRefundedEvent
 {
     public function __construct(
-        public readonly Order $order,
-        public readonly string $totalRefunded,
-        public readonly string $currency,
+        public Order $order,
+        public string $totalRefunded,
+        public string $currency,
     ) {
     }
 }

@@ -11,13 +11,14 @@ namespace App\Service\Payment\Order;
 
 use App\Entity\Order\OrderPaymentTransaction;
 use App\Entity\Order\OrderRefundTransaction;
+use App\Service\Refund\Order\OrderRefundService;
 use App\ServiceInterface\Payment\Order\OrderPaymentServiceInterface;
 
 final readonly class OrderPaymentService implements OrderPaymentServiceInterface
 {
     public function __construct(
-        private readonly PartialPaymentService $partialPayments,
-        private readonly \App\Service\Refund\Order\OrderRefundService $refunds,
+        private PartialPaymentService $partialPayments,
+        private OrderRefundService $refunds,
     ) {
     }
 

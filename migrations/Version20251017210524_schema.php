@@ -12,10 +12,12 @@ final class Version20251017210524_schema extends AbstractMigration
     {
         return 'Create orders table (Phase 12)';
     }
+
     public function up(Schema $schema): void
     {
         // $schema->createTable('orders') ... (left as placeholder)
     }
+
     public function down(Schema $schema): void
     {
         // dropTable('orders')

@@ -6,7 +6,7 @@ namespace App\Service\Security\Order;
 
 final readonly class RetryOrderSagaCommand
 {
-    public function __construct(public readonly int $orderId)
+    public function __construct(public int $orderId)
     {
     }
 }

@@ -8,6 +8,7 @@ use App\Entity\Order;
 
 final readonly class OrderPartiallyRefundedEvent
 {
-    public function __construct(public readonly Order $order, public readonly string $refundAmount, public readonly string $balanceAmount) {
+    public function __construct(public Order $order, public string $refundAmount, public string $balanceAmount)
+    {
     }
 }

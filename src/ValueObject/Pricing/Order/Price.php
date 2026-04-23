@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\ValueObject\Pricing\Order;
 
-use App\ValueObject\Pricing\Order\Money;
-
 final readonly class Price
 {
     public function __construct(
-        public readonly Money $base,
-        public readonly Money $tax,
-        public readonly Money $discount,
-        public readonly Money $total,
+        public Money $base,
+        public Money $tax,
+        public Money $discount,
+        public Money $total,
     ) {
     }
 

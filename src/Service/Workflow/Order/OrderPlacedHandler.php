@@ -17,8 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 final readonly class OrderPlacedHandler implements OrderPlacedHandlerInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OrderStatusService $status,
+        private EntityManagerInterface $em,
+        private OrderStatusService $status,
     ) {
     }
 

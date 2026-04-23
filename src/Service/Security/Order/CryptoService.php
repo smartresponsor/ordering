@@ -13,7 +13,7 @@ use App\ServiceInterface\Security\Order\CryptoServiceInterface;
 
 final readonly class CryptoService implements CryptoServiceInterface
 {
-    public function __construct(private readonly string $key)
+    public function __construct(private string $key)
     {
         if (strlen($this->key) < 16) {
             throw new \InvalidArgumentException('Crypto key too short');

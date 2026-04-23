@@ -9,19 +9,20 @@ use App\Message\Command\OrderPayCommand;
 use App\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 
 #[AsMessageHandler(bus: 'messenger.bus.commands')]
 final readonly class OrderPayHandler
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OutboxPublisher $outbox,
+        private EntityManagerInterface $em,
+        private OutboxPublisher $outbox,
     ) {
     }
 
     /**
      * @throws \JsonException
-     * @throws \Symfony\Component\Messenger\Exception\ExceptionInterface
+     * @throws ExceptionInterface
      */
     public function __invoke(OrderPayCommand $cmd): void
     {

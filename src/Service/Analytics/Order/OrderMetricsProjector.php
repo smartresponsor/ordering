@@ -14,7 +14,7 @@ use App\ServiceInterface\Analytics\Order\OrderMetricsProjectorInterface;
 
 final readonly class OrderMetricsProjector implements OrderMetricsProjectorInterface
 {
-    public function __construct(private readonly OrderMetricsViewRepository $repo)
+    public function __construct(private OrderMetricsViewRepository $repo)
     {
     }
 
@@ -38,7 +38,7 @@ final readonly class OrderMetricsProjector implements OrderMetricsProjectorInter
 
             case $event instanceof OrderRefundedEvent:
                 $vendorId = $event->vendorId ?? 'UNKNOWN';
-                $amount = (string) ($event->amount ?? '0.00');
+                $amount = $event->amount ?? '0.00';
                 $this->repo->upsert($vendorId, function ($v) use ($amount): void {
                     $v->refundedAmount = bcadd($v->refundedAmount, $amount, 2);
                 });

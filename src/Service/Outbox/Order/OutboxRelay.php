@@ -10,18 +10,18 @@ declare(strict_types=1);
 namespace App\Service\Outbox\Order;
 
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
-use App\ServiceInterface\Outbox\Order\OutboxRelayInterface;
 use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
+use App\ServiceInterface\Outbox\Order\OutboxRelayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
 final readonly class OutboxRelay implements OutboxRelayInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OutboxRepositoryInterface $repo,
-        private readonly TransactionalEventPublisherInterface $publisher,
-        private readonly LoggerInterface $logger,
+        private EntityManagerInterface $em,
+        private OutboxRepositoryInterface $repo,
+        private TransactionalEventPublisherInterface $publisher,
+        private LoggerInterface $logger,
     ) {
     }
 

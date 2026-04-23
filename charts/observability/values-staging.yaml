@@ -1,13 +1,13 @@
 prometheus:
-  retention: 3d
-  replicas: 1
+    retention: 3d
+    replicas: 1
 grafana:
-  adminUser: admin
-  adminPassword: admin
-  persistence:
-    enabled: false
+    adminUser: admin
+    adminPassword: admin
+    persistence:
+        enabled: false
 pushgateway:
-  replicas: 1
+    replicas: 1
 ingress:
-  enabled: true
-  host: monitor.staging.local
+    enabled: true
+    host: monitor.staging.local

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 readonly class PaymentMethod
 {
     #[ORM\Column(type: 'string', length: 32)]
-    private readonly string $value;
+    private string $value;
 
     private function __construct(string $v)
     {

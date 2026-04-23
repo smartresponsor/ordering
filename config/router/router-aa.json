@@ -1,56 +1,56 @@
 {
-  "regions": [
-    "us",
-    "eu"
-  ],
-  "providers": [
-    {
-      "name": "stripe",
-      "base_weight": 100,
-      "cost_cents_per_txn": 30,
-      "enabled_regions": [
+    "regions": [
         "us",
         "eu"
-      ]
+    ],
+    "providers": [
+        {
+            "name": "stripe",
+            "base_weight": 100,
+            "cost_cents_per_txn": 30,
+            "enabled_regions": [
+                "us",
+                "eu"
+            ]
+        },
+        {
+            "name": "adyen",
+            "base_weight": 60,
+            "cost_cents_per_txn": 35,
+            "enabled_regions": [
+                "us",
+                "eu"
+            ]
+        },
+        {
+            "name": "paypal",
+            "base_weight": 30,
+            "cost_cents_per_txn": 45,
+            "enabled_regions": [
+                "us"
+            ]
+        }
+    ],
+    "canary": {
+        "us": {
+            "provider": "adyen",
+            "pct": 5
+        },
+        "eu": {
+            "provider": "adyen",
+            "pct": 5
+        }
     },
-    {
-      "name": "adyen",
-      "base_weight": 60,
-      "cost_cents_per_txn": 35,
-      "enabled_regions": [
-        "us",
-        "eu"
-      ]
+    "quotas": {
+        "default_rps": 200,
+        "per_provider": {
+            "stripe": 300,
+            "adyen": 150,
+            "paypal": 120
+        }
     },
-    {
-      "name": "paypal",
-      "base_weight": 30,
-      "cost_cents_per_txn": 45,
-      "enabled_regions": [
-        "us"
-      ]
+    "cost_guardrails": {
+        "max_cost_cents_per_txn": 50,
+        "tenant_budget_cents_per_min": 5000
     }
-  ],
-  "canary": {
-    "us": {
-      "provider": "adyen",
-      "pct": 5
-    },
-    "eu": {
-      "provider": "adyen",
-      "pct": 5
-    }
-  },
-  "quotas": {
-    "default_rps": 200,
-    "per_provider": {
-      "stripe": 300,
-      "adyen": 150,
-      "paypal": 120
-    }
-  },
-  "cost_guardrails": {
-    "max_cost_cents_per_txn": 50,
-    "tenant_budget_cents_per_min": 5000
-  }
 }

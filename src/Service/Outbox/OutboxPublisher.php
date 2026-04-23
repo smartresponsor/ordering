@@ -8,6 +8,7 @@ use App\Entity\Outbox\OutboxMessage;
 use App\Messenger\Message\OutboxDispatchedMessage;
 use App\Repository\Outbox\OutboxMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OutboxPublisher
@@ -45,7 +46,7 @@ final class OutboxPublisher
         throw new \InvalidArgumentException('Unsupported OutboxPublisher constructor signature.');
     }
 
-    /** @throws \Symfony\Component\Messenger\Exception\ExceptionInterface|\JsonException */
+    /** @throws ExceptionInterface|\JsonException */
     public function storeAndPublish(string $aggregateId, string $eventType, array $payload): void
     {
         if (null !== $this->em) {
@@ -62,7 +63,7 @@ final class OutboxPublisher
         $this->bus->dispatch(new OutboxDispatchedMessage($eventType, $payload));
     }
 
-    /** @throws \Symfony\Component\Messenger\Exception\ExceptionInterface|\JsonException */
+    /** @throws ExceptionInterface|\JsonException */
     public function replay(int $limit = 100): int
     {
         if (null === $this->repository || null === $this->em) {
@@ -81,7 +82,7 @@ final class OutboxPublisher
         return $count;
     }
 
-    /** @throws \Symfony\Component\Messenger\Exception\ExceptionInterface */
+    /** @throws ExceptionInterface */
     public function publish(string $topic, array $payload): void
     {
         $this->bus->dispatch(new OutboxDispatchedMessage($topic, $payload));

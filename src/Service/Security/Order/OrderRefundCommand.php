@@ -7,12 +7,12 @@ namespace App\Service\Security\Order;
 final readonly class OrderRefundCommand
 {
     public function __construct(
-        public readonly string $orderId,
-        public readonly int $amountMinor,
-        public readonly string $currency,
-        public readonly string $reason,
-        public readonly ?string $paymentRef = null,
-        public readonly ?string $idempotencyKey = null,
+        public string $orderId,
+        public int $amountMinor,
+        public string $currency,
+        public string $reason,
+        public ?string $paymentRef = null,
+        public ?string $idempotencyKey = null,
     ) {
     }
 }

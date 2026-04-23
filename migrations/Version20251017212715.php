@@ -12,10 +12,12 @@ final class Version20251017212715 extends AbstractMigration
     {
         return 'Order Component — Phase 26: Outbox & DLQ Production Policies migration';
     }
+
     public function up(Schema $schema): void
     {
         // No-op for scaffold
     }
+
     public function down(Schema $schema): void
     {
         // No-op

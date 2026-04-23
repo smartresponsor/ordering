@@ -1,24 +1,25 @@
 <?php
 
 declare(strict_types=1);
+
 use App\Api\Controller\OrderPayController;
 use App\Api\Controller\OrderShipController;
 use App\Api\State\OrderDataPersister;
 use App\MessageHandler\OrderEventMessageHandler;
 use App\Service\Inventory\InMemoryInventoryService;
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
-use App\Service\Pricing\Order\PriceCalculator;
-use App\Service\Pricing\Order\FlatPromotionStrategy;
-use App\Service\Pricing\Order\FlatTaxationStrategy;
-use App\Service\Workflow\Order\OrderWorkflowService;
 use App\Service\Outbox\OutboxMessengerDispatcher;
 use App\Service\Outbox\OutboxPublisher;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Payment\StripeGateway;
-use App\ServiceInterface\Shipment\CarrierInterface;
+use App\Service\Pricing\Order\FlatPromotionStrategy;
+use App\Service\Pricing\Order\FlatTaxationStrategy;
+use App\Service\Pricing\Order\PriceCalculator;
 use App\Service\Shipment\ShipmentProcessorService;
 use App\Service\Shipment\UPSCarrier;
+use App\Service\Workflow\Order\OrderWorkflowService;
+use App\ServiceInterface\Inventory\InventoryServiceInterface;
+use App\ServiceInterface\Payment\PaymentGatewayInterface;
+use App\ServiceInterface\Shipment\CarrierInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 

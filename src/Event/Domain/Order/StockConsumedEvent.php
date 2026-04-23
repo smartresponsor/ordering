@@ -8,6 +8,7 @@ use App\Entity\Order\InventoryReservation;
 
 final readonly class StockConsumedEvent
 {
-    public function __construct(public readonly InventoryReservation $reservation) {
+    public function __construct(public InventoryReservation $reservation)
+    {
     }
 }

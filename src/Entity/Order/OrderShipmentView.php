@@ -7,7 +7,7 @@ namespace App\Entity\Order;
 final class OrderShipmentView
 {
     public function __construct(
-        private string $orderId,
+        private readonly string $orderId,
         private string $carrier,
         private string $tracking,
         private string $status,

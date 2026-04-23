@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
+use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\ExchangeRateProviderInterface;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use Symfony\Component\Yaml\Yaml;
 
-final readonly class CurrencyConversionService implements \App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface
+final readonly class CurrencyConversionService implements CurrencyConversionServiceInterface
 {
     private ExchangeRateProviderInterface $provider;
 
@@ -43,6 +44,6 @@ final readonly class CurrencyConversionService implements \App\ServiceInterface\
         $rate = $this->provider->getRate($from, $to)->rate;
         $converted = bcmul($money->getAmount(), (string) $rate, max(6, $scale));
 
-        return (new Money($converted, $to))->round($scale);
+        return new Money($converted, $to)->round($scale);
     }
 }

@@ -16,7 +16,7 @@ final class InMemoryInventoryService implements InventoryServiceInterface
     public function reserve(array $items): void
     {
         foreach ($items as $it) {
-            $sku = (new \ReflectionProperty($it, 'sku'))->getValue($it);
+            $sku = new \ReflectionProperty($it, 'sku')->getValue($it);
             $this->reserved[$sku] = ($this->reserved[$sku] ?? 0) + $it->getQuantity();
         }
     }
@@ -27,7 +27,7 @@ final class InMemoryInventoryService implements InventoryServiceInterface
     public function release(array $items): void
     {
         foreach ($items as $it) {
-            $sku = (new \ReflectionProperty($it, 'sku'))->getValue($it);
+            $sku = new \ReflectionProperty($it, 'sku')->getValue($it);
             $this->reserved[$sku] = max(0, ($this->reserved[$sku] ?? 0) - $it->getQuantity());
         }
     }

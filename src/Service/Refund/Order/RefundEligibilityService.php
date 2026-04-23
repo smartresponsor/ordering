@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class RefundEligibilityService implements RefundEligibilityServiceInterface, OrderRefundEligibilityServiceInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 

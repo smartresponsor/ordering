@@ -30,13 +30,7 @@ final class OrderStockReservationRepository implements OrderStockReservationRepo
 
     public function findOne(string $orderId, string $sku): ?OrderStockReservation
     {
-        foreach (self::$reservations as $reservation) {
-            if ($reservation->orderId() === $orderId && $reservation->sku() === $sku) {
-                return $reservation;
-            }
-        }
-
-        return null;
+        return array_find(self::$reservations, fn ($reservation) => $reservation->orderId() === $orderId && $reservation->sku() === $sku);
     }
 
     public function findActiveForSku(string $sku): array

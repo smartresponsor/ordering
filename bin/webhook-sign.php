@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Webhook\Order\WebhookSignerHmac;
 use App\Service\Webhook\Order\WebhookSignerRsa;
@@ -14,13 +14,13 @@ $payload = stream_get_contents(STDIN);
 if ('hmac' === $alg) {
     $secret = $argv[2] ?? 'secret';
     $signer = new WebhookSignerHmac();
-    echo $signer->sign($payload, $secret)."
-";
+    echo $signer->sign($payload, $secret) . '
+';
     exit(0);
 }
 
 if ('rsa' === $alg) {
-    $privatePemPath = $argv[2] ?? __DIR__.'/../var/key/private.pem';
+    $privatePemPath = $argv[2] ?? __DIR__ . '/../var/key/private.pem';
     $kid = $argv[3] ?? 'kid-demo';
     $privatePem = @file_get_contents($privatePemPath);
     if (false === $privatePem || '' === $privatePem) {
@@ -30,11 +30,11 @@ if ('rsa' === $alg) {
     }
 
     $signer = new WebhookSignerRsa();
-    echo $signer->sign($payload, (string) $privatePem, $kid)."
-";
+    echo $signer->sign($payload, $privatePem, $kid) . '
+';
     exit(0);
 }
 
-fwrite(STDERR, "Usage: webhook-sign.php hmac <secret> | rsa <private.pem> <kid>
-");
+fwrite(STDERR, 'Usage: webhook-sign.php hmac <secret> | rsa <private.pem> <kid>
+');
 exit(2);

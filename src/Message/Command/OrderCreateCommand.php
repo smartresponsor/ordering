@@ -7,8 +7,8 @@ namespace App\Message\Command;
 final readonly class OrderCreateCommand
 {
     public function __construct(
-        public readonly string $currency,
-        public readonly string $grandTotal,
+        public string $currency,
+        public string $grandTotal,
     ) {
     }
 }

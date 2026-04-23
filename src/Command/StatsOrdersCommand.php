@@ -27,7 +27,9 @@ final class StatsOrdersCommand extends Command
 
         $output->writeln('By status');
         foreach ($rows as $row) {
-            if (!is_array($row)) { continue; }
+            if (!is_array($row)) {
+                continue;
+            }
             $status = isset($row['status']) && is_scalar($row['status']) ? (string) $row['status'] : 'unknown';
             $qty = isset($row['qty']) && is_scalar($row['qty']) ? (string) $row['qty'] : '0';
             $output->writeln(sprintf('%s: %s', $status, $qty));

@@ -10,18 +10,18 @@ declare(strict_types=1);
 namespace App\Service\Payment\Order;
 
 use App\Message\Command\Order\OrderPaymentCommand;
-use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
-use App\ServiceInterface\Payment\Order\OrderPaymentCommandHandlerInterface;
 use App\Service\Messaging\Order\TransactionalEventPublisher;
+use App\ServiceInterface\Payment\Order\OrderPaymentCommandHandlerInterface;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 final readonly class OrderPaymentCommandHandler implements OrderPaymentCommandHandlerInterface
 {
     public function __construct(
-        private readonly PaymentService $service,
-        private readonly TransactionalEventPublisher $publisher,
-        private readonly PaymentGatewayInterface $gateway,
+        private PaymentService $service,
+        private TransactionalEventPublisher $publisher,
+        private PaymentGatewayInterface $gateway,
     ) {
     }
 

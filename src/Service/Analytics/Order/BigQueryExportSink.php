@@ -8,7 +8,7 @@ use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
 
 final readonly class BigQueryExportSink implements ExportSinkInterface
 {
-    public function __construct(private readonly string $targetPath)
+    public function __construct(private string $targetPath)
     {
     }
 

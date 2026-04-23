@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderMetricsQueryService implements OrderMetricsQueryServiceInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 

@@ -18,9 +18,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class OutboxPublisher
 {
     public function __construct(
-        private readonly OutboxMessageRepository $repo,
-        private readonly EntityManagerInterface $em,
-        private readonly MessageBusInterface $bus,
+        private OutboxMessageRepository $repo,
+        private EntityManagerInterface $em,
+        private MessageBusInterface $bus,
     ) {
     }
 

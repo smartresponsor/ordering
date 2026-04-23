@@ -1,23 +1,23 @@
 {
-  "steady_state": {
-    "api_p95_ms": 250,
-    "error_rate_pct": 0.5,
-    "backlog_age_p95_s": 30
-  },
-  "experiment": {
-    "name": "db-outage-90s",
-    "fault": "kill_db",
-    "params": {
-      "dur": 90
+    "steady_state": {
+        "api_p95_ms": 250,
+        "error_rate_pct": 0.5,
+        "backlog_age_p95_s": 30
     },
-    "duration_s": 300,
-    "measure": [
-      "error_rate_pct",
-      "backlog_age_p95_s"
+    "experiment": {
+        "name": "db-outage-90s",
+        "fault": "kill_db",
+        "params": {
+            "dur": 90
+        },
+        "duration_s": 300,
+        "measure": [
+            "error_rate_pct",
+            "backlog_age_p95_s"
+        ]
+    },
+    "pass": [
+        "error_rate_pct <= 0.5",
+        "backlog_age_p95_s <= 30"
     ]
-  },
-  "pass": [
-    "error_rate_pct <= 0.5",
-    "backlog_age_p95_s <= 30"
-  ]
 }

@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler(fromTransport: 'async')]
 final readonly class RetryOrderSagaHandler implements RetryOrderSagaHandlerInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly OrderSaga $saga)
+    public function __construct(private EntityManagerInterface $em, private OrderSaga $saga)
     {
     }
 

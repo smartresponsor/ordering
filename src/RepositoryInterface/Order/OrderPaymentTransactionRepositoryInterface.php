@@ -9,5 +9,6 @@ use App\Entity\Order\OrderPaymentTransaction;
 interface OrderPaymentTransactionRepositoryInterface
 {
     public function add(OrderPaymentTransaction $tx): void;
+
     public function sumSucceededByOrder(string $orderId): string;
 }

@@ -13,19 +13,20 @@ use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
+use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
 use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\TaxRate;
 
-readonly class PriceCalculator implements \App\ServiceInterface\Pricing\Order\PriceCalculatorInterface
+readonly class PriceCalculator implements PriceCalculatorInterface
 {
     public function __construct(
-        private readonly DefaultPromotionStrategyInterface $promotions,
-        private readonly TaxationStrategyInterface $taxation,
-        private readonly TaxationConfigLoaderInterface $taxConfig,
-        private readonly CurrencyConversionServiceInterface $fx,
+        private DefaultPromotionStrategyInterface $promotions,
+        private TaxationStrategyInterface $taxation,
+        private TaxationConfigLoaderInterface $taxConfig,
+        private CurrencyConversionServiceInterface $fx,
     ) {
     }
 

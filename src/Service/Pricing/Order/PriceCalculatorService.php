@@ -12,6 +12,7 @@ namespace App\Service\Pricing\Order;
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorServiceInterface;
+use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\Price;
@@ -19,13 +20,13 @@ use App\ValueObject\Pricing\Order\Taxation;
 
 readonly class PriceCalculatorService implements PriceCalculatorServiceInterface
 {
-    public function __construct(private readonly \App\ServiceInterface\Pricing\Order\TaxationStrategyInterface $taxStrategy)
+    public function __construct(private TaxationStrategyInterface $taxStrategy)
     {
     }
 
     public function calculateItemPrice(OrderItem $orderItem, Taxation $taxation, ?Discount $discount = null): Price
     {
-        $base = new Money((string) $orderItem->getBasePrice(), $orderItem->getCurrency());
+        $base = new Money($orderItem->getBasePrice(), $orderItem->getCurrency());
         $tax = $this->taxStrategy->compute($base, $taxation);
         $afterTax = $base->add($tax);
         $final = $discount ? $discount->apply($afterTax) : $afterTax;

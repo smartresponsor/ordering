@@ -62,22 +62,22 @@ $steps = [
 ];
 
 foreach ($steps as $step) {
-    echo PHP_EOL.'==> '.$step['name'].PHP_EOL;
+    echo PHP_EOL . '==> ' . $step['name'] . PHP_EOL;
 
     if ($step['optional'] && !commandIsAvailable($step['command'])) {
-        echo 'SKIPPED: tool or command not available'.PHP_EOL;
+        echo 'SKIPPED: tool or command not available' . PHP_EOL;
         continue;
     }
 
     passthru($step['command'], $exitCode);
 
     if (0 !== $exitCode) {
-        fwrite(STDERR, 'FAILED: '.$step['name'].PHP_EOL);
+        fwrite(STDERR, 'FAILED: ' . $step['name'] . PHP_EOL);
         exit($exitCode);
     }
 }
 
-echo PHP_EOL.'QA pipeline completed successfully.'.PHP_EOL;
+echo PHP_EOL . 'QA pipeline completed successfully.' . PHP_EOL;
 
 function commandIsAvailable(string $command): bool
 {
@@ -94,7 +94,7 @@ function commandIsAvailable(string $command): bool
     }
 
     $where = strtoupper(substr(PHP_OS_FAMILY, 0, 3)) === 'WIN' ? 'where' : 'command -v';
-    exec($where.' '.$binary, $output, $exitCode);
+    exec($where . ' ' . $binary, $output, $exitCode);
 
     return 0 === $exitCode;
 }

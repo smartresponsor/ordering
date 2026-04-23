@@ -7,11 +7,11 @@ namespace App\Message\Command\Order;
 final readonly class OrderPartialPaymentCommand
 {
     public function __construct(
-        public readonly string $orderId,
-        public readonly int $amountMinor,
-        public readonly string $currency,
-        public readonly string $paymentMethod,
-        public readonly ?string $idempotencyKey = null,
+        public string $orderId,
+        public int $amountMinor,
+        public string $currency,
+        public string $paymentMethod,
+        public ?string $idempotencyKey = null,
     ) {
     }
 }

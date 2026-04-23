@@ -6,7 +6,8 @@ namespace App\ValueObject\Money;
 
 final readonly class Money
 {
-    public function __construct(public readonly int $amount, public readonly Currency $currency) {
+    public function __construct(public int $amount, public Currency $currency)
+    {
         if ($amount < 0) {
             throw new \InvalidArgumentException('Amount must be >= 0');
         }

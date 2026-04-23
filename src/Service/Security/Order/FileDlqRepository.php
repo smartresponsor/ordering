@@ -15,7 +15,8 @@ use App\ServiceInterface\Security\Order\DlqRepositoryInterface;
 
 final readonly class FileDlqRepository implements DlqRepositoryInterface
 {
-    public function __construct(private readonly string $file) {
+    public function __construct(private string $file)
+    {
         if (!file_exists($this->file)) {
             touch($this->file);
         }
@@ -64,13 +65,7 @@ final readonly class FileDlqRepository implements DlqRepositoryInterface
     /** @return array<string, mixed>|null */
     public function get(string $dlqId): ?array
     {
-        foreach ($this->list() as $row) {
-            if (($row['dlq_id'] ?? '') === $dlqId) {
-                return $row;
-            }
-        }
-
-        return null;
+        return array_find($this->list(), fn ($row) => ($row['dlq_id'] ?? '') === $dlqId);
     }
 
     /** @param array<string, mixed> $item */
@@ -98,9 +93,9 @@ final readonly class FileDlqRepository implements DlqRepositoryInterface
             $lines[] = json_encode($item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}';
         }
 
-        file_put_contents($this->file, implode("
-", $lines).(count($lines) > 0 ? "
-" : ''));
+        file_put_contents($this->file, implode('
+', $lines).(count($lines) > 0 ? '
+' : ''));
     }
 
     public function delete(string $dlqId): void
@@ -121,8 +116,8 @@ final readonly class FileDlqRepository implements DlqRepositoryInterface
             }
         }
 
-        file_put_contents($this->file, implode("
-", $lines).(count($lines) > 0 ? "
-" : ''));
+        file_put_contents($this->file, implode('
+', $lines).(count($lines) > 0 ? '
+' : ''));
     }
 }

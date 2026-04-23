@@ -11,7 +11,8 @@ use Symfony\Component\HttpKernel\Event\TerminateEvent;
 #[AsEventListener(event: 'kernel.terminate')]
 final readonly class OrderApiAuditSubscriber
 {
-    public function __construct(private readonly LoggerInterface $order_security) {
+    public function __construct(private LoggerInterface $order_security)
+    {
     }
 
     public function __invoke(TerminateEvent $event): void
@@ -24,7 +25,7 @@ final readonly class OrderApiAuditSubscriber
         $this->order_security->info('Order API call', [
             'path' => $req->getPathInfo(),
             'method' => $req->getMethod(),
-            'status' => $res?->getStatusCode(),
+            'status' => $res->getStatusCode(),
             'ip' => $req->getClientIp(),
         ]);
     }

@@ -8,14 +8,21 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version2025101917355484 extends AbstractMigration
 {
-    public function getDescription(): string { return 'Phase 79 — E2E Orchestration Payments-Orders-Shipments'; }
-    public function up(Schema $schema): void {
+    public function getDescription(): string
+    {
+        return 'Phase 79 — E2E Orchestration Payments-Orders-Shipments';
+    }
+
+    public function up(Schema $schema): void
+    {
         $this->addSql(<<<'SQL'
 CREATE TABLE IF NOT EXISTS order_e2e_sagas (id SERIAL PRIMARY KEY, name VARCHAR(64) NOT NULL, state VARCHAR(16) NOT NULL)
 SQL
         );
     }
-    public function down(Schema $schema): void {
+
+    public function down(Schema $schema): void
+    {
         $this->addSql(<<<'SQL'
 DROP TABLE IF EXISTS order_e2e_sagas
 SQL

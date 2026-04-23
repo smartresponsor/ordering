@@ -1,153 +1,153 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "SmartResponsor Order API",
-    "version": "v1.0.0-rc"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8080"
-    }
-  ],
-  "paths": {
-    "/api/v1/orders": {
-      "post": {
-        "summary": "Create order",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
+    "openapi": "3.0.3",
+    "info": {
+        "title": "SmartResponsor Order API",
+        "version": "v1.0.0-rc"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "paths": {
+        "/api/v1/orders": {
+            "post": {
+                "summary": "Create order",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderCreate"
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderCreate"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/orders/{orderId}": {
-      "get": {
-        "summary": "Get order by id",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orderId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
+        "/api/v1/orders/{orderId}": {
+            "get": {
+                "summary": "Get order by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "orderId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
+        },
+        "/api/v1/orders/{orderId}/transitions/{action}": {
+            "post": {
+                "summary": "Apply transition",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "orderId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "action",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "place",
+                                "confirm",
+                                "fulfill",
+                                "close",
+                                "cancel",
+                                "return"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
-      }
     },
-    "/api/v1/orders/{orderId}/transitions/{action}": {
-      "post": {
-        "summary": "Apply transition",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orderId",
-            "required": true,
-            "schema": {
-              "type": "string"
+    "components": {
+        "schemas": {
+            "Order": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "status",
+                    "totalAmount",
+                    "currency"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "totalAmount": {
+                        "type": "integer"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "customerId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderCreate": {
+                "type": "object",
+                "required": [
+                    "totalAmount",
+                    "currency",
+                    "customerId"
+                ],
+                "properties": {
+                    "totalAmount": {
+                        "type": "integer"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "customerId": {
+                        "type": "string"
+                    }
+                }
             }
-          },
-          {
-            "in": "path",
-            "name": "action",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "place",
-                "confirm",
-                "fulfill",
-                "close",
-                "cancel",
-                "return"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
         }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "Order": {
-        "type": "object",
-        "required": [
-          "id",
-          "status",
-          "totalAmount",
-          "currency"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "totalAmount": {
-            "type": "integer"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "customerId": {
-            "type": "string"
-          }
-        }
-      },
-      "OrderCreate": {
-        "type": "object",
-        "required": [
-          "totalAmount",
-          "currency",
-          "customerId"
-        ],
-        "properties": {
-          "totalAmount": {
-            "type": "integer"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "customerId": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
 }

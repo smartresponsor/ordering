@@ -17,7 +17,7 @@ use Symfony\Component\Uid\Uuid;
 
 final readonly class AuditLoggerService implements AuditLoggerServiceInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 

@@ -8,7 +8,8 @@ use App\ServiceInterface\Transport\Order\ProviderAdapterInterface;
 
 final readonly class DummyAdapter implements ProviderAdapterInterface
 {
-    public function __construct(private readonly string $name) {
+    public function __construct(private string $name)
+    {
     }
 
     public function name(): string

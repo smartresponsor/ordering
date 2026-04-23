@@ -7,10 +7,10 @@ namespace App\Contract\Gateway\Order;
 final readonly class TaxBreakdown
 {
     public function __construct(
-        public readonly string $subtotal,
-        public readonly string $taxAmount,
-        public readonly string $total,
-        public readonly string $currency,
+        public string $subtotal,
+        public string $taxAmount,
+        public string $total,
+        public string $currency,
     ) {
     }
 }

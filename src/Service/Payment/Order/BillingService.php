@@ -20,8 +20,8 @@ use Doctrine\ORM\EntityManagerInterface;
 final readonly class BillingService implements BillingServiceInterface, OrderBillingServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly OrderPaymentProcessor $processor,
+        private EntityManagerInterface $em,
+        private OrderPaymentProcessor $processor,
     ) {
     }
 

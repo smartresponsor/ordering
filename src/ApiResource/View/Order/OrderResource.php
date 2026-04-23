@@ -16,10 +16,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
     operations: [
-        new GetCollection(security: "is_granted('IS_AUTHENTICATED_FULLY')", normalizationContext: ['groups' => ['order:read']]),
-        new Get(security: "is_granted('IS_AUTHENTICATED_FULLY')", normalizationContext: ['groups' => ['order:read']]),
-        new Post(security: "is_granted('IS_AUTHENTICATED_FULLY')", denormalizationContext: ['groups' => ['order:write']]),
-        new Patch(security: "is_granted('IS_AUTHENTICATED_FULLY')", denormalizationContext: ['groups' => ['order:write']]),
+        new GetCollection(normalizationContext: ['groups' => ['order:read']], security: "is_granted('IS_AUTHENTICATED_FULLY')"),
+        new Get(normalizationContext: ['groups' => ['order:read']], security: "is_granted('IS_AUTHENTICATED_FULLY')"),
+        new Post(denormalizationContext: ['groups' => ['order:write']], security: "is_granted('IS_AUTHENTICATED_FULLY')"),
+        new Patch(denormalizationContext: ['groups' => ['order:write']], security: "is_granted('IS_AUTHENTICATED_FULLY')"),
         new Delete(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
     ]
 )]
@@ -27,19 +27,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
 final readonly class OrderResource
 {
     public function __construct(
-        #[Groups(['order:read'])] public readonly ?string $id = null,
-        #[Groups(['order:read'])] public readonly ?string $number = null,
-        #[Groups(['order:read', 'order:write'])] public readonly ?string $status = null,
-        #[Groups(['order:read', 'order:write'])] public readonly ?string $currency = null,
-        #[Groups(['order:read'])] public readonly ?string $total = null,
-        #[Groups(['order:read'])] public readonly ?string $grandTotal = null,
-        #[Groups(['order:read'])] public readonly ?string $paidTotal = null,
-        #[Groups(['order:read'])] public readonly ?string $refundedTotal = null,
-        #[Groups(['order:read', 'order:write'])] public readonly ?string $customerId = null,
-        #[Groups(['order:read', 'order:write'])] public readonly ?string $vendorId = null,
+        #[Groups(['order:read'])] public ?string $id = null,
+        #[Groups(['order:read'])] public ?string $number = null,
+        #[Groups(['order:read', 'order:write'])] public ?string $status = null,
+        #[Groups(['order:read', 'order:write'])] public ?string $currency = null,
+        #[Groups(['order:read'])] public ?string $total = null,
+        #[Groups(['order:read'])] public ?string $grandTotal = null,
+        #[Groups(['order:read'])] public ?string $paidTotal = null,
+        #[Groups(['order:read'])] public ?string $refundedTotal = null,
+        #[Groups(['order:read', 'order:write'])] public ?string $customerId = null,
+        #[Groups(['order:read', 'order:write'])] public ?string $vendorId = null,
         /** @var list<object{sku:string,qty:int,price:string|int|float}>|null */
-        #[Groups(['order:read', 'order:write'])] public readonly ?array $items = null,
-        #[Groups(['order:read', 'order:write'])] public readonly ?string $placeAt = null,
+        #[Groups(['order:read', 'order:write'])] public ?array $items = null,
+        #[Groups(['order:read', 'order:write'])] public ?string $placeAt = null,
     ) {
     }
 }

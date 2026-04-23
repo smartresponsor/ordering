@@ -18,7 +18,7 @@ use App\ValueObject\Pricing\Order\Taxation;
 
 interface PriceCalculatorServiceInterface
 {
-    public function __construct(\App\ServiceInterface\Pricing\Order\TaxationStrategyInterface $taxStrategy);
+    public function __construct(TaxationStrategyInterface $taxStrategy);
 
     public function calculateItemPrice(OrderItem $orderItem, Taxation $taxation, ?Discount $discount = null): Price;
 

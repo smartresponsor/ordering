@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 
 $console = __DIR__ . '/console';
-$cycles = max(1, (int) ($argv[1] ?? 1));
+$cycles = max(1, (int)($argv[1] ?? 1));
 
 for ($cycle = 0; $cycle < $cycles; ++$cycle) {
     passthru(sprintf('php %s order:outbox:run', escapeshellarg($console)), $exitCode);

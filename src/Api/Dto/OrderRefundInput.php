@@ -11,8 +11,8 @@ final readonly class OrderRefundInput
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Positive]
-        public readonly string $amount = '0.00',
-        public readonly ?string $reason = null,
+        public string $amount = '0.00',
+        public ?string $reason = null,
     ) {
     }
 }

@@ -1,5 +1,5 @@
 name: K8s Security Scan
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   scan:
     runs-on: ubuntu-latest

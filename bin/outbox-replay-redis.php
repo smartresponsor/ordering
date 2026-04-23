@@ -14,9 +14,9 @@ $batch = getenv('ORDER_DLQ_REQUEUE_BATCH');
 $command = sprintf('php %s order:dlq:requeue', escapeshellarg($console));
 
 if (is_string($batch) && '' !== trim($batch)) {
-    $command .= sprintf(' --batch=%d', max(1, (int) $batch));
+    $command .= sprintf(' --batch=%d', max(1, (int)$batch));
 }
 
 passthru($command, $exitCode);
 
-exit((int) $exitCode);
+exit($exitCode);

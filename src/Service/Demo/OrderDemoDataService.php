@@ -10,7 +10,7 @@ use Faker\Factory;
 
 final readonly class OrderDemoDataService
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 

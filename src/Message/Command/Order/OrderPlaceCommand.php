@@ -7,6 +7,7 @@ namespace App\Message\Command\Order;
 final readonly class OrderPlaceCommand
 {
     /** @param array{orderId:string,customerId $payload $payload :?string,vendorId:?string,currency:string,items:array<array{sku:string,qty:int,price:string}>,placeAt:string} $payload */
-    public function __construct(public readonly array $payload) {
+    public function __construct(public array $payload)
+    {
     }
 }

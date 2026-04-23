@@ -1,16 +1,16 @@
 {
-  "title": "Deploys",
-  "panels": [
-    {
-      "type": "stat",
-      "title": "Deploy Failures",
-      "targets": [
+    "title": "Deploys",
+    "panels": [
         {
-          "expr": "ci_failures_total{type=\"deploy\"}"
+            "type": "stat",
+            "title": "Deploy Failures",
+            "targets": [
+                {
+                    "expr": "ci_failures_total{type=\"deploy\"}"
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "schemaVersion": 37,
-  "version": 1
+    ],
+    "schemaVersion": 37,
+    "version": 1
 }

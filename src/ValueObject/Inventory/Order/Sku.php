@@ -6,7 +6,7 @@ namespace App\ValueObject\Inventory\Order;
 
 final readonly class Sku
 {
-    public function __construct(private readonly string $value)
+    public function __construct(private string $value)
     {
     }
 

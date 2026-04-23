@@ -10,8 +10,8 @@ final readonly class OrderShipInput
 {
     public function __construct(
         #[Assert\Positive]
-        public readonly int $count = 1,
-        public readonly ?string $note = null,
+        public int $count = 1,
+        public ?string $note = null,
     ) {
     }
 }

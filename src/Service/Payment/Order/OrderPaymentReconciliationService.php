@@ -17,8 +17,8 @@ use Psr\Log\LoggerInterface;
 final readonly class OrderPaymentReconciliationService implements OrderPaymentReconciliationServiceInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly LoggerInterface $logger,
+        private EntityManagerInterface $em,
+        private LoggerInterface $logger,
     ) {
     }
 

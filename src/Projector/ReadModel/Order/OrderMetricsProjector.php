@@ -6,7 +6,7 @@ namespace App\Projector\ReadModel\Order;
 
 final readonly class OrderMetricsProjector
 {
-    public function __construct(private readonly mixed $connection = null, private readonly mixed $entityManager = null)
+    public function __construct(private mixed $connection = null, private mixed $entityManager = null)
     {
     }
 
