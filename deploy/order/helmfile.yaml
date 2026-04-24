@@ -1,12 +1,12 @@
 releases:
     -   name: order-staging
         namespace: order-staging
-        chart: ./charts/ordercomponent
+        chart: ../../charts/ordercomponent
         values:
-            - ./charts/ordercomponent/values.yaml
+            - ../../charts/ordercomponent/values.yaml
     -   name: order-prod
         namespace: order-prod
         installed: false
-        chart: ./charts/ordercomponent
+        chart: ../../charts/ordercomponent
         values:
-            - ./charts/ordercomponent/values.yaml
+            - ../../charts/ordercomponent/values.yaml

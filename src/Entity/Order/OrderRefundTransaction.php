@@ -4,26 +4,37 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-final readonly class OrderRefundTransaction
+#[ORM\Entity]
+#[ORM\Table(name: 'order_refund_transaction')]
+class OrderRefundTransaction
 {
+    #[ORM\Id]
+    #[ORM\Column(length: 36)]
     private string $id;
+
+    #[ORM\Column(length: 64)]
     private string $orderId;
+
+    #[ORM\Column(length: 64)]
     private string $refundId;
+
+    #[ORM\Column(length: 128, nullable: true)]
     private ?string $paymentRef;
+
+    #[ORM\Column(type: 'decimal', precision: 12, scale: 2)]
     private string $amount;
+
+    #[ORM\Column(length: 3)]
     private string $currency;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $reason;
 
-    public function __construct(
-        string $arg1,
-        string|int|float $arg2,
-        ?string $arg3 = null,
-        ?string $arg4 = null,
-        ?int $arg5 = null,
-        ?string $arg6 = null,
-    ) {
+    public function __construct(string $arg1, string|int|float $arg2, ?string $arg3 = null, ?string $arg4 = null, ?int $arg5 = null, ?string $arg6 = null)
+    {
         if (null !== $arg5) {
             $this->id = $arg1;
             $this->orderId = (string) $arg2;

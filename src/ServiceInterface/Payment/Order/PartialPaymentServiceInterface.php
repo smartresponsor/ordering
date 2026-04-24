@@ -9,11 +9,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order\OrderPaymentTransaction;
+use App\Entity\OrderPaymentTransaction;
 
 interface PartialPaymentServiceInterface
 {
-
     public function applyPartial(string $orderId, string $amount, string $method, string $txId): OrderPaymentTransaction;
 
     public function balance(string $orderId, string $grandTotal, string $refundedTotal = '0.00'): string;

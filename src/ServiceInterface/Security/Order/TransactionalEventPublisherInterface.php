@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\OutboxMessage;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Workflow\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\OrderItem;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;

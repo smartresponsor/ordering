@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderStockReservationRepository implements OrderStockReservationRepositoryInterface
 {
-    /** @var list<OrderStockReservation> */
-    private static array $reservations = [];
-
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
@@ -24,20 +21,20 @@ final class OrderStockReservationRepository implements OrderStockReservationRepo
 
     public function add(OrderStockReservation $reservation): void
     {
-        self::$reservations[] = $reservation;
         $this->em->persist($reservation);
     }
 
     public function findOne(string $orderId, string $sku): ?OrderStockReservation
     {
-        return array_find(self::$reservations, fn ($reservation) => $reservation->orderId() === $orderId && $reservation->sku() === $sku);
+        $reservation = $this->em->getRepository(OrderStockReservation::class)->findOneBy(['orderId' => $orderId, 'sku' => $sku]);
+
+        return $reservation instanceof OrderStockReservation ? $reservation : null;
     }
 
     public function findActiveForSku(string $sku): array
     {
-        return array_values(array_filter(
-            self::$reservations,
-            static fn (OrderStockReservation $reservation): bool => $reservation->sku() === $sku && !$reservation->isReleased(),
-        ));
+        $reservations = $this->em->getRepository(OrderStockReservation::class)->findBy(['sku' => $sku, 'status' => OrderStockReservation::STATUS_RESERVED]);
+
+        return array_values(array_filter($reservations, static fn (mixed $reservation): bool => $reservation instanceof OrderStockReservation));
     }
 }

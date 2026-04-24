@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\OrderItem;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorServiceInterface;
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;

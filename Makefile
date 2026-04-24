@@ -1,7 +1,7 @@
 .PHONY: deploy-hpa purge-run migrate-zero shed-test provider-smoke capacity-calc
 deploy-hpa:
-	kubectl apply -f k8s/hpa-api.yaml
-	kubectl apply -f k8s/hpa-worker.yaml
+	kubectl apply -f deploy/k8s/hpa-api.yaml
+	kubectl apply -f deploy/k8s/hpa-worker.yaml
 purge-run:
 	php bin/purge-pii.php
 migrate-zero:
@@ -11,4 +11,4 @@ shed-test:
 provider-smoke:
 	@echo 'Instantiate ProviderRouter with Stripe+Adyen+PayPal stubs and call authorize()'
 capacity-calc:
-	@echo 'See docs/capacity-model.md and dashboards/grafana/scale-saturation.json'
+	@echo 'See docs/capacity-model.md and deploy/observability/grafana/scale-saturation.json'

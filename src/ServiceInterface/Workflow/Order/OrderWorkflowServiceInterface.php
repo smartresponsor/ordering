@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Workflow\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\OrderItem;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;

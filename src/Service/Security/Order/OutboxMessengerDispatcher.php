@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\OutboxMessage;
 use App\Message\OrderEventMessage;
 use App\ServiceInterface\Security\Order\OutboxMessengerDispatcherInterface;
 use Doctrine\ORM\EntityManagerInterface;

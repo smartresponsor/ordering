@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Messaging\Order;
 
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\OutboxMessage;
 use App\Message\Domain\Order\OrderDomainMessage;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;

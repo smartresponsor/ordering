@@ -1,8 +1,8 @@
 # Deployment & Monitoring (Iteration 14)
 
 ## Состав
-- `Dockerfile.prod` — multi-stage, php-fpm 8.3 + amqp + opcache
-- `docker/docker-compose.prod.yml` — nginx + php + PostgreSQL + RabbitMQ
+- `deploy/Dockerfile.prod` — multi-stage, php-fpm 8.3 + amqp + opcache
+- `deploy/docker-compose.prod.yml` — nginx + php + PostgreSQL + RabbitMQ
 - `.env.prod.example` — переменные окружения
 - `config/packages/{monolog.php, rate_limiter.php, lexik_jwt_authentication.yaml, security.yaml}`
 - Контроллеры: `/metrics`, `/healthz`
@@ -11,7 +11,7 @@
 ## Быстрый старт (staging)
 ```bash
 cp .env.prod.example .env
-docker compose -f docker/docker-compose.prod.yml up -d --build
+docker compose -f deploy/docker-compose.prod.yml up -d --build
 # открыть http://localhost:8080/healthz и /metrics
 ```
 

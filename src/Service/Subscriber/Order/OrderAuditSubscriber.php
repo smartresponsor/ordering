@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Subscriber\Order;
 
-use App\Entity\Order\OrderAuditLog;
+use App\Entity\Order\OrderAuditLogEntity;
 use App\Entity\Order\OrderEventRecord;
 use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
 use App\ServiceInterface\Subscriber\Order\OrderAuditSubscriberInterface;
@@ -48,11 +48,25 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface, O
         $record = new OrderEventRecord($eventId, $orderId, $name, $payload, $occurredAt);
         $this->repo->save($record);
 
-        $action = new \ReflectionClass($event)->getShortName();
-        $audit = new OrderAuditLog(Uuid::v7()->toRfc4122(), $orderId, $action, json_encode($payload, JSON_UNESCAPED_SLASHES));
+        $action = (new \ReflectionClass($event))->getShortName();
+        $audit = new OrderAuditLogEntity(
+            $action,
+            $payload,
+            $orderId,
+            'event',
+            null,
+            'order',
+            null,
+            null,
+            null,
+            $occurredAt,
+        );
         $this->em->persist($audit);
     }
 
+    /**
+     * @param array<int, string> $methods
+     */
     private function extract(object $event, array $methods): ?string
     {
         foreach ($methods as $method) {
@@ -69,6 +83,9 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface, O
         return null;
     }
 
+    /**
+     * @param array<int, string> $methods
+     */
     private function extractDate(object $event, array $methods): ?\DateTimeImmutable
     {
         foreach ($methods as $method) {
@@ -88,6 +105,9 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface, O
         return null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function normalizeEvent(object $event): array
     {
         if (method_exists($event, 'toArray')) {

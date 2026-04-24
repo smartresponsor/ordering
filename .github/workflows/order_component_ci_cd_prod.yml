@@ -97,7 +97,7 @@ jobs:
         uses: azure/setup-helm@v3
       - name: Helm deploy to staging
         run: |
-          helm upgrade --install order ./helm/order             --namespace order-staging             --create-namespace             --set image.repository=ghcr.io/${{ github.repository }}/order             --set image.tag=${{ github.sha }}             --wait
+          helm upgrade --install order ./charts/ordercomponent --namespace order-staging --create-namespace --values ./charts/ordercomponent/values-staging.yaml --set app.phpImage=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --set worker.image=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --wait
       - name: Verify rollout
         run: kubectl rollout status deployment/order -n order-staging
 
@@ -114,7 +114,7 @@ jobs:
         uses: azure/setup-kubectl@v3
       - name: Helm deploy to production
         run: |
-          helm upgrade --install order ./helm/order             --namespace order-prod             --create-namespace             --set image.repository=ghcr.io/${{ github.repository }}/order             --set image.tag=${{ github.sha }}             --history-max=10             --wait
+          helm upgrade --install order ./charts/ordercomponent --namespace order-prod --create-namespace --values ./charts/ordercomponent/values-production.yaml --set app.phpImage=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --set worker.image=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --history-max=10 --wait
       - name: Verify rollout
         run: kubectl rollout status deployment/order -n order-prod
       - name: Rollback on failure

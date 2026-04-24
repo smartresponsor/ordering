@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-use App\Entity\Order\OrderRefundTransaction;
+use App\Entity\OrderRefundTransaction;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Refund\Order\RefundServiceInterface;

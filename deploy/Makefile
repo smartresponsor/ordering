@@ -1,16 +1,16 @@
 up:
-	docker compose -f docker-compose.local.yml --env-file .env.local up -d --build
+	docker compose -f deploy/docker-compose.local.yml --env-file .env.local up -d --build
 
 init:
 	@echo "Run DB migrations here (symfony console)"
 	@true
 
 ci:
-	helm lint order/charts/ordercomponent || true
+	helm lint deploy/order/charts/ordercomponent || true
 
 deploy:
-	helmfile -f order/helmfile.yaml apply -e staging || true
-	helmfile -f order/helmfile.yaml apply -e production || true
+	helmfile -f deploy/order/helmfile.yaml apply -e staging || true
+	helmfile -f deploy/order/helmfile.yaml apply -e production || true
 
 test-mail:
 	@echo "Sending test email (requires app and mailpit up)"

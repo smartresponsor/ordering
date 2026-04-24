@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\Order\OrderItem;
+use App\Entity\OrderItem;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;

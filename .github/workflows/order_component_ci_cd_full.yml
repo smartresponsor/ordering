@@ -101,6 +101,6 @@ jobs:
           version: 'latest'
       - name: Helm deploy to staging
         run: |
-          helm upgrade --install order ./helm/order             --namespace order-staging             --create-namespace             --set image.repository=ghcr.io/${{ github.repository }}/order             --set image.tag=${{ github.sha }}             --wait
+          helm upgrade --install order ./charts/ordercomponent --namespace order-staging --create-namespace --values ./charts/ordercomponent/values-staging.yaml --set app.phpImage=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --set worker.image=ghcr.io/${{ github.repository }}/order:${{ github.sha }} --wait
       - name: Verify rollout
         run: kubectl rollout status deployment/order -n order-staging

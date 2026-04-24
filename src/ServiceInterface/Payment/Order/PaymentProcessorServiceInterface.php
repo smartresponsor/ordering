@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Payment\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\OrderPayment;
 use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

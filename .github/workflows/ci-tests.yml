@@ -35,4 +35,4 @@ jobs:
         run: |
           ./notifiers/slack_notify.sh "Tests/Analysis failed on PHP ${{ matrix.php }} — ${{ github.repository }}"
           ./notifiers/telegram_notify.sh "Tests/Analysis failed on PHP ${{ matrix.php }} — ${{ github.repository }}"
-          python monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"
+          python tools/ci/monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Pricing\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\OrderItem;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
@@ -18,6 +18,7 @@ use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Currency;
 use App\ValueObject\Pricing\Order\Money;
+use App\ValueObject\Pricing\Order\Taxation;
 use App\ValueObject\Pricing\Order\TaxRate;
 
 readonly class PriceCalculator implements PriceCalculatorInterface
@@ -35,11 +36,15 @@ readonly class PriceCalculator implements PriceCalculatorInterface
      * @param TaxRate       $rate           tax rate (from config)
      * @param Currency|null $targetCurrency convert final totals to this currency
      */
+    /**
+     * @return array{subtotal: Money, discount: Money, tax: Money, total: Money}
+     */
     public function calculate(Money $subtotal, TaxRate $rate, ?Currency $targetCurrency = null): array
     {
         $discount = $this->promotions->discount($subtotal);
         $taxBase = $subtotal->subtract($discount);
-        $tax = $this->taxation->compute($taxBase, $rate);
+        $taxation = new Taxation(((float) $rate->asDecimal()) / 100, 'vat');
+        $tax = $this->taxation->compute($taxBase, $taxation);
         $total = $taxBase->add($tax);
 
         $scale = $this->taxConfig->rounding();
@@ -49,10 +54,10 @@ readonly class PriceCalculator implements PriceCalculatorInterface
         $total = $total->round($scale);
 
         if ($targetCurrency) {
-            $subtotal = $this->fx->convert($subtotal, $targetCurrency, $scale);
-            $discount = $this->fx->convert($discount, $targetCurrency, $scale);
-            $tax = $this->fx->convert($tax, $targetCurrency, $scale);
-            $total = $this->fx->convert($total, $targetCurrency, $scale);
+            $subtotal = $this->fx->convert($subtotal, $targetCurrency->getCode());
+            $discount = $this->fx->convert($discount, $targetCurrency->getCode());
+            $tax = $this->fx->convert($tax, $targetCurrency->getCode());
+            $total = $this->fx->convert($total, $targetCurrency->getCode());
         }
 
         return [
@@ -67,6 +72,7 @@ readonly class PriceCalculator implements PriceCalculatorInterface
     public function recalc(Order $order, array $items): void
     {
         $subtotal = Money::zero($order->getCurrency());
+        $lineSubtotals = [];
 
         foreach ($items as $item) {
             if (!method_exists($item, 'subtotalMoney')) {
@@ -76,6 +82,7 @@ readonly class PriceCalculator implements PriceCalculatorInterface
             /** @var Money $itemSubtotal */
             $itemSubtotal = $item->subtotalMoney();
             $subtotal = $subtotal->add($itemSubtotal);
+            $lineSubtotals[] = $itemSubtotal;
         }
 
         $country = method_exists($order, 'getCountryCode') ? $order->getCountryCode() : null;
@@ -85,5 +92,57 @@ readonly class PriceCalculator implements PriceCalculatorInterface
         $order->setDiscountTotal($result['discount']->getAmount());
         $order->setTaxTotal($result['tax']->getAmount());
         $order->setGrandTotal($result['total']->getAmount());
+
+        $this->allocateLineBreakdown($items, $lineSubtotals, $result);
+    }
+
+    /** @param OrderItem[] $items
+     * @param Money[]                                                           $lineSubtotals
+     * @param array{subtotal: Money, discount: Money, tax: Money, total: Money} $result
+     */
+    private function allocateLineBreakdown(array $items, array $lineSubtotals, array $result): void
+    {
+        $subtotalMinor = $this->toMinor($result['subtotal']);
+        $discountMinor = $this->toMinor($result['discount']);
+        $taxMinor = $this->toMinor($result['tax']);
+
+        $allocatedDiscount = 0;
+        $allocatedTax = 0;
+        $count = count($items);
+
+        foreach ($items as $index => $item) {
+            if (!method_exists($item, 'setPricingBreakdown')) {
+                continue;
+            }
+
+            $lineMinor = $index < count($lineSubtotals) ? $this->toMinor($lineSubtotals[$index]) : 0;
+            $itemDiscount = 0;
+            if ($subtotalMinor > 0) {
+                $itemDiscount = (int) round(($lineMinor / $subtotalMinor) * $discountMinor);
+            }
+            if ($index === $count - 1) {
+                $itemDiscount = $discountMinor - $allocatedDiscount;
+            }
+            $allocatedDiscount += $itemDiscount;
+
+            $lineTaxBase = max(0, $lineMinor - $itemDiscount);
+            $taxBaseMinor = max(0, $subtotalMinor - $discountMinor);
+            $itemTax = 0;
+            if ($taxBaseMinor > 0) {
+                $itemTax = (int) round(($lineTaxBase / $taxBaseMinor) * $taxMinor);
+            }
+            if ($index === $count - 1) {
+                $itemTax = $taxMinor - $allocatedTax;
+            }
+            $allocatedTax += $itemTax;
+
+            $itemFinal = max(0, $lineMinor - $itemDiscount + $itemTax);
+            $item->setPricingBreakdown($itemDiscount, $itemTax, $itemFinal);
+        }
+    }
+
+    private function toMinor(Money $money): int
+    {
+        return (int) round(((float) $money->getAmount()) * 100);
     }
 }

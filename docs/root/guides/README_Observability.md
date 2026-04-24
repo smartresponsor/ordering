@@ -13,11 +13,11 @@ CI_FAILURE_EMOJI="💥" SLACK_WEBHOOK_URL=... GITHUB_RUN_URL=https://...   GITHU
 ```
 
 ## Prometheus Exporters
-- `monitoring/ci_failure_exporter.py` → `ci_failures_total{type=...}`
-- `monitoring/ci_metrics_exporter.py` → `ci_build_duration_seconds`, `ci_coverage_percent`
+- `tools/ci/monitoring/ci_failure_exporter.py` → `ci_failures_total{type=...}`
+- `tools/ci/monitoring/ci_metrics_exporter.py` → `ci_build_duration_seconds`, `ci_coverage_percent`
 
 ## Grafana
-- Импортируй JSON из `monitoring/grafana/*.json`
+- Импортируй JSON из `deploy/deploy/observability/grafana/*.json`
 
 ## Prometheus
-- `monitoring/prometheus.yml` содержит scrape конфигурации для CI и приложения.
+- `deploy/deploy/observability/prometheus/prometheus.yml` содержит scrape конфигурации для CI и приложения.

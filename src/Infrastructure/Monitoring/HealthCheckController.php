@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Monitoring;
 
-use Doctrine\DBAL\Connection;
+use App\Entity\Order;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class HealthCheckController
 {
-    public function __construct(private Connection $db)
+    public function __construct(private EntityManagerInterface $em)
     {
     }
 
@@ -18,7 +19,11 @@ final readonly class HealthCheckController
     public function __invoke(): JsonResponse
     {
         try {
-            $this->db->executeQuery('SELECT 1')->fetchOne();
+            $this->em->createQueryBuilder()
+                ->select('COUNT(o.id)')
+                ->from(Order::class, 'o')
+                ->getQuery()
+                ->getSingleScalarResult();
 
             return new JsonResponse(['status' => 'ok', 'db' => true], 200);
         } catch (\Throwable $e) {

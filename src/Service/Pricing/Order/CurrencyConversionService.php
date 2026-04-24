@@ -23,9 +23,15 @@ final readonly class CurrencyConversionService implements CurrencyConversionServ
     {
         if (is_string($provider)) {
             $parsed = Yaml::parseFile($provider);
-            $base = strtoupper((string) ($parsed['exchange_rates']['base'] ?? 'USD'));
+            $config = is_array($parsed) ? $parsed : [];
+            $exchangeRates = is_array($config['exchange_rates'] ?? null) ? $config['exchange_rates'] : [];
+            $base = strtoupper((string) ($exchangeRates['base'] ?? 'USD'));
             $rates = [];
-            foreach (($parsed['exchange_rates']['rates'] ?? []) as $quote => $rate) {
+            $pairs = is_array($exchangeRates['rates'] ?? null) ? $exchangeRates['rates'] : [];
+            foreach ($pairs as $quote => $rate) {
+                if (!is_scalar($quote) || !is_numeric($rate)) {
+                    continue;
+                }
                 $rates[$base.':'.strtoupper((string) $quote)] = (float) $rate;
             }
             $provider = new InMemoryRateProvider($rates);
@@ -41,9 +47,9 @@ final readonly class CurrencyConversionService implements CurrencyConversionServ
         if ($from === $to) {
             return $money->round($scale);
         }
-        $rate = $this->provider->getRate($from, $to)->rate;
+        $rate = $this->provider->getRate($from, $to)->rate();
         $converted = bcmul($money->getAmount(), (string) $rate, max(6, $scale));
 
-        return new Money($converted, $to)->round($scale);
+        return (new Money($converted, $to))->round($scale);
     }
 }

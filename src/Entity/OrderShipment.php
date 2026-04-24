@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -42,6 +44,10 @@ class OrderShipment
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $deliveredAt = null;
 
+    /** @var Collection<int, OrderShipmentItem> */
+    #[ORM\OneToMany(targetEntity: OrderShipmentItem::class, mappedBy: 'shipment', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $items;
+
     public function __construct(Order $order, string $carrier, ?string $trackingCode = null, ?string $note = null)
     {
         $this->order = $order;
@@ -49,6 +55,7 @@ class OrderShipment
         $this->trackingCode = $trackingCode;
         $this->note = $note;
         $this->shippedAt = new \DateTimeImmutable();
+        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +76,11 @@ class OrderShipment
     public function getTrackingCode(): ?string
     {
         return $this->trackingCode;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
     }
 
     public function setTrackingCode(string $trackingCode): void
@@ -110,5 +122,19 @@ class OrderShipment
     public function markShipped(): void
     {
         $this->markInTransit();
+    }
+
+    /** @return Collection<int, OrderShipmentItem> */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function attachItem(?OrderItem $orderItem, int $quantity = 1): OrderShipmentItem
+    {
+        $shipmentItem = new OrderShipmentItem($this, $orderItem, $quantity);
+        $this->items->add($shipmentItem);
+
+        return $shipmentItem;
     }
 }

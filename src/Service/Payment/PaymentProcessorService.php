@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\OrderPayment;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class PaymentProcessorService

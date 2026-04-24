@@ -1,0 +1,8 @@
+{
+    "config": true,
+    "tests": true,
+    "docker": true,
+    "migrations": true,
+    "ops": true,
+    "tools": false
+}

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Refund\Order;
 
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Entity\Order\OrderRefundTransaction;
+use App\Entity\OrderRefundTransaction;
 use App\Event\Domain\Order\OrderRefundCompletedEvent;
 use App\ServiceInterface\Refund\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order\OrderPaymentTransaction;
-use App\Entity\Order\OrderRefundTransaction;
+use App\Entity\OrderPaymentTransaction;
+use App\Entity\OrderRefundTransaction;
 
 interface OrderPaymentServiceInterface
 {

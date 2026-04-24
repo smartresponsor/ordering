@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Monitoring;
 
-use Doctrine\DBAL\Connection;
+use App\Entity\Order;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,7 +17,7 @@ final readonly class HealthController implements ServiceSubscriberInterface
     use ServiceSubscriberTrait;
 
     public function __construct(
-        private Connection $db,
+        private EntityManagerInterface $em,
         private ?TransportInterface $orderTransport = null,
     ) {
     }
@@ -25,7 +26,11 @@ final readonly class HealthController implements ServiceSubscriberInterface
     public function liveness(): JsonResponse
     {
         try {
-            $this->db->executeQuery('SELECT 1')->fetchOne();
+            $this->em->createQueryBuilder()
+                ->select('COUNT(o.id)')
+                ->from(Order::class, 'o')
+                ->getQuery()
+                ->getSingleScalarResult();
 
             return new JsonResponse(['status' => 'ok', 'db' => true], 200);
         } catch (\Throwable $e) {
@@ -45,7 +50,11 @@ final readonly class HealthController implements ServiceSubscriberInterface
         $errors = [];
 
         try {
-            $this->db->executeQuery('SELECT 1')->fetchOne();
+            $this->em->createQueryBuilder()
+                ->select('COUNT(o.id)')
+                ->from(Order::class, 'o')
+                ->getQuery()
+                ->getSingleScalarResult();
             $dbOk = true;
         } catch (\Throwable $e) {
             $errors['db'] = $e->getMessage();

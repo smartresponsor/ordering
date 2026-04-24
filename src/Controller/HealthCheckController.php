@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Transport\TransportInterface;
@@ -19,7 +20,11 @@ final readonly class HealthCheckController
     public function __invoke(): JsonResponse
     {
         try {
-            $this->em->getConnection()->executeQuery('SELECT 1')->fetchOne();
+            $this->em->createQueryBuilder()
+                ->select('COUNT(o.id)')
+                ->from(Order::class, 'o')
+                ->getQuery()
+                ->getSingleScalarResult();
             $rabbitOk = method_exists($this->asyncTransport, 'get') || method_exists($this->asyncTransport, '__toString');
 
             return new JsonResponse(['status' => 'ok', 'rabbitmq' => $rabbitOk], 200);

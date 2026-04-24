@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order\OrderPaymentTransaction;
+use App\Entity\OrderPaymentTransaction;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PartialPaymentServiceInterface;
 

@@ -11,7 +11,7 @@ final class TaxationConfigLoaderTest extends TestCase
 {
     public function testLoaderReadsYaml(): void
     {
-        $loader = new TaxationConfigLoader(__DIR__.'/../../../config/taxation.yaml');
+        $loader = new TaxationConfigLoader(dirname(__DIR__, 4).'/config/taxation.yaml');
         $this->assertSame(2, $loader->rounding());
         $rate = $loader->rateFor('EU', 'DE');
         $this->assertSame('19', (string) $rate);

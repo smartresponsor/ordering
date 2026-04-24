@@ -10,10 +10,9 @@ declare(strict_types=1);
 namespace App\Service\Analytics\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderAuditLog;
+use App\Entity\Order\OrderAuditLogEntity;
 use App\ServiceInterface\Analytics\Order\AuditLoggerServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Uid\Uuid;
 
 final readonly class AuditLoggerService implements AuditLoggerServiceInterface
 {
@@ -21,6 +20,9 @@ final readonly class AuditLoggerService implements AuditLoggerServiceInterface
     {
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function logEvent(Order $order, string $event, array $context = [], ?string $actor = null, ?string $ip = null): void
     {
         $payload = $context;
@@ -31,11 +33,14 @@ final readonly class AuditLoggerService implements AuditLoggerServiceInterface
             $payload['ip'] = $ip;
         }
 
-        $log = new OrderAuditLog(
-            Uuid::v7()->toRfc4122(),
-            $order->getId(),
+        $log = new OrderAuditLogEntity(
             $event,
-            json_encode($payload, JSON_THROW_ON_ERROR),
+            $payload,
+            $order->getId(),
+            null !== $actor ? 'user' : 'system',
+            $actor,
+            'order',
+            $ip,
         );
         $this->em->wrapInTransaction(function () use ($log): void {
             $this->em->persist($log);

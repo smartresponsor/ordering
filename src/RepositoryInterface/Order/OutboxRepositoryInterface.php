@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\OutboxMessage;
 
 interface OutboxRepositoryInterface
 {

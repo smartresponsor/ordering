@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Order\OrderPaymentTransaction;
+use App\Entity\OrderPaymentTransaction;
 
 interface OrderPaymentTransactionRepositoryInterface
 {

@@ -25,5 +25,5 @@ php bin/console order:outbox:replay 500
 ```
 
 ## Мониторинг
-- Правила Prometheus: `observability/prometheus/rules/order_rules.yml`
-- Дашборд Grafana: `observability/grafana/order_dashboard.json`
+- Правила Prometheus: `deploy/observability/prometheus/rules/order_rules.yml`
+- Дашборд Grafana: `deploy/observability/grafana/order_dashboard.json`

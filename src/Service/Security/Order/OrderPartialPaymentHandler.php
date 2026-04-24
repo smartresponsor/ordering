@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\IdempotencyKey;
 use App\Entity\Order\OrderPartialPayment;
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\IdempotencyKey;
+use App\Entity\Outbox\OutboxMessage;
 use App\Message\Command\Order\OrderPartialPaymentCommand;
 use App\ServiceInterface\Security\Order\OrderPartialPaymentHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;

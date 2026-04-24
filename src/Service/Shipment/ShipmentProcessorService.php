@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Shipment;
 
 use App\Entity\Order;
-use App\Entity\Order\OrderShipment;
+use App\Entity\OrderShipment;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class ShipmentProcessorService

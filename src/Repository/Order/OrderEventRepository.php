@@ -10,57 +10,24 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderEventRepository implements OrderEventRepositoryInterface
 {
-    /** @var array<string, OrderEventRecord> */
-    private static array $records = [];
-
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
 
     public function existsByEventId(string $eventId): bool
     {
-        if (isset(self::$records[$eventId])) {
-            return true;
-        }
-
-        try {
-            return null !== $this->em->find(OrderEventRecord::class, $eventId);
-        } catch (\Throwable) {
-            return false;
-        }
+        return null !== $this->em->find(OrderEventRecord::class, $eventId);
     }
 
     public function save(OrderEventRecord $record): void
     {
-        self::$records[$record->eventId()] = $record;
         $this->em->persist($record);
     }
 
     public function findByOrderId(string $orderId): array
     {
-        $records = array_values(array_filter(
-            self::$records,
-            static fn (OrderEventRecord $record): bool => $record->orderId() === $orderId,
-        ));
+        $records = $this->em->getRepository(OrderEventRecord::class)->findBy(['orderId' => $orderId], ['occurredAt' => 'ASC']);
 
-        if ([] === $records) {
-            try {
-                $persisted = $this->em->getRepository(OrderEventRecord::class)->findBy(['orderId' => $orderId]);
-                foreach ($persisted as $record) {
-                    if ($record instanceof OrderEventRecord) {
-                        self::$records[$record->eventId()] = $record;
-                        $records[] = $record;
-                    }
-                }
-            } catch (\Throwable) {
-            }
-        }
-
-        usort(
-            $records,
-            static fn (OrderEventRecord $left, OrderEventRecord $right): int => $left->occurredAt() <=> $right->occurredAt(),
-        );
-
-        return $records;
+        return array_values(array_filter($records, static fn (mixed $record): bool => $record instanceof OrderEventRecord));
     }
 }

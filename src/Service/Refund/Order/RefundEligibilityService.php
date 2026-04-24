@@ -11,7 +11,7 @@ namespace App\Service\Refund\Order;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderReturnPolicy;
-use App\Entity\Order\OrderShipment;
+use App\Entity\OrderShipment;
 use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Order\OrderRefundTransaction;
+use App\Entity\OrderRefundTransaction;
 
 interface OrderRefundTransactionRepositoryInterface
 {

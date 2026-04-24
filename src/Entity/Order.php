@@ -78,7 +78,12 @@ class Order implements RecordsDomainEvents
     private Collection $shipments;
 
     /** @var Collection<int, OrderItem> */
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
     private Collection $items;
+
+    /** @var Collection<int, OrderStatusHistory> */
+    #[ORM\OneToMany(targetEntity: OrderStatusHistory::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $statusHistory;
 
     /** @var list<object> */
     private array $releasedEvents = [];
@@ -92,6 +97,7 @@ class Order implements RecordsDomainEvents
         $this->refunds = new ArrayCollection();
         $this->shipments = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->statusHistory = new ArrayCollection();
         $this->createdAt = $now;
         $this->updatedAt = $now;
 
@@ -251,7 +257,15 @@ class Order implements RecordsDomainEvents
 
     public function setStatus(OrderStatus|string $status): void
     {
-        $this->status = $status instanceof OrderStatus ? $status->value : strtolower((string) $status);
+        $newStatus = $status instanceof OrderStatus ? $status->value : strtolower((string) $status);
+        $previousStatus = $this->status;
+
+        if ($previousStatus === $newStatus) {
+            return;
+        }
+
+        $this->status = $newStatus;
+        $this->statusHistory->add(new OrderStatusHistory($this, $previousStatus, $newStatus));
         $this->touch();
     }
 
@@ -324,9 +338,16 @@ class Order implements RecordsDomainEvents
         return $this->items;
     }
 
+    /** @return Collection<int, OrderStatusHistory> */
+    public function getStatusHistory(): Collection
+    {
+        return $this->statusHistory;
+    }
+
     public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
+            $item->setOrder($this);
             $this->items->add($item);
             $this->touch();
         }
@@ -338,7 +359,7 @@ class Order implements RecordsDomainEvents
         $payment = new OrderPayment($this, $gateway, $normalizedAmount, $this->currency, $externalRef, $isPartial);
         $this->payments->add($payment);
         $this->paidTotal = bcadd($this->paidTotal, $normalizedAmount, 2);
-        $this->status = bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value;
+        $this->setStatus(bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value);
         $this->recordEvent(new OrderPaidEvent($this->id, $normalizedAmount, $this->currency, $externalRef));
         $this->touch();
 
@@ -352,7 +373,7 @@ class Order implements RecordsDomainEvents
         $this->refunds->add($refund);
         $this->refundedTotal = bcadd($this->refundedTotal, $normalizedAmount, 2);
         if (bccomp($this->refundedTotal, $this->paidTotal, 2) >= 0) {
-            $this->status = OrderStatus::Refunded->value;
+            $this->setStatus(OrderStatus::Refunded->value);
         }
         $this->recordEvent(new OrderRefundedEvent($this, $normalizedAmount));
         $this->touch();
@@ -364,8 +385,11 @@ class Order implements RecordsDomainEvents
     {
         $shipment = new OrderShipment($this, $carrier, $trackingCode, $note);
         $this->shipments->add($shipment);
+        foreach ($this->items as $item) {
+            $shipment->attachItem($item, $item->getQuantity());
+        }
         $this->trackingCode = $trackingCode;
-        $this->status = OrderStatus::Shipped->value;
+        $this->setStatus(OrderStatus::Shipped->value);
         $this->recordEvent(new OrderShippedEvent($this->id));
         $this->touch();
 
@@ -377,7 +401,7 @@ class Order implements RecordsDomainEvents
         if (null !== $amount) {
             $this->paidTotal = bcadd($this->paidTotal, self::normalizeAmount($amount), 2);
         }
-        $this->status = OrderStatus::Paid->value;
+        $this->setStatus(OrderStatus::Paid->value);
         $this->touch();
     }
 
@@ -391,19 +415,19 @@ class Order implements RecordsDomainEvents
         if (null !== $amount) {
             $this->refundedTotal = bcadd($this->refundedTotal, self::normalizeAmount($amount), 2);
         }
-        $this->status = OrderStatus::Refunded->value;
+        $this->setStatus(OrderStatus::Refunded->value);
         $this->touch();
     }
 
     public function markAsShipped(): void
     {
-        $this->status = OrderStatus::Shipped->value;
+        $this->setStatus(OrderStatus::Shipped->value);
         $this->touch();
     }
 
     public function markAsCompleted(): void
     {
-        $this->status = OrderStatus::Completed->value;
+        $this->setStatus(OrderStatus::Completed->value);
         $this->touch();
     }
 
@@ -446,6 +470,9 @@ class Order implements RecordsDomainEvents
     {
         if ($amount instanceof Money) {
             return $amount->getAmount();
+        }
+        if (is_bool($amount)) {
+            return '0.00';
         }
         if (is_int($amount) && $amount > 1000) {
             return number_format($amount / 100, 2, '.', '');

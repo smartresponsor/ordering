@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Refund\Order;
 
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Entity\Order\OrderRefundTransaction;
+use App\Entity\OrderRefundTransaction;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

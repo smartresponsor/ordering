@@ -4,7 +4,7 @@ on:
     paths:
       - 'src/**'
       - 'bin/**'
-      - 'test/**'
+      - 'tools/smoke/manual/**'
   pull_request:
     branches: [ "order-rc-2-stab", "master" ]
 

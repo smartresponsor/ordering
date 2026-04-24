@@ -4,15 +4,35 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderShipmentView
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'order_shipment_view')]
+class OrderShipmentView
 {
-    public function __construct(
-        private readonly string $orderId,
-        private string $carrier,
-        private string $tracking,
-        private string $status,
-        private ?\DateTimeImmutable $deliveredAt = null,
-    ) {
+    #[ORM\Id]
+    #[ORM\Column(length: 64)]
+    private readonly string $orderId;
+
+    #[ORM\Column(length: 64)]
+    private string $carrier;
+
+    #[ORM\Column(length: 128)]
+    private string $tracking;
+
+    #[ORM\Column(length: 32)]
+    private string $status;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $deliveredAt = null;
+
+    public function __construct(string $orderId, string $carrier, string $tracking, string $status, ?\DateTimeImmutable $deliveredAt = null)
+    {
+        $this->orderId = $orderId;
+        $this->carrier = $carrier;
+        $this->tracking = $tracking;
+        $this->status = $status;
+        $this->deliveredAt = $deliveredAt;
     }
 
     public function id(): string

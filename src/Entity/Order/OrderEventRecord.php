@@ -4,18 +4,35 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderEventRecord
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'order_event_record')]
+class OrderEventRecord
 {
-    public function __construct(
-        private readonly string $eventId,
-        private readonly string $orderId,
-        private readonly string $eventName,
-        private readonly array $payload = [],
-        private ?\DateTimeImmutable $occurredAt = null,
-    ) {
-        if (null === $this->occurredAt) {
-            $this->occurredAt = new \DateTimeImmutable();
-        }
+    #[ORM\Id]
+    #[ORM\Column(length: 64)]
+    private string $eventId;
+
+    #[ORM\Column(length: 64)]
+    private string $orderId;
+
+    #[ORM\Column(length: 128)]
+    private string $eventName;
+
+    #[ORM\Column(type: 'json')]
+    private array $payload = [];
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private \DateTimeImmutable $occurredAt;
+
+    public function __construct(string $eventId, string $orderId, string $eventName, array $payload = [], ?\DateTimeImmutable $occurredAt = null)
+    {
+        $this->eventId = $eventId;
+        $this->orderId = $orderId;
+        $this->eventName = $eventName;
+        $this->payload = $payload;
+        $this->occurredAt = $occurredAt ?? new \DateTimeImmutable();
     }
 
     public function eventId(): string
@@ -40,6 +57,6 @@ final class OrderEventRecord
 
     public function occurredAt(): \DateTimeImmutable
     {
-        return $this->occurredAt ?? new \DateTimeImmutable();
+        return $this->occurredAt;
     }
 }

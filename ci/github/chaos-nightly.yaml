@@ -6,7 +6,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                scenario: [ "scenario/db-outage.json", "scenario/netem-db.yaml" ]
+                scenario: [ "deploy/chaos/scenario/db-outage.json", "deploy/chaos/scenario/netem-db.yaml" ]
         steps:
             -   uses: actions/checkout@v4
             -   name: Preflight

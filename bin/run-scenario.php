@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Read scenario (.json) and print steps; execute fault scripts and link to SLO gate.
  * This is a scaffold: integrate with your metrics source for real measurement.
  */
-$scenario = $argv[1] ?? 'scenario/db-outage.json';
+$scenario = $argv[1] ?? 'deploy/chaos/scenario/db-outage.json';
 if (!file_exists($scenario)) {
     fwrite(STDERR, sprintf("Scenario not found: %s\n", $scenario));
     exit(2);

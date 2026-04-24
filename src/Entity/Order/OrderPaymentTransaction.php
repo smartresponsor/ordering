@@ -4,15 +4,30 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-final class OrderPaymentTransaction
+#[ORM\Entity]
+#[ORM\Table(name: 'order_payment_transaction')]
+class OrderPaymentTransaction
 {
+    #[ORM\Id]
+    #[ORM\Column(length: 36)]
     private readonly string $id;
+
+    #[ORM\Column(length: 64)]
     private readonly string $orderId;
+
+    #[ORM\Column(type: 'decimal', precision: 12, scale: 2)]
     private readonly string $amount;
+
+    #[ORM\Column(length: 32)]
     private readonly string $method;
+
+    #[ORM\Column(length: 32)]
     private string $status = 'pending';
+
+    #[ORM\Column(length: 128, nullable: true)]
     private ?string $txId = null;
 
     public function __construct(string $orderId, string|int|float $amount, string $method)

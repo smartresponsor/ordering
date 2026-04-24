@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -43,6 +45,10 @@ class OrderPayment
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $capturedAt;
 
+    /** @var Collection<int, OrderPaymentAllocation> */
+    #[ORM\OneToMany(targetEntity: OrderPaymentAllocation::class, mappedBy: 'payment', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $allocations;
+
     public function __construct(?Order $order = null, string $gateway = 'manual', string|int|float $amount = '0.00', string $currency = 'USD', ?string $externalRef = null, bool $isPartial = true)
     {
         $this->order = $order;
@@ -52,6 +58,7 @@ class OrderPayment
         $this->externalRef = $externalRef;
         $this->isPartial = $isPartial;
         $this->capturedAt = new \DateTimeImmutable();
+        $this->allocations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +116,11 @@ class OrderPayment
         return $this->status;
     }
 
+    public function isPartial(): bool
+    {
+        return $this->isPartial;
+    }
+
     public function setStatus(string $status): void
     {
         $this->status = strtolower($status);
@@ -127,6 +139,20 @@ class OrderPayment
     public function addRefundedAmount(string|int|float $amount): void
     {
         $this->refundedAmount = bcadd($this->refundedAmount, self::normalizeAmount($amount), 2);
+    }
+
+    /** @return Collection<int, OrderPaymentAllocation> */
+    public function getAllocations(): Collection
+    {
+        return $this->allocations;
+    }
+
+    public function allocateToItem(?OrderItem $orderItem, string|int|float $amount): OrderPaymentAllocation
+    {
+        $allocation = new OrderPaymentAllocation($this, $orderItem, $amount);
+        $this->allocations->add($allocation);
+
+        return $allocation;
     }
 
     private static function normalizeAmount(string|int|float $amount): string

@@ -16,15 +16,21 @@ final readonly class OrderDemoDataService
 
     public function purge(): void
     {
-        foreach (['order_shipment', 'order_refund', 'order_payment', 'orders'] as $table) {
-            $this->em->getConnection()->executeStatement(sprintf('DELETE FROM %s', $table));
+        $orders = $this->em->getRepository(Order::class)->findAll();
+        foreach ($orders as $order) {
+            if ($order instanceof Order) {
+                $this->em->remove($order);
+            }
         }
+
+        $this->em->flush();
     }
 
     public function load(int $count = 12): int
     {
         $faker = Factory::create();
         $currencies = ['USD', 'EUR', 'GBP'];
+        $carriers = ['UPS', 'DHL'];
 
         for ($i = 0; $i < $count; ++$i) {
             $total = number_format($faker->randomFloat(2, 25, 350), 2, '.', '');
@@ -36,7 +42,7 @@ final readonly class OrderDemoDataService
             }
 
             if ($i % 4 >= 2) {
-                $shipment = $order->ship($faker->randomElement(['UPS', 'DHL']), sprintf('trk-%02d', $i), 'Fixture shipment');
+                $shipment = $order->ship($carriers[$i % 2], sprintf('trk-%02d', $i), 'Fixture shipment');
                 $this->em->persist($shipment);
             }
 

@@ -35,7 +35,7 @@ jobs:
         run: |
           ./notifiers/slack_notify.sh "Build/Auto-fix stage failed — ${{ github.repository }}"
           ./notifiers/telegram_notify.sh "Build/Auto-fix stage failed — ${{ github.repository }}"
-          python monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"
+          python tools/ci/monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"
 
   build-deploy:
     needs: autofix
@@ -62,7 +62,7 @@ jobs:
             set -e
             cd ${{ secrets.DEPLOY_DIR }}
             docker pull ghcr.io/${{ github.repository }}:latest
-            docker compose -f docker/docker-compose.prod.yml up -d
+            docker compose -f deploy/docker/docker-compose.prod.yml up -d
             docker exec $(docker ps -qf "name=php") php bin/console doctrine:migrations:migrate --no-interaction
       - name: Notify on failure (Slack/Telegram + Metrics)
         if: failure()
@@ -72,4 +72,4 @@ jobs:
         run: |
           ./notifiers/slack_notify.sh "Deploy failed — ${{ github.repository }}"
           ./notifiers/telegram_notify.sh "Deploy failed — ${{ github.repository }}"
-          python monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"
+          python tools/ci/monitoring/ci_failure_exporter.py "$CI_FAILURE_TYPE"

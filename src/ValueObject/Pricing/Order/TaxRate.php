@@ -26,4 +26,9 @@ final readonly class TaxRate
     {
         return $this->percent;
     }
+
+    public function __toString(): string
+    {
+        return $this->percent;
+    }
 }

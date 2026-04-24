@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Entity\Order;
-use App\Entity\Order\IdempotencyKey;
 use App\Entity\Order\OrderRefund;
-use App\Entity\Order\OutboxMessage;
+use App\Entity\Outbox\IdempotencyKey;
+use App\Entity\Outbox\OutboxMessage;
 use App\Message\Command\Order\OrderRefundCommand;
 use App\Service\Refund\Order\RefundPolicyService;
 use App\ServiceInterface\Security\Order\OrderRefundHandlerInterface;
