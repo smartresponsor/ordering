@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace App\Entity\Order;
 
-final class OrderItem extends \App\Entity\OrderItem
-{
-}
+class_alias(\App\Entity\OrderItem::class, __NAMESPACE__.'\OrderItem');

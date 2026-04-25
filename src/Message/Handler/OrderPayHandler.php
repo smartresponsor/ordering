@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 
-#[AsMessageHandler(bus: 'messenger.bus.commands')]
+#[AsMessageHandler(bus: 'messenger.bus.default')]
 final readonly class OrderPayHandler
 {
     public function __construct(

@@ -49,15 +49,17 @@ final class RetryAndDLQTest extends TestCase
         /** @var OutboxMessengerDispatcher $disp */ $disp = $c->get(OutboxMessengerDispatcher::class);
         $this->assertSame(1, $disp->dispatchPending());
 
-        /** @var InMemoryTransport $async */ $async = $c->get('messenger.transport.async');
-        /** @var InMemoryTransport $failed */ $failed = $c->get('messenger.transport.failed');
+        /** @var InMemoryTransport $async */ $async = $c->get('app.test_messenger.transport.async');
+        /** @var InMemoryTransport $failed */ $failed = $c->get('app.test_messenger.transport.failed');
 
         // Run worker to consume messages with retries; use container's event dispatcher so failure listener is active
         $bus = $c->get('messenger.default_bus');
-        $worker = new Worker(['async' => $async], $bus, $c->get('event_dispatcher'), new NullLogger());
-        $worker->run([new StopWorkerOnMessageLimitListener(4)]); // enough to attempt and move to failed
+        $dispatcher = $c->get('event_dispatcher');
+        $dispatcher->addSubscriber(new StopWorkerOnMessageLimitListener(1));
+        $worker = new Worker(['async' => $async], $bus, $dispatcher, new NullLogger());
+        $worker->run(['sleep' => 1000]); // one failed attempt is enough with test retry settings
 
-        $this->assertCount(0, $async->getSent(), 'Async queue should be drained');
+        $this->assertCount(0, $async->get(), 'Async queue should be drained');
         $this->assertGreaterThanOrEqual(1, count($failed->getSent()), 'Failed queue should contain the message');
     }
 }

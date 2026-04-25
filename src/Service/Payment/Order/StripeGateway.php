@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
+use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\StripeGatewayInterface;
 
-final readonly class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface
+final readonly class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface, OrderPaymentGatewayInterface
 {
     public function __construct(private ?string $apiKey = null)
     {

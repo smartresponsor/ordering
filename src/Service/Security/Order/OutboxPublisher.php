@@ -49,6 +49,11 @@ final readonly class OutboxPublisher
 
     public function publish(string $topic, array $payload): void
     {
+        $aggregateId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? $topic);
+        $outbox = new OutboxMessage($aggregateId, $topic, $payload);
+        $this->em->persist($outbox);
+        $this->em->flush();
+
         $this->bus->dispatch(new OutboxDispatchedMessage($topic, $payload));
     }
 }

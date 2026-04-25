@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Entity\Outbox\OutboxMessage;
-use App\Message\OrderEventMessage;
+use App\Messenger\Message\OutboxDispatchedMessage;
 use App\ServiceInterface\Security\Order\OutboxMessengerDispatcherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -35,8 +35,7 @@ final readonly class OutboxMessengerDispatcher implements OutboxMessengerDispatc
 
         foreach ($messages as $message) {
             $payload = $message->payload();
-            $orderId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? '');
-            $this->bus->dispatch(new OrderEventMessage($message->getTopic(), $orderId));
+            $this->bus->dispatch(new OutboxDispatchedMessage($message->getTopic(), $payload));
             $message->markSent();
             ++$count;
         }

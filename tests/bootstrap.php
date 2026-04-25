@@ -15,6 +15,10 @@ if (class_exists(Symfony\Component\Dotenv\Dotenv::class) && is_file(dirname(__DI
     (new Symfony\Component\Dotenv\Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 }
 
+if (class_exists(Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport::class) && !class_exists(Symfony\Component\Messenger\Transport\InMemoryTransport::class)) {
+    class_alias(Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport::class, Symfony\Component\Messenger\Transport\InMemoryTransport::class);
+}
+
 $_SERVER['APP_ENV'] ??= $_ENV['APP_ENV'] ?? 'test';
 $_ENV['APP_ENV'] = (string) $_SERVER['APP_ENV'];
 $_SERVER['APP_DEBUG'] ??= $_ENV['APP_DEBUG'] ?? '1';

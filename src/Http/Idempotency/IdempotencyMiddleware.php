@@ -25,22 +25,36 @@ final readonly class IdempotencyMiddleware implements HttpKernelInterface
             $item = $this->cache->getItem($key);
             $cached = $item->isHit() ? $item->get() : null;
             if (is_array($cached) && isset($cached['content'], $cached['status'], $cached['headers']) && is_array($cached['headers'])) {
-                return new Response((string) $cached['content'], (int) $cached['status'], $cached['headers']);
+                return new Response((string) $cached['content'], (int) $cached['status'], $this->cacheHeaders($cached['headers']));
             }
         }
 
         $response = $this->kernel->handle($request, $type, $catch);
         if ('' !== $key) {
+            $headers = $this->cacheHeaders($response->headers->allPreserveCaseWithoutCookies());
             $item = $this->cache->getItem($key);
             $item->set([
                 'content' => (string) $response->getContent(),
                 'status' => $response->getStatusCode(),
-                'headers' => $response->headers->allPreserveCaseWithoutCookies(),
+                'headers' => $headers,
             ]);
             $item->expiresAfter($this->ttl);
             $this->cache->save($item);
         }
 
         return $response;
+    }
+
+    /**
+     * @param array<string, array<int, string>> $headers
+     *
+     * @return array<string, array<int, string>>
+     */
+    private function cacheHeaders(array $headers): array
+    {
+        unset($headers['X-Fresh']);
+        unset($headers['x-fresh']);
+
+        return $headers;
     }
 }

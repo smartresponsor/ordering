@@ -6,6 +6,7 @@ namespace App\Service\Shipment;
 
 use App\Entity\Order;
 use App\Entity\OrderShipment;
+use App\ServiceInterface\Shipment\CarrierInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class ShipmentProcessorService

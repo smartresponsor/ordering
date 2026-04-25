@@ -12,9 +12,10 @@ namespace App\Service\Security\Order;
 use App\Message\Domain\Order\OrderDomainMessage;
 use App\ServiceInterface\Security\Order\OrderDomainMessageHandlerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final readonly class OrderDomainMessageHandler implements MessageHandlerInterface, OrderDomainMessageHandlerInterface
+#[AsMessageHandler]
+final readonly class OrderDomainMessageHandler implements OrderDomainMessageHandlerInterface
 {
     public function __construct(private LoggerInterface $logger)
     {

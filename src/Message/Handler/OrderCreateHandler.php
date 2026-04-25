@@ -9,7 +9,7 @@ use App\Message\Command\OrderCreateCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(bus: 'messenger.bus.commands')]
+#[AsMessageHandler(bus: 'messenger.bus.default')]
 final readonly class OrderCreateHandler
 {
     public function __construct(private EntityManagerInterface $em)

@@ -5,20 +5,33 @@ declare(strict_types=1);
 namespace App\Entity\Order;
 
 use App\Entity\Order as RootOrder;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'inventory_reservation')]
 final class InventoryReservation
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
     public const string STATE_RESERVED = 'reserved';
     public const string STATE_RELEASED = 'released';
     public const string STATE_CONSUMED = 'consumed';
     public const string STATE_FAILED = 'failed';
 
+    #[ORM\Column(length: 64)]
     private string $orderId;
+
+    #[ORM\Column(length: 128, unique: true)]
     private string $reservationKey;
 
     /** @var array<string, int> */
+    #[ORM\Column(type: 'json')]
     private array $lines;
 
+    #[ORM\Column(length: 16)]
     private string $state = self::STATE_RESERVED;
 
     /**
@@ -51,6 +64,11 @@ final class InventoryReservation
         return $this->orderId;
     }
 
+    public function getOrderId(): string
+    {
+        return $this->orderId;
+    }
+
     public function sku(): string
     {
         return (string) array_key_first($this->lines);
@@ -64,6 +82,11 @@ final class InventoryReservation
     public function getReservationKey(): string
     {
         return $this->reservationKey;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getState(): string

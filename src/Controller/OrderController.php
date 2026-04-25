@@ -62,7 +62,7 @@ final readonly class OrderController
     #[Route('/health', name: 'order_health_legacy', methods: ['GET'])]
     public function health(): JsonResponse
     {
-        return new JsonResponse(['status' => 'ok']);
+        return new JsonResponse(['items' => [], 'status' => 'ok']);
     }
 
     #[Route('/lookup/{id}', name: 'order_get_legacy', methods: ['GET'])]

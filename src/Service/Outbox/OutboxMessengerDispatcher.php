@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Outbox;
 
 use App\Entity\Outbox\OutboxMessage;
-use App\Message\OrderEventMessage;
+use App\Messenger\Message\OutboxDispatchedMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -30,11 +30,7 @@ final readonly class OutboxMessengerDispatcher
 
         foreach ($messages as $message) {
             $payload = json_decode($message->getPayload(), true, 512, JSON_THROW_ON_ERROR);
-            $orderId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? '0');
-            if ('' === $orderId) {
-                $orderId = '0';
-            }
-            $this->bus->dispatch(new OrderEventMessage($message->getEventType(), $orderId));
+            $this->bus->dispatch(new OutboxDispatchedMessage($message->getEventType(), $payload));
             $message->markDispatched();
             ++$count;
         }

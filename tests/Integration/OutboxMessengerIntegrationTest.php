@@ -6,11 +6,11 @@ namespace Tests\Integration;
 
 use App\Entity\Order;
 use App\Entity\Order\OrderItem;
-use App\Service\Workflow\Order\OrderWorkflowService;
 use App\Service\Outbox\OutboxMessengerDispatcher;
-use App\ValueObject\Money\Currency;
+use App\Service\Workflow\Order\OrderWorkflowService;
 use App\ValueObject\Inventory\Order\Quantity;
 use App\ValueObject\Inventory\Order\Sku;
+use App\ValueObject\Money\Currency;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -58,7 +58,7 @@ final class OutboxMessengerIntegrationTest extends TestCase
         $dispatched = $disp->dispatchPending();
         $this->assertGreaterThanOrEqual(3, $dispatched);
 
-        /** @var InMemoryTransport $async */ $async = $c->get('messenger.transport.async');
+        /** @var InMemoryTransport $async */ $async = $c->get('app.test_messenger.transport.async');
         $this->assertGreaterThanOrEqual(3, count($async->getSent()));
     }
 }

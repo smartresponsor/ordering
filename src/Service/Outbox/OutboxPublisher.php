@@ -85,6 +85,14 @@ final class OutboxPublisher
     /** @throws ExceptionInterface */
     public function publish(string $topic, array $payload): void
     {
+        if (null !== $this->em) {
+            $aggregateId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? $topic);
+            $this->em->persist(new OutboxMessage($aggregateId, $topic, $payload));
+            $this->em->flush();
+
+            return;
+        }
+
         $this->bus->dispatch(new OutboxDispatchedMessage($topic, $payload));
     }
 }

@@ -16,7 +16,7 @@ use App\ServiceInterface\Security\Order\OrderPayHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(bus: 'messenger.bus.commands')]
+#[AsMessageHandler(bus: 'messenger.bus.default')]
 final readonly class OrderPayHandler implements OrderPayHandlerInterface
 {
     public function __construct(

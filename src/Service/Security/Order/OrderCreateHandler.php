@@ -15,7 +15,7 @@ use App\ServiceInterface\Security\Order\OrderCreateHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(bus: 'messenger.bus.commands')]
+#[AsMessageHandler(bus: 'messenger.bus.default')]
 final readonly class OrderCreateHandler implements OrderCreateHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)

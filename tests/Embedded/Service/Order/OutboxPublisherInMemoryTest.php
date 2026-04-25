@@ -7,6 +7,7 @@ namespace Tests\Embedded\Service\Order;
 use App\Messenger\Message\OutboxDispatchedMessage;
 use App\Service\Outbox\OutboxPublisher;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\Middleware\SendMessageMiddleware;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
@@ -19,8 +20,10 @@ final class OutboxPublisherInMemoryTest extends TestCase
         // Arrange: create in-memory transport + bus that routes all messages to it
         $transport = new InMemoryTransport();
         $senders = new SendersLocator([
-            OutboxDispatchedMessage::class => [$transport],
-        ], []);
+            OutboxDispatchedMessage::class => ['in_memory'],
+        ], new ServiceLocator([
+            'in_memory' => static fn (): InMemoryTransport => $transport,
+        ]));
         $bus = new MessageBus([new SendMessageMiddleware($senders)]);
         $publisher = new OutboxPublisher($bus);
 

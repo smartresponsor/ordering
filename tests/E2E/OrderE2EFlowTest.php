@@ -12,12 +12,6 @@ final class OrderE2EFlowTest extends WebTestCase
 {
     private EntityManagerInterface $em;
 
-    protected function setUp(): void
-    {
-        self::bootKernel();
-        $this->em = static::getContainer()->get(EntityManagerInterface::class);
-    }
-
     /**
      * @throws \JsonException
      * @throws \Exception
@@ -25,6 +19,7 @@ final class OrderE2EFlowTest extends WebTestCase
     public function testFullOrderPaymentRefundFlow(): void
     {
         $client = static::createClient();
+        $this->em = static::getContainer()->get(EntityManagerInterface::class);
 
         // 1) Create Order via factory
         $factory = new OrderFactory($this->em);

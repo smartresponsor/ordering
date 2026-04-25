@@ -6,6 +6,7 @@ namespace Tests\Api;
 
 use App\Http\Idempotency\IdempotencyMiddleware;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,55 +21,7 @@ final class IdempotencyTest extends TestCase
             }
         };
 
-        $cache = new class implements \Psr\SimpleCache\CacheInterface {
-            private array $s = [];
-
-            public function get($key, $default = null)
-            {
-                return $this->s[$key] ?? $default;
-            }
-
-            public function set($key, $value, $ttl = null)
-            {
-                $this->s[$key] = $value;
-
-                return true;
-            }
-
-            public function has($key)
-            {
-                return array_key_exists($key, $this->s);
-            }
-
-            public function delete($key)
-            {
-                unset($this->s[$key]);
-
-                return true;
-            }
-
-            public function clear()
-            {
-                $this->s = [];
-
-                return true;
-            }
-
-            public function getMultiple($keys, $default = null)
-            {
-                return [];
-            }
-
-            public function setMultiple($values, $ttl = null)
-            {
-                return true;
-            }
-
-            public function deleteMultiple($keys)
-            {
-                return true;
-            }
-        };
+        $cache = new ArrayAdapter();
 
         $mw = new IdempotencyMiddleware($kernel, $cache, 60);
         $r1 = Request::create('/api/orders', 'POST', [], [], [], ['HTTP_Idempotency-Key' => 'abc']);

@@ -359,7 +359,7 @@ class Order implements RecordsDomainEvents
         $payment = new OrderPayment($this, $gateway, $normalizedAmount, $this->currency, $externalRef, $isPartial);
         $this->payments->add($payment);
         $this->paidTotal = bcadd($this->paidTotal, $normalizedAmount, 2);
-        $this->setStatus(bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : OrderStatus::Placed->value);
+        $this->setStatus(bccomp($this->paidTotal, $this->grandTotal, 2) >= 0 ? OrderStatus::Paid->value : 'partially_paid');
         $this->recordEvent(new OrderPaidEvent($this->id, $normalizedAmount, $this->currency, $externalRef));
         $this->touch();
 
@@ -394,6 +394,37 @@ class Order implements RecordsDomainEvents
         $this->touch();
 
         return $shipment;
+    }
+
+    public function shipItems(int $count, ?string $note = null): void
+    {
+        if ($count < 1) {
+            throw new \DomainException('Shipment item count must be greater than zero.');
+        }
+
+        if (bccomp($this->paidTotal, $this->grandTotal, 2) < 0) {
+            throw new \DomainException('Cannot ship items before the order is fully paid.');
+        }
+
+        $shipment = new OrderShipment($this, 'manual', null, $note);
+        $this->shipments->add($shipment);
+
+        $remaining = $count;
+        foreach ($this->items as $item) {
+            if ($remaining <= 0) {
+                break;
+            }
+
+            $quantity = min($remaining, $item->getQuantity());
+            if ($quantity > 0) {
+                $shipment->attachItem($item, $quantity);
+                $remaining -= $quantity;
+            }
+        }
+
+        $this->setStatus('partially_shipped');
+        $this->recordEvent(new OrderShippedEvent($this->id));
+        $this->touch();
     }
 
     public function markPaid(?string $amount = null): void
@@ -440,6 +471,19 @@ class Order implements RecordsDomainEvents
     public function applyPartialPayment(string $amount, ?string $externalRef = null, bool $isPartial = true, string $gateway = 'stripe'): OrderPayment
     {
         return $this->applyPayment($amount, $externalRef ?? ('PAY-'.$this->id), $isPartial, $gateway);
+    }
+
+    public function refundPartial(string $amount, ?string $reason = null, bool $isPartial = true): void
+    {
+        if (bccomp($this->paidTotal, '0.00', 2) <= 0) {
+            throw new \DomainException('Cannot refund before payment.');
+        }
+
+        $this->refund($amount, $reason, $isPartial);
+
+        if (OrderStatus::Refunded->value !== $this->status) {
+            $this->setStatus('partially_refunded');
+        }
     }
 
     /** @return list<object> */

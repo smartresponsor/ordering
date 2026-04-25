@@ -23,7 +23,7 @@ final class MetricsProjectionFlowTest extends KernelTestCase
         $em->persist($order);
         $em->flush();
 
-        $svc->projectOrderPlaced($order, '100.00', 'V-1', new \DateTimeImmutable('2025-01-02'));
+        $svc->projectOrderPlaced($order->id(), '100.00', 'V-1', new \DateTimeImmutable('2025-01-02'));
         $svc->projectRefund('10.00', new \DateTimeImmutable('2025-01-02'));
         $em->flush();
 

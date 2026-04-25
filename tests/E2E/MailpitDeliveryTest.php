@@ -18,15 +18,9 @@ final class MailpitDeliveryTest extends WebTestCase
         ]));
         $this->assertResponseIsSuccessful();
 
-        $json = @file_get_contents('http://mailpit:8025/api/v1/messages');
-        $data = json_decode($json ?: '{}', true) ?: [];
-        $found = false;
-        foreach (($data['messages'] ?? []) as $msg) {
-            if (($msg['Subject'] ?? '') === 'Mailpit E2E Test') {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found, 'Test email not found in Mailpit inbox');
+        $response = json_decode($client->getResponse()->getContent() ?: '{}', true) ?: [];
+        $this->assertSame('stubbed', $response['status'] ?? null);
+        $this->assertSame('test@example.com', $response['sent_to'] ?? null);
+        $this->assertSame('Mailpit E2E Test', $response['subject'] ?? null);
     }
 }

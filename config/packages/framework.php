@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $configurator): void {
+    $configurator->extension('framework', [
+        'workflows' => [
+            'order' => [
+                'type' => 'state_machine',
+                'supports' => ['App\\Entity\\Order'],
+                'initial_marking' => 'draft',
+                'places' => [
+                    'draft',
+                    'placed',
+                    'partially_paid',
+                    'paid',
+                    'partially_shipped',
+                    'shipped',
+                    'partially_refunded',
+                    'refunded',
+                    'completed',
+                    'cancelled',
+                ],
+                'transitions' => [
+                    'place' => ['from' => 'draft', 'to' => 'placed'],
+                    'partial_pay' => ['from' => ['placed'], 'to' => 'partially_paid'],
+                    'pay' => ['from' => ['placed', 'partially_paid'], 'to' => 'paid'],
+                    'partial_ship' => ['from' => ['paid'], 'to' => 'partially_shipped'],
+                    'ship' => ['from' => ['paid', 'partially_shipped'], 'to' => 'shipped'],
+                    'partial_refund' => ['from' => ['paid', 'shipped'], 'to' => 'partially_refunded'],
+                    'refund' => ['from' => ['paid', 'partially_refunded', 'shipped'], 'to' => 'refunded'],
+                    'complete' => ['from' => ['shipped'], 'to' => 'completed'],
+                    'cancel' => ['from' => ['draft', 'placed', 'partially_paid'], 'to' => 'cancelled'],
+                ],
+            ],
+        ],
+    ]);
+};

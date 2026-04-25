@@ -13,3 +13,19 @@ health_check_controller:
 readiness_controller:
     resource: ../src/Controller/ReadinessController.php
     type: attribute
+
+order_metrics_controller:
+    resource: ../src/Controller/OrderMetricsController.php
+    type: attribute
+
+order_api_controller:
+    resource: ../src/Controller/OrderApiController.php
+    type: attribute
+
+test_email_controller:
+    resource: ../src/Controller/TestEmailController.php
+    type: attribute
+
+payment_webhook_controller:
+    resource: ../src/Controller/Webhook/PaymentWebhookController.php
+    type: attribute

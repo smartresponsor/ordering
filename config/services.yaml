@@ -1,3 +1,6 @@
+imports:
+    - { resource: '../src/Resources/config/services.php' }
+
 services:
     _defaults:
         autowire: true
@@ -7,6 +10,12 @@ services:
         tags: [ 'controller.service_arguments' ]
 
     App\Controller\OrderManagementController:
+        tags: [ 'controller.service_arguments' ]
+
+    App\Controller\OrderApiController:
+        tags: [ 'controller.service_arguments' ]
+
+    App\Controller\Webhook\PaymentWebhookController:
         tags: [ 'controller.service_arguments' ]
 
     App\Controller\HealthCheckController:
@@ -22,6 +31,70 @@ services:
         resource: '../src/Service/'
         exclude:
             - '../src/Service/Tx/'
+            - '../src/Service/Http/'
+            - '../src/Service/Transport/'
+            - '../src/Service/Outbox/OutboxPublisher.php'
+            - '../src/Service/Pricing/Order/FlatTaxStrategy.php'
+            - '../src/Service/Pricing/Order/InMemoryRateProvider.php'
+            - '../src/Service/Pricing/Order/ProgressiveTaxStrategy.php'
+            - '../src/Service/Pricing/Order/TaxationConfigLoader.php'
+            - '../src/Service/Pricing/Order/CurrencyConversionService.php'
+            - '../src/Service/Security/Order/Kernel.php'
+            - '../src/Service/Security/Order/OrderOpenApiFactory.php'
+            - '../src/Service/Security/Order/*Command.php'
+            - '../src/Service/Security/Order/*Message.php'
+            - '../src/Service/Security/Order/*View.php'
+
+    App\Repository\:
+        resource: '../src/Repository/'
+
+    App\Webhook\:
+        resource: '../src/Webhook/'
+
+    App\ReadModel\Service\:
+        resource: '../src/ReadModel/Service/'
+
+    App\ReadModel\Repository\:
+        resource: '../src/ReadModel/Repository/'
+
+    App\Service\Analytics\Order\BigQueryExportSink:
+        arguments:
+            $targetPath: '%kernel.project_dir%/var/bigquery'
+
+    App\ServiceInterface\Analytics\Order\ExportSinkInterface: '@App\Service\Analytics\Order\BigQueryExportSink'
+    App\ServiceInterface\Analytics\Order\BigQueryExportSinkInterface: '@App\Service\Analytics\Order\BigQueryExportSink'
+    App\Service\Analytics\Order\ClickHouseExportSink:
+        arguments:
+            $endpoint: 'http://127.0.0.1:8123'
+            $table: 'order_metrics_aggregate_view'
+
+    App\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface: '@App\Service\Analytics\Order\ClickHouseExportSink'
+    App\Service\SensitiveData\MaskingService:
+        arguments:
+            $maskKeys: ['email', 'phone', 'card_number', 'password', 'plainPassword']
+        public: true
+    App\Service\Security\Order\CryptoService:
+        arguments:
+            $key: '%kernel.secret%'
+
+    App\ServiceInterface\Security\Order\CryptoServiceInterface: '@App\Service\Security\Order\CryptoService'
+    App\Service\Security\Order\FileDlqRepository:
+        arguments:
+            $file: '%kernel.project_dir%/var/dlq.ndjson'
+
+    App\ServiceInterface\Security\Order\DlqRepositoryInterface: '@App\Service\Security\Order\FileDlqRepository'
+    App\Service\Security\Order\FileJwkRepository:
+        arguments:
+            $dir: '%kernel.project_dir%/var/jwks'
+
+    App\ServiceInterface\Security\Order\JwkRepositoryInterface: '@App\Service\Security\Order\FileJwkRepository'
+    App\ServiceInterface\Security\Order\IdempotencyStoreInterface: '@App\Service\Security\Order\MemoryIdempotencyStore'
+    App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface: '@App\Webhook\NoopWebhookDispatcher'
+    App\ValueObject\Archival\Order\AuditLog:
+        arguments:
+            $file: '%kernel.project_dir%/var/dlq-audit.ndjson'
+
+    App\ServiceInterface\Security\Order\DlqConsoleInterface: '@App\Service\Security\Order\DlqConsole'
 
     App\Command\OrderDemoLoadCommand: ~
     App\Command\OrderDemoResetCommand: ~
@@ -31,6 +104,21 @@ services:
     App\DataFixtures\OrderDemoFixtures: ~
 
     Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'
+    Symfony\Component\Messenger\Transport\Sender\SenderInterface: '@messenger.transport.async'
+    Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface: '@messenger.transport.failed'
+    Symfony\Component\Workflow\WorkflowInterface: '@state_machine.order'
+    Symfony\Component\RateLimiter\RateLimiterFactory: '@limiter.order_api_write'
+    App\RateLimiter\TenantKeyResolver: ~
+    App\Saga\OrderSaga: '@App\Service\Workflow\Order\OrderSaga'
+    App\Contract\Gateway\Order\OrderPaymentGatewayInterface: '@App\Service\Payment\Order\StripeGateway'
+    App\Contract\Gateway\Order\OrderShipmentGatewayInterface: '@App\Service\Shipment\Order\DHLGateway'
+    App\Contract\Gateway\Order\OrderTaxationGatewayInterface: '@App\Service\Pricing\Order\EUTaxStrategy'
+    App\ServiceInterface\Pricing\Order\PriceCalculatorInterface: '@App\Service\Pricing\Order\PriceCalculator'
+    App\ServiceInterface\Pricing\Order\OrderPricingInterface: '@App\Service\Pricing\Order\OrderPricingService'
+    App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface: '@App\Service\Pricing\Order\DefaultPromotionStrategy'
+    App\ServiceInterface\Pricing\Order\TaxationStrategyInterface: '@App\Service\Pricing\Order\VatExclusiveStrategy'
+    App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface: '@App\Service\Pricing\Order\TaxationConfigLoader'
+    App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface: '@App\Service\Pricing\Order\CurrencyConversionService'
 
     App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Repository\Order\OrderPaymentTransactionRepository'
     App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Repository\Order\OrderRefundTransactionRepository'
@@ -40,6 +128,8 @@ services:
     App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Repository\Order\OrderShipmentViewRepository'
 
     App\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Service\Outbox\Order\OutboxRelay'
+    App\ServiceInterface\Outbox\Order\DlqServiceInterface: '@App\Service\Outbox\Order\DlqService'
+    App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface: '@App\Service\Messaging\Order\TransactionalEventPublisher'
     App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Service\Shipment\Order\OrderShipmentProjectionService'
     App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Service\Shipment\Order\CarrierPollingService'
     App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
@@ -47,3 +137,96 @@ services:
     App\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Service\Refund\Order\OrderServiceHook'
     App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\ReadModel\Service\OrderReadModelUpdater'
     App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Service\Archival\Order\OrderAuditTrailBuilder'
+    App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface: '@App\Service\Security\Order\IdempotencyGuard'
+    App\Service\Workflow\Order\OrderOrchestrator:
+        public: true
+    Doctrine\ORM\EntityManagerInterface:
+        public: true
+        alias: 'doctrine.orm.entity_manager'
+    app.test_messenger.transport.async:
+        public: true
+        alias: 'messenger.transport.async'
+    app.test_messenger.transport.failed:
+        public: true
+        alias: 'messenger.transport.failed'
+
+when@test:
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+
+        App\Service\:
+            resource: '../src/Service/'
+            public: true
+            exclude:
+                - '../src/Service/Tx/'
+                - '../src/Service/Http/'
+                - '../src/Service/Transport/'
+                - '../src/Service/Outbox/OutboxPublisher.php'
+                - '../src/Service/Pricing/Order/FlatTaxStrategy.php'
+                - '../src/Service/Pricing/Order/InMemoryRateProvider.php'
+                - '../src/Service/Pricing/Order/ProgressiveTaxStrategy.php'
+                - '../src/Service/Pricing/Order/TaxationConfigLoader.php'
+                - '../src/Service/Pricing/Order/CurrencyConversionService.php'
+                - '../src/Service/Security/Order/Kernel.php'
+                - '../src/Service/Security/Order/OrderOpenApiFactory.php'
+                - '../src/Service/Security/Order/*Command.php'
+                - '../src/Service/Security/Order/*Message.php'
+                - '../src/Service/Security/Order/*View.php'
+
+        App\Repository\:
+            resource: '../src/Repository/'
+            public: true
+
+        App\Webhook\:
+            resource: '../src/Webhook/'
+            public: true
+
+        App\Service\SensitiveData\MaskingService:
+            arguments:
+                $maskKeys: ['email', 'phone', 'card_number', 'password', 'plainPassword']
+            public: true
+
+        App\ReadModel\Service\:
+            resource: '../src/ReadModel/Service/'
+            public: true
+
+        App\ReadModel\Repository\:
+            resource: '../src/ReadModel/Repository/'
+            public: true
+
+        App\Command\:
+            resource: '../src/Command/'
+            public: true
+
+        App\Service\Analytics\Order\BigQueryExportSink:
+            arguments:
+                $targetPath: '%kernel.project_dir%/var/bigquery'
+            public: true
+
+        App\Service\Analytics\Order\ClickHouseExportSink:
+            arguments:
+                $endpoint: 'http://127.0.0.1:8123'
+                $table: 'order_metrics_aggregate_view'
+            public: true
+
+        App\Service\Security\Order\CryptoService:
+            arguments:
+                $key: '%kernel.secret%'
+            public: true
+
+        App\Service\Security\Order\FileDlqRepository:
+            arguments:
+                $file: '%kernel.project_dir%/var/dlq.ndjson'
+            public: true
+
+        App\Service\Security\Order\FileJwkRepository:
+            arguments:
+                $dir: '%kernel.project_dir%/var/jwks'
+            public: true
+
+        App\ValueObject\Archival\Order\AuditLog:
+            arguments:
+                $file: '%kernel.project_dir%/var/dlq-audit.ndjson'
+            public: true
