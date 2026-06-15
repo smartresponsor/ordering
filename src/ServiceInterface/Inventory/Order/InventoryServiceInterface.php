@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Inventory\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\InventoryReservation;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderStockReservationEntity;
 
 interface InventoryServiceInterface
 {
     /** @param array<string,int> $lines sku => qty */
-    public function reserve(Order $order, array $lines, string $key): InventoryReservation;
+    public function reserve(OrderEntity $OrderEntity, array $lines, string $key): OrderStockReservationEntity;
 
-    public function release(InventoryReservation $res): void;
+    public function release(OrderStockReservationEntity $res): void;
 
-    public function consume(InventoryReservation $res): void;
+    public function consume(OrderStockReservationEntity $res): void;
 }

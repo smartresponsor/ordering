@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Workflow\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;
@@ -31,14 +31,14 @@ interface OrderWorkflowServiceInterface
         OutboxPublisher $outbox,
     );
 
-    /** @param OrderItem[] $items */
-    public function place(Order $order, array $items): void;
+    /** @param OrderItemEntity[] $items */
+    public function place(OrderEntity $OrderEntity, array $items): void;
 
-    public function pay(Order $order, int $amount): void;
+    public function pay(OrderEntity $OrderEntity, int $amount): void;
 
-    public function ship(Order $order): void;
+    public function ship(OrderEntity $OrderEntity): void;
 
-    public function cancel(Order $order): void;
+    public function cancel(OrderEntity $OrderEntity): void;
 
-    public function refund(Order $order): void;
+    public function refund(OrderEntity $OrderEntity): void;
 }

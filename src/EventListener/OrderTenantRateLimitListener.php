@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\RateLimiter\TenantKeyResolver;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
+#[AsEventListener(event: 'kernel.request', priority: 9)]
 final readonly class OrderTenantRateLimitListener
 {
     public function __construct(
@@ -29,8 +31,9 @@ final readonly class OrderTenantRateLimitListener
         }
 
         $limit = $this->orderApiTenantLimiter->create($this->keyResolver->key())->consume();
-        if (!$limit->isAccepted()) {
-            throw new TooManyRequestsHttpException(null, 'Order tenant rate limit exceeded.');
+
+        if (false === $limit->isAccepted()) {
+            throw new TooManyRequestsHttpException(60, 'Order tenant rate limit exceeded.');
         }
     }
 }

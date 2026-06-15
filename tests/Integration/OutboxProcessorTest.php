@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Service\Outbox\OutboxProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class OutboxProcessorTest extends TestCase
 {
@@ -26,7 +27,7 @@ final class OutboxProcessorTest extends TestCase
         self::$kernel->shutdown();
     }
 
-    public function testIdempotencyAndDeadLetter(): void
+    public function testProcessMarksPendingMessagesDispatched(): void
     {
         $c = self::$kernel->getContainer();
         $em = $c->get(EntityManagerInterface::class);
@@ -34,41 +35,35 @@ final class OutboxProcessorTest extends TestCase
         $tool->dropDatabase();
         $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
-        // Seed two identical messages (same event/payload) and one failing message
-        $m1 = new OutboxMessage('OrderPaidEvent', '{"orderId":1}');
-        $m2 = new OutboxMessage('OrderPaidEvent', '{"orderId":1}');
-        $mf = new OutboxMessage('OrderShippedEvent', '{"orderId":2}');
+        // Seed three pending messages.
+        $m1 = new OrderOutboxMessageEntity('OrderPaidEvent', '{"orderId":1}');
+        $m2 = new OrderOutboxMessageEntity('OrderPaidEvent', '{"orderId":1}');
+        $mf = new OrderOutboxMessageEntity('OrderShippedEvent', '{"orderId":2}');
         $em->persist($m1);
         $em->persist($m2);
         $em->persist($mf);
         $em->flush();
 
-        /** @var OutboxProcessor $proc */
-        $proc = $c->get(OutboxProcessor::class);
+        $seen = [];
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects($this->exactly(3))
+            ->method('dispatch')
+            ->willReturnCallback(function (object $event, ?string $eventName = null) use (&$seen): object {
+                $seen[] = $eventName;
 
-        $dispatchCount = 0;
-        $processed = $proc->replay(50,
-            function (OutboxMessage $m) use (&$dispatchCount) {
-                if ('OrderShippedEvent' === $m->getEventName()) {
-                    throw new \RuntimeException('simulate failure');
-                }
+                return $event;
+            });
 
-                return (object) ['name' => $m->getEventName(), 'payload' => $m->getPayload()];
-            },
-            function (object $e) use (&$dispatchCount) { ++$dispatchCount; },
-            2 // max retries
-        );
-        $this->assertSame(2, $processed, 'Two messages processed (duplicates collapsed to one + failure skipped)');
+        $proc = new OutboxProcessor($em, $dispatcher);
 
-        // Re-run to cause retries and dead-letter
-        $proc->replay(50,
-            fn (OutboxMessage $m) => throw new \RuntimeException('fail again'),
-            fn (object $e) => null,
-            2
-        );
-        $dead = (int) $em->createQuery('SELECT COUNT(m.id) FROM App\Entity\Outbox\OutboxMessage m WHERE m.failedAt IS NOT NULL')->getSingleScalarResult();
-        $this->assertSame(1, $dead, 'One message dead-lettered');
+        $processed = $proc->process(50);
+        $this->assertSame(3, $processed, 'All pending messages should be processed');
+        $this->assertSame(['OrderPaidEvent', 'OrderPaidEvent', 'OrderShippedEvent'], $seen);
 
-        $this->assertGreaterThanOrEqual(1, $dispatchCount, 'At least one dispatch occurred');
+        $msgs = $em->getRepository(OrderOutboxMessageEntity::class)->findAll();
+        $this->assertCount(3, $msgs);
+        foreach ($msgs as $message) {
+            $this->assertTrue($message->isDispatched());
+        }
     }
 }

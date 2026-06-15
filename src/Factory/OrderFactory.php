@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ValueObject\OrderStatus;
 
 final class OrderFactory
@@ -16,7 +16,7 @@ final class OrderFactory
         $statuses = OrderStatus::cases();
 
         for ($i = 0; $i < $count; ++$i) {
-            $order = new Order();
+            $order = new OrderEntity();
             $order->setStatus($statuses[array_rand($statuses)]);
             $order->initAudit();
             $proxies[] = new OrderFactoryProxy($order);

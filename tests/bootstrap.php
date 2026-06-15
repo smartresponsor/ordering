@@ -26,6 +26,14 @@ $_ENV['APP_DEBUG'] = (string) $_SERVER['APP_DEBUG'];
 $_SERVER['KERNEL_CLASS'] ??= $_ENV['KERNEL_CLASS'] ?? Kernel::class;
 $_ENV['KERNEL_CLASS'] = (string) $_SERVER['KERNEL_CLASS'];
 
+$testDatabase = dirname(__DIR__).'/var/test-'.getmypid().'.db';
+$testDatabaseDsn = 'sqlite:///'.str_replace('\\', '/', $testDatabase);
+$_SERVER['DATABASE_URL'] = $_ENV['DATABASE_URL'] = $testDatabaseDsn;
+$_SERVER['PLATFORM_DATA_DATABASE'] = $_ENV['PLATFORM_DATA_DATABASE'] = $testDatabaseDsn;
+if (is_file($testDatabase)) {
+    @unlink($testDatabase);
+}
+
 if (!class_exists(Kernel::class)) {
     return;
 }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Refund\Order;
 
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\Event\Domain\Order\OrderRefundCompletedEvent;
 use App\ServiceInterface\Refund\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +25,7 @@ final readonly class RefundProcessor implements RefundProcessorInterface
     ) {
     }
 
-    public function startRefund(OrderRefundTransaction $tx): void
+    public function startRefund(OrderRefundTransactionEntity $tx): void
     {
         $gatewayRef = $this->gateway->refund($tx->orderId(), $tx->amount(), ['refund_id' => $tx->refundId(), 'reason' => $tx->reason()]);
         if ('' === $gatewayRef) {

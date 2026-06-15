@@ -1,0 +1,53 @@
+= Ordering Canon Wave 3: Controller Type-Layer Move
+:toc:
+:sectnums:
+
+== Scope
+
+Wave 3 performs the first real structural move for Ordering while keeping the change intentionally narrow and reviewable.
+
+The API controller files are moved out of `src/Api/Controller` and into the Symfony controller type layer under `src/Controller/Api`.
+
+== Moved files
+
+[cols="1,1",options="header"]
+|===
+|From |To
+|`src/Api/Controller/OrderAuditAction.php` |`src/Controller/Api/OrderAuditAction.php`
+|`src/Api/Controller/OrderPayAction.php` |`src/Controller/Api/OrderPayAction.php`
+|`src/Api/Controller/OrderPayController.php` |`src/Controller/Api/OrderPayController.php`
+|`src/Api/Controller/OrderRefundAction.php` |`src/Controller/Api/OrderRefundAction.php`
+|`src/Api/Controller/OrderShipAction.php` |`src/Controller/Api/OrderShipAction.php`
+|`src/Api/Controller/OrderShipController.php` |`src/Controller/Api/OrderShipController.php`
+|===
+
+== Updated references
+
+* `src/Resources/config/services.php` now imports the explicit public controller services from `App\Controller\Api` instead of `App\Api\Controller`.
+
+== Deletion policy
+
+The old `src/Api/Controller/*.php` files are removal candidates only after the overlay has placed the replacement files under `src/Controller/Api`.
+The PowerShell script backs up those exact old files before removal and does not delete directories recursively.
+
+== Deferred to later waves
+
+* `src/Service/Subscriber/Order` is not moved in this wave because Ordering already has `src/Subscriber/Event/Order` classes with overlapping basenames. That needs a collision-aware consolidation wave.
+* `src/Service/Security/Order` is still mixed and should be split by class form: service, listener, subscriber, middleware, message, handler, validator, processor, factory.
+* `src/Model/Order/Billing` remains an owner-canon path violation and should be fixed in a focused model/entity/read-model wave.
+* Entity-first ordering is not changed here.
+
+== Validation commands
+
+[source,powershell]
+----
+cd D:\PhpstormProjects\www\Ordering
+composer dump-autoload
+php -l src/Controller/Api/OrderAuditAction.php
+php -l src/Controller/Api/OrderPayAction.php
+php -l src/Controller/Api/OrderPayController.php
+php -l src/Controller/Api/OrderRefundAction.php
+php -l src/Controller/Api/OrderShipAction.php
+php -l src/Controller/Api/OrderShipController.php
+php -l src/Resources/config/services.php
+----

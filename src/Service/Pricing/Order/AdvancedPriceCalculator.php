@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;
@@ -48,7 +48,7 @@ final readonly class AdvancedPriceCalculator
         $tax = Money::zero($displayCurrency);
         if (null !== $taxStrategy) {
             foreach ($items as $i) {
-                $item = new OrderItem((string) ($i['sku'] ?? 'sku'), (int) $i['quantity'], (int) $i['priceMinor'], strtoupper((string) ($i['currency'] ?? $displayCurrency)));
+                $item = new OrderItemEntity((string) ($i['sku'] ?? 'sku'), (int) $i['quantity'], (int) $i['priceMinor'], strtoupper((string) ($i['currency'] ?? $displayCurrency)));
                 $taxMinor = $taxStrategy->taxFor($item, (int) $i['priceMinor']);
                 $tax = $tax->add(new Money(number_format($taxMinor / 100, 2, '.', ''), $displayCurrency));
             }

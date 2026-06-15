@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\Billing\OrderInvoice;
-use App\Entity\Order\Billing\OrderPaymentIntent;
-use App\Entity\Order\Billing\OrderTransaction;
+use App\Entity\Order\OrderEntity;
+use App\Model\Billing\Order\OrderInvoice;
+use App\Model\Billing\Order\OrderPaymentIntent;
+use App\Model\Billing\Order\OrderTransaction;
 use App\Service\Payment\Order\OrderPaymentProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -23,9 +23,9 @@ interface BillingServiceInterface
         OrderPaymentProcessor $processor,
     );
 
-    public function generateInvoice(Order $order): OrderInvoice;
+    public function generateInvoice(OrderEntity $OrderEntity): OrderInvoice;
 
-    public function createPaymentIntent(Order $order, string $amount): OrderPaymentIntent;
+    public function createPaymentIntent(OrderEntity $OrderEntity, string $amount): OrderPaymentIntent;
 
     public function capturePayment(OrderPaymentIntent $intent): OrderTransaction;
 }

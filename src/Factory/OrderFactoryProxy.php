@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 final readonly class OrderFactoryProxy
 {
-    public function __construct(private Order $order)
+    public function __construct(private OrderEntity $order)
     {
     }
 
-    public function object(): Order
+    public function object(): OrderEntity
     {
         return $this->order;
     }

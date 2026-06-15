@@ -1,0 +1,20 @@
+{
+  "wave": "ordering-canon-wave14",
+  "scope": "Move remaining src/Api/Processor classes into canonical src/Processor/Api type layer.",
+  "canonical_targets": [
+    "src/Processor/Api/OrderPartialPaymentProcessor.php",
+    "src/Processor/Api/OrderRefundProcessor.php"
+  ],
+  "legacy_cleanup": [
+    "src/Api/Processor/OrderPartialPaymentProcessor.php",
+    "src/Api/Processor/OrderRefundProcessor.php"
+  ],
+  "non_goals": [
+    "No Entity-first changes",
+    "No Service/Security/Order processor cleanup",
+    "No full repository overwrite/delete"
+  ],
+  "checks": [
+    "php -l for both canonical processor files"
+  ]
+}

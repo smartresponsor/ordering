@@ -1,0 +1,23 @@
+config_tools:
+  - application_code: Ordering
+    tool_code: ordering.rate_limits
+    label: Ordering Rate Limits
+    description: Safe runtime limits for ordering API read/write traffic.
+    form_class: App\Form\Config\OrderingRateLimitsConfigFormType
+    service_class: App\Service\Config\OrderingRateLimitsConfigService
+    required_permission: administration.config.update
+    editable_fields:
+      - apiWriteLimit
+      - apiWriteIntervalMinutes
+      - apiReadLimit
+      - apiReadIntervalMinutes
+    sensitive_fields: []
+    readable_files:
+      - config/component/runtime.yaml
+      - config/packages/rate_limiter.php
+    writable_files:
+      - config/component/runtime.yaml
+    apply_strategy: component_runtime_yaml
+    metadata:
+      section: Configuration
+      kind: rate_limits

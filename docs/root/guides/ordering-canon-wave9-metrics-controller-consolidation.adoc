@@ -1,0 +1,30 @@
+= Ordering Canon Wave 9: Metrics Controller Consolidation
+
+Wave 9 resolves the remaining `/metrics` route collision by consolidating the two metrics controllers into a single Symfony controller type-layer file.
+
+== Canonical target
+
+* `src/Controller/Monitoring/OrderMetricsController.php`
+
+== Retired legacy files
+
+The apply script backs up and removes only these paired legacy files after the canonical target exists:
+
+* `src/Controller/OrderMetricsController.php`
+* `src/Infrastructure/Monitoring/MetricsController.php`
+
+== Behavior preserved
+
+The canonical controller keeps the existing Prometheus text endpoint and the vendor metrics JSON endpoints.
+
+* `/metrics`
+* `/api/order/metric`
+* `/vendors/{vendorId}/metrics`
+* `/vendors/{vendorId}/metrics/aggregate`
+* `/vendors/{vendorId}/metrics/rollup`
+
+The Prometheus endpoint now uses `MetricsCollector::render()` when collector-backed metrics are available and falls back to the existing `order_component_build_info` text sample when the collector is empty.
+
+== Scope intentionally deferred
+
+`MetricsCollector` remains under `src/Infrastructure/Monitoring` for now. Moving it to a service/interface pair should be handled in a later wave together with monitoring service naming, not inside the route-collision cleanup.

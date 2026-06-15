@@ -1,0 +1,24 @@
+= Ordering Canon Wave 11: Messenger Outbox Message Cleanup
+
+Wave 11 canonicalizes the outbox Messenger message surface without touching Entity-first work.
+
+== Canonical targets
+
+* `src/Message/Outbox/OrderOutboxDispatchedMessage.php`
+* `src/MessageHandler/Outbox/OrderOutboxDispatchedMessageHandler.php`
+
+== Legacy files retired by guarded apply script
+
+* `src/Messenger/Message/OutboxDispatchedMessage.php`
+* `src/Service/Security/Order/OutboxDispatchedMessage.php`
+* `src/Service/Security/Order/OutboxDispatchedMessageHandler.php`
+
+== Reasoning
+
+`src/Messenger/Message` was a framework bucket rather than the Symfony-oriented message type layer already present in the repository. The duplicate message under `src/Service/Security/Order` was also not a service and did not belong in a security service path.
+
+The canonical class uses the Order prefix/suffix convention and keeps the existing payload contract: `topic` plus `payload`.
+
+== Safety
+
+The patch is a touched-files overlay. The PowerShell script removes only explicitly paired legacy files after verifying the canonical message and handler exist.

@@ -1,0 +1,40 @@
+= Ordering Canon Wave 7: Billing Model Layer
+:toc:
+
+== Scope
+
+Wave 7 closes the owner-depth violation in the billing value-model branch:
+
+* `src/Model/Order/Billing/OrderInvoice.php`
+* `src/Model/Order/Billing/OrderPaymentIntent.php`
+* `src/Model/Order/Billing/OrderTransaction.php`
+
+The previous path placed the repository/domain token `Order` at the third nesting level under `src`, which is forbidden by the ecosystem root/domain-depth rule outside the explicit entity exception.
+
+== Canonical destination
+
+Billing value models are now placed under a type-first model contour:
+
+[source,text]
+----
+src/Model/Billing/Order/OrderInvoice.php
+src/Model/Billing/Order/OrderPaymentIntent.php
+src/Model/Billing/Order/OrderTransaction.php
+----
+
+This keeps `Model` as the type layer, `Billing` as the concern direction, and `Order` as the deeper context qualifier.
+
+== Updated consumers
+
+The following consumers were updated from `App\Model\Order\Billing\...` to `App\Model\Billing\Order\...`:
+
+* `src/Service/Payment/Order/BillingService.php`
+* `src/Service/Payment/Order/OrderPaymentProcessor.php`
+* `src/ServiceInterface/Payment/Order/BillingServiceInterface.php`
+* `src/ServiceInterface/Payment/Order/PaymentProcessorInterface.php`
+
+== Safety
+
+The apply script overlays only touched files. It backs up and removes the old billing model files only after verifying the canonical replacement exists.
+
+No cumulative snapshot overwrite is required or expected.

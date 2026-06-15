@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorServiceInterface;
 use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
 use App\ValueObject\Pricing\Order\Discount;
@@ -24,9 +24,9 @@ readonly class PriceCalculatorService implements PriceCalculatorServiceInterface
     {
     }
 
-    public function calculateItemPrice(OrderItem $orderItem, Taxation $taxation, ?Discount $discount = null): Price
+    public function calculateItemPrice(OrderItemEntity $OrderItemEntity, Taxation $taxation, ?Discount $discount = null): Price
     {
-        $base = new Money($orderItem->getBasePrice(), $orderItem->getCurrency());
+        $base = new Money($OrderItemEntity->getBasePrice(), $OrderItemEntity->getCurrency());
         $tax = $this->taxStrategy->compute($base, $taxation);
         $afterTax = $base->add($tax);
         $final = $discount ? $discount->apply($afterTax) : $afterTax;
@@ -35,7 +35,7 @@ readonly class PriceCalculatorService implements PriceCalculatorServiceInterface
         return Price::fromParts($afterTax, $tax, $discountMoney);
     }
 
-    public function calculateOrderTotals(Order $order, Taxation $taxation, ?Discount $discount = null): Money
+    public function calculateOrderTotals(OrderEntity $order, Taxation $taxation, ?Discount $discount = null): Money
     {
         $sum = Money::zero($order->getCurrency());
         foreach ($order->getItems() as $item) {

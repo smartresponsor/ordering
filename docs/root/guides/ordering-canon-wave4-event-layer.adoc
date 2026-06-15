@@ -1,0 +1,27 @@
+= Ordering canon Wave 4: event layer normalization
+:toc:
+
+== Scope
+
+Wave 4 performs a narrow Symfony-oriented event-layer normalization.
+
+It moves only low-risk framework event classes from legacy `EventSubscriber` / `EventListener` buckets into canonical type layers:
+
+* `src/EventSubscriber/ApiAuditSubscriber.php` -> `src/Subscriber/ApiAuditSubscriber.php`
+* `src/EventListener/OrderApiRateLimitListener.php` -> `src/Listener/Http/Order/OrderApiRateLimitListener.php`
+* `src/EventListener/OrderTenantRateLimitListener.php` -> `src/Listener/Http/Order/OrderTenantRateLimitListener.php`
+
+== Why this wave is intentionally small
+
+`src/Service/Subscriber/Order/**` contains collision-heavy subscriber names that overlap with `src/Subscriber/Event/Order/**`.
+Those classes require semantic comparison before any destructive retirement.
+
+Wave 4 therefore avoids those collision-heavy files and only normalizes classes where the target path is unoccupied.
+
+== Follow-up
+
+Next wave should continue with one of these safe tracks:
+
+. compare duplicate subscriber behavior in `src/Service/Subscriber/Order/**` versus `src/Subscriber/Event/Order/**`;
+. normalize `src/Service/Security/Order/*Listener.php` / `*Subscriber.php` into listener/subscriber layers where no semantic collision exists;
+. start Entity-first inventory for model/schema drift.

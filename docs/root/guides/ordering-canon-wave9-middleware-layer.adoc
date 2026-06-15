@@ -1,0 +1,34 @@
+= Ordering Canon Wave 9: Middleware Layer Cleanup
+:toc:
+
+== Scope
+
+Wave 9 continues the canonicalization of the overloaded `src/Service/Security/Order` bucket by extracting middleware-shaped classes into a type-identifiable middleware layer.
+
+== Changes
+
+* `src/Service/Security/Order/CspMiddleware.php` is replaced by `src/Middleware/Http/Order/OrderCspMiddleware.php`.
+* The class now carries the component prefix and role suffix: `OrderCspMiddleware`.
+* `config/services.yaml` registers `App\Middleware\` for normal and `when@test` autowiring.
+* Legacy duplicate/incorrect middleware artifacts in `src/Service/Security/Order` are retired by the apply script when the corresponding canonical runtime surface already exists or is supplied by this patch.
+
+== Retired legacy paths
+
+The apply script backs up and removes only the explicitly listed touched paths:
+
+* `src/Service/Security/Order/CspMiddleware.php`
+* `src/Service/Security/Order/IdempotencyMiddleware.php`
+* `src/Service/Security/Order/TransactionMiddleware.php`
+* `src/ServiceInterface/Security/Order/CspMiddlewareInterface.php`
+* `src/ServiceInterface/Security/Order/IdempotencyMiddlewareInterface.php`
+* `src/ServiceInterface/Security/Order/TransactionMiddlewareInterface.php`
+
+== Canonical alternatives already present
+
+* Messenger idempotency middleware remains under `src/Messenger/Middleware/IdempotencyMiddleware.php`.
+* Transaction wrapper remains under `src/Service/Tx/TransactionMiddleware.php`.
+* HTTP idempotency middleware remains under `src/Http/Idempotency/IdempotencyMiddleware.php`.
+
+== Next candidate
+
+The next cleanup area is the command/handler/message concentration under `src/Service/Security/Order`. Those classes should be split into `Message/Command`, `MessageHandler` or `Message/Handler`, and service layers only after a collision-aware command-handler map is produced.

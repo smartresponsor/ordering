@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Service;
 
-use App\ReadModel\Entity\OrderView;
+use App\ReadModel\Entity\OrderViewEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderReadModelProjector
@@ -18,11 +18,11 @@ final readonly class OrderReadModelProjector
      */
     public function project(string $orderId, ?string $status = null): array
     {
-        /** @var OrderView|null $view */
-        $view = $this->entityManager->getRepository(OrderView::class)->find($orderId);
+        /** @var OrderViewEntity|null $view */
+        $view = $this->entityManager->getRepository(OrderViewEntity::class)->find($orderId);
 
-        if (!$view instanceof OrderView) {
-            $view = new OrderView($orderId);
+        if (!$view instanceof OrderViewEntity) {
+            $view = new OrderViewEntity($orderId);
             $this->entityManager->persist($view);
         }
 

@@ -1,0 +1,26 @@
+= Ordering Canon Wave 21: Messenger DLQ Command Cleanup
+
+Wave 21 moves the remaining root-level Messenger dead-letter queue command into a Symfony type-identifiable command sublayer.
+
+== Canonical move
+
+[source,text]
+----
+src/Command/DlqRequeueCommand.php
+→ src/Command/Messenger/OrderDlqRequeueCommand.php
+----
+
+The Symfony console command name remains stable:
+
+[source,text]
+----
+order:dlq:requeue
+----
+
+== Canonical rule
+
+Messenger operational commands belong under `src/Command/Messenger` and use the `Order*Command` class naming form. Root `src/Command/*Command.php` should be retired once a canonical sublayer exists.
+
+== Cleanup behavior
+
+The apply script overlays touched files first, then removes only the paired legacy file after checking that the canonical target exists.

@@ -1,0 +1,23 @@
+{
+  "wave": 20,
+  "component": "Ordering",
+  "scope": "root outbox console command cleanup",
+  "canonical_targets": [
+    "src/Command/Outbox/OrderOutboxDispatchCommand.php",
+    "src/Command/Outbox/OrderOutboxProcessCommand.php",
+    "src/Command/Outbox/OrderOutboxReplayCommand.php"
+  ],
+  "legacy_files": [
+    "src/Command/OutboxDispatchCommand.php",
+    "src/Command/OutboxProcessCommand.php",
+    "src/Command/OutboxReplayCommand.php"
+  ],
+  "policy": [
+    "touched-files overlay only",
+    "paired legacy cleanup only after canonical target exists",
+    "Windows PowerShell compatible; no GetRelativePath"
+  ],
+  "notes": [
+    "Symfony command names are preserved: order:outbox:dispatch, order:outbox:process, order:outbox:replay"
+  ]
+}

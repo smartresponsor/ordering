@@ -13,6 +13,5 @@ use App\Event\Domain\Order\OrderShippedEvent;
 
 interface OrderShippedHandlerInterface
 {
-
     public function __invoke(OrderShippedEvent $event): void;
 }

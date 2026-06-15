@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Workflow\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 
@@ -20,7 +20,7 @@ interface OrderStatusServiceInterface
         EntityManagerInterface $em,
     );
 
-    public function canTransition(Order $order, string $transition): bool;
+    public function canTransition(OrderEntity $OrderEntity, string $transition): bool;
 
-    public function applyTransition(Order $order, string $transition): void;
+    public function applyTransition(OrderEntity $OrderEntity, string $transition): void;
 }

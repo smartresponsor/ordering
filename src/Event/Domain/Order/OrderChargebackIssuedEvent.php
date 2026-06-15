@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Order;
 
-use App\Entity\Order\OrderDispute;
+use App\Entity\Order\OrderDisputeEntity;
 
 final readonly class OrderChargebackIssuedEvent
 {
-    public function __construct(public OrderDispute $dispute)
+    public function __construct(public OrderDisputeEntity $dispute)
     {
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Message\OrderMessage;
 use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,7 +38,7 @@ final class MessengerIntegrationTest extends TestCase
         /** @var OrderWorkflowService $svc */
         $svc = $c->get(OrderWorkflowService::class);
 
-        $o = new Order();
+        $o = new OrderEntity();
         $em->persist($o);
         $em->flush();
 

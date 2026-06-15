@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Service\Shipment\Order;
 
 use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Shipment\Order\DHLGatewayInterface;
 
 final class DHLGateway implements DHLGatewayInterface, OrderShipmentGatewayInterface
 {
-    public function createShipment(Order $order, string $carrier): string
+    public function createShipment(OrderEntity $order, string $carrier): string
     {
         $seed = method_exists($order, 'getNumber')
             ? (string) $order->getNumber()

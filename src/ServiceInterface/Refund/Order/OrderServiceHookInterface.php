@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Refund\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ValueObject\Pricing\Order\Money;
 
 interface OrderServiceHookInterface
 {
-    public function assertRefundAllowed(Order $order, Money $amount): void;
+    public function assertRefundAllowed(OrderEntity $OrderEntity, Money $amount): void;
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Outbox\OutboxMessage;
-use App\Messenger\Message\OutboxDispatchedMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -24,13 +24,13 @@ final readonly class OutboxMessengerDispatcher
      */
     public function dispatchPending(int $limit = 100): int
     {
-        $repo = $this->em->getRepository(OutboxMessage::class);
+        $repo = $this->em->getRepository(OrderOutboxMessageEntity::class);
         $messages = $repo->findBy(['dispatched' => false], ['id' => 'ASC'], $limit);
         $count = 0;
 
         foreach ($messages as $message) {
-            $payload = json_decode($message->getPayload(), true, 512, JSON_THROW_ON_ERROR);
-            $this->bus->dispatch(new OutboxDispatchedMessage($message->getEventType(), $payload));
+            $payload = $message->payload();
+            $this->bus->dispatch(new OrderOutboxDispatchedMessage($message->getEventType(), $payload));
             $message->markDispatched();
             ++$count;
         }

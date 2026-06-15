@@ -1,0 +1,19 @@
+{
+  "component": "Ordering",
+  "wave": 9,
+  "purpose": "Consolidate duplicate /metrics controllers into one canonical monitoring controller.",
+  "canonical_targets": [
+    "src/Controller/Monitoring/OrderMetricsController.php"
+  ],
+  "updated_files": [
+    "config/routes.yaml"
+  ],
+  "legacy_removal_candidates": [
+    "src/Controller/OrderMetricsController.php",
+    "src/Infrastructure/Monitoring/MetricsController.php"
+  ],
+  "deferred": [
+    "src/Infrastructure/Monitoring/MetricsCollector.php service/interface relocation"
+  ],
+  "safety": "Touched-files overlay only; cleanup removes only explicit paired legacy files after target validation."
+}

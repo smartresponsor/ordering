@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\E2E;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use PHPUnit\Framework\TestCase;
 
 final class PartialPaymentTest extends TestCase
 {
     public function testPartialThenFull(): void
     {
-        $o = new Order('USD', '100.00');
+        $o = new OrderEntity('USD', '100.00');
         $o->applyPartialPayment('40.00', 'r1', true);
         $this->assertSame('partially_paid', $o->status());
         $o->applyPartialPayment('60.00', 'r2', true);

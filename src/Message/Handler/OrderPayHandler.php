@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Handler;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Message\Command\OrderPayCommand;
 use App\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,8 +26,8 @@ final readonly class OrderPayHandler
      */
     public function __invoke(OrderPayCommand $cmd): void
     {
-        /** @var Order|null $order */
-        $order = $this->em->getRepository(Order::class)->findOneBy(['id' => $cmd->orderId]);
+        /** @var OrderEntity|null $order */
+        $order = $this->em->getRepository(OrderEntity::class)->findByIdentifier($cmd->orderId);
         if (!$order) {
             throw new \RuntimeException('Order not found: '.$cmd->orderId);
         }

@@ -1,0 +1,24 @@
+{
+  "component": "Ordering",
+  "wave": 6,
+  "scope": "infrastructure listener/subscriber/processor cleanup",
+  "policy": "touched-files overlay only with paired legacy cleanup after target verification",
+  "canonical_targets": [
+    "src/EventListener/Http/OrderAuditListener.php",
+    "src/EventListener/Http/OrderProblemExceptionListener.php",
+    "src/EventListener/Idempotency/OrderIdempotencyRequestListener.php",
+    "src/EventSubscriber/Monitoring/OrderTraceContextSubscriber.php",
+    "src/EventListener/Observability/OrderApiMetricListener.php",
+    "src/EventListener/Observability/OrderRequestCorrelationListener.php",
+    "src/Processor/Observability/OrderLogCorrelationProcessor.php"
+  ],
+  "legacy_sources": [
+    "src/Infrastructure/Http/Order/AuditListener.php",
+    "src/Infrastructure/Http/Order/ProblemExceptionListener.php",
+    "src/Infrastructure/Idempotency/Order/IdempotencyRequestListener.php",
+    "src/Infrastructure/Monitoring/TraceContextSubscriber.php",
+    "src/Infrastructure/Observability/Order/ApiMetricListener.php",
+    "src/Infrastructure/Observability/Order/RequestCorrelationListener.php",
+    "src/Infrastructure/Observability/Order/LogCorrelationProcessor.php"
+  ]
+}

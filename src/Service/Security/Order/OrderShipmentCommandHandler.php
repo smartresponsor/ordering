@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\Message\Command\Order\OrderShipmentCommand;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 use App\Service\Shipment\Order\ShipmentService;
 use App\ServiceInterface\Shipment\CarrierInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

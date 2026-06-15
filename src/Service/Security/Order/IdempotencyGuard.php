@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\WebhookLog;
 use App\ServiceInterface\Security\Order\IdempotencyGuardInterface;
 use App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
 use Doctrine\ORM\EntityManagerInterface;

@@ -1,0 +1,35 @@
+= Ordering Canon Wave 5: Subscriber Collision Cleanup
+:toc:
+
+== Scope
+
+Wave 5 retires the collision-heavy `src/Service/Subscriber/Order` subscriber bucket without converting the whole repository at once.
+
+The previous state mixed Symfony event subscribers/listeners into `Service`, which caused two problems:
+
+* the class type was not readable from the layer;
+* several behaviors existed twice, once under `Service/Subscriber/Order` and once under `Subscriber/Event/Order` or `EventSubscriber`.
+
+== Applied direction
+
+The canonical direction for this wave is:
+
+* event subscribers live under `src/Subscriber/...`;
+* HTTP/kernel listeners live under `src/Listener/...`;
+* `src/Service/Subscriber/Order` is retired as a legacy bucket;
+* services configuration explicitly loads `App\Subscriber\` and `App\Listener\` so moved classes are registered by Symfony autoconfiguration.
+
+== Functional preservation
+
+The wave preserves non-empty behavior instead of deleting it blindly:
+
+* the old workflow pricing-audit behavior from `Service/Subscriber/Order/OrderWorkflowSubscriber.php` is consolidated into `Subscriber/Event/Order/OrderWorkflowSubscriber.php`;
+* the old `/api/orders` terminate audit behavior from `Service/Subscriber/Order/OrderApiAuditSubscriber.php` is moved to `Listener/Http/Order/OrderApiAuditTerminateListener.php`;
+* the workflow guard is moved to `Subscriber/Workflow/Order/OrderWorkflowGuardSubscriber.php` and its subject check is corrected to `OrderEntity`;
+* the analytics subscriber instantiation is corrected from the stale `AnalyticsRecord` symbol to `OrderAnalyticsRecordEntity`.
+
+== Retired legacy files
+
+The apply script backs up and removes only the explicitly listed legacy paths under `src/Service/Subscriber/Order` plus the old workflow guard under `src/EventSubscriber`.
+
+No full repository overwrite or broad cleanup is performed.

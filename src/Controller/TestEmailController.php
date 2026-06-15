@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TestEmailController
 {
-    #[Route('/api/test-email', name: 'api_test_email', methods: ['POST'])]
+    #[Route('/api/order/test/email', name: 'api_test_email', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent() ?: '{}', true);

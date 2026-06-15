@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\State\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 interface OrderStateMachineInterface
 {
-    public function place(Order $order): void;
+    public function place(OrderEntity $OrderEntity): void;
 
-    public function confirm(Order $order): void;
+    public function confirm(OrderEntity $OrderEntity): void;
 
-    public function fulfill(Order $order): void;
+    public function fulfill(OrderEntity $OrderEntity): void;
 
-    public function close(Order $order): void;
+    public function close(OrderEntity $OrderEntity): void;
 
-    public function cancel(Order $order): void;
+    public function cancel(OrderEntity $OrderEntity): void;
 
-    public function return(Order $order): void;
+    public function return(OrderEntity $OrderEntity): void;
 }

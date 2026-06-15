@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order\Billing\OrderPaymentIntent;
-use App\Entity\Order\Billing\OrderTransaction;
+use App\Model\Billing\Order\OrderPaymentIntent;
+use App\Model\Billing\Order\OrderTransaction;
 
 interface PaymentProcessorInterface
 {

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Entity\Order\OrderEntity;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $configurator): void {
@@ -9,7 +10,7 @@ return static function (ContainerConfigurator $configurator): void {
         'workflows' => [
             'order' => [
                 'type' => 'state_machine',
-                'supports' => ['App\\Entity\\Order'],
+                'supports' => [OrderEntity::class],
                 'initial_marking' => 'draft',
                 'places' => [
                     'draft',

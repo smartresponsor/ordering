@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Outbox\IdempotencyKey;
 use App\Repository\Order\IdempotencyKeyRepository;
 use App\ServiceInterface\Security\Order\IdempotencyServiceInterface;
 

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 
 interface LegacyTaxationStrategyInterface
 {
-    public function taxFor(OrderItem $orderItem, int $priceAfterDiscount): int; // in minor units
+    public function taxFor(OrderItemEntity $OrderItemEntity, int $priceAfterDiscount): int; // in minor units
 }

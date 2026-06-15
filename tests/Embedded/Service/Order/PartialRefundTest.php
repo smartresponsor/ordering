@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use PHPUnit\Framework\TestCase;
 
 final class PartialRefundTest extends TestCase
 {
     public function testPartialRefundMovesFromPaidToPartiallyRefunded(): void
     {
-        $order = new Order('USD', '100.00');
+        $order = new OrderEntity('USD', '100.00');
         $order->applyPartialPayment('100.00', 'ref-1', false);
         $this->assertSame('paid', $order->status());
         $order->refundPartial('30.00', 'customer_request', true);

@@ -1,0 +1,36 @@
+{
+  "component": "Ordering",
+  "wave": "wave5",
+  "theme": "http-messenger-middleware-subscriber-type-layer-cleanup",
+  "base_slice": "OrderingThu.zip",
+  "policy": {
+    "full_repository_overwrite": false,
+    "cumulative_snapshot": false,
+    "delete_scope": "Only explicitly listed legacy source files after canonical targets exist."
+  },
+  "canonical_targets": [
+    "src/Middleware/Http/OrderHttpIdempotencyMiddleware.php",
+    "src/Middleware/Http/OrderRateLimitHeaderMiddleware.php",
+    "src/EventSubscriber/OrderWebhookHmacSubscriber.php",
+    "src/Middleware/Messenger/OrderMessageIdempotencyMiddleware.php",
+    "src/Middleware/Messenger/OrderMessageIdempotencyStoreInterface.php",
+    "src/Middleware/Messenger/InMemoryOrderMessageIdempotencyStore.php",
+    "src/Middleware/IdempotencyMiddleware.php",
+    "config/services.security.yaml",
+    "tests/Api/IdempotencyTest.php",
+    "tests/Api/RateLimitHeadersTest.php"
+  ],
+  "legacy_cleanup_candidates": [
+    "src/Http/Idempotency/IdempotencyMiddleware.php",
+    "src/Http/Middleware/RateLimitHeaderMiddleware.php",
+    "src/Http/Subscriber/WebhookHmacSubscriber.php",
+    "src/Messenger/Middleware/IdempotencyMiddleware.php",
+    "src/Messenger/Middleware/IdempotencyStoreInterface.php",
+    "src/Messenger/Middleware/InMemoryIdempotencyStore.php"
+  ],
+  "notes": [
+    "Kept src/Middleware/IdempotencyMiddleware.php as a compatibility alias because older docs/config mention it as stable messenger middleware entrypoint.",
+    "Did not touch Entity, Model, Doctrine, or broad Service/Security cleanup in this wave.",
+    "Updated tests to import canonical middleware class names."
+  ]
+}

@@ -5,64 +5,64 @@ declare(strict_types=1);
 
 $steps = [
     [
-        'name' => 'Composer audit',
+        'nameEntity' => 'Composer audit',
         'command' => 'composer audit --no-interaction',
         'optional' => false,
     ],
     [
-        'name' => 'PHP lint',
+        'nameEntity' => 'PHP lint',
         'command' => 'php -l src/Controller/OrderManagementController.php',
         'optional' => false,
     ],
     [
-        'name' => 'YAML lint',
+        'nameEntity' => 'YAML lint',
         'command' => 'php bin/console lint:yaml config',
         'optional' => false,
     ],
     [
-        'name' => 'Twig lint',
+        'nameEntity' => 'Twig lint',
         'command' => 'php bin/console lint:twig templates',
         'optional' => false,
     ],
     [
-        'name' => 'Container lint',
+        'nameEntity' => 'Container lint',
         'command' => 'php bin/console lint:container',
         'optional' => false,
     ],
     [
-        'name' => 'Schema validate',
+        'nameEntity' => 'Schema validate',
         'command' => 'php bin/console doctrine:schema:validate -vvv',
         'optional' => false,
     ],
     [
-        'name' => 'Unit tests',
+        'nameEntity' => 'Unit tests',
         'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFast',
         'optional' => false,
     ],
     [
-        'name' => 'Functional tests',
+        'nameEntity' => 'Functional tests',
         'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack',
         'optional' => false,
     ],
     [
-        'name' => 'Importmap audit',
+        'nameEntity' => 'Importmap audit',
         'command' => 'php bin/console importmap:audit',
         'optional' => true,
     ],
     [
-        'name' => 'Gitleaks',
+        'nameEntity' => 'Gitleaks',
         'command' => 'gitleaks detect --no-banner --source .',
         'optional' => true,
     ],
     [
-        'name' => 'Semgrep',
+        'nameEntity' => 'Semgrep',
         'command' => 'semgrep scan --config auto',
         'optional' => true,
     ],
 ];
 
 foreach ($steps as $step) {
-    echo PHP_EOL . '==> ' . $step['name'] . PHP_EOL;
+    echo PHP_EOL . '==> ' . $step['nameEntity'] . PHP_EOL;
 
     if ($step['optional'] && !commandIsAvailable($step['command'])) {
         echo 'SKIPPED: tool or command not available' . PHP_EOL;
@@ -72,7 +72,7 @@ foreach ($steps as $step) {
     passthru($step['command'], $exitCode);
 
     if (0 !== $exitCode) {
-        fwrite(STDERR, 'FAILED: ' . $step['name'] . PHP_EOL);
+        fwrite(STDERR, 'FAILED: ' . $step['nameEntity'] . PHP_EOL);
         exit($exitCode);
     }
 }

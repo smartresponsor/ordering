@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Outbox\OutboxMessage;
-use App\Messenger\Message\OutboxDispatchedMessage;
-use App\ServiceInterface\Security\Order\OutboxMessengerDispatcherInterface;
+use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final readonly class OutboxMessengerDispatcher implements OutboxMessengerDispatcherInterface
+final readonly class OutboxMessengerDispatcher
 {
     public function __construct(
         private EntityManagerInterface $em,
@@ -25,17 +24,17 @@ final readonly class OutboxMessengerDispatcher implements OutboxMessengerDispatc
 
     public function dispatchPending(int $limit = 100): int
     {
-        $repo = $this->em->getRepository(OutboxMessage::class);
+        $repo = $this->em->getRepository(OrderOutboxMessageEntity::class);
         $messages = array_filter(
             $repo->findBy([], ['messageId' => 'ASC'], $limit),
-            static fn (mixed $message): bool => $message instanceof OutboxMessage
+            static fn (mixed $message): bool => $message instanceof OrderOutboxMessageEntity
                 && $message->isPending(),
         );
         $count = 0;
 
         foreach ($messages as $message) {
             $payload = $message->payload();
-            $this->bus->dispatch(new OutboxDispatchedMessage($message->getTopic(), $payload));
+            $this->bus->dispatch(new OrderOutboxDispatchedMessage($message->getTopic(), $payload));
             $message->markSent();
             ++$count;
         }

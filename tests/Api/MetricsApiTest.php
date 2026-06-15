@@ -11,7 +11,7 @@ final class MetricsApiTest extends WebTestCase
     public function testMetricsEndpointAvailable(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/metrics/orders');
+        $client->request('GET', '/api/order/metric');
         $this->assertTrue(in_array($client->getResponse()->getStatusCode(), [200, 401, 403], true));
     }
 }

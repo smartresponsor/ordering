@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\OrderReturnRequest;
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\Event\Domain\Order\OrderRefundInitiatedEvent;
+use App\Model\Order\OrderReturnRequest;
 use App\Service\Refund\Order\RefundProcessor;
 use App\ServiceInterface\Workflow\Order\ReturnWorkflowServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +43,7 @@ final readonly class ReturnWorkflowService implements ReturnWorkflowServiceInter
         $return->approve();
         $this->em->persist($return);
 
-        $tx = new OrderRefundTransaction(
+        $tx = new OrderRefundTransactionEntity(
             Uuid::v7()->toRfc4122(),
             $orderId,
             $return->id(),

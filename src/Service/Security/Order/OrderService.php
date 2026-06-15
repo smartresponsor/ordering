@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
-use App\Entity\Order\OrderRefundLedger;
-use App\Entity\Outbox\IdempotencyKey;
+use App\Entity\Order\OrderDisputeEntity;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderIdempotencyKeyEntity;
+use App\Entity\Order\OrderPaymentEntity;
+use App\Entity\OrderRefundLedger;
 use App\Event\Domain\Order\OrderFullyRefundedEvent;
 use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use App\ServiceInterface\Security\Order\OrderServiceInterface;
@@ -29,17 +30,24 @@ final readonly class OrderService implements OrderServiceInterface
     ) {
     }
 
-    public function refundPartial(Order $order, Money $amount, string $idempotencyKey): OrderRefundLedger
+    public function refundPartial(OrderEntity $order, Money $amount, string $idempotencyKey): OrderRefundLedger
     {
+        $activeDisputes = $this->em->getRepository(OrderDisputeEntity::class)->findBy(['order' => $order]);
+        foreach ($activeDisputes as $dispute) {
+            if ($dispute instanceof OrderDisputeEntity && OrderDisputeEntity::STATUS_RESOLVED !== $dispute->getStatus()) {
+                throw new \DomainException('Refund not allowed while dispute is active.');
+            }
+        }
+
         $refund = RefundAmount::fromMoney($amount);
         $ledger = new OrderRefundLedger($order, $idempotencyKey, $refund->getAmount(), (string) $refund->getCurrency());
         $this->em->persist($ledger);
-        $this->em->persist(new IdempotencyKey('order_refund_'.$order->getId(), hash('sha256', $idempotencyKey)));
+        $this->em->persist(new OrderIdempotencyKeyEntity('order_refund_'.$order->getId(), hash('sha256', $idempotencyKey)));
 
-        $payments = $this->em->getRepository(OrderPayment::class)->findBy(['order' => $order], ['id' => 'DESC']);
+        $payments = $this->em->getRepository(OrderPaymentEntity::class)->findBy(['order' => $order], ['id' => 'DESC']);
         $left = $refund->getAmount();
         foreach ($payments as $p) {
-            if (!$p instanceof OrderPayment) {
+            if (!$p instanceof OrderPaymentEntity) {
                 continue;
             }
             if (!in_array($p->getStatus(), ['captured', 'paid', 'succeeded'], true)) {
@@ -69,14 +77,14 @@ final readonly class OrderService implements OrderServiceInterface
         return $ledger;
     }
 
-    public function payOrder(Order $order): void
+    public function payOrder(OrderEntity $order): void
     {
         $order->markPaid();
         $this->em->persist($order);
         $this->em->flush();
     }
 
-    public function shipOrder(Order $order, string $carrier = 'DHL'): string
+    public function shipOrder(OrderEntity $order, string $carrier = 'DHL'): string
     {
         $tracking = 'TRK-'.substr(str_replace('-', '', $order->getId()), 0, 12);
         $order->assignTracking($tracking);
@@ -88,7 +96,7 @@ final readonly class OrderService implements OrderServiceInterface
         return $tracking;
     }
 
-    public function recalcTaxes(Order $order, ?string $countryCode = null): void
+    public function recalcTaxes(OrderEntity $order, ?string $countryCode = null): void
     {
         $order->setTaxTotal('0.00');
         $order->setGrandTotal($order->getSubtotal());
@@ -96,7 +104,7 @@ final readonly class OrderService implements OrderServiceInterface
         $this->em->flush();
     }
 
-    public function refundOrder(Order $order, float $amount): bool
+    public function refundOrder(OrderEntity $order, float $amount): bool
     {
         $order->refund(number_format($amount, 2, '.', ''));
         $this->em->persist($order);

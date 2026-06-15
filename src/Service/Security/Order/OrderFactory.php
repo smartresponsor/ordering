@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Security\Order\OrderFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,9 +14,9 @@ final readonly class OrderFactory implements OrderFactoryInterface
     {
     }
 
-    public function create(float $total = 100.00): Order
+    public function create(float $total = 100.00): OrderEntity
     {
-        $order = new Order();
+        $order = new OrderEntity();
         if (method_exists($order, 'setTotal')) {
             $order->setTotal($total);
         }

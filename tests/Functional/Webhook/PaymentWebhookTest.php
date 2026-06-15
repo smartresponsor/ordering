@@ -16,7 +16,7 @@ final class PaymentWebhookTest extends WebTestCase
         $client = static::createClient();
         $client->request(
             'POST',
-            '/api/webhooks/payment',
+            '/api/payment/webhook',
             server: [
                 'HTTP_CONTENT_TYPE' => 'application/json',
                 'HTTP_X_PROVIDER' => 'mock',
@@ -48,7 +48,7 @@ final class PaymentWebhookTest extends WebTestCase
         ], JSON_THROW_ON_ERROR);
 
         // first
-        $client->request('POST', '/api/webhooks/payment', server: [
+        $client->request('POST', '/api/payment/webhook', server: [
             'HTTP_CONTENT_TYPE' => 'application/json',
             'HTTP_X_PROVIDER' => 'mock',
             'HTTP_X_EVENT_ID' => 'evt_dup_1',
@@ -56,7 +56,7 @@ final class PaymentWebhookTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         // second (same event id)
-        $client->request('POST', '/api/webhooks/payment', server: [
+        $client->request('POST', '/api/payment/webhook', server: [
             'HTTP_CONTENT_TYPE' => 'application/json',
             'HTTP_X_PROVIDER' => 'mock',
             'HTTP_X_EVENT_ID' => 'evt_dup_1',

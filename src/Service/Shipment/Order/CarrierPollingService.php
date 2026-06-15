@@ -29,7 +29,7 @@ final readonly class CarrierPollingService implements CarrierPollingServiceInter
     ) {
         $mappedCarriers = [];
         foreach ($carriers as $carrier) {
-            $mappedCarriers[strtolower($carrier->name())] = $carrier;
+            $mappedCarriers[strtolower($carrier->nameEntity())] = $carrier;
         }
 
         $this->carriers = $mappedCarriers;
@@ -52,17 +52,17 @@ final readonly class CarrierPollingService implements CarrierPollingServiceInter
         $normalizedStatus = strtolower($update->status);
         $existing = $this->repo->find($orderId);
         if (null !== $existing
-            && $existing->carrier() === $carrier->name()
+            && $existing->carrier() === $carrier->nameEntity()
             && $existing->tracking() === $trackingNumber
             && $existing->status() === $normalizedStatus
             && $existing->deliveredAt()?->format(DATE_ATOM) === $update->deliveredAt?->format(DATE_ATOM)) {
-            $this->logger->debug('Carrier polling produced no shipment changes', ['carrier' => $carrier->name(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
+            $this->logger->debug('Carrier polling produced no shipment changes', ['carrier' => $carrier->nameEntity(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
 
             return true;
         }
 
-        $this->projection->updateFromExternal($orderId, $carrier->name(), $trackingNumber, $normalizedStatus, $update->deliveredAt);
-        $this->logger->info('Carrier polled', ['carrier' => $carrier->name(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
+        $this->projection->updateFromExternal($orderId, $carrier->nameEntity(), $trackingNumber, $normalizedStatus, $update->deliveredAt);
+        $this->logger->info('Carrier polled', ['carrier' => $carrier->nameEntity(), 'orderId' => $orderId, 'status' => $normalizedStatus]);
 
         return true;
     }

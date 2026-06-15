@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Shipment\Order\UPSGatewayInterface;
 
 final class UPSGateway implements UPSGatewayInterface
 {
-    public function createShipment(Order $order, string $carrier): string
+    public function createShipment(OrderEntity $order, string $carrier): string
     {
         return 'UPS-'.strtoupper(bin2hex(random_bytes(4)));
     }

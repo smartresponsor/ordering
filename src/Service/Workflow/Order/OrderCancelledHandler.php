@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\ServiceInterface\Workflow\Order\OrderCancelledHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +24,7 @@ final readonly class OrderCancelledHandler implements OrderCancelledHandlerInter
 
     public function __invoke(OrderCancelledEvent $event): void
     {
-        if (!$event->order instanceof Order) {
+        if (!$event->order instanceof OrderEntity) {
             return;
         }
 

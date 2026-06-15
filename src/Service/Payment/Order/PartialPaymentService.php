@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\OrderPaymentTransaction;
+use App\Entity\Order\OrderPaymentTransactionEntity;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PartialPaymentServiceInterface;
 
@@ -19,9 +19,9 @@ final readonly class PartialPaymentService implements PartialPaymentServiceInter
     {
     }
 
-    public function applyPartial(string $orderId, string $amount, string $method, string $txId): OrderPaymentTransaction
+    public function applyPartial(string $orderId, string $amount, string $method, string $txId): OrderPaymentTransactionEntity
     {
-        $tx = new OrderPaymentTransaction($orderId, $amount, $method);
+        $tx = new OrderPaymentTransactionEntity($orderId, $amount, $method);
         $tx->succeed($txId);
         $this->payments->add($tx);
 

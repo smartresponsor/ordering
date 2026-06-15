@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Fixtures;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderFactory
@@ -13,12 +13,9 @@ final readonly class OrderFactory
     {
     }
 
-    public function create(float $total = 100.00): Order
+    public function create(float $total = 100.00): OrderEntity
     {
-        $order = new Order();
-        if (method_exists($order, 'setTotal')) {
-            $order->setTotal($total);
-        }
+        $order = OrderEntity::create('USD', (string) $total);
         $this->em->persist($order);
         $this->em->flush();
 

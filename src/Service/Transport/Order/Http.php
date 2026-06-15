@@ -27,8 +27,8 @@ final readonly class Http
         }
 
         $normalizedHeaders = [];
-        foreach ($headers as $name => $value) {
-            $normalizedHeaders[] = $name.': '.$value;
+        foreach ($headers as $nameEntity => $value) {
+            $normalizedHeaders[] = $nameEntity.': '.$value;
         }
 
         $body = null;

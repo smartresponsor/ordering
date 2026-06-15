@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Command\OrderDemoLoadCommand;
-use App\Command\OrderReportCommand;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Console\Tester\ApplicationTester;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 
 final class OrderDemoCommandTest extends KernelTestCase
 {
@@ -34,7 +30,7 @@ final class OrderDemoCommandTest extends KernelTestCase
         self::assertSame(0, $loadTester->execute(['--count' => 5]));
 
         $em = self::getContainer()->get(EntityManagerInterface::class);
-        self::assertCount(5, $em->getRepository(Order::class)->findAll());
+        self::assertCount(5, $em->getRepository(OrderEntity::class)->findAll());
 
         $reportTester = new CommandTester($application->find('app:order:report'));
         self::assertSame(0, $reportTester->execute([]));

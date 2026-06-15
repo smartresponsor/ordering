@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Service\Tx\TransactionMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -41,7 +41,7 @@ final class TransactionMiddlewareTest extends TestCase
         $tx = $c->get(TransactionMiddleware::class);
         try {
             $tx->run(function (EntityManagerInterface $em) {
-                $o = new Order();
+                $o = new OrderEntity();
                 $em->persist($o);
                 throw new \RuntimeException('boom');
             });

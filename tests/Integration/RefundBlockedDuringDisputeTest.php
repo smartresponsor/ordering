@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
 use App\Service\Dispute\Order\DisputeService;
 use App\Service\Security\Order\OrderService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
@@ -25,9 +25,9 @@ final class RefundBlockedDuringDisputeTest extends KernelTestCase
         $dispatcher->addSubscriber(new OrderDisputeSubscriber(new NullLogger()));
         $disputes = new DisputeService($em, $dispatcher);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = new OrderEntity('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);
-        $em->persist(new OrderPayment($order, 'pi_1', '100.00', 'USD'));
+        $em->persist(new OrderPaymentEntity($order, 'pi_1', '100.00', 'USD'));
         $em->flush();
 
         $disputes->openDispute($order, 'inquiry', 'fraud', 'ext_001');

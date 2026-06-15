@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use PHPUnit\Framework\TestCase;
 
 final class OrderStateTest extends TestCase
 {
     public function testOrderTransitionsAcrossPaymentShipmentAndRefund(): void
     {
-        $order = new Order('USD', '120.00');
+        $order = OrderEntity::create('USD', '120.00');
 
         $payment = $order->applyPayment('120.00', 'pay-ref-1');
         self::assertSame('paid', $order->getStatus());

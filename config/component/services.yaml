@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  App\Form\Config\:
+    resource: '../../src/Form/Config/'
+
+  App\Service\Config\OrderingRateLimitsConfigService:
+    arguments:
+      $projectDir: '%kernel.project_dir%'
+      $applyService: '@App\Administering\Service\Config\ConfigApplyService'
+      $fileWriter: '@App\Administering\Service\Config\ConfigFileWriterService'
+    tags: ['administering.config_tool']

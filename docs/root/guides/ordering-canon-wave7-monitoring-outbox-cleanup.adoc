@@ -1,0 +1,26 @@
+= Ordering Canon Wave 7: Monitoring Controller and Outbox Processor Cleanup
+
+== Scope
+
+Wave 7 performs a narrow Symfony type-layer cleanup for low-risk Infrastructure leftovers.
+
+== Moves
+
+* `src/Infrastructure/Monitoring/HealthController.php` -> `src/Controller/Monitoring/OrderHealthMonitoringController.php`
+* `src/Infrastructure/Outbox/Order/OutboxProcessor.php` -> `src/Processor/Outbox/OrderOutboxProcessor.php`
+* `src/Infrastructure/Outbox/Command/Order/OutboxRunCommand.php` -> `src/Command/Outbox/OrderOutboxRunCommand.php`
+
+== Intent
+
+* Controllers belong in `src/Controller`.
+* Processors belong in `src/Processor`.
+* Symfony console commands belong in `src/Command`.
+* Order-specific runtime classes receive an `Order*` prefix/suffix name.
+
+== Guardrails
+
+The apply script overlays touched files only. Legacy files are backed up and removed only when their paired canonical target exists. No repository-wide cleanup is performed.
+
+== Deferred
+
+`src/Infrastructure/Monitoring/MetricsController.php` is intentionally deferred because `/metrics` is already represented by `src/Controller/OrderMetricsController.php`. That needs a merge decision, not a blind move.

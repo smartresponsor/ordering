@@ -1,0 +1,19 @@
+{
+  "wave": 17,
+  "component": "Ordering",
+  "scope": "validator-layer-cleanup",
+  "canonical_targets": [
+    "src/Validator/Order/OrderValidSkuConstraint.php",
+    "src/Validator/Order/OrderValidSkuConstraintValidator.php"
+  ],
+  "legacy_cleanup_candidates": [
+    "src/Service/Security/Order/ValidSku.php",
+    "src/Service/Security/Order/ValidSkuValidator.php",
+    "src/ServiceInterface/Security/Order/ValidSkuInterface.php",
+    "src/ServiceInterface/Security/Order/ValidSkuValidatorInterface.php"
+  ],
+  "updated_files": [
+    "config/services.yaml"
+  ],
+  "policy": "touched-files overlay only; cleanup is paired and refuses to remove legacy files unless canonical target exists"
+}

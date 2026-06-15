@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Refund\Order\RefundServiceInterface;
@@ -22,13 +22,13 @@ final readonly class OrderRefundService implements RefundServiceInterface
     ) {
     }
 
-    public function refund(string $orderId, string $amount, ?string $reason = null): OrderRefundTransaction
+    public function refund(string $orderId, string $amount, ?string $reason = null): OrderRefundTransactionEntity
     {
         if (!method_exists($this->gateway, 'refund')) {
             throw new \RuntimeException('Gateway does not support refunds');
         }
         $refundId = $this->gateway->refund($orderId, $amount, ['reason' => $reason]);
-        $tx = new OrderRefundTransaction($orderId, $amount, $refundId, $reason);
+        $tx = new OrderRefundTransactionEntity($orderId, $amount, $refundId, $reason);
         $this->refunds->add($tx);
 
         return $tx;

@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\EventSubscriber;
+
+use App\Service\Security\Order\OrderWebhookSignatureVerifier;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+final readonly class OrderWebhookHmacSubscriber
+{
+    public function __construct(
+        private OrderWebhookSignatureVerifier $verifier,
+        private string $header = 'X-Signature',
+    ) {
+    }
+
+    public function __invoke(RequestEvent $event): void
+    {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        $request = $event->getRequest();
+        $path = $request->getPathInfo();
+        if (!str_starts_with($path, '/webhooks/') && !str_starts_with($path, '/api/webhooks/')) {
+            return;
+        }
+
+        $signature = $request->headers->get($this->header);
+        $payload = $request->getContent() ?: '';
+        if (!$this->verifier->isValid($payload, $signature)) {
+            $event->setResponse(new JsonResponse([
+                'error' => 'Invalid webhook signature',
+            ], 401));
+        }
+    }
+}

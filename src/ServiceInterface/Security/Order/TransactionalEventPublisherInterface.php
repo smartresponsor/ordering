@@ -9,18 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Outbox\OutboxMessage;
-use App\RepositoryInterface\Order\OutboxRepositoryInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
+use App\Entity\Order\OrderOutboxMessageEntity;
 
-interface TransactionalEventPublisherInterface
+interface TransactionalEventPublisherInterface extends \App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface
 {
-    public function __construct(
-        OutboxRepositoryInterface $outbox,
-        MessageBusInterface $bus,
-    );
-
-    public function publish(string $topic, array $payload): string;
-
-    public function relay(OutboxMessage $m): void;
+    public function relay(OrderOutboxMessageEntity $m): void;
 }

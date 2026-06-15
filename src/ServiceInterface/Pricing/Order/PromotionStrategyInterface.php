@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 
 interface PromotionStrategyInterface
 {
-    public function discountFor(OrderItem $orderItem): int; // returns discount in minor units
+    public function discountFor(OrderItemEntity $OrderItemEntity): int; // returns discount in minor units
 }

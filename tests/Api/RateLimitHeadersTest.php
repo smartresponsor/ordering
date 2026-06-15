@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-use App\Http\Middleware\RateLimitHeaderMiddleware;
+use App\Middleware\Http\OrderRateLimitHeaderMiddleware;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +29,7 @@ final class RateLimitHeadersTest extends TestCase
             'interval' => '60 seconds',
         ], new InMemoryStorage());
 
-        $mw = new RateLimitHeaderMiddleware($kernel, $limiterFactory);
+        $mw = new OrderRateLimitHeaderMiddleware($kernel, $limiterFactory);
         $resp = $mw->handle(Request::create('/api/orders', 'GET'));
         $this->assertTrue($resp->headers->has('X-RateLimit-Limit'));
         $this->assertTrue($resp->headers->has('X-RateLimit-Remaining'));

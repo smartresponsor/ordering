@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Domain\Order\OrderDomainMessage;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use App\ServiceInterface\Security\Order\TransactionalEventPublisherInterface;
@@ -28,13 +28,13 @@ final readonly class TransactionalEventPublisher implements TransactionalEventPu
     {
         $messageId = Uuid::v7()->toRfc4122();
         // Пишем в outbox (транзакция с UoW)
-        $this->outbox->add(new OutboxMessage($messageId, $topic, $payload));
+        $this->outbox->add(new OrderOutboxMessageEntity($messageId, $topic, $payload));
 
         // Асинхронная публикация произойдёт через OutboxRelay (ниже)
         return $messageId;
     }
 
-    public function relay(OutboxMessage $m): void
+    public function relay(OrderOutboxMessageEntity $m): void
     {
         $this->bus->dispatch(new OrderDomainMessage($m->messageId(), $m->topic(), $m->payload()));
     }

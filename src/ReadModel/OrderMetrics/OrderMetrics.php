@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\OrderMetrics;
+namespace App\ReadModel\OrderMetricsEntity;
 
-final readonly class OrderMetrics
+final readonly class OrderMetricsEntity
 {
     public function __construct(
         public string $orderId = '',

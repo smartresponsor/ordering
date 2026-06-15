@@ -1,0 +1,202 @@
+= Ordering Canonization Milestone
+:doctype: article
+:toc: macro
+:toclevels: 3
+
+Status: proposed staged milestone for Ordering cleanup and structural canonization.
+
+ toc::[]
+
+== Operating rules
+
+* Work only from the current uploaded slice.
+* Apply touched files only.
+* Do not overwrite the full repository with a cumulative snapshot.
+* Do not run repository-wide deletion scripts.
+* Preserve default Symfony `App\...` namespace for Ordering.
+* Keep Symfony-oriented typed layers visible in `src/`.
+* Keep `src/Entity/Order` as the entity-first anchor.
+
+== Wave 1: audit, guardrails, root duplicate cleanup
+
+Goal: make the current disorder explicit and safe to continue from.
+
+Deliverables:
+
+* `docs/root/guides/ordering-canon-audit.adoc`
+* `docs/root/guides/ordering-canon-milestone.adoc`
+* `.meta/ordering-canon-audit.json`
+* `tools/ordering-canon/ordering-canon-inventory.php`
+* PowerShell apply script that overlays touched files and removes only exact known root duplicates after target verification.
+
+Targeted root files for removal:
+
+[source,text]
+----
+DisputeService.php
+DisputeServiceInterface.php
+DisputeWorkflowTest.php
+OrderChargebackIssuedEvent.php
+OrderDisputeEntity.php
+OrderDisputeOpenedEvent.php
+OrderDisputeResolvedEvent.php
+OrderService.php
+RefundBlockedDuringDisputeTest.php
+----
+
+Acceptance:
+
+[source,powershell]
+----
+composer dump-autoload
+php tools/ordering-canon/ordering-canon-inventory.php --write=.meta/ordering-canon-inventory-after-wave1.json
+php bin/owner-canon-scan.php --write=.meta/owner-canon-scan-after-wave1.json
+----
+
+== Wave 2: class-form classification map
+
+Goal: produce a move map before moving code.
+
+Tasks:
+
+. Classify every PHP file by declared kind and intended typed layer.
+. Identify classes under `src/Service/**` that are not services.
+. Identify interfaces outside mirrored interface layers.
+. Identify command/message/resource/view/repository/middleware/listener/subscriber files in the wrong layer.
+. Produce a machine-readable move plan with source, target, namespace change, reference update status, and test impact.
+
+Acceptance:
+
+* No blind file moves.
+* Every move candidate has a typed-layer reason.
+* Every target path follows class basename.
+* Every namespace change has a grep-backed reference update list.
+
+== Wave 3: entity-first Order core
+
+Goal: make Order entity lifecycle the center of the component.
+
+Tasks:
+
+. Normalize `src/Entity/Order/**` and entity table naming.
+. Keep entity exceptions only inside `Entity` where structurally justified.
+. Align `Repository/Order`, entity lifecycle services, value objects, and events around the entity model.
+. Move non-entity model classes out of `src/Model/Order/**` or justify them as temporary compatibility.
+
+Acceptance:
+
+* Order aggregate/entity lifecycle is discoverable from `src/Entity/Order`.
+* Repository/service/event references are consistent.
+* Existing scanner no longer reports `src/Model/Order/Billing` as a canon violation, either because it is moved or because the scanner rule is replaced by a more precise accepted rule.
+
+== Wave 4: typed layer moves
+
+Goal: remove mixed-form buckets without breaking the runtime.
+
+Move directions:
+
+[cols="1,1", options="header"]
+|===
+|Current smell |Canonical destination
+
+|`*Command.php` inside service/security folders
+|`src/Command/...` or `src/Message/Command/...`, depending on Symfony Console vs Messenger command
+
+|`*Middleware.php`
+|`src/Middleware/...`
+
+|`*Subscriber.php`
+|`src/Subscriber/...`
+
+|`*Listener.php`
+|`src/EventListener/...` or `src/Listener/...` if introduced as canonical
+
+|`*Repository.php`
+|`src/Repository/...`
+
+|`*Resource.php`
+|`src/Api/Resource/...` or `src/ApiResource/...`, one canonical surface chosen per component
+
+|`*View.php`, `*ReadModel.php`
+|`src/ReadModel/...` unless the class is a DTO/API output
+
+|Security voters/authenticators/verifiers
+|Typed security-related layers such as `src/Voter`, `src/Authenticator`, `src/Service/Security`, depending on actual form
+|===
+
+Acceptance:
+
+* No generic `src/Security` mixed bucket remains unless each file is intentionally classified.
+* `src/Service` contains service-shaped classes only.
+* Mirrored interfaces live under `src/ServiceInterface/**` or the corresponding typed interface layer.
+
+== Wave 5: deployment and operational structure
+
+Goal: make deployment files discoverable and non-competing.
+
+Target direction:
+
+[source,text]
+----
+deploy/docker/...
+deploy/k8s/...
+deploy/helm/...
+deploy/observability/...
+deploy/ci/...
+deploy/ops/...
+deploy/notifiers/...
+deploy/sql/...
+----
+
+Tasks:
+
+. Move root `charts/` into `deploy/` only after checking all references.
+. Move `ci/`, `ops/`, `notifiers/`, and operational `sql/` under `deploy/` or `tools/` depending on function.
+. Update scripts, README, Makefile, CI config and docs references.
+
+Acceptance:
+
+* Root contains no competing operational directory when an equivalent `deploy/` home exists.
+* All command references are updated.
+* No broken relative paths in scripts.
+
+== Wave 6: compatibility shim retirement
+
+Goal: remove stale aliases after references are migrated.
+
+Tasks:
+
+. Locate every `class_alias` and `require_once` wrapper.
+. Replace references to old namespaces/classes.
+. Delete shim files only after grep confirms no remaining usage.
+. Keep a short `UPGRADE` note if external usage is plausible.
+
+Acceptance:
+
+* No accidental BC break inside repository.
+* Remaining aliases are documented and intentional.
+
+== Wave 7: tests, links, and final proof
+
+Goal: verify the repository after structural moves.
+
+Commands:
+
+[source,powershell]
+----
+composer dump-autoload
+composer lint:php
+composer lint:yaml
+composer lint:container
+composer test
+composer analyse
+php bin/owner-canon-scan.php --fail-on-violations
+----
+
+Acceptance:
+
+* Autoload passes.
+* Tests are aligned with moved classes.
+* Documentation and README links point to the new structure.
+* Remaining warnings are explicitly tracked.
+

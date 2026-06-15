@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\MessageHandler;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\Message\OrderMessage;
+use App\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -26,27 +27,21 @@ final readonly class OrderMessageHandler
 
     public function __invoke(OrderMessage $m): void
     {
-        $order = $this->em->find(Order::class, $m->orderId);
-        if (!$order instanceof Order) {
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($m->orderId);
+        if (!$order instanceof OrderEntity) {
             return;
         }
-        $legacyId = $this->legacyNumericOrderId($order);
         $map = [
-            OrderPlacedEvent::class => fn () => new OrderPlacedEvent($legacyId),
-            OrderPaidEvent::class => fn () => new OrderPaidEvent($order->id(), $order->grandTotal(), $order->currency(), $order->id()),
-            OrderShippedEvent::class => fn () => new OrderShippedEvent((string) $legacyId),
+            OrderPlacedEvent::class => fn () => new OrderPlacedEvent($order->slug()),
+            OrderPaidEvent::class => fn () => new OrderPaidEvent($order->slug(), $order->grandTotal(), $order->currency(), $order->slug()),
+            OrderShippedEvent::class => fn () => new OrderShippedEvent($order->slug()),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
             OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order, $order->refundedTotal()),
         ];
         if (isset($map[$m->eventName])) {
             $this->dispatcher->dispatch($map[$m->eventName](), $m->eventName);
         }
-    }
-
-    private function legacyNumericOrderId(Order $order): int
-    {
-        $digits = preg_replace('/\D+/', '', $order->id());
-
-        return is_string($digits) && '' !== $digits ? (int) $digits : 0;
     }
 }

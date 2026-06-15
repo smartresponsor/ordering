@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Repository;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderReadRepository
@@ -13,17 +14,18 @@ final readonly class OrderReadRepository
     {
     }
 
-    public function findOrderById(string $id): ?Order
+    public function findOrderById(string $id): ?OrderEntity
     {
-        /** @var Order|null $order */
-        $order = $this->entityManager->getRepository(Order::class)->findOneBy(['id' => $id]);
+        /** @var OrderRepository $repo */
+        $repo = $this->entityManager->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
 
         return $order;
     }
 
-    /** @return array<int, Order> */
+    /** @return array<int, OrderEntity> */
     public function findByCustomerId(string $customerId): array
     {
-        return $this->entityManager->getRepository(Order::class)->findBy(['customerId' => $customerId]);
+        return $this->entityManager->getRepository(OrderEntity::class)->findBy(['customerId' => $customerId]);
     }
 }

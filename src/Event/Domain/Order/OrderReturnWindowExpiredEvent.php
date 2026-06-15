@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Order;
 
-use App\Entity\Order\OrderReturnPolicy;
+use App\Model\Order\OrderReturnPolicy;
 
 final readonly class OrderReturnWindowExpiredEvent
 {

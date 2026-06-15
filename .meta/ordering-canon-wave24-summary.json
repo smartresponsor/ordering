@@ -1,0 +1,18 @@
+{
+  "wave": "24",
+  "component": "Ordering",
+  "scope": "command naming/layer cleanup",
+  "canonical_targets": [
+    "src/Command/Outbox/OrderOutboxRelayCommand.php",
+    "src/Command/ReadModel/OrderReadModelSyncCommand.php"
+  ],
+  "legacy_files": [
+    "src/Command/Operations/Order/OutboxRelayCommand.php",
+    "src/Command/Operations/Order/SyncReadModelCommand.php"
+  ],
+  "notes": [
+    "Moves remaining unprefixed command classes from Operations/Order to explicit command-purpose layers.",
+    "Symfony command names are preserved: order:outbox:relay and order:readmodel:sync.",
+    "No entity-first refactor or broad service cleanup is included in this wave."
+  ]
+}

@@ -7,9 +7,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Service\Http\Order\Redactor;
 
-function argvValue(array $argv, string $name, ?string $default = null): ?string
+function argvValue(array $argv, string $nameEntity, ?string $default = null): ?string
 {
-    $index = array_search($name, $argv, true);
+    $index = array_search($nameEntity, $argv, true);
 
     return false !== $index && isset($argv[$index + 1]) ? $argv[$index + 1] : $default;
 }

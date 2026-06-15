@@ -8,12 +8,12 @@ use App\ServiceInterface\Transport\Order\ProviderAdapterInterface;
 
 final readonly class DummyAdapter implements ProviderAdapterInterface
 {
-    public function __construct(private string $name)
+    public function __construct(private string $nameEntity)
     {
     }
 
-    public function name(): string
+    public function nameEntity(): string
     {
-        return $this->name;
+        return $this->nameEntity;
     }
 }

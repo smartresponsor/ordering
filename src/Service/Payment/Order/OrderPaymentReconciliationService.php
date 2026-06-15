@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Repository\Order\OrderRepository;
 use App\ServiceInterface\Payment\Order\OrderPaymentReconciliationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -24,7 +25,9 @@ final readonly class OrderPaymentReconciliationService implements OrderPaymentRe
 
     public function onCaptured(string $orderId, string $paymentId, int $amountMinor, string $currency): void
     {
-        $order = $this->em->getRepository(Order::class)->find($orderId);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($orderId);
         if (!$order) {
             $this->logger->warning('Order not found for payment capture', ['orderId' => $orderId]);
 
@@ -37,7 +40,9 @@ final readonly class OrderPaymentReconciliationService implements OrderPaymentRe
 
     public function onRefunded(string $orderId, string $paymentId, int $amountMinor, string $currency): void
     {
-        $order = $this->em->getRepository(Order::class)->find($orderId);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($orderId);
         if (!$order) {
             $this->logger->warning('Order not found for refund', ['orderId' => $orderId]);
 

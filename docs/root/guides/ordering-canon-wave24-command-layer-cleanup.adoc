@@ -1,0 +1,18 @@
+= Ordering Canon Wave 24: Command Layer Cleanup
+
+Wave 24 performs a narrow command naming/layer cleanup.
+
+== Canonical moves
+
+* `src/Command/Operations/Order/OutboxRelayCommand.php` -> `src/Command/Outbox/OrderOutboxRelayCommand.php`
+* `src/Command/Operations/Order/SyncReadModelCommand.php` -> `src/Command/ReadModel/OrderReadModelSyncCommand.php`
+
+== Preserved console names
+
+* `order:outbox:relay`
+* `order:readmodel:sync`
+
+== Safety boundaries
+
+This wave only overlays touched files and removes the paired legacy command files after the canonical targets exist.
+It does not rewrite the repository, does not delete the full tree, and does not touch the entity-first cleanup track.

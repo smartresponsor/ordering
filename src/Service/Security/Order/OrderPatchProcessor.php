@@ -11,14 +11,13 @@ namespace App\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Resource\Order\OrderResource;
+use App\ApiResource\View\Order\OrderResource;
 use App\Message\Command\Order\OrderCancelCommand;
 use App\Message\Command\Order\OrderPaymentCommand;
 use App\Message\Command\Order\OrderShipmentCommand;
-use App\ServiceInterface\Security\Order\OrderPatchProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final readonly class OrderPatchProcessor implements ProcessorInterface, OrderPatchProcessorInterface
+final readonly class OrderPatchProcessor implements ProcessorInterface
 {
     public function __construct(private MessageBusInterface $bus)
     {

@@ -1,0 +1,38 @@
+{
+  "wave": 16,
+  "component": "Ordering",
+  "purpose": "Move remaining API DTO surface out of src/Api into src/DTO/Api and retire broken Api Resource alias by pointing processors to canonical ApiResource view.",
+  "canonical_targets": [
+    "src/DTO/Api/OrderInput.php",
+    "src/DTO/Api/OrderOutput.php",
+    "src/DTO/Api/OrderPartialPaymentInput.php",
+    "src/DTO/Api/OrderPayInput.php",
+    "src/DTO/Api/OrderRefundInput.php",
+    "src/DTO/Api/OrderShipInput.php",
+    "src/DTO/Api/Order/OrderCreateInput.php"
+  ],
+  "updated_references": [
+    "src/Controller/Api/OrderPayAction.php",
+    "src/Controller/Api/OrderRefundAction.php",
+    "src/Controller/Api/OrderShipAction.php",
+    "src/State/Api/OrderDataPersister.php",
+    "src/Service/Security/Order/OrderPartialPaymentProcessor.php",
+    "src/Service/Security/Order/OrderRefundProcessor.php",
+    "src/Service/Security/Order/OrderPatchProcessor.php",
+    "src/Service/Security/Order/OrderPlaceProcessor.php"
+  ],
+  "legacy_cleanup_candidates": [
+    "src/Api/Dto/OrderInput.php",
+    "src/Api/Dto/OrderOutput.php",
+    "src/Api/Dto/OrderPartialPaymentInput.php",
+    "src/Api/Dto/OrderPayInput.php",
+    "src/Api/Dto/OrderRefundInput.php",
+    "src/Api/Dto/OrderShipInput.php",
+    "src/Api/Dto/Order/OrderCreateInput.php",
+    "src/Api/Resource/Order/OrderResource.php"
+  ],
+  "notes": [
+    "OrderOutput::fromEntity type was corrected from missing Order to OrderEntity.",
+    "Api Resource alias extended a final readonly class; references now use App\\ApiResource\\View\\Order\\OrderResource directly."
+  ]
+}

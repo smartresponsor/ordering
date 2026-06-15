@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-use App\Http\Idempotency\IdempotencyMiddleware;
+use App\Middleware\Http\OrderHttpIdempotencyMiddleware;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ final class IdempotencyTest extends TestCase
 
         $cache = new ArrayAdapter();
 
-        $mw = new IdempotencyMiddleware($kernel, $cache, 60);
+        $mw = new OrderHttpIdempotencyMiddleware($kernel, $cache, 60);
         $r1 = Request::create('/api/orders', 'POST', [], [], [], ['HTTP_Idempotency-Key' => 'abc']);
         $resp1 = $mw->handle($r1);
         $this->assertSame(201, $resp1->getStatusCode());

@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Shipment\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 interface UPSGatewayInterface
 {
-    public function createShipment(Order $order, string $carrier): string;
+    public function createShipment(OrderEntity $OrderEntity, string $carrier): string;
 
     public function updateShipmentStatus(string $trackingNumber, string $status): bool;
 

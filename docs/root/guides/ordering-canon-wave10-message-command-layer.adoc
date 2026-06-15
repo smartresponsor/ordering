@@ -1,0 +1,23 @@
+= Ordering canon wave 10: message command layer closure
+:toc:
+
+== Scope
+
+Wave 10 closes the duplicated Messenger command/handler bucket that remained under `src/Service/Security/Order`.
+The wave keeps the canonical Symfony message forms under `src/Message/**` and message handlers under `src/MessageHandler/**` or `src/Message/Handler/**`.
+
+== Canonicalized forms
+
+* `App\Message\Command\FlakyCommand` is now a real command class, not an alias/extension of the legacy service-layer class.
+* `App\MessageHandler\FlakyHandler` is now a real message handler, not an extension of the legacy service-layer handler.
+* `App\Message\Command\Order\RecalculateOrderPricingCommand` is now a real command class, not a `require_once` + `class_alias` bridge.
+* Canonical handlers that referenced the non-existing short `Order` symbol now use `OrderEntity`.
+
+== Retired legacy files
+
+The apply script backs up and removes only explicitly listed duplicates from `src/Service/Security/Order` after verifying that their canonical target exists.
+No repository-wide cleanup, full overwrite, or cumulative snapshot apply is performed.
+
+== Next contour
+
+The next safe contour is processor/API-resource/factory classification from `src/Service/Security/Order`, especially `*Processor.php`, `*Resource.php`, `*Transformer.php`, and `*Factory.php`.

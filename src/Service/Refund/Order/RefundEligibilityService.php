@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderReturnPolicy;
-use App\Entity\OrderShipment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderShipmentEntity;
+use App\Model\Order\OrderReturnPolicy;
 use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,12 +22,12 @@ final readonly class RefundEligibilityService implements RefundEligibilityServic
     {
     }
 
-    public function canRefund(Order $order): bool
+    public function canRefund(OrderEntity $order): bool
     {
         // If no delivered shipments -> allow (pre-delivery policy handled elsewhere)
-        /** @var OrderShipment[] $ships */
-        $ships = $this->em->getRepository(OrderShipment::class)->findBy(['order' => $order]);
-        $delivered = array_filter($ships, fn ($s) => OrderShipment::STATUS_DELIVERED === $s->getStatus() || OrderShipment::STATUS_COMPLETED === $s->getStatus());
+        /** @var OrderShipmentEntity[] $ships */
+        $ships = $this->em->getRepository(OrderShipmentEntity::class)->findBy(['order' => $order]);
+        $delivered = array_filter($ships, fn ($s) => OrderShipmentEntity::STATUS_DELIVERED === $s->getStatus() || OrderShipmentEntity::STATUS_COMPLETED === $s->getStatus());
         if (!$delivered) {
             return true;
         }

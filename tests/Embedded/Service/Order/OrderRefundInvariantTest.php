@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
 use App\Service\Security\Order\OrderService;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +19,9 @@ final class OrderRefundInvariantTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $svc = self::$kernel->getContainer()->get(OrderService::class);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = OrderEntity::create('USD', '100.00');
         $em->persist($order);
-        $payment = new OrderPayment($order, 'pi_1', '60.00', 'USD');
+        $payment = new OrderPaymentEntity($order, 'pi_1', '60.00', 'USD');
         $em->persist($payment);
         $em->flush();
 

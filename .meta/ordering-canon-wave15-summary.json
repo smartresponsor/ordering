@@ -1,0 +1,33 @@
+{
+  "wave": "ordering-canon-wave15",
+  "scope": "API Platform provider/state classes moved from src/Api bucket into Symfony type layers.",
+  "canonical_targets": [
+    "src/Provider/Api/OrderMetricsProvider.php",
+    "src/Provider/Api/OrderMetricsAggregateProvider.php",
+    "src/Provider/Api/OrderMetricsRollupProvider.php",
+    "src/State/Api/OrderDataPersister.php",
+    "src/State/Api/OrderPriceProvider.php"
+  ],
+  "legacy_files": [
+    "src/Api/Provider/OrderMetricsProvider.php",
+    "src/Api/Provider/OrderMetricsAggregateProvider.php",
+    "src/Api/Provider/OrderMetricsRollupProvider.php",
+    "src/Api/State/OrderDataPersister.php",
+    "src/Api/State/OrderPriceProvider.php"
+  ],
+  "updated_references": [
+    "src/Resources/config/services.php",
+    "src/Service/Analytics/Order/OrderMetricsView.php",
+    "src/Service/Analytics/Order/OrderMetricsAggregateView.php",
+    "src/Service/Analytics/Order/OrderMetricsRollupView.php"
+  ],
+  "bug_fixes": [
+    "OrderDataPersister now instantiates OrderEntity instead of undefined Order."
+  ],
+  "intentionally_not_touched": [
+    "src/Api/Dto/*",
+    "src/Api/Resource/*",
+    "src/ApiResource/*"
+  ],
+  "destructive_policy": "No full repository overwrite. Apply script overlays touched files and removes only listed legacy files after canonical target checks."
+}

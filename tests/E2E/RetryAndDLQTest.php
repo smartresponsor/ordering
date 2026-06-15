@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\E2E;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\Service\Outbox\OutboxMessengerDispatcher;
 use App\Service\Outbox\OutboxPublisher;
@@ -39,7 +39,7 @@ final class RetryAndDLQTest extends TestCase
         $tool->dropDatabase();
         $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
-        $order = new Order();
+        $order = new OrderEntity();
         $em->persist($order);
         $em->flush();
         /** @var OutboxPublisher $pub */ $pub = $c->get(OutboxPublisher::class);

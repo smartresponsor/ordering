@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\E2E;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use PHPUnit\Framework\TestCase;
 
 final class OrderFullCycleTest extends TestCase
 {
     public function testFullCycle(): void
     {
-        $o = new Order('USD', '100.00');
+        $o = new OrderEntity('USD', '100.00');
         $o->applyPartialPayment('40.00', 'p1', true);
         $o->applyPartialPayment('60.00', 'p2', true);
         $this->assertSame('paid', $o->status());

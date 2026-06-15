@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderPayment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
+use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 use App\ServiceInterface\Payment\Order\PaymentProcessorServiceInterface;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class PaymentProcessorService implements PaymentProcessorServiceInterface
@@ -23,10 +23,10 @@ final readonly class PaymentProcessorService implements PaymentProcessorServiceI
     ) {
     }
 
-    public function charge(Order $order, int $amount, string $gatewayName = 'stripe'): OrderPayment
+    public function charge(OrderEntity $order, int $amount, string $gatewayName = 'stripe'): OrderPaymentEntity
     {
         $reference = $this->gateway->charge($order, $amount);
-        $payment = new OrderPayment($order, $gatewayName, $amount);
+        $payment = new OrderPaymentEntity($order, $gatewayName, $amount);
         $payment->markPaid();
         if (method_exists($payment, 'setReference')) {
             $payment->setReference($reference);

@@ -14,7 +14,7 @@ deploy:
 
 test-mail:
 	@echo "Sending test email (requires app and mailpit up)"
-	@curl -s -X POST http://localhost:8080/api/test-email \
+	@curl -s -X POST http://localhost:8080/api/order/test/email \
 		-H "Content-Type: application/json" \
 		-d '{"to":"test@example.com","subject":"Mailpit CLI Test","message":"Hello from Makefile"}' || true
 	@echo "\nCheck http://localhost:8025"

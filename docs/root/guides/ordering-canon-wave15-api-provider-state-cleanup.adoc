@@ -1,0 +1,27 @@
+= Ordering Canon Wave 15: API Provider and State Cleanup
+
+Wave 15 moves API Platform provider/state runtime classes out of the broad `src/Api` bucket and into Symfony-oriented type layers.
+
+== Canonical targets
+
+* `src/Provider/Api/OrderMetricsProvider.php`
+* `src/Provider/Api/OrderMetricsAggregateProvider.php`
+* `src/Provider/Api/OrderMetricsRollupProvider.php`
+* `src/State/Api/OrderDataPersister.php`
+* `src/State/Api/OrderPriceProvider.php`
+
+== Legacy files retired by apply script
+
+* `src/Api/Provider/OrderMetricsProvider.php`
+* `src/Api/Provider/OrderMetricsAggregateProvider.php`
+* `src/Api/Provider/OrderMetricsRollupProvider.php`
+* `src/Api/State/OrderDataPersister.php`
+* `src/Api/State/OrderPriceProvider.php`
+
+== Notes
+
+The wave updates API Platform `provider:` references on metrics view resources and the explicit service import for `OrderDataPersister`.
+
+`OrderDataPersister` also keeps the existing `OrderEntity` import and uses `new OrderEntity()` instead of the undefined `new Order()` expression found in the source slice.
+
+This wave intentionally does not move DTO files. DTO normalization deserves a separate review because existing processors and API inputs still reference `App\Api\Dto`.

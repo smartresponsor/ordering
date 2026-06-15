@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
-use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
+use App\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface;
 
-final readonly class ClickHouseExportSink implements ExportSinkInterface
+final readonly class ClickHouseExportSink implements ClickHouseExportSinkInterface
 {
     public function __construct(
         private string $endpoint,

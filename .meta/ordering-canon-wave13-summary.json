@@ -1,0 +1,24 @@
+{
+  "wave": "13",
+  "component": "Ordering",
+  "scope": "rate-limit listener layer cleanup",
+  "canonical_targets": [
+    "src/EventListener/OrderApiRateLimitListener.php",
+    "src/EventListener/OrderTenantRateLimitListener.php"
+  ],
+  "updated_files": [
+    "src/Resources/config/services.php"
+  ],
+  "legacy_cleanup_candidates": [
+    "src/Service/Security/Order/OrderApiRateLimitListener.php",
+    "src/Service/Security/Order/OrderTenantRateLimitListener.php",
+    "src/ServiceInterface/Security/Order/OrderApiRateLimitListenerInterface.php",
+    "src/ServiceInterface/Security/Order/OrderTenantRateLimitListenerInterface.php"
+  ],
+  "notes": [
+    "Moves runtime rate-limit listeners out of Service/Security/Order into Symfony EventListener type-layer.",
+    "Keeps Order prefix and adds AsEventListener attributes to canonical listeners.",
+    "Updates services.php imports so explicit rate limiter arguments target canonical listener classes.",
+    "Cleanup is paired and guarded by canonical target existence."
+  ]
+}

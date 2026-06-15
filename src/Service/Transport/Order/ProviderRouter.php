@@ -49,19 +49,19 @@ final readonly class ProviderRouter implements ProviderRouterInterface
         $bestProvider = null;
         $bestScore = INF;
 
-        foreach ($this->adapter as $name => $adapter) {
-            if (!isset($this->probe[$name])) {
+        foreach ($this->adapter as $nameEntity => $adapter) {
+            if (!isset($this->probe[$nameEntity])) {
                 continue;
             }
 
-            $probe = $this->probe[$name];
+            $probe = $this->probe[$nameEntity];
 
             if (!$this->quotaPolicy->allow($probe)) {
                 continue;
             }
 
             if ($context->canary()) {
-                $percent = $this->canaryPercent[$name] ?? 0.0;
+                $percent = $this->canaryPercent[$nameEntity] ?? 0.0;
                 if ($percent <= 0.0) {
                     continue;
                 }
@@ -80,7 +80,7 @@ final readonly class ProviderRouter implements ProviderRouterInterface
 
             if ($score < $bestScore) {
                 $bestScore = $score;
-                $bestProvider = $name;
+                $bestProvider = $nameEntity;
             }
         }
 

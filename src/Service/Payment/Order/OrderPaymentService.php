@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\OrderPaymentTransaction;
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderPaymentTransactionEntity;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\Service\Refund\Order\OrderRefundService;
 use App\ServiceInterface\Payment\Order\OrderPaymentServiceInterface;
 
@@ -27,14 +27,14 @@ final readonly class OrderPaymentService implements OrderPaymentServiceInterface
         return $amount >= 0;
     }
 
-    public function applyPartialPayment(string $orderId, string $paymentId, string $currency, string $amount): OrderPaymentTransaction
+    public function applyPartialPayment(string $orderId, string $paymentId, string $currency, string $amount): OrderPaymentTransactionEntity
     {
         $method = '' !== strtolower($currency) ? strtolower($currency) : 'unknown';
 
         return $this->partialPayments->applyPartial($orderId, $amount, $method, $paymentId);
     }
 
-    public function refund(string $orderId, string $refundId, string $currency, string $amount, ?string $reason = null): OrderRefundTransaction
+    public function refund(string $orderId, string $refundId, string $currency, string $amount, ?string $reason = null): OrderRefundTransactionEntity
     {
         $transaction = $this->refunds->refund($orderId, $amount, $reason);
 

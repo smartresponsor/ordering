@@ -6,16 +6,16 @@ order_management_controller:
     resource: ../src/Controller/OrderManagementController.php
     type: attribute
 
-health_check_controller:
-    resource: ../src/Controller/HealthCheckController.php
+order_host_health_check_controller:
+    resource: ../src/Controller/Monitoring/OrderHostHealthCheckController.php
     type: attribute
 
-readiness_controller:
-    resource: ../src/Controller/ReadinessController.php
+order_readiness_controller:
+    resource: ../src/Controller/Monitoring/OrderReadinessController.php
     type: attribute
 
 order_metrics_controller:
-    resource: ../src/Controller/OrderMetricsController.php
+    resource: ../src/Controller/Monitoring/OrderMetricsController.php
     type: attribute
 
 order_api_controller:
@@ -29,3 +29,10 @@ test_email_controller:
 payment_webhook_controller:
     resource: ../src/Controller/Webhook/PaymentWebhookController.php
     type: attribute
+
+order_monitoring_health_controller:
+    resource: ../src/Controller/Monitoring/OrderHealthMonitoringController.php
+    type: attribute
+
+cruding_routes:
+    resource: ../../Cruding/config/routes/cruding_crud.yaml

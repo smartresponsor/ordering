@@ -10,11 +10,12 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderReturnPolicy;
-use App\Entity\OrderShipment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderShipmentEntity;
 use App\Event\Domain\Order\OrderDeliveredEvent;
 use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
+use App\Model\Order\OrderReturnPolicy;
+use App\Repository\Order\OrderRepository;
 use App\ServiceInterface\Shipment\Order\ShipmentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -29,13 +30,15 @@ final readonly class ShipmentService implements ShipmentServiceInterface
 
     public function markShipped(string $orderId, string $tracking, ?string $carrier = null): void
     {
-        $order = $this->em->getRepository(Order::class)->find($orderId);
-        if (!$order instanceof Order) {
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($orderId);
+        if (!$order instanceof OrderEntity) {
             return;
         }
 
-        $shipment = $this->em->getRepository(OrderShipment::class)->findOneBy(['order' => $order]);
-        if (!$shipment instanceof OrderShipment) {
+        $shipment = $this->em->getRepository(OrderShipmentEntity::class)->findOneBy(['order' => $order]);
+        if (!$shipment instanceof OrderShipmentEntity) {
             return;
         }
 
@@ -53,7 +56,7 @@ final readonly class ShipmentService implements ShipmentServiceInterface
         $this->em->flush();
     }
 
-    public function markDelivered(OrderShipment $shipment, \DateTimeInterface $at): void
+    public function markDelivered(OrderShipmentEntity $shipment, \DateTimeInterface $at): void
     {
         $shipment->markDelivered($at);
 
@@ -69,7 +72,7 @@ final readonly class ShipmentService implements ShipmentServiceInterface
         $this->events->dispatch(new OrderDeliveredEvent($shipment));
     }
 
-    public function completeShipment(OrderShipment $shipment): void
+    public function completeShipment(OrderShipmentEntity $shipment): void
     {
         $shipment->markCompleted();
         $this->em->flush();

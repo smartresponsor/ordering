@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\ServiceInterface\Workflow\Order\OrderRefundedHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +24,7 @@ final readonly class OrderRefundedHandler implements OrderRefundedHandlerInterfa
 
     public function __invoke(OrderRefundedEvent $event): void
     {
-        if (!$event->order instanceof Order) {
+        if (!$event->order instanceof OrderEntity) {
             return;
         }
 

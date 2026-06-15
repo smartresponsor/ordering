@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\FlatPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\PromotionStrategyInterface;
 
@@ -19,9 +19,9 @@ readonly class FlatPromotionStrategy implements PromotionStrategyInterface, Flat
     {
     }
 
-    public function discountFor(OrderItem $orderItem): int
+    public function discountFor(OrderItemEntity $OrderItemEntity): int
     {
-        $base = $orderItem->getUnitPrice() * $orderItem->getQuantity();
+        $base = $OrderItemEntity->getUnitPrice() * $OrderItemEntity->getQuantity();
 
         return (int) round($base * ($this->percent / 100));
     }

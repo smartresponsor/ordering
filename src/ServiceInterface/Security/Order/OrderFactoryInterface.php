@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 interface OrderFactoryInterface
 {
-    public function create(float $total = 100.00): Order;
+    public function create(float $total = 100.00): OrderEntity;
 }

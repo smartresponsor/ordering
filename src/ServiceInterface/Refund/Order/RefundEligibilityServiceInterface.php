@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Refund\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 interface RefundEligibilityServiceInterface
 {
-    public function canRefund(Order $order): bool;
+    public function canRefund(OrderEntity $OrderEntity): bool;
 }

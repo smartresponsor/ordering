@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Refund\Order;
 
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
 
@@ -20,5 +20,5 @@ interface RefundServiceInterface
         OrderRefundTransactionRepositoryInterface $refunds,
     );
 
-    public function refund(string $orderId, string $amount, ?string $reason = null): OrderRefundTransaction;
+    public function refund(string $orderId, string $amount, ?string $reason = null): OrderRefundTransactionEntity;
 }

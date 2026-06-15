@@ -13,6 +13,5 @@ use App\Message\Command\Order\OrderPaymentCommand;
 
 interface OrderPaymentCommandHandlerInterface
 {
-
     public function __invoke(OrderPaymentCommand $cmd): void;
 }

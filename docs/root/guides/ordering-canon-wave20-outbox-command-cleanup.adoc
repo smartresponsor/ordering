@@ -1,0 +1,21 @@
+= Ordering Canon Wave 20: Outbox Command Cleanup
+
+Wave 20 moves the remaining root-level outbox console commands into the canonical Symfony command layer for the Ordering component.
+
+== Canonical moves
+
+* `src/Command/OutboxDispatchCommand.php` -> `src/Command/Outbox/OrderOutboxDispatchCommand.php`
+* `src/Command/OutboxProcessCommand.php` -> `src/Command/Outbox/OrderOutboxProcessCommand.php`
+* `src/Command/OutboxReplayCommand.php` -> `src/Command/Outbox/OrderOutboxReplayCommand.php`
+
+== Preserved runtime contract
+
+The Symfony command names are intentionally preserved:
+
+* `order:outbox:dispatch`
+* `order:outbox:process`
+* `order:outbox:replay`
+
+== Cleanup rule
+
+The apply script overlays only the touched files and then backs up/removes only the explicitly paired legacy root command files after each canonical target exists.

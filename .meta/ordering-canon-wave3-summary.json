@@ -1,0 +1,49 @@
+{
+  "wave": "ordering-canon-wave3-controller-layer-move",
+  "base_archive": "OrderingThu.zip",
+  "scope": "Move API controller classes from src/Api/Controller to Symfony type layer src/Controller/Api and update explicit DI imports.",
+  "moved_files": [
+    {
+      "from": "src/Api/Controller/OrderAuditAction.php",
+      "to": "src/Controller/Api/OrderAuditAction.php"
+    },
+    {
+      "from": "src/Api/Controller/OrderPayAction.php",
+      "to": "src/Controller/Api/OrderPayAction.php"
+    },
+    {
+      "from": "src/Api/Controller/OrderPayController.php",
+      "to": "src/Controller/Api/OrderPayController.php"
+    },
+    {
+      "from": "src/Api/Controller/OrderRefundAction.php",
+      "to": "src/Controller/Api/OrderRefundAction.php"
+    },
+    {
+      "from": "src/Api/Controller/OrderShipAction.php",
+      "to": "src/Controller/Api/OrderShipAction.php"
+    },
+    {
+      "from": "src/Api/Controller/OrderShipController.php",
+      "to": "src/Controller/Api/OrderShipController.php"
+    }
+  ],
+  "updated_files": [
+    "src/Resources/config/services.php"
+  ],
+  "removed_after_overlay": [
+    "src/Api/Controller/OrderAuditAction.php",
+    "src/Api/Controller/OrderPayAction.php",
+    "src/Api/Controller/OrderPayController.php",
+    "src/Api/Controller/OrderRefundAction.php",
+    "src/Api/Controller/OrderShipAction.php",
+    "src/Api/Controller/OrderShipController.php"
+  ],
+  "intentionally_deferred": [
+    "Entity-first restructuring",
+    "Service/Subscriber consolidation because existing src/Subscriber/Event duplicates require a second collision-aware wave",
+    "Service/Security decomposition",
+    "Model/Order/Billing owner-canon violation"
+  ],
+  "safety": "Touched-files overlay only; old files removed by PowerShell only after canonical target exists."
+}

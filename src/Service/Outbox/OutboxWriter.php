@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OutboxWriter
@@ -19,6 +19,6 @@ final readonly class OutboxWriter
     public function store(string $topic, array $payload): void
     {
         $aggregateId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? $payload['id'] ?? $topic);
-        $this->em->persist(new OutboxMessage($aggregateId, $topic, $payload));
+        $this->em->persist(new OrderOutboxMessageEntity($aggregateId, $topic, $payload));
     }
 }

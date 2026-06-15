@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\FlatTaxationStrategyInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 
@@ -20,7 +20,7 @@ readonly class FlatTaxationStrategy implements LegacyTaxationStrategyInterface, 
     }
 
     // 20%
-    public function taxFor(OrderItem $orderItem, int $priceAfterDiscount): int
+    public function taxFor(OrderItemEntity $OrderItemEntity, int $priceAfterDiscount): int
     {
         return (int) round($priceAfterDiscount * $this->rate);
     }

@@ -19,11 +19,15 @@ final class OrderShipmentType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('carrier', TextType::class, ['label' => 'Carrier'])
+            ->add('carrier', TextType::class, [
+                'label' => 'Carrier',
+                'help' => 'Carrier code or human-readable carrier nameEntity.',
+            ])
             ->add('note', TextareaType::class, [
                 'label' => 'Operational note',
                 'required' => false,
-                'attr' => ['rows' => 2],
+                'attr' => ['rows' => 3],
+                'help' => 'Internal note for fulfillment or dispatch operators.',
             ])
             ->add('submit', SubmitType::class, ['label' => 'Ship order']);
     }

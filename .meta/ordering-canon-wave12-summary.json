@@ -1,0 +1,24 @@
+{
+  "component": "Ordering",
+  "wave": 12,
+  "scope": "fault-tolerance and storage type-layer cleanup",
+  "touched_files": [
+    "src/Middleware/FaultTolerance/OrderRateLimiterMiddleware.php",
+    "src/Service/FaultTolerance/OrderCircuitBreakerService.php",
+    "src/Factory/Storage/OrderS3ClientFactory.php",
+    "src/Resources/config/services.php",
+    "docs/root/guides/ordering-canon-wave12-fault-tolerance-storage-cleanup.adoc",
+    ".meta/ordering-canon-wave12-summary.json"
+  ],
+  "legacy_files_to_backup_and_remove": [
+    "src/Infrastructure/FaultTolerance/RateLimiterMiddleware.php",
+    "src/Infrastructure/FaultTolerance/CircuitBreaker.php",
+    "src/Infrastructure/Storage/Order/S3ClientFactory.php"
+  ],
+  "non_goals": [
+    "No full repository overwrite",
+    "No cumulative snapshot",
+    "No Entity-first migration in this wave",
+    "No broad Service/Security/Order cleanup"
+  ]
+}

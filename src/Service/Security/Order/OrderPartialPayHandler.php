@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Message\Command\Order\OrderPartialPayCommand;
 use App\ServiceInterface\Security\Order\OrderPartialPayHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,8 +24,10 @@ final readonly class OrderPartialPayHandler implements OrderPartialPayHandlerInt
 
     public function __invoke(OrderPartialPayCommand $cmd): void
     {
-        $order = $this->em->getRepository(Order::class)->find($cmd->orderId);
-        if (!$order) {
+        /** @var \App\Repository\Order\OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($cmd->orderId);
+        if (!$order instanceof OrderEntity) {
             throw new \RuntimeException('Order not found');
         }
         $order->applyPartialPayment($cmd->amount, $cmd->externalRef);

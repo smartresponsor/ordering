@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\State\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderStatusChanged;
 use App\ServiceInterface\State\Order\OrderStateMachineInterface;
 use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
@@ -15,37 +15,37 @@ final readonly class OrderStateMachine implements OrderStateMachineInterface
     {
     }
 
-    public function place(Order $order): void
+    public function place(OrderEntity $order): void
     {
         $this->transit($order, 'placed');
     }
 
-    public function confirm(Order $order): void
+    public function confirm(OrderEntity $order): void
     {
         $this->transit($order, 'paid');
     }
 
-    public function fulfill(Order $order): void
+    public function fulfill(OrderEntity $order): void
     {
         $this->transit($order, 'shipped');
     }
 
-    public function close(Order $order): void
+    public function close(OrderEntity $order): void
     {
         $this->transit($order, 'completed');
     }
 
-    public function cancel(Order $order): void
+    public function cancel(OrderEntity $order): void
     {
         $this->transit($order, 'cancelled');
     }
 
-    public function return(Order $order): void
+    public function return(OrderEntity $order): void
     {
         $this->transit($order, 'refunded');
     }
 
-    private function transit(Order $order, string $targetStatus): void
+    private function transit(OrderEntity $order, string $targetStatus): void
     {
         $from = $order->status();
         $allowed = match ($from) {

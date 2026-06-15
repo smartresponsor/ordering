@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\ValueObject\Pricing\Order\Discount;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\Price;
@@ -20,7 +20,7 @@ interface PriceCalculatorServiceInterface
 {
     public function __construct(TaxationStrategyInterface $taxStrategy);
 
-    public function calculateItemPrice(OrderItem $orderItem, Taxation $taxation, ?Discount $discount = null): Price;
+    public function calculateItemPrice(OrderItemEntity $OrderItemEntity, Taxation $taxation, ?Discount $discount = null): Price;
 
-    public function calculateOrderTotals(Order $order, Taxation $taxation, ?Discount $discount = null): Money;
+    public function calculateOrderTotals(OrderEntity $OrderEntity, Taxation $taxation, ?Discount $discount = null): Money;
 }

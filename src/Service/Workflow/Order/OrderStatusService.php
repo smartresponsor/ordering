@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Workflow\Order\OrderStatusServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
@@ -22,12 +22,12 @@ final readonly class OrderStatusService implements OrderStatusServiceInterface
     ) {
     }
 
-    public function canTransition(Order $order, string $transition): bool
+    public function canTransition(OrderEntity $order, string $transition): bool
     {
         return $this->orderWorkflow->can($order, $transition);
     }
 
-    public function applyTransition(Order $order, string $transition): void
+    public function applyTransition(OrderEntity $order, string $transition): void
     {
         if (!$this->orderWorkflow->can($order, $transition)) {
             throw new \RuntimeException(sprintf('Invalid transition %s for order %s', $transition, $order->getId()));

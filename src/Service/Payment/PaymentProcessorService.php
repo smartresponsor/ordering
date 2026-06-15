@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
-use App\Entity\Order;
-use App\Entity\OrderPayment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
 use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -15,10 +15,10 @@ final readonly class PaymentProcessorService
     {
     }
 
-    public function charge(Order $order, int $amount, string $gatewayName = 'stripe'): OrderPayment
+    public function charge(OrderEntity $order, int $amount, string $gatewayName = 'stripe'): OrderPaymentEntity
     {
         $ref = $this->gateway->charge($order, $amount);
-        $p = new OrderPayment($order, $gatewayName, $amount);
+        $p = new OrderPaymentEntity($order, $gatewayName, $amount);
         $p->markPaid();
         $this->em->persist($p);
 

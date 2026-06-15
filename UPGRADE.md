@@ -1,18 +1,23 @@
-# Upgrade Guide to 1.0.0-rc1
+# Upgrade notes
 
-## Namespaces
-- Use `OrderComponent\Entity\...` and `OrderComponent\Service\...` instead of legacy `App\...` paths.
-- Events: `OrderComponent\Event\Order\*`
+## Namespace and integration model
+- Current repository code uses the default Symfony application namespace: `App\\...`
+- Do not assume a separate package namespace such as `OrderComponent\\...` in this repository snapshot
 
-## Messenger & Outbox
-- Configure DSNs via `MESSENGER_TRANSPORT_DSN` and `MESSENGER_FAILURE_TRANSPORT_DSN`.
-- Run outbox dispatch via `order:outbox:dispatch` (if using Iteration 11) or `order:outbox:replay` in stabilization pack.
-
-## Doctrine
-- Run migrations for your app schema; package ships entity mapping attributes.
+## Doctrine-first storage
+- Doctrine entities under `src/Entity/` and migrations under `migrations/` are the primary schema path
+- Prefer `php bin/console doctrine:migrations:migrate` and `php bin/console doctrine:schema:validate`
+- Do not treat legacy SQL assets as the primary operational schema flow
 
 ## API
-- Endpoints via API Platform 3; ensure the API Platform bundle enabled and mapping paths include `src/Entity` and `src/Api`.
+- Current API specs live under `api/openapi/`
+- Archived API snapshots live under `api/openapi/archive/`
+
+## Deploy surface
+- Dockerfiles and Compose files live under `deploy/`
+- Helmfile and values live under `deploy/order/`
+- Security manifests live under `deploy/security/`
 
 ## Testing
-- Use provided test kernels and SQLite DB for integration testing.
+- Main automated test surface lives under `tests/`
+- Use repository workflows or local PHPUnit runs for validation

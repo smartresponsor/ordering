@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Outbox\IdempotencyKey;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class IdempotencyGuard

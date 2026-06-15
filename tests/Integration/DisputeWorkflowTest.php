@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Service\Dispute\Order\DisputeService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Pricing\Order\Money;
@@ -23,7 +23,7 @@ final class DisputeWorkflowTest extends KernelTestCase
         $dispatcher->addSubscriber(new OrderDisputeSubscriber(new NullLogger()));
         $svc = new DisputeService($em, $dispatcher);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = new OrderEntity('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);
         $em->flush();
 

@@ -1,0 +1,30 @@
+{
+  "wave": 22,
+  "component": "Ordering",
+  "scope": "console command naming cleanup and outbox DLQ command collision split",
+  "canonical_targets": [
+    "src/Command/Operations/Order/OrderAuditRotateCommand.php",
+    "src/Command/Operations/Order/OrderAuditShipS3Command.php",
+    "src/Command/Outbox/OrderOutboxDlqListCommand.php",
+    "src/Command/Outbox/OrderOutboxDlqRequeueCommand.php",
+    "src/CommandInterface/Console/Order/OrderAuditRotateCommandInterface.php",
+    "src/CommandInterface/Console/Order/OrderAuditShipS3CommandInterface.php",
+    "src/CommandInterface/Console/Order/OrderOutboxDlqListCommandInterface.php",
+    "src/CommandInterface/Console/Order/OrderOutboxDlqRequeueCommandInterface.php"
+  ],
+  "legacy_files": [
+    "src/Command/Operations/Order/AuditRotateCommand.php",
+    "src/Command/Operations/Order/AuditShipS3Command.php",
+    "src/Command/Operations/Order/DlqListCommand.php",
+    "src/Command/Operations/Order/DlqRequeueCommand.php",
+    "src/CommandInterface/Console/Order/AuditRotateCommandInterface.php",
+    "src/CommandInterface/Console/Order/AuditShipS3CommandInterface.php",
+    "src/CommandInterface/Console/Order/DlqListCommandInterface.php",
+    "src/CommandInterface/Console/Order/DlqRequeueCommandInterface.php"
+  ],
+  "notes": [
+    "Audit commands now use Order*Command class/file/interface names while preserving Symfony command names.",
+    "Outbox DLQ commands moved to src/Command/Outbox with OrderOutbox*Command naming.",
+    "Outbox DLQ Symfony command names changed to order:outbox:dlq:* to avoid collision with Messenger DLQ command order:dlq:requeue."
+  ]
+}

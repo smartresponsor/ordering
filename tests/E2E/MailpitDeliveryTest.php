@@ -11,7 +11,7 @@ final class MailpitDeliveryTest extends WebTestCase
     public function testEmailDeliveryViaMailpit(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/api/test-email', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $client->request('POST', '/api/order/test/email', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'to' => 'test@example.com',
             'subject' => 'Mailpit E2E Test',
             'message' => 'Hello from Order!',

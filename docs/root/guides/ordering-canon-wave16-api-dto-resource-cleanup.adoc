@@ -1,0 +1,23 @@
+= Ordering Canon Wave 16: API DTO / Resource cleanup
+
+Wave 16 moves the remaining API DTO surface out of the mixed `src/Api` bucket and into the Symfony-oriented DTO layer.
+
+== Canonical DTO targets
+
+* `src/DTO/Api/OrderInput.php`
+* `src/DTO/Api/OrderOutput.php`
+* `src/DTO/Api/OrderPartialPaymentInput.php`
+* `src/DTO/Api/OrderPayInput.php`
+* `src/DTO/Api/OrderRefundInput.php`
+* `src/DTO/Api/OrderShipInput.php`
+* `src/DTO/Api/Order/OrderCreateInput.php`
+
+== Resource alias cleanup
+
+The previous `App\Api\Resource\Order\OrderResource` class was a thin alias over `App\ApiResource\View\Order\OrderResource`, but the target class is `final readonly`; extending it is not valid PHP inheritance.
+
+Wave 16 updates processors to depend directly on the canonical `App\ApiResource\View\Order\OrderResource` class and removes only the old alias file after the canonical target exists.
+
+== Guardrail
+
+The apply script overlays only touched files and removes only explicitly paired legacy files after checking their canonical targets.

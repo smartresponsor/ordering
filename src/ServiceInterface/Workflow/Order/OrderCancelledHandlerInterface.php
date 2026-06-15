@@ -13,6 +13,5 @@ use App\Event\Domain\Order\OrderCancelledEvent;
 
 interface OrderCancelledHandlerInterface
 {
-
     public function __invoke(OrderCancelledEvent $event): void;
 }

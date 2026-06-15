@@ -1,0 +1,29 @@
+= Ordering Canon Wave 8: Monitoring Controller Consolidation
+
+Wave 8 continues the non-destructive Ordering canonicalization by consolidating health/readiness controllers into the Symfony controller type-layer.
+
+== Scope
+
+* Move the host health endpoint from the root controller layer to `src/Controller/Monitoring` with explicit `Order*Controller` naming.
+* Move readiness endpoint from the root controller layer to `src/Controller/Monitoring` with explicit `Order*Controller` naming.
+* Retire stale infrastructure monitoring controllers that duplicate the canonical `_health` and `_ready` order monitoring endpoints.
+* Fix the historical `Order::class` typo by using `OrderEntity::class` in the canonical host health check controller.
+
+== Canonical targets
+
+* `src/Controller/Monitoring/OrderHostHealthCheckController.php`
+* `src/Controller/Monitoring/OrderReadinessController.php`
+* `src/Controller/Monitoring/OrderHealthMonitoringController.php` remains the canonical order DB/MQ liveness/readiness endpoint from Wave 7.
+
+== Legacy paths retired by the apply script
+
+The apply script backs up and removes only the explicitly listed legacy files after checking that the matching canonical monitoring controller exists:
+
+* `src/Controller/HealthCheckController.php`
+* `src/Controller/ReadinessController.php`
+* `src/Infrastructure/Monitoring/HealthCheckController.php`
+* `src/Infrastructure/Monitoring/HealthController.php`
+
+== Not included
+
+This wave intentionally does not merge the Prometheus `/metrics` controller. Metrics is left for a separate collision-aware wave because the repository currently has both a static order metrics controller and an infrastructure collector-backed metrics controller.

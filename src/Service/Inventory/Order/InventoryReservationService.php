@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory\Order;
 
-use App\Entity\Order\OrderStockReservation;
+use App\Entity\Order\OrderStockReservationEntity;
 use App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
 use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
 use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
@@ -22,9 +22,9 @@ final readonly class InventoryReservationService implements InventoryReservation
     ) {
     }
 
-    public function reserveOrFail(string $orderId, string $sku, int $qty): OrderStockReservation
+    public function reserveOrFail(string $orderId, string $sku, int $qty): OrderStockReservationEntity
     {
-        $res = new OrderStockReservation($orderId, $sku, $qty);
+        $res = new OrderStockReservationEntity($orderId, $sku, $qty);
         $reservationKey = $this->reservationKey($orderId, $sku);
         $lines = [$sku => $qty];
 
@@ -48,7 +48,7 @@ final readonly class InventoryReservationService implements InventoryReservation
     public function release(string $orderId, string $sku, int $qty): void
     {
         $existing = $this->repo->findOne($orderId, $sku);
-        if (!$existing || OrderStockReservation::STATUS_RESERVED !== $existing->status()) {
+        if (!$existing || OrderStockReservationEntity::STATUS_RESERVED !== $existing->status()) {
             return;
         }
 

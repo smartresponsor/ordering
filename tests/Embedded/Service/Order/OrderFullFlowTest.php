@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Service\Workflow\Order\OrderOrchestrator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -14,7 +14,7 @@ final class OrderFullFlowTest extends KernelTestCase
     {
         self::bootKernel();
         $orchestrator = self::getContainer()->get(OrderOrchestrator::class);
-        $order = $this->createMock(Order::class);
+        $order = $this->createMock(OrderEntity::class);
         $order->method('getNumber')->willReturn('ORDER-999');
         $order->method('getTotalAmount')->willReturn('100.00');
         $order->method('getCurrency')->willReturn('EUR');

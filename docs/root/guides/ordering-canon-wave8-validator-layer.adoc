@@ -1,0 +1,31 @@
+= Ordering Canon Wave 8: Validator Layer Extraction
+:toc:
+:icons: font
+
+== Purpose
+
+Wave 8 removes validator-form classes from the overloaded `src/Service/Security/Order` bucket and places them in the Symfony type-identifiable validator layer.
+
+== Canonical move
+
+[source,text]
+----
+src/Service/Security/Order/ValidSku.php
+  -> src/Validator/Order/ValidSku.php
+
+src/Service/Security/Order/ValidSkuValidator.php
+  -> src/Validator/Order/ValidSkuValidator.php
+----
+
+The moved classes now use the namespace `App\Validator\Order`.
+
+== Why this is safe
+
+* The classes are a Symfony `Constraint` and `ConstraintValidator` pair.
+* They do not represent services in the Ordering business-service sense.
+* No direct references to the old `App\Service\Security\Order\ValidSku` namespace were found in the scanned current slice.
+* The old files are removed only by the apply script after backup, and only by explicit touched paths.
+
+== Remaining work
+
+`src/Service/Security/Order` still contains several non-service forms: middleware, commands, handlers, processors, messages, factories, repositories, resources, and OpenAPI helpers. Those should be extracted in narrow waves by class form, not by blind directory moves.

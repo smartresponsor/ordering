@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Dispute\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderDispute;
+use App\Entity\Order\OrderDisputeEntity;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderChargebackIssuedEvent;
 use App\Event\Domain\Order\OrderDisputeOpenedEvent;
 use App\Event\Domain\Order\OrderDisputeResolvedEvent;
@@ -27,9 +27,9 @@ final readonly class DisputeService implements DisputeServiceInterface, OrderDis
     ) {
     }
 
-    public function openDispute(Order $order, string $type, ?string $reason = null, ?string $externalId = null): OrderDispute
+    public function openDispute(OrderEntity $order, string $type, ?string $reason = null, ?string $externalId = null): OrderDisputeEntity
     {
-        $dispute = new OrderDispute($order, $type, $reason, $externalId);
+        $dispute = new OrderDisputeEntity($order, $type, $reason, $externalId);
         $this->em->persist($dispute);
         $this->em->flush();
         $this->events->dispatch(new OrderDisputeOpenedEvent($dispute));
@@ -37,16 +37,16 @@ final readonly class DisputeService implements DisputeServiceInterface, OrderDis
         return $dispute;
     }
 
-    public function resolveDispute(OrderDispute $dispute): void
+    public function resolveDispute(OrderDisputeEntity $dispute): void
     {
         $dispute->markResolved();
         $this->em->flush();
         $this->events->dispatch(new OrderDisputeResolvedEvent($dispute));
     }
 
-    public function issueChargeback(OrderDispute $dispute): void
+    public function issueChargeback(OrderDisputeEntity $dispute): void
     {
-        $dispute->setStatus(OrderDispute::STATUS_CHARGEBACK_ISSUED);
+        $dispute->setStatus(OrderDisputeEntity::STATUS_CHARGEBACK_ISSUED);
         $this->em->flush();
         $this->events->dispatch(new OrderChargebackIssuedEvent($dispute));
     }

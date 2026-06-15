@@ -13,6 +13,5 @@ use App\Message\Legacy\Order\OrderPartialPaymentCommand;
 
 interface OrderPartialPaymentCommandHandlerInterface
 {
-
     public function __invoke(OrderPartialPaymentCommand $cmd): void;
 }

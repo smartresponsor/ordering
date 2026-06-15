@@ -4,37 +4,37 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order\Payment;
+use App\Entity\Order\OrderPaymentEntity;
 use App\ServiceInterface\Payment\Order\PaymentStateMachineInterface;
 
 final class PaymentStateMachine implements PaymentStateMachineInterface
 {
-    public function authorize(Payment $payment): void
+    public function authorize(OrderPaymentEntity $payment): void
     {
         $this->transit($payment, 'authorized');
     }
 
-    public function capture(Payment $payment): void
+    public function capture(OrderPaymentEntity $payment): void
     {
         $this->transit($payment, 'captured');
     }
 
-    public function settle(Payment $payment): void
+    public function settle(OrderPaymentEntity $payment): void
     {
         $this->transit($payment, 'settled');
     }
 
-    public function void(Payment $payment): void
+    public function void(OrderPaymentEntity $payment): void
     {
         $this->transit($payment, 'voided');
     }
 
-    public function refund(Payment $payment): void
+    public function refund(OrderPaymentEntity $payment): void
     {
         $this->transit($payment, 'refunded');
     }
 
-    private function transit(Payment $payment, string $targetStatus): void
+    private function transit(OrderPaymentEntity $payment, string $targetStatus): void
     {
         $from = $payment->status();
         $allowed = match ($from) {

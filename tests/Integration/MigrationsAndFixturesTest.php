@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\DataFixtures\OrderFixtures;
-use Doctrine\Bundle\FixturesBundle\Executor\ORMExecutor;
-use Doctrine\Bundle\FixturesBundle\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -38,10 +36,21 @@ final class MigrationsAndFixturesTest extends TestCase
         $schemaTool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
         // load fixtures
-        $executor = new ORMExecutor($em, new ORMPurger($em));
-        $executor->execute([new OrderFixtures()]);
+        (new OrderFixtures())->load($em);
 
-        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order o')->getSingleScalarResult();
-        self::assertSame(2, $count);
+        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order\OrderEntity o')->getSingleScalarResult();
+
+        self::assertSame(4, $count);
+
+        $slugs = $em->createQuery('SELECT o.slug FROM App\Entity\Order\OrderEntity o ORDER BY o.number ASC')->getScalarResult();
+        self::assertCount(4, $slugs);
+        foreach ($slugs as $row) {
+            self::assertArrayHasKey('slug', $row);
+            self::assertMatchesRegularExpression(
+                '/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
+                $row['slug']
+            );
+            self::assertNotSame('7f2a4d8e-1c23-4f5d-8f90-2b3c4d5e1001', $row['slug']);
+        }
     }
 }

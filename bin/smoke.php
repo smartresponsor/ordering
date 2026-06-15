@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 $flow = $argv[1] ?? 'basic';
-$order = new Order('USD', '19.99');
+$order = new OrderEntity('USD', '19.99');
 
 match ($flow) {
     'basic' => $order->markPaid('19.99'),
@@ -18,3 +18,4 @@ match ($flow) {
 };
 
 echo json_encode(['orderId' => $order->id(), 'final' => $order->status()], JSON_THROW_ON_ERROR) . PHP_EOL;
+

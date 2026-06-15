@@ -1,5 +1,190 @@
 imports:
     - { resource: '../src/Resources/config/services.php' }
+    - { resource: 'services.security.yaml' }
+    - { resource: '../../Cruding/config/services.yaml' }
+    - { resource: '../../Viewing/Resources/config/services.php' }
+    - { resource: '../../Interfacing/config/services/interfacing.yaml' }
+    - { resource: '../../Localizing/config/services.yaml' }
+    - { resource: '../../Vendoring/config/component/services.yaml' }
+
+parameters:
+    cruding.resource_requirement: '[a-z][a-z0-9_-]*'
+    cruding.resource_path_requirement: '[a-z][a-z0-9_-]*(?:/(?!(?:new|edit|delete|audit|visibility|attach|detach)$)[a-z0-9][a-z0-9_-]*)*'
+    cruding.surface_token_requirement: 'card|table|gallery|compact|full|detail|list'
+    cruding.operation_token_requirement: 'show|index|new|create|edit|update|delete|bulk|import|export|archive|restore|duplicate|assign|unassign|adjust|calculate|verify|reject|approve|pay|recalculate|start|overview|mutation'
+    cruding.identity_slug_requirement: '[A-Za-z0-9][A-Za-z0-9_-]*'
+    cruding.runtime_scope_env: 'APP_RUNTIME_SCOPE'
+    cruding.runtime_entity_env: 'APP_RUNTIME_ENTITY'
+    cruding.runtime_surface_token_env: 'APP_RUNTIME_SURFACE_TOKEN'
+    cruding.runtime_reserved_env: 'APP_RUNTIME_RESERVED'
+    cruding.runtime_lock_glob: 'config/kernel/runtime_scope.{env}.lock.php'
+    cruding.runtime_require_lock: false
+    cruding.runtime_require_composer_packages: false
+    cruding.runtime_scope_package_map:
+        cruding: 'cruding/crud'
+        viewing: 'viewing/view'
+        interfacing: 'interfacing/interface'
+        administering: 'administering/administer'
+        accessing: 'accessing/access'
+    cruding.runtime_scope_tokens:
+        - accessing
+        - adjudicating
+        - administering
+        - analysing
+        - applicating
+        - attaching
+        - billing
+        - carting
+        - cataloging
+        - commercializing
+        - commissioning
+        - configuring
+        - cruding
+        - currencing
+        - discovering
+        - domaining
+        - exchanging
+        - faceting
+        - facting
+        - indexing
+        - interfacing
+        - localizing
+        - locating
+        - managing
+        - merchandising
+        - messaging
+        - navigating
+        - objecting
+        - observabiliting
+        - ordering
+        - paging
+        - paying
+        - projecting
+        - rolling
+        - sdk
+        - searching
+        - shipping
+        - subscripting
+        - tagging
+        - taxating
+        - vendoring
+        - viewing
+    cruding.runtime_entity_tokens:
+        - vendor
+        - attachment
+        - media
+        - product
+        - category
+        - search
+        - role
+        - application
+    cruding.runtime_surface_tokens:
+        - show
+        - card
+        - table
+        - gallery
+        - compact
+        - full
+        - detail
+        - list
+    cruding.runtime_operation_tokens:
+        - show
+        - index
+        - new
+        - create
+        - edit
+        - update
+        - delete
+        - bulk
+        - import
+        - export
+        - archive
+        - restore
+        - duplicate
+        - assign
+        - unassign
+        - adjust
+        - calculate
+        - verify
+        - reject
+        - approve
+        - pay
+        - recalculate
+        - start
+        - overview
+        - mutation
+    cruding.runtime_resource_path_reserved_tokens: []
+    cruding.runtime_reserved_tokens: []
+    cruding.runtime_allowed_resource_tokens: []
+    cruding.runtime_conflicting_entity_tokens: []
+    cruding.app_env: 'dev'
+    cruding.runtime_lock_path: null
+    cruding.runtime_lock_found: false
+    cruding.runtime_lock_scope_tokens: []
+    cruding.runtime_lock_entity_tokens: []
+    cruding.runtime_lock_surface_tokens: []
+    cruding.runtime_lock_reserved_tokens: []
+    cruding.runtime_effective_scope_raw: ''
+    cruding.runtime_effective_entity_raw: ''
+    cruding.runtime_effective_surface_token_raw: ''
+    cruding.runtime_effective_reserved_raw: ''
+    cruding.capability_map:
+        identifiable:
+            interfaces:
+                - App\Cruding\Contract\Capability\CrudIdentifiableInterface
+            methods_any: ['getId']
+            properties_any: ['id']
+        sluggable:
+            interfaces:
+                - App\Cruding\Contract\Capability\CrudSluggableInterface
+            methods_any: ['getSlug']
+            properties_any: ['slug']
+    cruding.entity_class_alias_map:
+        vendor: 'App\Vendoring\Entity\Vendor\VendorEntity'
+        attachment: 'App\Attaching\Entity\Attachment\Attachment'
+        message: 'App\Messaging\Entity\Message\MessageEntity'
+        order: 'App\Entity\Order\OrderEntity'
+        payment: 'App\Paying\Entity\PaymentEntity'
+        product: 'App\Entity\Product\CommerceProductEntity'
+        project: 'App\Entity\Project\CommerceProjectEntity'
+        category: 'App\Cataloging\Entity\Catalog\CatalogCategoryEntity'
+    cruding.form_type_map: []
+    viewing.enabled: true
+    viewing.bot_actor_values: ['bot']
+    viewing.actor_request_attribute: '_view_actor_type'
+    viewing.controlled_route_attribute: '_view_controlled'
+    viewing.response_guard_enabled: true
+    viewing.debug_response_guard: false
+    viewing.diagnostic_mode: 'safe'
+    viewing.traffic_classifier_enabled: true
+    viewing.bot_user_agent_patterns:
+        - '/bot/i'
+        - '/crawl/i'
+        - '/spider/i'
+        - '/slurp/i'
+        - '/headless/i'
+        - '/python-requests/i'
+        - '/curl/i'
+        - '/wget/i'
+    viewing.excluded_path_patterns:
+        - '#^/_wdt(?:/|$)#'
+        - '#^/_profiler(?:/|$)#'
+        - '#^/assets(?:/|$)#'
+        - '#^/build(?:/|$)#'
+        - '#^/favicon\\.ico$#'
+        - '#^/robots\\.txt$#'
+        - '#^/sitemap\\.xml$#'
+        - '#^/health$#'
+        - '#^/metrics$#'
+    viewing.excluded_route_patterns:
+        - '#^_profiler#'
+        - '#^_wdt#'
+        - '#^health$#'
+        - '#^metrics$#'
+    viewing.interfacing_twig_namespace: 'Interfacing'
+    viewing.viewing_twig_namespace: 'Viewing'
+    viewing.local_component_fallback_enabled: true
+    viewing.json_fallback_status_code: 200
 
 services:
     _defaults:
@@ -18,11 +203,11 @@ services:
     App\Controller\Webhook\PaymentWebhookController:
         tags: [ 'controller.service_arguments' ]
 
-    App\Controller\HealthCheckController:
+    App\Controller\Monitoring\:
+        resource: '../src/Controller/Monitoring/'
         tags: [ 'controller.service_arguments' ]
 
-    App\Controller\ReadinessController:
-        tags: [ 'controller.service_arguments' ]
+    Psr\Container\ContainerInterface: '@service_container'
 
     App\Form\:
         resource: '../src/Form/'
@@ -40,13 +225,34 @@ services:
             - '../src/Service/Pricing/Order/TaxationConfigLoader.php'
             - '../src/Service/Pricing/Order/CurrencyConversionService.php'
             - '../src/Service/Security/Order/Kernel.php'
+            - '../src/Service/Security/Order/OrderWebhookSignatureVerifier.php'
             - '../src/Service/Security/Order/OrderOpenApiFactory.php'
             - '../src/Service/Security/Order/*Command.php'
             - '../src/Service/Security/Order/*Message.php'
             - '../src/Service/Security/Order/*View.php'
 
+    App\EventListener\:
+        resource: '../src/EventListener/'
+        exclude:
+            - '../src/EventListener/Http/'
+
+    App\EventSubscriber\:
+        resource: '../src/EventSubscriber/'
+
+    App\Subscriber\:
+        resource: '../src/Subscriber/'
+
+    App\Validator\:
+        resource: '../src/Validator/'
+
+    App\Processor\:
+        resource: '../src/Processor/'
+
     App\Repository\:
         resource: '../src/Repository/'
+
+    App\Repository\Order\OrderRepository:
+        tags: [ 'doctrine.repository_service' ]
 
     App\Webhook\:
         resource: '../src/Webhook/'
@@ -56,6 +262,8 @@ services:
 
     App\ReadModel\Repository\:
         resource: '../src/ReadModel/Repository/'
+
+    App\Infrastructure\Monitoring\MetricsCollector: ~
 
     App\Service\Analytics\Order\BigQueryExportSink:
         arguments:
@@ -100,6 +308,15 @@ services:
     App\Command\OrderDemoResetCommand: ~
     App\Command\OrderDiagnosticsCommand: ~
     App\Command\OrderReportCommand: ~
+
+    App\Command\Outbox\:
+        resource: '../src/Command/Outbox/'
+
+    App\Command\Messenger\:
+        resource: '../src/Command/Messenger/'
+
+    App\Command\Operations\Order\:
+        resource: '../src/Command/Operations/Order/'
 
     App\DataFixtures\OrderDemoFixtures: ~
 
@@ -170,10 +387,33 @@ when@test:
                 - '../src/Service/Pricing/Order/TaxationConfigLoader.php'
                 - '../src/Service/Pricing/Order/CurrencyConversionService.php'
                 - '../src/Service/Security/Order/Kernel.php'
+                - '../src/Service/Security/Order/OrderWebhookSignatureVerifier.php'
                 - '../src/Service/Security/Order/OrderOpenApiFactory.php'
                 - '../src/Service/Security/Order/*Command.php'
                 - '../src/Service/Security/Order/*Message.php'
                 - '../src/Service/Security/Order/*View.php'
+
+        App\EventListener\:
+            resource: '../src/EventListener/'
+            public: true
+            exclude:
+                - '../src/EventListener/Http/'
+
+        App\EventSubscriber\:
+            resource: '../src/EventSubscriber/'
+            public: true
+
+        App\Subscriber\:
+            resource: '../src/Subscriber/'
+            public: true
+
+        App\Validator\:
+            resource: '../src/Validator/'
+            public: true
+
+        App\Processor\:
+            resource: '../src/Processor/'
+            public: true
 
         App\Repository\:
             resource: '../src/Repository/'

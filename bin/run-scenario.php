@@ -21,12 +21,12 @@ if (!is_array($config)) {
 }
 
 $experiment = is_array($config['experiment'] ?? null) ? $config['experiment'] : [];
-$name = (string)($experiment['name'] ?? 'unnamed');
+$nameEntity = (string)($experiment['nameEntity'] ?? 'unnamed');
 $fault = (string)($experiment['fault'] ?? '');
 $params = is_array($experiment['params'] ?? null) ? $experiment['params'] : [];
 $duration = (int)($experiment['duration_s'] ?? 60);
 
-fwrite(STDOUT, sprintf("Scenario: %s\n", $name));
+fwrite(STDOUT, sprintf("Scenario: %s\n", $nameEntity));
 
 $runCommand = static function (string $command): void {
     fwrite(STDOUT, sprintf("+ %s\n", $command));

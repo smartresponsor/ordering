@@ -1,0 +1,45 @@
+{
+  "component": "Ordering",
+  "wave": 4,
+  "title": "Subscriber layer cleanup",
+  "base": "OrderingThu.zip plus waves 1-3 overlay",
+  "policy": {
+    "destructive_repository_overwrite": false,
+    "full_repository_delete": false,
+    "cumulative_snapshot": false,
+    "touched_files_only": true,
+    "explicit_backup_before_delete": true
+  },
+  "changed_files": [
+    "docs/root/guides/ordering-canon-wave4-subscriber-cleanup.adoc",
+    ".meta/ordering-canon-wave4-summary.json",
+    "src/EventSubscriber/OrderApiAuditSubscriber.php",
+    "src/EventSubscriber/OrderWorkflowGuardSubscriber.php",
+    "src/Subscriber/Event/Order/OrderWorkflowSubscriber.php"
+  ],
+  "delete_candidates": [
+    "src/Service/Subscriber/Order/AnalyticsSubscriber.php",
+    "src/Service/Subscriber/Order/ApiAuditSubscriber.php",
+    "src/Service/Subscriber/Order/EmailSubscriber.php",
+    "src/Service/Subscriber/Order/OrderApiAuditSubscriber.php",
+    "src/Service/Subscriber/Order/OrderAuditSubscriber.php",
+    "src/Service/Subscriber/Order/OrderDisputeSubscriber.php",
+    "src/Service/Subscriber/Order/OrderRefundEventSubscriber.php",
+    "src/Service/Subscriber/Order/OrderShipmentSubscriber.php",
+    "src/Service/Subscriber/Order/OrderWorkflowGuardSubscriber.php",
+    "src/Service/Subscriber/Order/OrderWorkflowSubscriber.php",
+    "src/ServiceInterface/Subscriber/Order/AnalyticsSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/ApiAuditSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/EmailSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/OrderAuditSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/OrderDisputeSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/OrderRefundEventSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/OrderShipmentSubscriberInterface.php",
+    "src/ServiceInterface/Subscriber/Order/OrderWorkflowGuardSubscriberInterface.php"
+  ],
+  "notes": [
+    "Canonical subscriber/listener classes now remain in EventSubscriber or Subscriber/Event layers.",
+    "OrderWorkflowSubscriber keeps the richer implementation from the former Service/Subscriber duplicate.",
+    "OrderWorkflowGuardSubscriber now checks OrderEntity instead of an undefined Order symbol."
+  ]
+}

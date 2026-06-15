@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 
 interface OutboxRepositoryInterface
 {
-    public function add(OutboxMessage $message): void;
+    public function add(OrderOutboxMessageEntity $message): void;
 
-    /** @return iterable<OutboxMessage> */
+    /** @return iterable<OrderOutboxMessageEntity> */
     public function pullPending(int $limit): iterable;
 
-    public function markSent(OutboxMessage $message): void;
+    public function markSent(OrderOutboxMessageEntity $message): void;
 
-    public function markFailed(OutboxMessage $message, int $delaySeconds = 0): void;
+    public function markFailed(OrderOutboxMessageEntity $message, int $delaySeconds = 0): void;
 }

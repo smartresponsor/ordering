@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderShipment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderShipmentEntity;
 use App\Service\Refund\Order\RefundEligibilityService;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +19,9 @@ final class RefundAfterDeliveryPolicyTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $elig = self::$kernel->getContainer()->get(RefundEligibilityService::class);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = new OrderEntity('VND-1', new Money('100.00', 'USD'));
         $em->persist($order);
-        $shipment = new OrderShipment($order, 'UPS', 'TRK-2');
+        $shipment = new OrderShipmentEntity($order, 'UPS', 'TRK-2');
         $em->persist($shipment);
         $em->flush();
 

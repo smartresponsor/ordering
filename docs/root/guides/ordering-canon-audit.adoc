@@ -1,0 +1,219 @@
+= Ordering Canon Audit
+:doctype: article
+:toc: macro
+:toclevels: 3
+
+Status: initial factual audit from `OrderingThu.zip`.
+Scope: architecture, naming, class-form placement, root cleanup, deploy/docker consolidation, and entity-first restructuring.
+
+ toc::[]
+
+== Executive summary
+
+Ordering already contains a large amount of useful code, but the repository is not yet canonically shaped as a Symfony-oriented component.
+The current problem is not lack of functionality; it is that code form, file placement, and operational assets are mixed across several competing conventions.
+
+Key audit numbers from the current slice:
+
+[cols="1,1", options="header"]
+|===
+|Metric |Observed value
+
+|PHP files under `src/`
+|741
+
+|PHP files under `tests/`
+|143
+
+|Top `src/ServiceInterface` file count
+|237
+
+|Top `src/Service` file count
+|229
+
+|Root-level PHP application/test duplicates
+|9
+
+|Existing owner-canon scanner violations
+|1: `src/Model/Order/Billing`
+
+|Class/file basename mismatches under `src/`
+|0
+
+|Detected `src/Security` mixed-form files
+|3
+|===
+
+== Main findings
+
+=== 1. Root is too noisy
+
+The root currently contains application classes, tests, release scripts, frontend config, docs, SQL, deployment, charts, CI and operational folders at the same level.
+The most serious root pollution is the set of PHP files that should not live at repository root:
+
+[source,text]
+----
+DisputeService.php
+DisputeServiceInterface.php
+DisputeWorkflowTest.php
+OrderChargebackIssuedEvent.php
+OrderDisputeEntity.php
+OrderDisputeOpenedEvent.php
+OrderDisputeResolvedEvent.php
+OrderService.php
+RefundBlockedDuringDisputeTest.php
+----
+
+Most of these already have canonical or near-canonical twins under `src/` or `tests/`. They should be removed from root only after confirming the canonical target exists.
+
+=== 2. Entity-first shape is incomplete
+
+`src/Entity/Order` exists and is usable as the anchor, but much of the business behavior is still scattered across `Service`, `Message`, `Model`, `ReadModel`, `Infrastructure`, `Api`, and alias shims.
+The next structure work should start from entities and their adjacent lifecycle, not from generic services.
+
+Canonical direction:
+
+[source,text]
+----
+src/Entity/Order/...
+src/Repository/Order/...
+src/Service/<Capability>/Order/...
+src/ServiceInterface/<Capability>/Order/...
+src/Message/<Kind>/Order/...
+src/MessageHandler/Order/...
+src/Controller/... or src/Api/Controller/...
+src/Form/...
+src/ValueObject/<Capability>/Order/...
+----
+
+=== 3. Service and ServiceInterface are overloaded
+
+`src/Service` and `src/ServiceInterface` together contain more than 460 PHP files.
+This means the component has a rich service surface, but also that many classes are likely classified by business subject rather than by class form.
+
+The highest-risk examples are command, resource, middleware, listener, repository, view and kernel-shaped classes sitting inside service folders.
+These need staged movement to existing typed layers, not a single broad rename wave.
+
+=== 4. Type-identifiable layer canon is only partially applied
+
+There are typed layers already: `Entity`, `Repository`, `Controller`, `Message`, `MessageHandler`, `Subscriber`, `ValueObject`, `Form`, `Command`, `Event`.
+However, there are also competing or broad buckets:
+
+[source,text]
+----
+src/Security
+src/Http
+src/Infrastructure
+src/Integration
+src/Model
+src/ReadModel
+src/Contract
+src/Gateway
+src/Saga
+----
+
+Some of these may remain temporarily, but cleanup should classify files by actual Symfony/class form first.
+For example, voters should move to `src/Voter`, middleware to `src/Middleware`, subscribers to `src/Subscriber`, commands to `src/Command`, handlers to `src/MessageHandler`, repositories to `src/Repository`, and service logic to `src/Service`.
+
+=== 5. Existing alias shims show backward-compatibility residue
+
+Several files are pure `class_alias` shims or `require_once` wrappers. Examples include:
+
+[source,text]
+----
+src/Integration/Inventory/InMemoryInventoryGateway.php
+src/Message/Command/Order/RecalculateOrderPricingCommand.php
+src/Saga/OrderSaga.php
+src/Service/Analytics/Order/OrderMetricsProjectionService.php
+src/Service/Analytics/Order/OrderMetricsSubscriber.php
+src/Service/Payment/Order/OrderBillingService.php
+src/Service/Payment/Order/PaymentProcessor.php
+src/Service/Security/Order/OrderIdempotencyGuard.php
+----
+
+These should be treated as temporary compatibility files. Before end-state release, either remove them after all references are migrated or convert them into canonical classes with real declarations.
+
+=== 6. Deployment layout is partially organized, but still duplicated
+
+Deployment assets are already partly under `deploy/`, including Dockerfiles and compose files:
+
+[source,text]
+----
+deploy/Dockerfile.local
+deploy/Dockerfile.prod
+deploy/docker-compose.dev.yml
+deploy/docker-compose.local.yml
+deploy/docker-compose.prod.yml
+deploy/docker-compose.stack.yml
+deploy/docker/...
+deploy/k8s/...
+deploy/observability/...
+----
+
+But root-level operational folders still compete with `deploy/`:
+
+[source,text]
+----
+charts/
+ci/
+notifiers/
+ops/
+policies/
+sql/
+api/openapi/archive/
+----
+
+Recommended end-state is to keep `deploy/` as operational home and leave root for source, tests, config, docs, tools, composer/npm configs, and canonical metadata only.
+
+=== 7. Namespace is currently default Symfony `App\...`
+
+The current component uses Composer PSR-4 mapping:
+
+[source,json]
+----
+"App\\": "src/"
+----
+
+For Ordering, no component-scoped namespace migration is proposed in this milestone. All work should preserve default Symfony `App\...` unless explicitly changed later.
+
+== Canonical risk map
+
+[cols="1,1,2", options="header"]
+|===
+|Risk |Severity |Reason
+
+|Root PHP duplicates
+|High
+|They create ambiguity and can mislead future patches, test discovery, and manual review.
+
+|Service layer overload
+|High
+|Commands, views, repositories, middleware and domain objects mixed into service folders reduce class-form readability.
+
+|Alias shim accumulation
+|Medium
+|Temporary compatibility wrappers can hide stale namespace dependencies.
+
+|Deploy/docker duplication
+|Medium
+|Operational files are split between root-level folders and `deploy/`.
+
+|Entity-first incompleteness
+|High
+|Order aggregate and entity lifecycle are not yet the obvious center of the component.
+
+|Tests not mirroring canonical layer structure
+|Medium
+|143 tests exist, but they need phased re-linking after class moves.
+|===
+
+== Immediate wave recommendation
+
+Wave 1 should not perform broad class moves. It should:
+
+. Add this audit and milestone documentation.
+. Add a focused canon inventory tool for Ordering.
+. Remove only root-level duplicate PHP files after verifying their canonical target exists.
+. Preserve default Symfony `App\` namespace.
+. Avoid repository-wide delete/overwrite operations.
+

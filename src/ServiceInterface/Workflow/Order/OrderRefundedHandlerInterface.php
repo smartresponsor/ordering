@@ -13,6 +13,5 @@ use App\Event\Domain\Order\OrderRefundedEvent;
 
 interface OrderRefundedHandlerInterface
 {
-
     public function __invoke(OrderRefundedEvent $event): void;
 }

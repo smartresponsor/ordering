@@ -1,0 +1,52 @@
+= Ordering Canon Wave 4: Subscriber Layer Cleanup
+
+== Scope
+
+Wave 4 retires the duplicate subscriber implementations that were placed under `src/Service/Subscriber/Order` and keeps subscriber classes in Symfony subscriber/listener-oriented layers.
+
+This is intentionally a narrow cleanup wave. It does not rewrite the whole repository and does not delete the repository root. The apply script only overlays touched files and backs up/removes the explicitly listed duplicate subscriber files and now-orphan subscriber service interfaces.
+
+== Canonical decisions
+
+* Runtime event subscribers/listeners belong under `src/EventSubscriber` or `src/Subscriber/Event/...`, not under `src/Service/Subscriber/...`.
+* Duplicate service-interface abstractions for event subscribers are not required when no consumer type-hints them and when Symfony dispatching is attribute/subscriber based.
+* Canonical `OrderWorkflowSubscriber` keeps the richer workflow pricing/audit listener logic from the service-layer duplicate.
+* Canonical `OrderApiAuditSubscriber` is introduced under `src/EventSubscriber` because the source duplicate was a kernel terminate listener and had no collision-safe target.
+* `OrderWorkflowGuardSubscriber` is fixed to check `OrderEntity`; the previous file imported `OrderEntity` but checked an undefined `Order` symbol.
+
+== Explicit delete candidates handled by the apply script
+
+The script removes only these files after backing them up and after validating that the replacement/retirement rule is known:
+
+* `src/Service/Subscriber/Order/AnalyticsSubscriber.php`
+* `src/Service/Subscriber/Order/ApiAuditSubscriber.php`
+* `src/Service/Subscriber/Order/EmailSubscriber.php`
+* `src/Service/Subscriber/Order/OrderApiAuditSubscriber.php`
+* `src/Service/Subscriber/Order/OrderAuditSubscriber.php`
+* `src/Service/Subscriber/Order/OrderDisputeSubscriber.php`
+* `src/Service/Subscriber/Order/OrderRefundEventSubscriber.php`
+* `src/Service/Subscriber/Order/OrderShipmentSubscriber.php`
+* `src/Service/Subscriber/Order/OrderWorkflowGuardSubscriber.php`
+* `src/Service/Subscriber/Order/OrderWorkflowSubscriber.php`
+* `src/ServiceInterface/Subscriber/Order/AnalyticsSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/ApiAuditSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/EmailSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/OrderAuditSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/OrderDisputeSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/OrderRefundEventSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/OrderShipmentSubscriberInterface.php`
+* `src/ServiceInterface/Subscriber/Order/OrderWorkflowGuardSubscriberInterface.php`
+
+== Validation
+
+Run after applying:
+
+[source,powershell]
+----
+cd D:\PhpstormProjects\www\Ordering
+composer dump-autoload
+php -l src/EventSubscriber/OrderWorkflowGuardSubscriber.php
+php -l src/EventSubscriber/OrderApiAuditSubscriber.php
+php -l src/Subscriber/Event/Order/OrderWorkflowSubscriber.php
+php tools/ordering-canon/ordering-canon-classform-plan.php --write=.meta/ordering-canon-classform-plan-after-wave4.json --csv=.meta/ordering-canon-classform-plan-after-wave4.csv
+----

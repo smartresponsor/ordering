@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment;
 
-use App\Entity\Order;
-use App\Entity\OrderShipment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderShipmentEntity;
 use App\ServiceInterface\Shipment\CarrierInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -15,10 +15,10 @@ final readonly class ShipmentProcessorService
     {
     }
 
-    public function ship(Order $order, string $carrierName = 'UPS'): OrderShipment
+    public function ship(OrderEntity $order, string $carrierName = 'UPS'): OrderShipmentEntity
     {
-        $tracking = $this->carrier->createShipment($carrierName, $order->getId() ?? 0);
-        $s = new OrderShipment($order, $carrierName, $tracking);
+        $tracking = $this->carrier->createShipment($carrierName, (string) ($order->getId() ?? 0));
+        $s = new OrderShipmentEntity($order, $carrierName, $tracking);
         $s->markShipped($tracking);
         $this->em->persist($s);
 

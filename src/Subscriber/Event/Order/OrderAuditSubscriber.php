@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Subscriber\Event\Order;
 
 use App\Entity\Order\OrderAuditLogEntity;
-use App\Entity\Order\OrderEventRecord;
+use App\Entity\Order\OrderEventRecordEntity;
 use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -40,11 +40,11 @@ final readonly class OrderAuditSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $name = $event::class;
+        $nameEntity = $event::class;
         $payload = $this->normalizeEvent($event);
         $occurredAt = $this->extractDate($event, ['occurredAt', 'getOccurredAt']) ?? new \DateTimeImmutable();
 
-        $record = new OrderEventRecord($eventId, $orderId, $name, $payload, $occurredAt);
+        $record = new OrderEventRecordEntity($eventId, $orderId, $nameEntity, $payload, $occurredAt);
         $this->repo->save($record);
 
         $action = (new \ReflectionClass($event))->getShortName();

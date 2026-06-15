@@ -1,0 +1,54 @@
+{
+  "repository": "Ordering",
+  "slice": "OrderingThu.zip",
+  "generated_at_utc": "2026-04-30T20:20:00Z",
+  "autoload_namespace": "App\\",
+  "src_php_files": 741,
+  "tests_php_files": 143,
+  "src_class_file_basename_mismatches": 0,
+  "src_missing_class_or_alias_only_files": [
+    "src/Integration/Inventory/InMemoryInventoryGateway.php",
+    "src/Message/Command/Order/RecalculateOrderPricingCommand.php",
+    "src/Resources/config/services.php",
+    "src/Saga/OrderSaga.php",
+    "src/Service/Analytics/Order/OrderMetricsProjectionService.php",
+    "src/Service/Analytics/Order/OrderMetricsSubscriber.php",
+    "src/Service/Payment/Order/OrderBillingService.php",
+    "src/Service/Payment/Order/PaymentProcessor.php",
+    "src/Service/Security/Order/OrderIdempotencyGuard.php"
+  ],
+  "root_php_duplicates_or_misplaced_files": [
+    "DisputeService.php",
+    "DisputeServiceInterface.php",
+    "DisputeWorkflowTest.php",
+    "OrderChargebackIssuedEvent.php",
+    "OrderDisputeEntity.php",
+    "OrderDisputeOpenedEvent.php",
+    "OrderDisputeResolvedEvent.php",
+    "OrderService.php",
+    "RefundBlockedDuringDisputeTest.php"
+  ],
+  "top_src_layers_by_php_count": {
+    "ServiceInterface": 237,
+    "Service": 229,
+    "ValueObject": 33,
+    "Message": 28,
+    "Event": 22,
+    "Api": 21,
+    "Command": 21,
+    "Entity": 20,
+    "Infrastructure": 16,
+    "Subscriber": 11,
+    "ReadModel": 10,
+    "Repository": 9
+  },
+  "existing_owner_canon_scan_violation": [
+    "src/Model/Order/Billing"
+  ],
+  "wave1_policy": {
+    "apply_mode": "touched-files-only",
+    "delete_mode": "explicit-root-files-only-after-target-verification",
+    "full_repository_overwrite": false,
+    "repository_wide_delete": false
+  }
+}

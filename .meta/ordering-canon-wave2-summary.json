@@ -1,0 +1,21 @@
+{
+  "component": "Ordering",
+  "wave": "2",
+  "base_archive": "OrderingThu.zip",
+  "mode": "read_only_classform_planning_plus_docs",
+  "summary": {
+    "src_php_files": 741,
+    "with_issues": 270,
+    "non_service_inside_service_layer": 90,
+    "wrong_layer_or_path": 264,
+    "missing_or_wrong_suffix": 102
+  },
+  "guardrails": [
+    "no cumulative snapshot overwrite",
+    "no repository-wide delete script",
+    "no /src/Domain",
+    "no ports/adapters pattern",
+    "Symfony type-layer canon only"
+  ],
+  "next_wave": "small reviewed move wave starting with API controllers or Service/Subscriber slice"
+}

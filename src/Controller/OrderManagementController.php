@@ -8,11 +8,13 @@ use App\DTO\OrderCreateDTO;
 use App\DTO\OrderPaymentDTO;
 use App\DTO\OrderRefundDTO;
 use App\DTO\OrderShipmentDTO;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Form\OrderCreateType;
 use App\Form\OrderPaymentType;
 use App\Form\OrderRefundType;
 use App\Form\OrderShipmentType;
+use App\Repository\Order\OrderRepository;
+use App\Service\OrderManagementSurfaceContractFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,52 +24,68 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/manage/orders')]
 final class OrderManagementController extends AbstractController
 {
+    public function __construct(
+        private readonly OrderManagementSurfaceContractFactory $surfaceContractFactory,
+    ) {
+    }
+
     #[Route('', name: 'order_management_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): mixed
     {
         $createDto = new OrderCreateDTO();
         $createForm = $this->createForm(OrderCreateType::class, $createDto);
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
-            $order = new Order($createDto->currency, $createDto->grandTotal);
+            $order = new OrderEntity($createDto->currency, $createDto->grandTotal);
             $em->persist($order);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Order %s created.', $order->getId()));
+            $this->addFlash('success', sprintf('Order %s created.', $order->slug()));
 
             return $this->redirectToRoute('order_management_index');
         }
 
-        $orders = $em->getRepository(Order::class)->findBy([], ['createdAt' => 'DESC']);
+        /** @var OrderRepository $repo */
+        $repo = $em->getRepository(OrderEntity::class);
+        $orders = $repo->findBy([], ['createdAt' => 'DESC']);
         $paymentForms = [];
         $shipmentForms = [];
         $refundForms = [];
 
         foreach ($orders as $order) {
-            $paymentForms[$order->getId()] = $this->createForm(OrderPaymentType::class, new OrderPaymentDTO(), [
-                'action' => $this->generateUrl('order_management_pay', ['id' => $order->getId()]),
+            $paymentForms[$order->slug()] = $this->createForm(OrderPaymentType::class, new OrderPaymentDTO(), [
+                'action' => $this->generateUrl('order_management_pay', ['id' => $order->slug()]),
             ])->createView();
-            $shipmentForms[$order->getId()] = $this->createForm(OrderShipmentType::class, new OrderShipmentDTO(), [
-                'action' => $this->generateUrl('order_management_ship', ['id' => $order->getId()]),
+            $shipmentForms[$order->slug()] = $this->createForm(OrderShipmentType::class, new OrderShipmentDTO(), [
+                'action' => $this->generateUrl('order_management_ship', ['id' => $order->slug()]),
             ])->createView();
-            $refundForms[$order->getId()] = $this->createForm(OrderRefundType::class, new OrderRefundDTO(), [
-                'action' => $this->generateUrl('order_management_refund', ['id' => $order->getId()]),
+            $refundForms[$order->slug()] = $this->createForm(OrderRefundType::class, new OrderRefundDTO(), [
+                'action' => $this->generateUrl('order_management_refund', ['id' => $order->slug()]),
             ])->createView();
         }
 
-        return $this->render('order_management/index.html.twig', [
-            'create_form' => $createForm->createView(),
-            'orders' => $orders,
-            'payment_forms' => $paymentForms,
-            'shipment_forms' => $shipmentForms,
-            'refund_forms' => $refundForms,
-        ]);
+        return $this->surfaceContractFactory->createIndexSurface(
+            $orders,
+            $createForm->createView(),
+            $paymentForms,
+            $shipmentForms,
+            $refundForms,
+        );
     }
 
     #[Route('/{id}/pay', name: 'order_management_pay', methods: ['POST'])]
-    public function pay(Order $order, Request $request, EntityManagerInterface $em): Response
+    public function pay(string $id, Request $request, EntityManagerInterface $em): Response
     {
+        /** @var OrderRepository $repo */
+        $repo = $em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
+        if (!$order instanceof OrderEntity) {
+            $this->addFlash('danger', 'Order not found.');
+
+            return $this->redirectToRoute('order_management_index');
+        }
+
         $dto = new OrderPaymentDTO();
         $form = $this->createForm(OrderPaymentType::class, $dto);
         $form->handleRequest($request);
@@ -76,7 +94,7 @@ final class OrderManagementController extends AbstractController
             $payment = $order->applyPayment($dto->amount, $dto->externalRef);
             $em->persist($payment);
             $em->flush();
-            $this->addFlash('success', sprintf('Payment captured for %s.', $order->getId()));
+            $this->addFlash('success', sprintf('Payment captured for %s.', $order->slug()));
         } else {
             $this->addFlash('danger', 'Payment form contains invalid data.');
         }
@@ -85,8 +103,17 @@ final class OrderManagementController extends AbstractController
     }
 
     #[Route('/{id}/ship', name: 'order_management_ship', methods: ['POST'])]
-    public function ship(Order $order, Request $request, EntityManagerInterface $em): Response
+    public function ship(string $id, Request $request, EntityManagerInterface $em): Response
     {
+        /** @var OrderRepository $repo */
+        $repo = $em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
+        if (!$order instanceof OrderEntity) {
+            $this->addFlash('danger', 'Order not found.');
+
+            return $this->redirectToRoute('order_management_index');
+        }
+
         $dto = new OrderShipmentDTO();
         $form = $this->createForm(OrderShipmentType::class, $dto);
         $form->handleRequest($request);
@@ -95,17 +122,26 @@ final class OrderManagementController extends AbstractController
             $shipment = $order->ship($dto->carrier, null, $dto->note);
             $em->persist($shipment);
             $em->flush();
-            $this->addFlash('success', sprintf('Order %s shipped.', $order->getId()));
+            $this->addFlash('success', sprintf('Order %s shipped.', $order->slug()));
         } else {
-            $this->addFlash('danger', 'Shipment form contains invalid data.');
+            $this->addFlash('danger', 'ShipmentEntity form contains invalid data.');
         }
 
         return $this->redirectToRoute('order_management_index');
     }
 
     #[Route('/{id}/refund', name: 'order_management_refund', methods: ['POST'])]
-    public function refund(Order $order, Request $request, EntityManagerInterface $em): Response
+    public function refund(string $id, Request $request, EntityManagerInterface $em): Response
     {
+        /** @var OrderRepository $repo */
+        $repo = $em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
+        if (!$order instanceof OrderEntity) {
+            $this->addFlash('danger', 'Order not found.');
+
+            return $this->redirectToRoute('order_management_index');
+        }
+
         $dto = new OrderRefundDTO();
         $form = $this->createForm(OrderRefundType::class, $dto);
         $form->handleRequest($request);
@@ -114,7 +150,7 @@ final class OrderManagementController extends AbstractController
             $refund = $order->refund($dto->amount, $dto->reason);
             $em->persist($refund);
             $em->flush();
-            $this->addFlash('success', sprintf('Refund registered for %s.', $order->getId()));
+            $this->addFlash('success', sprintf('Refund registered for %s.', $order->slug()));
         } else {
             $this->addFlash('danger', 'Refund form contains invalid data.');
         }

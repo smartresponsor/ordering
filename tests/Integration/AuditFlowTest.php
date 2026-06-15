@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Service\Analytics\Order\AuditLoggerService;
 use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 use App\ValueObject\Pricing\Order\Money;
@@ -24,7 +24,7 @@ final class AuditFlowTest extends KernelTestCase
         /** @var OrderAuditTrailBuilderInterface $builder */
         $builder = self::getContainer()->get(OrderAuditTrailBuilderInterface::class);
 
-        $order = new Order('V-1', new Money('10.00', 'USD'));
+        $order = new OrderEntity('V-1', new Money('10.00', 'USD'));
         $em->persist($order);
         $em->flush();
 

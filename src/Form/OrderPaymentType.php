@@ -20,11 +20,16 @@ final class OrderPaymentType extends AbstractType
 
         $builder
             ->add('amount', MoneyType::class, [
+                'label' => 'Capture amount',
                 'currency' => false,
                 'divisor' => 1,
                 'scale' => 2,
+                'help' => 'The amount to capture against the order.',
             ])
-            ->add('externalRef', TextType::class, ['label' => 'External reference'])
+            ->add('externalRef', TextType::class, [
+                'label' => 'External reference',
+                'help' => 'Optional reference from a payment gateway or PSP.',
+            ])
             ->add('submit', SubmitType::class, ['label' => 'Capture payment']);
     }
 

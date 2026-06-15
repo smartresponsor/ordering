@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Messaging\Order;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -22,5 +22,5 @@ interface TransactionalEventPublisherInterface
 
     public function publish(string $topic, array $payload): string;
 
-    public function relay(OutboxMessage $m): void;
+    public function relay(OrderOutboxMessageEntity $m): void;
 }

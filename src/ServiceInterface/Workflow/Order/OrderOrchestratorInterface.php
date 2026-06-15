@@ -12,7 +12,7 @@ namespace App\ServiceInterface\Workflow\Order;
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface OrderOrchestratorInterface
@@ -24,5 +24,5 @@ interface OrderOrchestratorInterface
         OrderTaxationGatewayInterface $taxationGateway,
     );
 
-    public function processOrder(Order $order): void;
+    public function processOrder(OrderEntity $OrderEntity): void;
 }

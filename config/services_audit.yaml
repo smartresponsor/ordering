@@ -1,5 +1,5 @@
 services:
-    App\EventSubscriber\ApiAuditSubscriber:
+    App\EventSubscriber\OrderApiResponseAuditSubscriber:
         arguments:
             $orderAuditLogger: '@monolog.logger.order_audit'
             $tokens: '@security.token_storage'

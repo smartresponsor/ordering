@@ -1,0 +1,24 @@
+= Ordering Canon Wave 5: HTTP/Messenger Type-Layer Cleanup
+
+Wave 5 is a narrow structural cleanup wave. It moves low-risk HTTP and Messenger middleware/subscriber classes out of generic or capability-mixed locations and into Symfony-oriented type layers.
+
+== Canonical targets
+
+* `src/Middleware/Http/OrderHttpIdempotencyMiddleware.php`
+* `src/Middleware/Http/OrderRateLimitHeaderMiddleware.php`
+* `src/EventSubscriber/OrderWebhookHmacSubscriber.php`
+* `src/Middleware/Messenger/OrderMessageIdempotencyMiddleware.php`
+* `src/Middleware/Messenger/OrderMessageIdempotencyStoreInterface.php`
+* `src/Middleware/Messenger/InMemoryOrderMessageIdempotencyStore.php`
+
+== Compatibility kept intentionally
+
+`src/Middleware/IdempotencyMiddleware.php` remains as a thin compatibility alias, now extending the canonical Messenger middleware. This avoids breaking older Messenger configuration or runtime references while still moving the implementation to a canonical type layer.
+
+== Cleanup scope
+
+The apply script removes only explicitly listed legacy source files and only after the canonical targets exist. It does not delete directories, overwrite the repository, or apply a cumulative snapshot.
+
+== Deferred
+
+This wave does not touch Entity-first restructuring, Doctrine mapping, `src/Service/Security/Order/*Middleware`, or Infrastructure listener cleanup. Those areas should be handled by later focused waves.

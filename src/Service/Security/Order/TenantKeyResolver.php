@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Security\Jwt\JwtTenantResolver;
+use App\Service\Security\Jwt\OrderJwtTenantResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -13,7 +13,7 @@ final readonly class TenantKeyResolver
     public function __construct(
         private RequestStack $rs,
         private TokenStorageInterface $ts,
-        private JwtTenantResolver $tenantResolver,
+        private OrderJwtTenantResolver $tenantResolver,
     ) {
     }
 

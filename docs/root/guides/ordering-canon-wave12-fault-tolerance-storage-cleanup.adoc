@@ -1,0 +1,31 @@
+= Ordering Canon Wave 12: Fault-Tolerance and Storage Type-Layer Cleanup
+
+Wave 12 continues the small, reversible Ordering canonicalization work. It moves two infrastructure runtime helpers and one storage factory into Symfony-oriented type layers without touching the Entity-first migration block.
+
+== Canonical moves
+
+[cols="1,1"]
+|===
+| Legacy path | Canonical path
+
+| `src/Infrastructure/FaultTolerance/RateLimiterMiddleware.php`
+| `src/Middleware/FaultTolerance/OrderRateLimiterMiddleware.php`
+
+| `src/Infrastructure/FaultTolerance/CircuitBreaker.php`
+| `src/Service/FaultTolerance/OrderCircuitBreakerService.php`
+
+| `src/Infrastructure/Storage/Order/S3ClientFactory.php`
+| `src/Factory/Storage/OrderS3ClientFactory.php`
+|===
+
+== Service wiring
+
+`src/Resources/config/services.php` now imports `App\Factory\Storage\OrderS3ClientFactory` and uses it for the `app.order_s3_client` factory service.
+
+== Intentional limits
+
+This wave does not reorganize Doctrine entities, read models, pricing, payment, dispute, shipment, or broader service-layer business classes. Those areas require a separate Entity-first/business-naming pass.
+
+== Safety
+
+The apply script overlays only touched files. Cleanup removes only the paired legacy files listed above, and only after their canonical targets exist.

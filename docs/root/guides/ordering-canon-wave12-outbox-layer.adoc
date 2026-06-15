@@ -1,0 +1,36 @@
+= Ordering Canon Wave 12: Outbox Layer Closure
+:toc:
+
+== Scope
+
+Wave 12 closes the next safe slice of the overloaded `src/Service/Security/Order` bucket: outbox-related service and message residue.
+
+The wave keeps the canonical Symfony-oriented outbox surface under:
+
+* `src/Service/Outbox`
+* `src/Repository/Outbox`
+* `src/Messenger/Message`
+* `src/MessageHandler`
+* `src/Subscriber/Outbox`
+
+== Changes
+
+* Replaced stale `OutboxMessage` references with `OrderOutboxMessageEntity`.
+* Fixed `OutboxMessageRepository` generic metadata and Doctrine repository entity target.
+* Kept the existing flexible `OutboxPublisher` constructor used by current tests and command handlers.
+* Added a canonical `App\MessageHandler\OutboxDispatchedMessageHandler`.
+* Prepared safe retirement of legacy outbox files under `src/Service/Security/Order` and `src/ServiceInterface/Security/Order`.
+
+== Safety
+
+The PowerShell script overlays only files contained in the touched archive. Legacy files are moved to `.patch-backups` before deletion and only when their canonical alternatives exist.
+
+== Follow-up
+
+After application, run:
+
+[source,powershell]
+----
+composer dump-autoload
+php tools/ordering-canon/ordering-canon-outbox-layer-scan.php --write=.meta/ordering-canon-outbox-layer-after-wave12.json
+----

@@ -13,6 +13,5 @@ use App\Event\Domain\Order\OrderPaidEvent;
 
 interface OrderPaidHandlerInterface
 {
-
     public function __invoke(OrderPaidEvent $event): void;
 }

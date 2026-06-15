@@ -1,0 +1,21 @@
+= Ordering Canon Wave 6: Infrastructure Listener Cleanup
+
+Wave 6 moves runtime hook classes out of infrastructure buckets and into Symfony type-identifiable layers.
+
+== Canonical targets
+
+* `src/EventListener/Http/OrderAuditListener.php`
+* `src/EventListener/Http/OrderProblemExceptionListener.php`
+* `src/EventListener/Idempotency/OrderIdempotencyRequestListener.php`
+* `src/EventSubscriber/Monitoring/OrderTraceContextSubscriber.php`
+* `src/EventListener/Observability/OrderApiMetricListener.php`
+* `src/EventListener/Observability/OrderRequestCorrelationListener.php`
+* `src/Processor/Observability/OrderLogCorrelationProcessor.php`
+
+== Legacy sources retired by apply script
+
+The apply script only removes paired legacy files after the canonical target exists and after a backup is created under `.patch-backup/`.
+
+== Boundary
+
+This wave does not touch Entity-first work, Doctrine mappings, migrations, or service/business class reshaping.

@@ -7,7 +7,7 @@ namespace App\Service\Workflow\Order;
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -22,7 +22,7 @@ final readonly class OrderSaga
     ) {
     }
 
-    public function execute(Order $order): void
+    public function execute(OrderEntity $order): void
     {
         try {
             $amount = $order->getTotalAmount();
@@ -51,7 +51,7 @@ final readonly class OrderSaga
     }
 
     /** @return array<int, array<string, mixed>> */
-    private function buildLines(Order $order): array
+    private function buildLines(OrderEntity $order): array
     {
         $lines = [];
 

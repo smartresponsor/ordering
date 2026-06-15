@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderItemEntity;
 
 interface FlatTaxationStrategyInterface
 {
     public function __construct(float $rate = 0.2);
 
-    public function taxFor(OrderItem $orderItem, int $priceAfterDiscount): int;
+    public function taxFor(OrderItemEntity $OrderItemEntity, int $priceAfterDiscount): int;
 }

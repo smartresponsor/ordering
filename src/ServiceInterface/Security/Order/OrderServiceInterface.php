@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Entity\OrderRefundLedger;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,13 +22,13 @@ interface OrderServiceInterface
         EventDispatcherInterface $events,
     );
 
-    public function refundPartial(Order $order, Money $amount, string $idempotencyKey): OrderRefundLedger;
+    public function refundPartial(OrderEntity $OrderEntity, Money $amount, string $idempotencyKey): OrderRefundLedger;
 
-    public function payOrder(Order $order): void;
+    public function payOrder(OrderEntity $OrderEntity): void;
 
-    public function shipOrder(Order $order, string $carrier = 'DHL'): string;
+    public function shipOrder(OrderEntity $OrderEntity, string $carrier = 'DHL'): string;
 
-    public function recalcTaxes(Order $order, ?string $countryCode = null): void;
+    public function recalcTaxes(OrderEntity $OrderEntity, ?string $countryCode = null): void;
 
-    public function refundOrder(Order $order, float $amount): bool;
+    public function refundOrder(OrderEntity $OrderEntity, float $amount): bool;
 }

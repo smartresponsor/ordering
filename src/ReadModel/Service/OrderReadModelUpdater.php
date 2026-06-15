@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Service;
 
-use App\ReadModel\Entity\OrderView;
+use App\ReadModel\Entity\OrderViewEntity;
 use App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
@@ -21,8 +21,8 @@ final readonly class OrderReadModelUpdater implements OrderReadModelUpdaterInter
 
     public function recalc(string $orderId, string $grandTotal): void
     {
-        /** @var OrderView|null $view */
-        $view = $this->em->getRepository(OrderView::class)->find($orderId);
+        /** @var OrderViewEntity|null $view */
+        $view = $this->em->getRepository(OrderViewEntity::class)->find($orderId);
         if (!$view) {
             return;
         }

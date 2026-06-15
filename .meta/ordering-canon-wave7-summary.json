@@ -1,0 +1,19 @@
+{
+  "wave": "7",
+  "component": "Ordering",
+  "scope": [
+    "Infrastructure/Monitoring/HealthController -> Controller/Monitoring/OrderHealthMonitoringController",
+    "Infrastructure/Outbox/Order/OutboxProcessor -> Processor/Outbox/OrderOutboxProcessor",
+    "Infrastructure/Outbox/Command/Order/OutboxRunCommand -> Command/Outbox/OrderOutboxRunCommand"
+  ],
+  "legacy_cleanup_pairs": {
+    "src/Infrastructure/Monitoring/HealthController.php": "src/Controller/Monitoring/OrderHealthMonitoringController.php",
+    "src/Infrastructure/Outbox/Order/OutboxProcessor.php": "src/Processor/Outbox/OrderOutboxProcessor.php",
+    "src/Infrastructure/Outbox/Command/Order/OutboxRunCommand.php": "src/Command/Outbox/OrderOutboxRunCommand.php"
+  },
+  "notes": [
+    "Health controller was moved to a controller type-layer and its Doctrine query now uses OrderEntity::class instead of undefined Order::class.",
+    "MetricsController was intentionally not activated in this wave because /metrics already has an existing canonical OrderMetricsController route.",
+    "Cleanup is paired and guarded by canonical target checks."
+  ]
+}

@@ -1,0 +1,21 @@
+= Ordering Canon Wave 17: Validator Layer Cleanup
+
+Wave 17 moves the SKU Symfony Validator classes out of the mixed `Service/Security/Order` bucket and into the canonical type-identifiable validator layer.
+
+== Canonical targets
+
+* `src/Validator/Order/OrderValidSkuConstraint.php`
+* `src/Validator/Order/OrderValidSkuConstraintValidator.php`
+
+== Legacy files retired by the apply script
+
+The apply script removes these files only after the paired canonical target exists:
+
+* `src/Service/Security/Order/ValidSku.php`
+* `src/Service/Security/Order/ValidSkuValidator.php`
+* `src/ServiceInterface/Security/Order/ValidSkuInterface.php`
+* `src/ServiceInterface/Security/Order/ValidSkuValidatorInterface.php`
+
+== Notes
+
+This is a small structural cleanup wave. It does not change entity-first modeling, repository layout, or broad `Service/Security/Order` business services.

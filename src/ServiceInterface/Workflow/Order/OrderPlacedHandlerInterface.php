@@ -13,6 +13,5 @@ use App\Event\Domain\Order\OrderPlacedEvent;
 
 interface OrderPlacedHandlerInterface
 {
-
     public function __invoke(OrderPlacedEvent $event): void;
 }

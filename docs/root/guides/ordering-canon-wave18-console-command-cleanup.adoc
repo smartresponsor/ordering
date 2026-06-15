@@ -1,0 +1,30 @@
+= Ordering Canon Wave 18: Console Command Cleanup
+
+Wave 18 moves root-level order console commands into the canonical Symfony command operations layer.
+
+== Canonical targets
+
+* `src/Command/Operations/Order/OrderClearCommand.php`
+* `src/Command/Operations/Order/OrderListCommand.php`
+* `src/Command/Operations/Order/OrderGenerateCommand.php`
+* `src/Command/Operations/Order/OrderStatsCommand.php`
+
+== Legacy files retired by apply script
+
+* `src/Command/ClearOrdersCommand.php`
+* `src/Command/ListOrdersCommand.php`
+* `src/Command/GenerateOrdersCommand.php`
+* `src/Command/StatsOrdersCommand.php`
+
+== Naming correction
+
+The moved classes use the `Order*Command` form required by the Ordering component convention while preserving the public console command names:
+
+* `order:clear`
+* `order:list`
+* `order:generate`
+* `order:stats`
+
+== Entity-first correction
+
+The command internals no longer reference stale `App\Entity\Order` or `App\Entity\OrderPayment` names. They use the current entity-first classes under `App\Entity\Order`.

@@ -12,7 +12,7 @@ namespace App\Service\Workflow\Order;
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Workflow\Order\OrderOrchestratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,7 +26,7 @@ final readonly class OrderOrchestrator implements OrderOrchestratorInterface
     ) {
     }
 
-    public function processOrder(Order $order): void
+    public function processOrder(OrderEntity $order): void
     {
         $this->paymentGateway->charge($order->getId(), $order->getTotalAmount(), ['currency' => $order->getCurrency()]);
 

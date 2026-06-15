@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Order;
 
-use App\Entity\Order\OrderStockReservation;
+use App\Entity\Order\OrderStockReservationEntity;
 use App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,27 +14,27 @@ final class OrderStockReservationRepository implements OrderStockReservationRepo
     {
     }
 
-    public function save(OrderStockReservation $reservation): void
+    public function save(OrderStockReservationEntity $reservation): void
     {
         $this->add($reservation);
     }
 
-    public function add(OrderStockReservation $reservation): void
+    public function add(OrderStockReservationEntity $reservation): void
     {
         $this->em->persist($reservation);
     }
 
-    public function findOne(string $orderId, string $sku): ?OrderStockReservation
+    public function findOne(string $orderId, string $sku): ?OrderStockReservationEntity
     {
-        $reservation = $this->em->getRepository(OrderStockReservation::class)->findOneBy(['orderId' => $orderId, 'sku' => $sku]);
+        $reservation = $this->em->getRepository(OrderStockReservationEntity::class)->findOneBy(['orderId' => $orderId, 'sku' => $sku]);
 
-        return $reservation instanceof OrderStockReservation ? $reservation : null;
+        return $reservation instanceof OrderStockReservationEntity ? $reservation : null;
     }
 
     public function findActiveForSku(string $sku): array
     {
-        $reservations = $this->em->getRepository(OrderStockReservation::class)->findBy(['sku' => $sku, 'status' => OrderStockReservation::STATUS_RESERVED]);
+        $reservations = $this->em->getRepository(OrderStockReservationEntity::class)->findBy(['sku' => $sku, 'status' => OrderStockReservationEntity::STATUS_RESERVED]);
 
-        return array_values(array_filter($reservations, static fn (mixed $reservation): bool => $reservation instanceof OrderStockReservation));
+        return array_values(array_filter($reservations, static fn (mixed $reservation): bool => $reservation instanceof OrderStockReservationEntity));
     }
 }

@@ -1,0 +1,33 @@
+= Ordering Canon Wave 13: Rate-limit listener cleanup
+:toc:
+
+== Scope
+
+Wave 13 moves the remaining rate-limit runtime hooks out of `src/Service/Security/Order` and into the Symfony type-identifiable listener layer.
+
+== Canonical targets
+
+* `src/EventListener/OrderApiRateLimitListener.php`
+* `src/EventListener/OrderTenantRateLimitListener.php`
+
+Both classes keep the `Order` prefix and `Listener` suffix and now carry `#[AsEventListener]` attributes on the canonical class.
+
+== Service wiring
+
+`src/Resources/config/services.php` now imports the canonical `App\EventListener\...` classes for the explicit limiter arguments:
+
+* `OrderApiRateLimitListener` receives `limiter.api`
+* `OrderTenantRateLimitListener` receives `limiter.order_api_write`
+
+== Legacy cleanup
+
+The apply script removes only these paired legacy files after verifying that both canonical listener targets exist:
+
+* `src/Service/Security/Order/OrderApiRateLimitListener.php`
+* `src/Service/Security/Order/OrderTenantRateLimitListener.php`
+* `src/ServiceInterface/Security/Order/OrderApiRateLimitListenerInterface.php`
+* `src/ServiceInterface/Security/Order/OrderTenantRateLimitListenerInterface.php`
+
+== Non-goals
+
+This wave does not touch the broader `src/Service/Security/Order` command/handler/resource surface and does not start the Entity-first refactor.

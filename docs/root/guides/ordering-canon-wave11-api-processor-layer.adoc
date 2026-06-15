@@ -1,0 +1,35 @@
+= Ordering Canon Wave 11: API Processor Layer Closure
+:toc:
+
+== Scope
+
+Wave 11 closes a small API Platform residue from the overloaded `src/Service/Security/Order` bucket.
+The wave keeps the useful command-dispatch behavior from the legacy processors and places it in the canonical `src/Api/Processor` layer.
+
+== Canonicalized behavior
+
+* `App\Api\Processor\OrderPartialPaymentProcessor` now dispatches `App\Message\Command\Order\OrderPartialPaymentCommand`.
+* `App\Api\Processor\OrderRefundProcessor` now dispatches `App\Message\Command\Order\OrderRefundCommand`.
+* The duplicate legacy `OrderResource` is retired only when the canonical API resource view exists.
+
+== Retired legacy paths
+
+The apply script backs up and removes only these explicit touched legacy paths:
+
+[source,text]
+----
+src/Service/Security/Order/OrderResource.php
+src/Service/Security/Order/OrderPartialPaymentProcessor.php
+src/Service/Security/Order/OrderRefundProcessor.php
+----
+
+== Validation
+
+[source,powershell]
+----
+composer dump-autoload
+php -l src/Api/Processor/OrderPartialPaymentProcessor.php
+php -l src/Api/Processor/OrderRefundProcessor.php
+php -l tools/ordering-canon/ordering-canon-api-processor-layer-scan.php
+php tools/ordering-canon/ordering-canon-api-processor-layer-scan.php --write=.meta/ordering-canon-api-processor-layer-after-wave11.json
+----

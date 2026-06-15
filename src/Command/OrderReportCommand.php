@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +24,9 @@ final class OrderReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $orders = $this->em->getRepository(Order::class)->findBy([], ['createdAt' => 'DESC']);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $orders = $repo->findBy([], ['createdAt' => 'DESC']);
 
         if ([] === $orders) {
             $io->warning('No orders found.');
@@ -34,7 +37,7 @@ final class OrderReportCommand extends Command
         $rows = [];
         foreach ($orders as $order) {
             $rows[] = [
-                $order->getId(),
+                $order->slug(),
                 $order->getStatus(),
                 $order->getCurrency(),
                 $order->getGrandTotal(),

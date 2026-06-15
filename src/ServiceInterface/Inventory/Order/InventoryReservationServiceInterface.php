@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Inventory\Order;
 
-use App\Entity\Order\OrderStockReservation;
+use App\Entity\Order\OrderStockReservationEntity;
 
 interface InventoryReservationServiceInterface
 {
-    public function reserveOrFail(string $orderId, string $sku, int $qty): OrderStockReservation;
+    public function reserveOrFail(string $orderId, string $sku, int $qty): OrderStockReservationEntity;
 
     public function release(string $orderId, string $sku, int $qty): void;
 }

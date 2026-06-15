@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Demo;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 
@@ -16,9 +17,11 @@ final readonly class OrderDemoDataService
 
     public function purge(): void
     {
-        $orders = $this->em->getRepository(Order::class)->findAll();
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $orders = $repo->findAll();
         foreach ($orders as $order) {
-            if ($order instanceof Order) {
+            if ($order instanceof OrderEntity) {
                 $this->em->remove($order);
             }
         }
@@ -34,7 +37,7 @@ final readonly class OrderDemoDataService
 
         for ($i = 0; $i < $count; ++$i) {
             $total = number_format($faker->randomFloat(2, 25, 350), 2, '.', '');
-            $order = new Order($faker->randomElement($currencies), $total);
+            $order = new OrderEntity($faker->randomElement($currencies), $total);
 
             if ($i % 4 >= 1) {
                 $payment = $order->applyPayment($total, sprintf('demo-pay-%02d', $i));

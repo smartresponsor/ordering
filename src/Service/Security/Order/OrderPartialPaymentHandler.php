@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderPartialPayment;
-use App\Entity\Outbox\IdempotencyKey;
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Command\Order\OrderPartialPaymentCommand;
+use App\Model\Order\OrderPartialPayment;
 use App\ServiceInterface\Security\Order\OrderPartialPaymentHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -43,7 +42,7 @@ final readonly class OrderPartialPaymentHandler implements OrderPartialPaymentHa
         );
         $this->em->persist($pp);
 
-        $evt = new OutboxMessage(
+        $evt = new OrderOutboxMessageEntity(
             Uuid::v7()->toRfc4122(),
             'order.partial_paid',
             ['orderId' => $c->orderId, 'amountMinor' => $c->amountMinor, 'currency' => $c->currency]

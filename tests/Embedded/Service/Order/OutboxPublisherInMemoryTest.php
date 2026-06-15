@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Messenger\Message\OutboxDispatchedMessage;
+use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use App\Service\Outbox\OutboxPublisher;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ServiceLocator;
@@ -20,7 +20,7 @@ final class OutboxPublisherInMemoryTest extends TestCase
         // Arrange: create in-memory transport + bus that routes all messages to it
         $transport = new InMemoryTransport();
         $senders = new SendersLocator([
-            OutboxDispatchedMessage::class => ['in_memory'],
+            OrderOutboxDispatchedMessage::class => ['in_memory'],
         ], new ServiceLocator([
             'in_memory' => static fn (): InMemoryTransport => $transport,
         ]));
@@ -34,6 +34,6 @@ final class OutboxPublisherInMemoryTest extends TestCase
         $this->assertCount(1, $transport->get(), 'One message must be sent to in-memory transport');
         /** @var Envelope $envelope */
         $envelope = $transport->get()[0];
-        $this->assertInstanceOf(OutboxDispatchedMessage::class, $envelope->getMessage());
+        $this->assertInstanceOf(OrderOutboxDispatchedMessage::class, $envelope->getMessage());
     }
 }

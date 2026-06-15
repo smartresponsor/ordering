@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Analytics\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface AuditLoggerServiceInterface
 {
     public function __construct(EntityManagerInterface $em);
 
-    public function logEvent(Order $order, string $event, array $context = [], ?string $actor = null, ?string $ip = null): void;
+    public function logEvent(OrderEntity $OrderEntity, string $event, array $context = [], ?string $actor = null, ?string $ip = null): void;
 }

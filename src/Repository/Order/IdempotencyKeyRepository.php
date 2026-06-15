@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository\Order;
 
-use App\Entity\Outbox\IdempotencyKey;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class IdempotencyKeyRepository

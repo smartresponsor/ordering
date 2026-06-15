@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
@@ -68,8 +68,8 @@ readonly class PriceCalculator implements PriceCalculatorInterface
         ];
     }
 
-    /** @param OrderItem[] $items */
-    public function recalc(Order $order, array $items): void
+    /** @param OrderItemEntity[] $items */
+    public function recalc(OrderEntity $order, array $items): void
     {
         $subtotal = Money::zero($order->getCurrency());
         $lineSubtotals = [];
@@ -96,7 +96,7 @@ readonly class PriceCalculator implements PriceCalculatorInterface
         $this->allocateLineBreakdown($items, $lineSubtotals, $result);
     }
 
-    /** @param OrderItem[] $items
+    /** @param OrderItemEntity[] $items
      * @param Money[]                                                           $lineSubtotals
      * @param array{subtotal: Money, discount: Money, tax: Money, total: Money} $result
      */

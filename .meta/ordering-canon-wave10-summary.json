@@ -1,0 +1,30 @@
+{
+  "wave": "ordering-canon-wave10",
+  "scope": "HTTP problem helpers and security runtime helper type-layer cleanup",
+  "canonical_targets": [
+    "src/Factory/Http/OrderProblemFactory.php",
+    "src/Normalizer/Http/OrderViolationNormalizer.php",
+    "src/Service/Security/Jwt/OrderJwtTenantResolver.php",
+    "src/Voter/Jwt/OrderJwtScopeVoter.php",
+    "src/Service/Security/Order/OrderWebhookSignatureVerifier.php"
+  ],
+  "updated_references": [
+    "src/EventListener/Http/OrderProblemExceptionListener.php",
+    "src/EventSubscriber/OrderWebhookHmacSubscriber.php",
+    "src/RateLimiter/TenantKeyResolver.php",
+    "src/Service/Security/Order/TenantKeyResolver.php",
+    "src/Resources/config/services.php",
+    "config/services.security.yaml"
+  ],
+  "legacy_cleanup_files": [
+    "src/Service/Http/Order/ProblemFactory.php",
+    "src/Service/Http/Order/ViolationNormalizer.php",
+    "src/Security/Jwt/JwtTenantResolver.php",
+    "src/Security/JwtScopeVoter.php",
+    "src/Security/WebhookSignatureVerifier.php"
+  ],
+  "notes": [
+    "No Entity-first conversion in this wave.",
+    "No full repository overwrite/delete; apply script overlays touched files and removes only paired legacy files after target validation."
+  ]
+}

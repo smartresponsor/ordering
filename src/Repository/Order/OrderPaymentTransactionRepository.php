@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Order;
 
-use App\Entity\OrderPaymentTransaction;
+use App\Entity\Order\OrderPaymentTransactionEntity;
 use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,7 +14,7 @@ final class OrderPaymentTransactionRepository implements OrderPaymentTransaction
     {
     }
 
-    public function add(OrderPaymentTransaction $tx): void
+    public function add(OrderPaymentTransactionEntity $tx): void
     {
         $this->em->persist($tx);
     }
@@ -22,10 +22,10 @@ final class OrderPaymentTransactionRepository implements OrderPaymentTransaction
     public function sumSucceededByOrder(string $orderId): string
     {
         $sum = '0.00';
-        $transactions = $this->em->getRepository(OrderPaymentTransaction::class)->findBy(['orderId' => $orderId]);
+        $transactions = $this->em->getRepository(OrderPaymentTransactionEntity::class)->findBy(['orderId' => $orderId]);
 
         foreach ($transactions as $tx) {
-            if (!$tx instanceof OrderPaymentTransaction || 'succeeded' !== $tx->status()) {
+            if (!$tx instanceof OrderPaymentTransactionEntity || 'succeeded' !== $tx->status()) {
                 continue;
             }
 

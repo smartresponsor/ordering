@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
@@ -40,18 +40,18 @@ final class OrderWorkflowTest extends TestCase
 
         /** @var OrderWorkflowService $svc */
         $svc = $c->get(OrderWorkflowService::class);
-        $order = new Order();
-        $svc->place($order);
-        $svc->pay($order);
+        $order = OrderEntity::create('USD', '100.00');
+        $svc->place($order, []);
+        $svc->pay($order, 10000);
         $svc->ship($order);
 
         // outbox has 3 messages
-        $count = (int) $em->createQuery('SELECT COUNT(m.id) FROM App\Entity\Outbox\OutboxMessage m')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(m.id) FROM App\Entity\Order\OrderOutboxMessageEntity m')->getSingleScalarResult();
         $this->assertSame(3, $count);
 
         // validate event names in outbox payloads
-        $msgs = $em->getRepository(OutboxMessage::class)->findAll();
-        $names = array_map(fn ($m) => $m->getEventName(), $msgs);
+        $msgs = $em->getRepository(OrderOutboxMessageEntity::class)->findAll();
+        $names = array_map(fn ($m) => $m->getEventType(), $msgs);
         $this->assertContains(OrderPlacedEvent::class, $names);
         $this->assertContains(OrderPaidEvent::class, $names);
         $this->assertContains(OrderShippedEvent::class, $names);

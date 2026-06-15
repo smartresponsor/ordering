@@ -14,14 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class OrderApiController
 {
-    #[Route('/api/orders', name: 'api_orders_collection', methods: ['GET'])]
     #[Route('/orders', name: 'orders_collection', methods: ['GET'])]
     public function collection(): JsonResponse
     {
         return new JsonResponse(['items' => [], 'status' => 'ok']);
     }
 
-    #[Route('/api/orders', name: 'api_order_create', methods: ['POST'])]
     #[Route('/orders', name: 'orders_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
@@ -39,7 +37,6 @@ final readonly class OrderApiController
         ], 201);
     }
 
-    #[Route('/api/orders/{id}', name: 'api_order_get', methods: ['GET'])]
     #[Route('/orders/{id}', name: 'orders_get', methods: ['GET'])]
     public function get(string $id): JsonResponse
     {
@@ -53,7 +50,7 @@ final readonly class OrderApiController
         ]);
     }
 
-    #[Route('/api/orders/{id}/pay', name: 'api_order_pay', methods: ['POST'])]
+    #[Route('/api/order/pay/{id}', name: 'api_order_pay', methods: ['POST'])]
     #[Route('/orders/{id}/pay', name: 'orders_pay', methods: ['POST'])]
     public function pay(string $id, Request $request): JsonResponse
     {
@@ -66,7 +63,7 @@ final readonly class OrderApiController
         return new JsonResponse(['id' => $id, 'status' => 'paid', 'paidTotal' => $dto->amount], 202);
     }
 
-    #[Route('/api/orders/{id}/ship', name: 'api_order_ship', methods: ['POST'])]
+    #[Route('/api/order/ship/{id}', name: 'api_order_ship', methods: ['POST'])]
     #[Route('/orders/{id}/ship', name: 'orders_ship', methods: ['POST'])]
     public function ship(string $id, Request $request): JsonResponse
     {
@@ -79,7 +76,7 @@ final readonly class OrderApiController
         return new JsonResponse(['id' => $id, 'status' => 'shipped', 'carrier' => $dto->carrier], 202);
     }
 
-    #[Route('/api/orders/{id}/refund', name: 'api_order_refund', methods: ['POST'])]
+    #[Route('/api/order/refund/{id}', name: 'api_order_refund', methods: ['POST'])]
     #[Route('/orders/{id}/refund', name: 'orders_refund', methods: ['POST'])]
     public function refund(string $id, Request $request): JsonResponse
     {
@@ -98,14 +95,14 @@ final readonly class OrderApiController
         return new JsonResponse(['id' => $id, 'status' => 'completed'], 200);
     }
 
-    #[Route('/api/orders/{id}/invoice', name: 'api_order_invoice', methods: ['POST'])]
+    #[Route('/api/order/invoice/{id}', name: 'api_order_invoice', methods: ['POST'])]
     #[Route('/orders/{id}/invoice', name: 'orders_invoice', methods: ['POST'])]
     public function invoice(string $id): JsonResponse
     {
         return new JsonResponse(['id' => $id, 'invoiceId' => 'inv_'.bin2hex(random_bytes(4))], 200);
     }
 
-    #[Route('/api/orders/{id}/payments', name: 'api_order_payments', methods: ['POST'])]
+    #[Route('/api/order/payment/{id}', name: 'api_order_payments', methods: ['POST'])]
     #[Route('/orders/{id}/payments', name: 'orders_payments', methods: ['POST'])]
     public function payments(string $id): JsonResponse
     {

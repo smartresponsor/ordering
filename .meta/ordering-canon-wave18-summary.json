@@ -1,0 +1,22 @@
+{
+  "wave": "18",
+  "component": "Ordering",
+  "scope": "console root command cleanup",
+  "canonical_targets": [
+    "src/Command/Operations/Order/OrderClearCommand.php",
+    "src/Command/Operations/Order/OrderListCommand.php",
+    "src/Command/Operations/Order/OrderGenerateCommand.php",
+    "src/Command/Operations/Order/OrderStatsCommand.php"
+  ],
+  "legacy_files_for_backup_removal": [
+    "src/Command/ClearOrdersCommand.php",
+    "src/Command/ListOrdersCommand.php",
+    "src/Command/GenerateOrdersCommand.php",
+    "src/Command/StatsOrdersCommand.php"
+  ],
+  "notes": [
+    "Moves command classes into Command/Operations/Order with Order prefix and Command suffix.",
+    "Preserves existing console command names order:clear, order:list, order:generate, and order:stats.",
+    "Fixes stale App\\Entity\\Order and App\\Entity\\OrderPayment references to Entity-first classes."
+  ]
+}

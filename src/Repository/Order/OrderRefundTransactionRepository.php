@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Order;
 
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,7 +14,7 @@ final class OrderRefundTransactionRepository implements OrderRefundTransactionRe
     {
     }
 
-    public function add(OrderRefundTransaction $tx): void
+    public function add(OrderRefundTransactionEntity $tx): void
     {
         $this->em->persist($tx);
     }
@@ -22,10 +22,10 @@ final class OrderRefundTransactionRepository implements OrderRefundTransactionRe
     public function sumByOrder(string $orderId): string
     {
         $sum = '0.00';
-        $transactions = $this->em->getRepository(OrderRefundTransaction::class)->findBy(['orderId' => $orderId]);
+        $transactions = $this->em->getRepository(OrderRefundTransactionEntity::class)->findBy(['orderId' => $orderId]);
 
         foreach ($transactions as $tx) {
-            if (!$tx instanceof OrderRefundTransaction) {
+            if (!$tx instanceof OrderRefundTransactionEntity) {
                 continue;
             }
 

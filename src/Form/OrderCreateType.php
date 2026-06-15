@@ -19,12 +19,16 @@ final class OrderCreateType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('currency', TextType::class, ['label' => 'Currency'])
+            ->add('currency', TextType::class, [
+                'label' => 'Currency',
+                'help' => 'Three-letter ISO currency code, e.g. USD, EUR, UAH.',
+            ])
             ->add('grandTotal', MoneyType::class, [
                 'label' => 'Grand total',
                 'currency' => false,
                 'divisor' => 1,
                 'scale' => 2,
+                'help' => 'Order total before any post-payment adjustments.',
             ])
             ->add('submit', SubmitType::class, ['label' => 'Create order']);
     }

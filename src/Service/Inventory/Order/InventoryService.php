@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\InventoryReservation;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderStockReservationEntity;
 use App\Event\Domain\Order\StockConsumedEvent;
 use App\Event\Domain\Order\StockReleasedEvent;
 use App\Event\Domain\Order\StockReservationFailedEvent;
@@ -30,10 +30,10 @@ final readonly class InventoryService implements InventoryServiceInterface
     }
 
     /** @param array<string,int> $lines sku=>qty */
-    public function reserve(Order $order, array $lines, string $key): InventoryReservation
+    public function reserve(OrderEntity $order, array $lines, string $key): OrderStockReservationEntity
     {
         // idempotent: find existing by key
-        $existing = $this->em->getRepository(InventoryReservation::class)->findOneBy(['reservationKey' => $key]);
+        $existing = $this->em->getRepository(OrderStockReservationEntity::class)->findOneBy(['reservationKey' => $key]);
         if ($existing) {
             return $existing;
         }
@@ -43,7 +43,7 @@ final readonly class InventoryService implements InventoryServiceInterface
             throw new \DomainException('Not enough stock');
         }
 
-        $res = new InventoryReservation($order, $key, $lines);
+        $res = new OrderStockReservationEntity($order, $key, $lines);
 
         $this->em->wrapInTransaction(function () use ($res) {
             $this->em->persist($res);
@@ -55,9 +55,9 @@ final readonly class InventoryService implements InventoryServiceInterface
         return $res;
     }
 
-    public function release(InventoryReservation $res): void
+    public function release(OrderStockReservationEntity $res): void
     {
-        if (InventoryReservation::STATE_RESERVED !== $res->getState()) {
+        if (OrderStockReservationEntity::STATE_RESERVED !== $res->getState()) {
             return;
         }
         $this->gateway->release($res->getReservationKey());
@@ -66,9 +66,9 @@ final readonly class InventoryService implements InventoryServiceInterface
         $this->events->dispatch(new StockReleasedEvent($res));
     }
 
-    public function consume(InventoryReservation $res): void
+    public function consume(OrderStockReservationEntity $res): void
     {
-        if (InventoryReservation::STATE_RESERVED !== $res->getState()) {
+        if (OrderStockReservationEntity::STATE_RESERVED !== $res->getState()) {
             return;
         }
         $this->gateway->consume($res->getReservationKey());

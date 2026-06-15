@@ -6,9 +6,9 @@ namespace App\Infrastructure\Monitoring;
 
 final readonly class MetricsCollector
 {
-    private object|null $registry;
+    private ?object $registry;
 
-    public function __construct(object|null $registry = null)
+    public function __construct(?object $registry = null)
     {
         if (null !== $registry) {
             $this->registry = $registry;
@@ -26,26 +26,26 @@ final readonly class MetricsCollector
     }
 
     /** @param array<string, string> $labels */
-    public function inc(string $name, array $labels = []): void
+    public function inc(string $nameEntity, array $labels = []): void
     {
         if (null === $this->registry || !is_callable([$this->registry, 'getOrRegisterCounter'])) {
             return;
         }
 
-        $counter = $this->registry->getOrRegisterCounter('order', $name, '', array_keys($labels));
+        $counter = $this->registry->getOrRegisterCounter('order', $nameEntity, '', array_keys($labels));
         if (is_object($counter) && is_callable([$counter, 'inc'])) {
             $counter->inc(array_values($labels));
         }
     }
 
     /** @param array<string, string> $labels */
-    public function observe(string $name, float $seconds, array $labels = []): void
+    public function observe(string $nameEntity, float $seconds, array $labels = []): void
     {
         if (null === $this->registry || !is_callable([$this->registry, 'getOrRegisterHistogram'])) {
             return;
         }
 
-        $histogram = $this->registry->getOrRegisterHistogram('order', $name, '', array_keys($labels));
+        $histogram = $this->registry->getOrRegisterHistogram('order', $nameEntity, '', array_keys($labels));
         if (is_object($histogram) && is_callable([$histogram, 'observe'])) {
             $histogram->observe($seconds, array_values($labels));
         }

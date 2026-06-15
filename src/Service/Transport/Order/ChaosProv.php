@@ -9,7 +9,7 @@ use App\ServiceInterface\Transport\Order\PaymentProviderInterface;
 final readonly class ChaosProv implements PaymentProviderInterface
 {
     public function __construct(
-        private string $name,
+        private string $nameEntity,
         private float $failPct = 0.0,
         private int $minMs = 10,
         private int $maxMs = 30,
@@ -33,17 +33,17 @@ final readonly class ChaosProv implements PaymentProviderInterface
             throw new \RuntimeException('provider failure');
         }
 
-        return ['provider' => $this->name, 'status' => 'ok'];
+        return ['provider' => $this->nameEntity, 'status' => 'ok'];
     }
 
     public function capture(string $paymentId, int $amount): array
     {
-        return ['provider' => $this->name, 'status' => 'ok'];
+        return ['provider' => $this->nameEntity, 'status' => 'ok'];
     }
 
     public function refund(string $paymentId, int $amount): array
     {
-        return ['provider' => $this->name, 'status' => 'ok'];
+        return ['provider' => $this->nameEntity, 'status' => 'ok'];
     }
 
     public function verifyWebhook(string $payload, string $signatureHeader): bool
@@ -53,6 +53,6 @@ final readonly class ChaosProv implements PaymentProviderInterface
 
     public function mapEvent(array $event): array
     {
-        return ['name' => 'chaos', 'payload' => $event];
+        return ['nameEntity' => 'chaos', 'payload' => $event];
     }
 }

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order\Payment;
+use App\Entity\Order\OrderPaymentEntity;
 
 interface PaymentStateMachineInterface
 {
-    public function authorize(Payment $payment): void;
+    public function authorize(OrderPaymentEntity $payment): void;
 
-    public function capture(Payment $payment): void;
+    public function capture(OrderPaymentEntity $payment): void;
 
-    public function settle(Payment $payment): void;
+    public function settle(OrderPaymentEntity $payment): void;
 
-    public function void(Payment $payment): void;
+    public function void(OrderPaymentEntity $payment): void;
 
-    public function refund(Payment $payment): void;
+    public function refund(OrderPaymentEntity $payment): void;
 }

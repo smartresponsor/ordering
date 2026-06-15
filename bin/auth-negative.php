@@ -83,9 +83,9 @@ function verifyJwt(
     return ['ok' => true, 'claims' => $claims];
 }
 
-function reportCase(string $name, bool $ok): bool
+function reportCase(string $nameEntity, bool $ok): bool
 {
-    echo ($ok ? '[PASS] ' : '[FAIL] ') . $name . PHP_EOL;
+    echo ($ok ? '[PASS] ' : '[FAIL] ') . $nameEntity . PHP_EOL;
 
     return $ok;
 }

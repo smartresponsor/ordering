@@ -12,9 +12,8 @@ namespace App\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Resource\Order\OrderResource;
+use App\ApiResource\View\Order\OrderResource;
 use App\Message\Command\Order\OrderPlaceCommand;
-use App\ServiceInterface\Security\Order\OrderPlaceProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
@@ -22,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @implements ProcessorInterface<OrderResource, OrderResource>
  */
-final readonly class OrderPlaceProcessor implements ProcessorInterface, OrderPlaceProcessorInterface
+final readonly class OrderPlaceProcessor implements ProcessorInterface
 {
     public function __construct(
         private MessageBusInterface $bus,

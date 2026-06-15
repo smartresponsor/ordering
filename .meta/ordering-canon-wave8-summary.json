@@ -1,0 +1,26 @@
+{
+  "component": "Ordering",
+  "wave": 8,
+  "theme": "monitoring-controller-consolidation",
+  "mode": "touched-files-only",
+  "canonicalTargets": [
+    "src/Controller/Monitoring/OrderHostHealthCheckController.php",
+    "src/Controller/Monitoring/OrderReadinessController.php",
+    "src/Controller/Monitoring/OrderHealthMonitoringController.php"
+  ],
+  "updatedFiles": [
+    "config/routes.yaml",
+    "config/services.yaml"
+  ],
+  "legacyRemovalCandidates": [
+    "src/Controller/HealthCheckController.php",
+    "src/Controller/ReadinessController.php",
+    "src/Infrastructure/Monitoring/HealthCheckController.php",
+    "src/Infrastructure/Monitoring/HealthController.php"
+  ],
+  "notes": [
+    "No repository-wide delete or overwrite is performed.",
+    "The apply script overlays touched files and removes only explicitly listed legacy files after canonical target checks.",
+    "MetricsController consolidation is intentionally deferred to a dedicated route-collision-aware wave."
+  ]
+}

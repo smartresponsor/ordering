@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
+use App\Entity\Order\OrderMetricsProjectionEntity;
 use App\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
 use App\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,43 +20,43 @@ final readonly class MetricsProjectionService implements MetricsProjectionServic
     {
     }
 
-    private function getOrCreateDay(\DateTimeImmutable $day): OrderMetricsProjection
+    private function getOrCreateDay(\DateTimeImmutable $day): OrderMetricsProjectionEntity
     {
-        $repo = $this->em->getRepository(OrderMetricsProjection::class);
+        $repo = $this->em->getRepository(OrderMetricsProjectionEntity::class);
         $existing = $repo->findOneBy(['date' => $day]);
         if ($existing) {
             return $existing;
         }
 
-        $obj = new OrderMetricsProjection($day);
+        $obj = new OrderMetricsProjectionEntity($day);
         $this->em->persist($obj);
 
         return $obj;
     }
 
-    private function getOrCreateVendor(string $vendorId, \DateTimeImmutable $day): VendorRevenueView
+    private function getOrCreateVendor(string $vendorId, \DateTimeImmutable $day): VendorRevenueViewEntity
     {
-        $repo = $this->em->getRepository(VendorRevenueView::class);
+        $repo = $this->em->getRepository(VendorRevenueViewEntity::class);
         $existing = $repo->findOneBy(['vendorId' => $vendorId, 'date' => $day]);
         if ($existing) {
             return $existing;
         }
 
-        $obj = new VendorRevenueView($vendorId, $day);
+        $obj = new VendorRevenueViewEntity($vendorId, $day);
         $this->em->persist($obj);
 
         return $obj;
     }
 
-    private function getOrCreateRefundDay(\DateTimeImmutable $day): RefundStatsView
+    private function getOrCreateRefundDay(\DateTimeImmutable $day): RefundStatsViewEntity
     {
-        $repo = $this->em->getRepository(RefundStatsView::class);
+        $repo = $this->em->getRepository(RefundStatsViewEntity::class);
         $existing = $repo->findOneBy(['date' => $day]);
         if ($existing) {
             return $existing;
         }
 
-        $obj = new RefundStatsView($day);
+        $obj = new RefundStatsViewEntity($day);
         $this->em->persist($obj);
 
         return $obj;

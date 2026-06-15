@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Outbox\OutboxMessage;
-use App\Messenger\Message\OutboxDispatchedMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use App\Repository\Outbox\OutboxMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
@@ -47,20 +47,20 @@ final class OutboxPublisher
     }
 
     /** @throws ExceptionInterface|\JsonException */
-    public function storeAndPublish(string $aggregateId, string $eventType, array $payload): void
+    public function storeAndPublish(string|int $aggregateId, string $eventType, array $payload): void
     {
         if (null !== $this->em) {
-            $outbox = new OutboxMessage($aggregateId, $eventType, $payload);
+            $outbox = new OrderOutboxMessageEntity($aggregateId, $eventType, $payload);
             $this->em->persist($outbox);
             $this->em->flush();
-            $this->bus->dispatch(new OutboxDispatchedMessage($eventType, $payload));
+            $this->bus->dispatch(new OrderOutboxDispatchedMessage($eventType, $payload));
             $outbox->markDispatched();
             $this->em->flush();
 
             return;
         }
 
-        $this->bus->dispatch(new OutboxDispatchedMessage($eventType, $payload));
+        $this->bus->dispatch(new OrderOutboxDispatchedMessage($eventType, $payload));
     }
 
     /** @throws ExceptionInterface|\JsonException */
@@ -73,7 +73,7 @@ final class OutboxPublisher
         $count = 0;
         foreach ($this->repository->findUnpublishedBatch($limit) as $message) {
             $payload = $message->toArray()['payload'];
-            $this->bus->dispatch(new OutboxDispatchedMessage($message->getEventType(), $payload));
+            $this->bus->dispatch(new OrderOutboxDispatchedMessage($message->getEventType(), $payload));
             $message->markDispatched();
             ++$count;
         }
@@ -86,13 +86,13 @@ final class OutboxPublisher
     public function publish(string $topic, array $payload): void
     {
         if (null !== $this->em) {
-            $aggregateId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? $topic);
-            $this->em->persist(new OutboxMessage($aggregateId, $topic, $payload));
+            $aggregateId = $payload['orderId'] ?? $payload['aggregateId'] ?? $topic;
+            $this->em->persist(new OrderOutboxMessageEntity($aggregateId, $topic, $payload));
             $this->em->flush();
 
             return;
         }
 
-        $this->bus->dispatch(new OutboxDispatchedMessage($topic, $payload));
+        $this->bus->dispatch(new OrderOutboxDispatchedMessage($topic, $payload));
     }
 }

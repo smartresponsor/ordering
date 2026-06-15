@@ -8,7 +8,8 @@ use App\DTO\OrderCreateDTO;
 use App\DTO\OrderPaymentDTO;
 use App\DTO\OrderRefundDTO;
 use App\DTO\OrderShipmentDTO;
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,23 +35,26 @@ final readonly class OrderController
         if (count($errors) > 0) {
             return new JsonResponse(['errors' => (string) $errors], 422);
         }
-        $order = new Order($dto->currency, $dto->grandTotal);
+        $order = new OrderEntity($dto->currency, $dto->grandTotal);
         $this->em->persist($order);
         $this->em->flush();
 
-        return new JsonResponse(['id' => $order->id(), 'status' => $order->status()], 201);
+        return new JsonResponse(['id' => $order->slug(), 'slug' => $order->slug(), 'status' => $order->status()], 201);
     }
 
     #[Route('/{id}', name: 'order_get', methods: ['GET'])]
     public function get(string $id): JsonResponse
     {
-        $order = $this->em->getRepository(Order::class)->find($id);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
         if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
 
         return new JsonResponse([
-            'id' => $order->id(),
+            'id' => $order->slug(),
+            'slug' => $order->slug(),
             'status' => $order->status(),
             'grandTotal' => $order->grandTotal(),
             'paidTotal' => $order->paidTotal(),
@@ -74,7 +78,9 @@ final readonly class OrderController
     #[Route('/{id}/pay', name: 'order_pay', methods: ['POST'])]
     public function pay(string $id, Request $request): JsonResponse
     {
-        $order = $this->em->getRepository(Order::class)->find($id);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
         if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
@@ -97,13 +103,15 @@ final readonly class OrderController
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $order->id(), 'status' => $order->status(), 'paidTotal' => $order->paidTotal()]);
+        return new JsonResponse(['id' => $order->slug(), 'slug' => $order->slug(), 'status' => $order->status(), 'paidTotal' => $order->paidTotal()]);
     }
 
     #[Route('/{id}/ship', name: 'order_ship', methods: ['POST'])]
     public function ship(string $id, Request $request): JsonResponse
     {
-        $order = $this->em->getRepository(Order::class)->find($id);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
         if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
@@ -126,13 +134,15 @@ final readonly class OrderController
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $order->id(), 'status' => $order->status()]);
+        return new JsonResponse(['id' => $order->slug(), 'slug' => $order->slug(), 'status' => $order->status()]);
     }
 
     #[Route('/{id}/refund', name: 'order_refund', methods: ['POST'])]
     public function refund(string $id, Request $request): JsonResponse
     {
-        $order = $this->em->getRepository(Order::class)->find($id);
+        /** @var OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($id);
         if (!$order) {
             return new JsonResponse(['error' => 'Not found'], 404);
         }
@@ -155,6 +165,6 @@ final readonly class OrderController
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        return new JsonResponse(['id' => $order->id(), 'status' => $order->status(), 'refundedTotal' => $order->refundedTotal()]);
+        return new JsonResponse(['id' => $order->slug(), 'slug' => $order->slug(), 'status' => $order->status(), 'refundedTotal' => $order->refundedTotal()]);
     }
 }

@@ -1,26 +1,33 @@
-# Order — Deploy Full Stack
+# Ordering deploy surface
 
 ## Quick start (local)
 ```bash
-cp .env.local.example .env.local
-make up
-make test-mail
+cp deploy/.env.local.example .env.local
+make -f deploy/Makefile up
 ```
 
-## Namespaces & Security
-Apply namespaces with PSA labels (and SCC for OpenShift if needed):
+## Namespaces and security
+Apply namespace and security manifests from `deploy/security/`:
 ```bash
 kubectl apply -f deploy/security/namespace-staging.yaml
 kubectl apply -f deploy/security/namespace-prod.yaml
-# OpenShift:
+# OpenShift only:
 kubectl apply -f deploy/security/securitycontextconstraints.yaml
 ```
 
 ## Helmfile
 ```bash
-helmfile -f deploy/deploy/order/deploy/deploy/order/helmfile.yaml apply -e staging
-helmfile -f deploy/deploy/order/deploy/deploy/order/helmfile.yaml apply -e production
+helmfile -f deploy/order/helmfile.yaml apply -e staging
+helmfile -f deploy/order/helmfile.yaml apply -e production
 ```
 
+## Compose and images
+Use the compose files and Dockerfiles under `deploy/`:
+- `deploy/docker-compose.local.yml`
+- `deploy/docker-compose.dev.yml`
+- `deploy/docker-compose.prod.yml`
+- `deploy/Dockerfile.local`
+- `deploy/Dockerfile.prod`
+
 ## CI/CD
-See workflows under `.github/workflows`. Rollback and Slack dual-env included.
+Repository workflows live under `.github/workflows/`. Historical root-era CI materials are archived under `docs/root/archive/ci/`.

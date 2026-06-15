@@ -6,7 +6,7 @@ namespace App\Service\Analytics\Order;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use App\Api\Provider\OrderMetricsAggregateProvider;
+use App\Provider\Api\OrderMetricsAggregateProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 

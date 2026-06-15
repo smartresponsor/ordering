@@ -16,7 +16,7 @@ final class RefundWebhookTest extends WebTestCase
         $client = static::createClient();
         $client->request(
             'POST',
-            '/api/webhooks/refund',
+            '/api/payment/webhook/refund',
             server: [
                 'HTTP_CONTENT_TYPE' => 'application/json',
                 'HTTP_X_PROVIDER' => 'mock',

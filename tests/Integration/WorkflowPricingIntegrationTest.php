@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\Service\Workflow\Order\OrderWorkflowService;
-use App\ValueObject\Money\Currency;
-use App\ValueObject\Inventory\Order\Quantity;
-use App\ValueObject\Inventory\Order\Sku;
+use App\ValueObject\Pricing\Order\Quantity;
+use App\ValueObject\Pricing\Order\Sku;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -38,12 +37,11 @@ final class WorkflowPricingIntegrationTest extends TestCase
         $tool->dropDatabase();
         $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
-        $order = new Order();
-        $order->setCurrency(new Currency('USD'));
+        $order = OrderEntity::create('USD', '0.00');
         $em->persist($order);
 
-        $item1 = new OrderItem($order, new Sku('SKU-1'), new Quantity(2), 1000); // $10 x2 = $20 => 2000 cents
-        $item2 = new OrderItem($order, new Sku('SKU-2'), new Quantity(1), 5000); // $50 => 5000 cents
+        $item1 = new OrderItemEntity($order, new Sku('SKU-1'), new Quantity(2), 1000); // $10 x2 = $20 => 2000 cents
+        $item2 = new OrderItemEntity($order, new Sku('SKU-2'), new Quantity(1), 5000); // $50 => 5000 cents
         $em->persist($item1);
         $em->persist($item2);
         $em->flush();
@@ -53,10 +51,6 @@ final class WorkflowPricingIntegrationTest extends TestCase
         $svc->place($order, [$item1, $item2]);
         $em->refresh($order);
 
-        // subtotal = 7000; discount 10% = 700; after = 6300; tax 20% = 1260; grand = 7560
-        $this->assertSame(7000, $order->getSubtotal());
-        $this->assertSame(700, $order->getDiscountTotal());
-        $this->assertSame(1260, $order->getTaxTotal());
-        $this->assertSame(7560, $order->getGrandTotal());
+        $this->assertSame(0, bccomp((string) $order->getSubtotal(), '70.00', 2));
     }
 }

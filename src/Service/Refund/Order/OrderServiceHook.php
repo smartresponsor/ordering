@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\OrderServiceHookInterface;
 use App\ValueObject\Pricing\Order\Money;
@@ -20,7 +20,7 @@ final readonly class OrderServiceHook implements OrderServiceHookInterface
     {
     }
 
-    public function assertRefundAllowed(Order $order, Money $amount): void
+    public function assertRefundAllowed(OrderEntity $order, Money $amount): void
     {
         if (!$this->eligibility->canRefund($order)) {
             throw new \DomainException('Refund not allowed: delivery window expired or not delivered policy.');

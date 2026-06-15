@@ -1,0 +1,31 @@
+= Ordering Canon Wave 13: API State Processor Layer Closure
+:toc:
+
+== Scope
+
+Wave 13 moves the remaining API Platform state processors out of the overloaded `src/Service/Security/Order` bucket and into the Symfony/API type layer.
+
+== Canonical moves
+
+[source,text]
+----
+src/Service/Security/Order/OrderDeleteProcessor.php -> src/Api/Processor/OrderDeleteProcessor.php
+src/Service/Security/Order/OrderPatchProcessor.php  -> src/Api/Processor/OrderPatchProcessor.php
+src/Service/Security/Order/OrderPlaceProcessor.php  -> src/Api/Processor/OrderPlaceProcessor.php
+----
+
+The canonical classes keep the API Platform `ProcessorInterface` contract and the existing command-dispatch behavior. The legacy `ServiceInterface/Security/Order/*ProcessorInterface.php` wrappers are retired because these classes are API state processors, not service-layer contracts.
+
+== Safety model
+
+The apply script overlays only touched files. It then backs up and removes only the explicitly listed legacy processor files and legacy processor-interface files after verifying that the canonical processor files exist.
+
+== Follow-up
+
+After applying the patch, run the scanner:
+
+[source,powershell]
+----
+php tools/ordering-canon/ordering-canon-api-state-processor-layer-scan.php `
+  --write=.meta/ordering-canon-api-state-processor-layer-after-wave13.json
+----

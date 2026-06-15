@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
+use App\ServiceInterface\Security\Order\DlqConsoleInterface;
 use App\ServiceInterface\Security\Order\DlqRepositoryInterface;
 use App\ValueObject\Archival\Order\AuditLog;
 
@@ -14,7 +15,7 @@ use App\ValueObject\Archival\Order\AuditLog;
  * This file is part of SmartResponsor (Order domain).
  */
 
-final readonly class DlqConsole
+final readonly class DlqConsole implements DlqConsoleInterface
 {
     public function __construct(
         private DlqRepositoryInterface $repo,

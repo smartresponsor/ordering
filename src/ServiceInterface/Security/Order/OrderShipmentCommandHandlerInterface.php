@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Contract\Gateway\Order\CarrierInterface;
 use App\Message\Command\Order\OrderShipmentCommand;
-use App\Service\Security\Order\TransactionalEventPublisher;
+use App\Service\Messaging\Order\TransactionalEventPublisher;
 use App\Service\Shipment\Order\ShipmentService;
+use App\ServiceInterface\Shipment\CarrierInterface;
 
 interface OrderShipmentCommandHandlerInterface
 {

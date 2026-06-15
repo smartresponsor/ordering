@@ -1,0 +1,30 @@
+= Ordering Canon Wave 23: Event subscriber cleanup
+
+Wave 23 continues the touched-file-only Ordering canon cleanup.
+
+== Scope
+
+This wave fixes two remaining event-subscriber naming and layer issues:
+
+* unprefixed `ApiAuditSubscriber` in `src/EventSubscriber`;
+* duplicate `DomainEventsToOutboxSubscriber` implementations split between `src/EventSubscriber` and `src/Service/Security/Order`.
+
+== Canonical targets
+
+[source,text]
+----
+src/EventSubscriber/ApiAuditSubscriber.php
+→ src/EventSubscriber/OrderApiResponseAuditSubscriber.php
+
+src/EventSubscriber/DomainEventsToOutboxSubscriber.php
+src/Service/Security/Order/DomainEventsToOutboxSubscriber.php
+→ src/EventSubscriber/Outbox/OrderDomainEventsToOutboxSubscriber.php
+----
+
+`config/services_audit.yaml` now references `App\EventSubscriber\OrderApiResponseAuditSubscriber`.
+
+== Cleanup policy
+
+The apply script overlays only touched files. Legacy subscriber/interface files are backed up and removed only after the corresponding canonical target exists.
+
+No full repository overwrite, mass delete, or cumulative snapshot application is used.

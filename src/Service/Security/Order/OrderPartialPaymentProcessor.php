@@ -11,7 +11,7 @@ namespace App\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Dto\OrderPartialPaymentInput;
+use App\DTO\Api\OrderPartialPaymentInput;
 use App\Message\Command\Order\OrderPartialPaymentCommand;
 use App\ServiceInterface\Security\Order\OrderPartialPaymentProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Outbox\OutboxMessage;
-use App\Messenger\Message\OutboxDispatchedMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use App\Repository\Outbox\OutboxMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -28,7 +28,7 @@ final readonly class OutboxPublisher
     {
         $count = 0;
         foreach ($this->repo->findUnpublishedBatch($limit) as $msg) {
-            $this->bus->dispatch(new OutboxDispatchedMessage($msg->getEventType(), $msg->toArray()['payload']));
+            $this->bus->dispatch(new OrderOutboxDispatchedMessage($msg->getEventType(), $msg->toArray()['payload']));
             $msg->markDispatched();
             ++$count;
         }
@@ -37,23 +37,23 @@ final readonly class OutboxPublisher
         return $count;
     }
 
-    public function storeAndPublish(string $aggregateId, string $eventType, array $payload): void
+    public function storeAndPublish(string|int $aggregateId, string $eventType, array $payload): void
     {
-        $outbox = new OutboxMessage($aggregateId, $eventType, $payload);
+        $outbox = new OrderOutboxMessageEntity($aggregateId, $eventType, $payload);
         $this->em->persist($outbox);
         $this->em->flush();
-        $this->bus->dispatch(new OutboxDispatchedMessage($eventType, $payload));
+        $this->bus->dispatch(new OrderOutboxDispatchedMessage($eventType, $payload));
         $outbox->markDispatched();
         $this->em->flush();
     }
 
     public function publish(string $topic, array $payload): void
     {
-        $aggregateId = (string) ($payload['orderId'] ?? $payload['aggregateId'] ?? $topic);
-        $outbox = new OutboxMessage($aggregateId, $topic, $payload);
+        $aggregateId = $payload['orderId'] ?? $payload['aggregateId'] ?? $topic;
+        $outbox = new OrderOutboxMessageEntity($aggregateId, $topic, $payload);
         $this->em->persist($outbox);
         $this->em->flush();
 
-        $this->bus->dispatch(new OutboxDispatchedMessage($topic, $payload));
+        $this->bus->dispatch(new OrderOutboxDispatchedMessage($topic, $payload));
     }
 }

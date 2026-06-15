@@ -1,11 +1,20 @@
-Дополнения к монорепозиторию:
-- `Dockerfile` — образ PHP 8.3 с `amqp`, composer.
-- `Makefile` — цели `up/down/test/worker/ci`.
-- `openapi.yaml` — минимальная спецификация OpenAPI 3.0 для Order endpoints.
-- `OrderComponent.postman_collection.json` — коллекция Postman.
-- `docs/examples.http` — примеры HTTPie.
+# Ordering extras
 
-Инструкция:
-1) Импортируй Postman-коллекцию и укажи `{{baseUrl}}` (например, http://localhost).
-2) Или используй `docs/examples.http` с REST Client (VS Code) / HTTPie.
-3) Собери контейнер: `docker build -t order-component .`
+Additional repository assets:
+- `deploy/Dockerfile.local` and `deploy/Dockerfile.prod` — container build entry points
+- `deploy/docker-compose.local.yml`, `deploy/docker-compose.dev.yml`, `deploy/docker-compose.prod.yml`, `deploy/docker-compose.stack.yml` — compose entry points
+- `Makefile` — top-level helper targets
+- `api/openapi/order-v1.json` — current primary OpenAPI specification
+- `api/openapi/order-draft.yaml` — draft API specification
+- `api/openapi/archive/openapi-alpha-root.json` — archived early root-level OpenAPI snapshot
+- `api/openapi/archive/order-rc3-p1p2-openapi.yaml` — archived RC3 P1/P2 OpenAPI snapshot
+- `OrderComponent.postman_collection.json` — Postman collection
+- `docs/examples.http` — HTTP examples
+
+Quick usage:
+1. Import the Postman collection and set `{{baseUrl}}`.
+2. Or use `docs/examples.http` with a REST client.
+3. Build images from `deploy/`, for example:
+   ```bash
+   docker build -f deploy/Dockerfile.prod -t ordering:prod .
+   ```

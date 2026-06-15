@@ -1,0 +1,25 @@
+{
+  "wave": 11,
+  "component": "Ordering",
+  "scope": "Messenger outbox message canonicalization",
+  "canonical_targets": [
+    "src/Message/Outbox/OrderOutboxDispatchedMessage.php",
+    "src/MessageHandler/Outbox/OrderOutboxDispatchedMessageHandler.php"
+  ],
+  "updated_references": [
+    "src/Service/Outbox/OutboxMessengerDispatcher.php",
+    "src/Service/Outbox/OutboxPublisher.php",
+    "src/Service/Security/Order/OutboxMessengerDispatcher.php",
+    "src/Service/Security/Order/OutboxPublisher.php",
+    "tests/E2E/OutboxPublisherInMemoryTest.php",
+    "tests/Embedded/Service/Order/OutboxPublisherInMemoryTest.php",
+    "config/packages/messenger.yaml",
+    "config/packages/test/messenger.yaml"
+  ],
+  "legacy_cleanup_candidates": [
+    "src/Messenger/Message/OutboxDispatchedMessage.php",
+    "src/Service/Security/Order/OutboxDispatchedMessage.php",
+    "src/Service/Security/Order/OutboxDispatchedMessageHandler.php"
+  ],
+  "policy": "Touched-files overlay only; cleanup is paired and guarded by canonical target existence."
+}

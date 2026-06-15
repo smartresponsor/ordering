@@ -1,0 +1,19 @@
+{
+  "wave": 21,
+  "component": "Ordering",
+  "purpose": "Move remaining root DLQ console command into canonical Messenger command layer.",
+  "moves": [
+    {
+      "legacy": "src/Command/DlqRequeueCommand.php",
+      "canonical": "src/Command/Messenger/OrderDlqRequeueCommand.php"
+    }
+  ],
+  "updated": [
+    "config/services.yaml",
+    "docs/root/guides/ordering-canon-wave21-messenger-dlq-command-cleanup.adoc"
+  ],
+  "command_names_preserved": [
+    "order:dlq:requeue"
+  ],
+  "destructive_cleanup": "paired legacy file only after canonical target check"
+}

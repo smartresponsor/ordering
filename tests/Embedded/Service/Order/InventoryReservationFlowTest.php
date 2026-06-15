@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderItem;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderItemEntity;
 use App\Integration\Inventory\InMemoryInventoryGateway;
-use App\Subscriber\Event\Order\InventorySubscriber;
 use App\Service\Inventory\Order\InventoryService;
-use App\ValueObject\Pricing\Order\Money;
+use App\Subscriber\Event\Order\InventorySubscriber;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -27,9 +25,9 @@ final class InventoryReservationFlowTest extends KernelTestCase
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 10, 'SKU-2' => 5]);
         $svc = new InventoryService($em, $dispatcher, $gateway);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = OrderEntity::create('USD', '100.00');
         $em->persist($order);
-        $item = new OrderItem($order, '10.00', 'USD');
+        $item = new OrderItemEntity($order, '10.00', 'USD');
         $em->persist($item);
         $em->flush();
 
@@ -54,7 +52,7 @@ final class InventoryReservationFlowTest extends KernelTestCase
         $gateway = new InMemoryInventoryGateway(['SKU-1' => 1]);
         $svc = new InventoryService($em, $dispatcher, $gateway);
 
-        $order = new Order('VND-2', new Money('50.00', 'USD'));
+        $order = OrderEntity::create('USD', '50.00');
         $em->persist($order);
         $em->flush();
 

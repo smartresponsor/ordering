@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderMetricsProjectionEntity;
 use App\Service\Analytics\Order\MetricsProjectionService;
-use App\Service\Analytics\Order\OrderMetricsProjection;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -19,7 +19,7 @@ final class MetricsProjectionFlowTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $svc = self::$kernel->getContainer()->get(MetricsProjectionService::class);
 
-        $order = new Order('V-1', new Money('100.00', 'USD'));
+        $order = new OrderEntity('V-1', new Money('100.00', 'USD'));
         $em->persist($order);
         $em->flush();
 
@@ -27,7 +27,7 @@ final class MetricsProjectionFlowTest extends KernelTestCase
         $svc->projectRefund('10.00', new \DateTimeImmutable('2025-01-02'));
         $em->flush();
 
-        $repo = $em->getRepository(OrderMetricsProjection::class);
+        $repo = $em->getRepository(OrderMetricsProjectionEntity::class);
         $day = $repo->findOneBy(['date' => new \DateTimeImmutable('2025-01-02')]);
         $this->assertNotNull($day);
         $this->assertEquals(1, $day->getOrdersCount());

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\State\Order;
 
-use App\Entity\Order\Delivery;
+use App\Model\Order\Delivery;
 use App\ServiceInterface\State\Order\DeliveryStateMachineInterface;
 
 final class DeliveryStateMachine implements DeliveryStateMachineInterface

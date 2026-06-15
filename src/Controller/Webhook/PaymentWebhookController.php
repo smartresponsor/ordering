@@ -18,7 +18,7 @@ final readonly class PaymentWebhookController
     /**
      * @throws \Exception
      */
-    #[Route(path: '/api/webhooks/payment', name: 'order_payment_webhook', methods: ['POST'])]
+    #[Route(path: '/api/payment/webhook', name: 'order_payment_webhook', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
         $data = $this->handler->handlePayment($request);
@@ -26,7 +26,7 @@ final readonly class PaymentWebhookController
         return new JsonResponse($data, 200);
     }
 
-    #[Route(path: '/api/webhooks/refund', name: 'order_refund_webhook', methods: ['POST'])]
+    #[Route(path: '/api/payment/webhook/refund', name: 'order_refund_webhook', methods: ['POST'])]
     public function refund(Request $request): JsonResponse
     {
         $data = $this->handler->handleRefund($request);

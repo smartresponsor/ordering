@@ -6,5 +6,5 @@ namespace App\ServiceInterface\Transport\Order;
 
 interface ProviderAdapterInterface
 {
-    public function name(): string;
+    public function nameEntity(): string;
 }

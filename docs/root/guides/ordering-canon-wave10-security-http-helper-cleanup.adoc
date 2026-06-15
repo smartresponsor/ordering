@@ -1,0 +1,32 @@
+= Ordering Canon Wave 10: HTTP Problem and Security Runtime Helper Cleanup
+
+== Scope
+
+Wave 10 moves a small set of obvious helper/runtime classes into Symfony-oriented type layers while preserving behavior.
+
+== Canonical targets
+
+* `src/Factory/Http/OrderProblemFactory.php`
+* `src/Normalizer/Http/OrderViolationNormalizer.php`
+* `src/Service/Security/Jwt/OrderJwtTenantResolver.php`
+* `src/Voter/Jwt/OrderJwtScopeVoter.php`
+* `src/Service/Security/Order/OrderWebhookSignatureVerifier.php`
+
+== Updated references
+
+* `src/EventListener/Http/OrderProblemExceptionListener.php`
+* `src/EventSubscriber/OrderWebhookHmacSubscriber.php`
+* `src/RateLimiter/TenantKeyResolver.php`
+* `src/Service/Security/Order/TenantKeyResolver.php`
+* `src/Resources/config/services.php`
+* `config/services.security.yaml`
+
+== Cleanup contract
+
+The apply script removes only the paired legacy files after all canonical targets are present.
+It does not overwrite the whole repository and does not run broad cleanup.
+
+== Deferred
+
+The large `src/Service/Security/Order` business/runtime mix remains intentionally deferred.
+That area needs a dedicated class-form map before moving commands, handlers, processors, validators, middleware, and services.

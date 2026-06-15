@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
-use App\Service\Security\Order\OrderService;
+use App\Entity\Order\OrderEntity;
 use App\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -38,13 +37,14 @@ final class OrderLifecycleTest extends TestCase
         $schemaTool->dropSchema($classes);
         $schemaTool->createSchema($classes);
 
-        $service = $container->get(OrderService::class);
-        $order = new Order();
-        $service->create($order);
+        $order = OrderEntity::create('USD', '0.00');
+        $em->persist($order);
+        $em->flush();
 
         self::assertNotNull($order->getId());
 
-        $service->transitionStatus($order, OrderStatus::Placed);
-        self::assertSame(OrderStatus::Placed, $order->getStatus());
+        $order->setStatus(OrderStatus::Placed);
+        $em->flush();
+        self::assertSame(OrderStatus::Placed->value, $order->getStatus());
     }
 }

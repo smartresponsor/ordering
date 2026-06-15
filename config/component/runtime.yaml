@@ -1,0 +1,5 @@
+parameters:
+  ordering_rate_limit_api_write_limit: 60
+  ordering_rate_limit_api_write_interval_minutes: 1
+  ordering_rate_limit_api_read_limit: 600
+  ordering_rate_limit_api_read_interval_minutes: 1

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\ServiceInterface\Refund\Order;
 
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Entity\OrderRefundTransaction;
+use App\Entity\Order\OrderRefundTransactionEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -22,5 +22,5 @@ interface RefundProcessorInterface
         OrderPaymentGatewayInterface $gateway,
     );
 
-    public function startRefund(OrderRefundTransaction $tx): void;
+    public function startRefund(OrderRefundTransactionEntity $tx): void;
 }

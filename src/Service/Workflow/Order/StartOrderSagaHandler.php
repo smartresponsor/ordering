@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Message\Command\StartOrderSagaCommand;
 use App\Saga\OrderSaga;
 use App\ServiceInterface\Workflow\Order\StartOrderSagaHandlerInterface;
@@ -25,8 +25,10 @@ final readonly class StartOrderSagaHandler implements StartOrderSagaHandlerInter
 
     public function __invoke(StartOrderSagaCommand $cmd): void
     {
-        $order = $this->em->find(Order::class, $cmd->orderId);
-        if (!$order) {
+        /** @var \App\Repository\Order\OrderRepository $repo */
+        $repo = $this->em->getRepository(OrderEntity::class);
+        $order = $repo->findByIdentifier($cmd->orderId);
+        if (!$order instanceof OrderEntity) {
             return;
         }
 

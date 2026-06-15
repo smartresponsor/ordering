@@ -20,13 +20,17 @@ final class OrderRefundType extends AbstractType
 
         $builder
             ->add('amount', MoneyType::class, [
+                'label' => 'Refund amount',
                 'currency' => false,
                 'divisor' => 1,
                 'scale' => 2,
+                'help' => 'How much money to return to the customer.',
             ])
             ->add('reason', TextareaType::class, [
+                'label' => 'Reason',
                 'required' => false,
-                'attr' => ['rows' => 2],
+                'attr' => ['rows' => 3],
+                'help' => 'Short explanation for the refund, visible in the audit trail.',
             ])
             ->add('submit', SubmitType::class, ['label' => 'Refund order']);
     }

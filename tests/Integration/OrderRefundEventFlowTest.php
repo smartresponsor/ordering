@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
-use App\Entity\Order\OrderPayment;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
 use App\Service\Security\Order\OrderService;
 use App\Subscriber\Event\Order\OrderRefundEventSubscriber;
 use App\ValueObject\Pricing\Order\Money;
@@ -26,9 +26,9 @@ final class OrderRefundEventFlowTest extends KernelTestCase
 
         $svc = new OrderService($em, $dispatcher);
 
-        $order = new Order('VND-1', new Money('100.00', 'USD'));
+        $order = OrderEntity::create('USD', '100.00');
         $em->persist($order);
-        $em->persist(new OrderPayment($order, 'pi_1', '100.00', 'USD'));
+        $em->persist(new OrderPaymentEntity($order, 'pi_1', '100.00', 'USD'));
         $em->flush();
 
         $svc->refundPartial($order, new Money('40.00', 'USD'), 'e1');

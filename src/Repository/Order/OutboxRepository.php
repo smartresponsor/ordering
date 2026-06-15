@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Order;
 
-use App\Entity\Outbox\OutboxMessage;
+use App\Entity\Order\OrderOutboxMessageEntity;
 use App\RepositoryInterface\Order\OutboxRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,14 +14,14 @@ final class OutboxRepository implements OutboxRepositoryInterface
     {
     }
 
-    public function add(OutboxMessage $message): void
+    public function add(OrderOutboxMessageEntity $message): void
     {
         $this->em->persist($message);
     }
 
     public function pullPending(int $limit): iterable
     {
-        return $this->em->getRepository(OutboxMessage::class)
+        return $this->em->getRepository(OrderOutboxMessageEntity::class)
             ->createQueryBuilder('m')
             ->andWhere('m.dispatched = false')
             ->andWhere('m.availableAt IS NULL OR m.availableAt <= :now')
@@ -32,12 +32,12 @@ final class OutboxRepository implements OutboxRepositoryInterface
             ->toIterable();
     }
 
-    public function markSent(OutboxMessage $message): void
+    public function markSent(OrderOutboxMessageEntity $message): void
     {
         $message->markSent();
     }
 
-    public function markFailed(OutboxMessage $message, int $delaySeconds = 0): void
+    public function markFailed(OrderOutboxMessageEntity $message, int $delaySeconds = 0): void
     {
         $message->markFailed($delaySeconds);
     }

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Service\Webhook\Order;
 
-use App\Entity\Order\WebhookLog;
 use App\Repository\Order\WebhookLogRepository;
 use App\ServiceInterface\Webhook\Order\WebhookIdempotencyServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

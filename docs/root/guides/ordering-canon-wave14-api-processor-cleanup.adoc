@@ -1,0 +1,26 @@
+= Ordering Canon Wave 14: API Processor Layer Cleanup
+:toc:
+
+== Scope
+
+Wave 14 moves the small API Platform processor surface out of `src/Api/Processor` and into the canonical Symfony-oriented type layer under `src/Processor/Api`.
+
+== Canonical targets
+
+* `src/Processor/Api/OrderPartialPaymentProcessor.php`
+* `src/Processor/Api/OrderRefundProcessor.php`
+
+== Legacy files retired by apply script
+
+The apply script removes only the paired legacy files after the canonical targets are present:
+
+* `src/Api/Processor/OrderPartialPaymentProcessor.php`
+* `src/Api/Processor/OrderRefundProcessor.php`
+
+== Rationale
+
+`src/Api` is no longer a canonical root type layer for controllers/processors. Controllers were already moved to `src/Controller/Api` in Wave 3. This wave applies the same type-layer rule to the remaining API Platform processor helpers.
+
+== Non-goals
+
+This wave does not touch the larger `src/Service/Security/Order/*Processor` surface. That block has richer application behavior and must be handled in a dedicated collision-aware processor/handler wave.

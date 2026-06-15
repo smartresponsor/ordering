@@ -1,0 +1,73 @@
+= Ordering Canon Wave 2: Class-Form Plan
+:toc:
+
+== Purpose
+
+Wave 2 adds a deterministic, read-only class-form planner for the Ordering repository. It does not move source classes yet. The purpose is to make the next move wave reviewable and repeatable instead of guessing from file names or old snapshots.
+
+== Current scan summary
+
+The planner was run against the provided `OrderingThu.zip` current slice.
+
+[source,json]
+----
+{
+  "total": 741,
+  "with_issues": 270,
+  "non_service_inside_service_layer": 90,
+  "wrong_layer_or_path": 264,
+  "missing_or_wrong_suffix": 102
+}
+----
+
+== Main findings
+
+* The repository already contains a lot of useful Ordering business code, but the type shape is inconsistent.
+* `src/Service/**` contains commands, handlers, subscribers, middleware, repositories, messages, validators, resources, providers, factories and view/read-model classes.
+* API Platform classes are split between `src/Api/**` and `src/ApiResource/**`; this needs a deliberate Symfony/API Platform rule before mass moves.
+* The most dangerous cluster is `src/Service/Security/Order/**`: it mixes security, command, handler, message, middleware, repository, API resource, processor and outbox concerns.
+* The previous root-level PHP duplicates remain a separate cleanup surface and must only be removed with explicit backup/verification logic.
+
+== Added artifact
+
+`tools/ordering-canon/ordering-canon-classform-plan.php` scans `src/**/*.php` and writes:
+
+* `.meta/ordering-canon-classform-plan-wave2.json`
+* `.meta/ordering-canon-classform-plan-wave2.csv`
+
+The CSV columns are intentionally stable:
+
+[source,text]
+----
+path,class,kind,current_layer,detected_form,expected_name,target_path,issues,action
+----
+
+== How to run after applying
+
+[source,powershell]
+----
+cd D:\PhpstormProjects\www\Ordering
+
+php tools/ordering-canon/ordering-canon-classform-plan.php `
+  --write=.meta/ordering-canon-classform-plan-after-wave2.json `
+  --csv=.meta/ordering-canon-classform-plan-after-wave2.csv
+----
+
+== Next wave recommendation
+
+Wave 3 should not try to fix all 270 items at once. Recommended order:
+
+. Move and rename a small API/controller slice: `src/Api/Controller/**` to `src/Controller/**`, with class suffix normalization for `*Action` if accepted.
+. Move clear `src/Service/Subscriber/**` classes to `src/Subscriber/**`.
+. Move clear `src/Service/Security/Order/*Command.php` classes to `src/Command/Security/Order/**`.
+. Move clear message handlers to `src/MessageHandler/**`, only after checking current bus routing and imports.
+. Handle service interfaces separately, because interfaces are numerous and need paired class/interface movement.
+
+== Guardrails
+
+* No cumulative snapshot overwrite.
+* No repository-wide delete or cleanup script.
+* No `/src/Domain` introduction.
+* No ports/adapters pattern.
+* Only Symfony-oriented type layers.
+* Old files may be removed only when the PowerShell patch has copied the new canonical file and verifies that the target exists.

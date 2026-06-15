@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
-use App\ServiceInterface\Analytics\Order\ExportSinkInterface;
+use App\ServiceInterface\Analytics\Order\BigQueryExportSinkInterface;
 
-final readonly class BigQueryExportSink implements ExportSinkInterface
+final readonly class BigQueryExportSink implements BigQueryExportSinkInterface
 {
     public function __construct(private string $targetPath)
     {

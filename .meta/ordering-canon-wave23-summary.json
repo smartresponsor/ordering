@@ -1,0 +1,21 @@
+{
+  "wave": 23,
+  "component": "Ordering",
+  "scope": "event subscriber naming and duplicate outbox subscriber consolidation",
+  "canonical_targets": [
+    "src/EventSubscriber/OrderApiResponseAuditSubscriber.php",
+    "src/EventSubscriber/Outbox/OrderDomainEventsToOutboxSubscriber.php",
+    "config/services_audit.yaml"
+  ],
+  "legacy_files": [
+    "src/EventSubscriber/ApiAuditSubscriber.php",
+    "src/EventSubscriber/DomainEventsToOutboxSubscriber.php",
+    "src/Service/Security/Order/DomainEventsToOutboxSubscriber.php",
+    "src/ServiceInterface/Security/Order/DomainEventsToOutboxSubscriberInterface.php"
+  ],
+  "notes": [
+    "ApiAuditSubscriber was renamed to OrderApiResponseAuditSubscriber and services_audit.yaml now references the prefixed class.",
+    "Two DomainEventsToOutboxSubscriber implementations were consolidated into one canonical EventSubscriber/Outbox class.",
+    "The duplicate Service/Security subscriber and custom ServiceInterface are removed by the apply script only after the canonical target exists."
+  ]
+}

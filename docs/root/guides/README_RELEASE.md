@@ -1,13 +1,9 @@
-# OrderComponent Release (RC)
+# Ordering release
 
 ## Prerequisites
 - git, composer, PHP 8.2/8.3
-- gh CLI (`gh auth login`)
-- env tokens:
-  ```bash
-  export GITHUB_TOKEN=ghp_xxx
-  export PACKAGIST_TOKEN=pk_xxx
-  ```
+- GitHub CLI (`gh auth login`)
+- required tokens in the environment when publishing
 
 ## Release from CLI
 Linux/macOS:
@@ -23,11 +19,16 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
 
 ## GitHub Actions
-- CI: `.github/workflows/ci-enhancements.yml`
-- Auto Release on tag: `.github/workflows/release.yml`
+- Main CI workflows live under `.github/workflows/`
+- Archived root CI draft lives under `docs/root/archive/ci/ci-enhancements.root.yml`
+- Release workflow: `.github/workflows/release.yml`
 
-## Docker / Compose / Helm
+## Containers / Compose / Helmfile
 ```bash
-docker compose up -d --build
-helm upgrade --install order-component ./helm
+# local or prod compose from deploy/
+docker compose -f deploy/docker-compose.local.yml up -d --build
+
+# helmfile from deploy/order/
+helmfile -f deploy/order/helmfile.yaml apply -e staging
+helmfile -f deploy/order/helmfile.yaml apply -e production
 ```

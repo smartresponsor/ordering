@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 use App\Service\Archival\Order\OrderArchivalService;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +18,7 @@ final class ArchivalCommandTest extends KernelTestCase
         $em = self::$kernel->getContainer()->get(EntityManagerInterface::class);
         $svc = self::$kernel->getContainer()->get(OrderArchivalService::class);
 
-        $order = new Order('V-1', new Money('10.00', 'USD'));
+        $order = new OrderEntity('V-1', new Money('10.00', 'USD'));
         // emulate old update time via direct SQL if needed; here we just ensure method callable
         $em->persist($order);
         $em->flush();

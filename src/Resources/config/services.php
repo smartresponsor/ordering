@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-use App\Api\Controller\OrderPayController;
-use App\Api\Controller\OrderShipController;
-use App\Api\State\OrderDataPersister;
-use App\Infrastructure\Storage\Order\S3ClientFactory;
+use App\Controller\Api\OrderPayController;
+use App\Controller\Api\OrderShipController;
+use App\EventListener\OrderApiRateLimitListener;
+use App\EventListener\OrderTenantRateLimitListener;
+use App\Factory\Storage\OrderS3ClientFactory;
 use App\MessageHandler\OrderEventMessageHandler;
-use App\Security\Jwt\JwtTenantResolver;
 use App\Service\Http\Order\AuditRotator;
 use App\Service\Http\Order\MonologAuditSink;
 use App\Service\Http\Order\NdjsonAuditSink;
 use App\Service\Http\Order\S3AuditShipper;
 use App\Service\Inventory\InMemoryInventoryService;
 use App\Service\Inventory\Order\InMemoryInventoryGateway;
+use App\Service\OrderSummaryProvider;
 use App\Service\Outbox\OutboxMessengerDispatcher;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\Order\StripeGateway as OrderStripeGateway;
@@ -26,8 +27,7 @@ use App\Service\Pricing\Order\FlatTaxationStrategy;
 use App\Service\Pricing\Order\PriceCalculator;
 use App\Service\Pricing\Order\TaxationConfigLoader;
 use App\Service\Pricing\Order\VatExclusiveStrategy;
-use App\Service\Security\Order\OrderApiRateLimitListener;
-use App\Service\Security\Order\OrderTenantRateLimitListener;
+use App\Service\Security\Jwt\OrderJwtTenantResolver;
 use App\Service\Shipment\ShipmentProcessorService;
 use App\Service\Shipment\UPSCarrier;
 use App\Service\Workflow\Order\OrderWorkflowService;
@@ -36,9 +36,11 @@ use App\ServiceInterface\Http\Order\AuditShipInterface;
 use App\ServiceInterface\Http\Order\AuditSinkInterface;
 use App\ServiceInterface\Inventory\InventoryServiceInterface;
 use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
+use App\ServiceInterface\OrderSummaryProviderInterface;
 use App\ServiceInterface\Payment\Order\PaymentGatewayInterface as OrderPaymentGatewayInterface;
 use App\ServiceInterface\Payment\PaymentGatewayInterface;
 use App\ServiceInterface\Shipment\CarrierInterface;
+use App\State\Api\OrderDataPersister;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -78,13 +80,13 @@ return static function (ContainerConfigurator $c): void {
         ->arg(1, new Reference('doctrine.orm.entity_manager'));
 
     // Rate limiting
-    $s->set(JwtTenantResolver::class);
+    $s->set(OrderJwtTenantResolver::class);
     $s->set(OrderApiRateLimitListener::class)
         ->arg('$orderApiLimiter', new Reference('limiter.api'));
     $s->set(OrderTenantRateLimitListener::class)
         ->arg('$orderApiTenantLimiter', new Reference('limiter.order_api_write'));
 
-    // Shipment
+    // ShipmentEntity
     $s->set(UPSCarrier::class);
     $s->alias(CarrierInterface::class, UPSCarrier::class);
     $s->set(ShipmentProcessorService::class)
@@ -102,9 +104,9 @@ return static function (ContainerConfigurator $c): void {
         ->arg(1, new Reference('messenger.default_bus'));
 
     // HTTP audit helpers
-    $s->set(S3ClientFactory::class);
+    $s->set(OrderS3ClientFactory::class);
     $s->set('app.order_s3_client', stdClass::class)
-        ->factory([service(S3ClientFactory::class), 'create']);
+        ->factory([service(OrderS3ClientFactory::class), 'create']);
     $s->set(AuditRotator::class)
         ->arg(0, '%kernel.project_dir%');
     $s->alias(AuditRotateInterface::class, AuditRotator::class);
@@ -127,6 +129,9 @@ return static function (ContainerConfigurator $c): void {
         ->arg(4, service(PriceCalculator::class))
         ->arg(5, service(InventoryServiceInterface::class))
         ->arg(6, service(OutboxPublisher::class));
+
+    $s->set(OrderSummaryProvider::class);
+    $s->alias(OrderSummaryProviderInterface::class, OrderSummaryProvider::class);
 
     $s->set(OrderDataPersister::class)->tag('api_platform.state_processor');
     $s->set(OrderPayController::class)->public();

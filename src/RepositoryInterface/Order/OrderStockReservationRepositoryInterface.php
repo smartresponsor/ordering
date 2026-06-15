@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Order\OrderStockReservation;
+use App\Entity\Order\OrderStockReservationEntity;
 
 interface OrderStockReservationRepositoryInterface
 {
-    public function save(OrderStockReservation $reservation): void;
+    public function save(OrderStockReservationEntity $reservation): void;
 
-    public function add(OrderStockReservation $reservation): void;
+    public function add(OrderStockReservationEntity $reservation): void;
 
-    public function findOne(string $orderId, string $sku): ?OrderStockReservation;
+    public function findOne(string $orderId, string $sku): ?OrderStockReservationEntity;
 
-    /** @return list<OrderStockReservation> */
+    /** @return list<OrderStockReservationEntity> */
     public function findActiveForSku(string $sku): array;
 }

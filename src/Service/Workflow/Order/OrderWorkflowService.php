@@ -9,8 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
@@ -45,7 +44,7 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
      *
      * @throws ExceptionInterface
      */
-    public function place(Order $order, array $items): void
+    public function place(OrderEntity $order, array $items): void
     {
         $this->apply($order, 'place');
         $this->calculator->recalc($order, $items);
@@ -54,7 +53,7 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
         $this->em->flush();
     }
 
-    public function pay(Order $order, int $amount): void
+    public function pay(OrderEntity $order, int $amount): void
     {
         $this->payments->charge($order, $amount);
         $this->apply($order, 'pay');
@@ -62,7 +61,7 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
         $this->em->flush();
     }
 
-    public function ship(Order $order): void
+    public function ship(OrderEntity $order): void
     {
         $this->shipper->ship($order);
         $this->apply($order, 'ship');
@@ -70,7 +69,7 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
         $this->em->flush();
     }
 
-    private function apply(Order $order, string $transition): void
+    private function apply(OrderEntity $order, string $transition): void
     {
         if (!$this->workflow->can($order, $transition)) {
             throw new \LogicException("Transition '$transition' not allowed");
@@ -85,19 +84,19 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
         $this->em->persist($order);
     }
 
-    public function cancel(Order $order): void
+    public function cancel(OrderEntity $order): void
     {
         $this->apply($order, 'cancel');
         $this->publish(OrderCancelledEvent::class, $order);
     }
 
-    public function refund(Order $order): void
+    public function refund(OrderEntity $order): void
     {
         $this->apply($order, 'refund');
         $this->publish(OrderRefundedEvent::class, $order);
     }
 
-    private function publish(string $eventClass, Order $order): void
+    private function publish(string $eventClass, OrderEntity $order): void
     {
         $this->outbox->publish($eventClass, ['orderId' => $order->getId()]);
         $this->em->flush();

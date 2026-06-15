@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
+use App\Entity\Order\OrderMetricsProjectionEntity;
 use App\ServiceInterface\Analytics\Order\OrderMetricsQueryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -23,7 +24,7 @@ final readonly class OrderMetricsQueryService implements OrderMetricsQueryServic
     {
         $qb = $this->em->createQueryBuilder()
             ->select('m')
-            ->from(OrderMetricsProjection::class, 'm')
+            ->from(OrderMetricsProjectionEntity::class, 'm')
             ->where('m.date BETWEEN :f AND :t')
             ->setParameter('f', $from->format('Y-m-d'))
             ->setParameter('t', $to->format('Y-m-d'))

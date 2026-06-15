@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Payment\Order;
 
-use App\Entity\Order;
-use App\Entity\OrderPayment;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
+use App\Entity\Order\OrderEntity;
+use App\Entity\Order\OrderPaymentEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface PaymentProcessorServiceInterface
 {
     public function __construct(PaymentGatewayInterface $gateway, EntityManagerInterface $em);
 
-    public function charge(Order $order, int $amount, string $gatewayName = 'stripe'): OrderPayment;
+    public function charge(OrderEntity $OrderEntity, int $amount, string $gatewayName = 'stripe'): OrderPaymentEntity;
 }

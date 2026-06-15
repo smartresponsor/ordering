@@ -1,0 +1,19 @@
+component:
+  schema_version: 1
+  name: ordering
+  title: Ordering
+  package: ordering/order
+  status: rc
+  namespace: App
+  responsibility: "order processing, routing, pricing, and rate-limit surfaces"
+  export_contract:
+    services: config/component/services.yaml
+    config_tools: config/component/config_tools.yaml
+    rate_limiter: config/packages/rate_limiter.php
+    runtime: config/component/runtime.yaml
+  host_policy:
+    business_logic_owner: component
+    composition_owner: host_application
+    glue_layer_goal: near_zero
+    transport_contracts: dto_api_resource_first
+    entities_as_transport_contracts: false

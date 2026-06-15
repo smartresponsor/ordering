@@ -1,0 +1,42 @@
+= Ordering Canon Wave 22: Command naming cleanup
+
+Wave 22 continues the touched-file-only Ordering canon cleanup.
+
+== Scope
+
+This wave canonicalizes remaining unprefixed console command class names in the already isolated command operation surface.
+
+== Moves
+
+[source,text]
+----
+src/Command/Operations/Order/AuditRotateCommand.php
+→ src/Command/Operations/Order/OrderAuditRotateCommand.php
+
+src/Command/Operations/Order/AuditShipS3Command.php
+→ src/Command/Operations/Order/OrderAuditShipS3Command.php
+
+src/Command/Operations/Order/DlqListCommand.php
+→ src/Command/Outbox/OrderOutboxDlqListCommand.php
+
+src/Command/Operations/Order/DlqRequeueCommand.php
+→ src/Command/Outbox/OrderOutboxDlqRequeueCommand.php
+----
+
+== Collision decision
+
+`src/Command/Messenger/OrderDlqRequeueCommand.php` owns Messenger failure-transport requeue and keeps `order:dlq:requeue`.
+
+The outbox DLQ commands now use explicit outbox command names:
+
+[source,text]
+----
+order:outbox:dlq:list
+order:outbox:dlq:requeue
+----
+
+This avoids two services claiming the same Symfony console command name.
+
+== Cleanup policy
+
+The apply script overlays only touched files. Legacy command/interface files are backed up and removed only after the corresponding canonical target exists.

@@ -9,5 +9,5 @@ framework:
             failed:
                 dsn: 'in-memory://'
         routing:
-            'App\Messenger\Message\OutboxDispatchedMessage': async
+            'App\Message\Outbox\OrderOutboxDispatchedMessage': async
             'App\Message\OrderEventMessage': async

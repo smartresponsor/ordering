@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order;
+use App\Entity\Order\OrderEntity;
 
 /**
- * Shipment gateway contract for Ordering service layer.
+ * ShipmentEntity gateway contract for Ordering service layer.
  */
 interface OrderShipmentGatewayInterface
 {
     /**
-     * Create shipment for given Order and return tracking number.
+     * Create shipment for given OrderEntity and return tracking number.
      */
-    public function createShipment(Order $order, string $carrier): string;
+    public function createShipment(OrderEntity $OrderEntity, string $carrier): string;
 
     /**
      * Update shipment status by tracking number.

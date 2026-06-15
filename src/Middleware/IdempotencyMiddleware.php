@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-final class IdempotencyMiddleware extends \App\Messenger\Middleware\IdempotencyMiddleware
+final class IdempotencyMiddleware extends Messenger\OrderMessageIdempotencyMiddleware
 {
 }

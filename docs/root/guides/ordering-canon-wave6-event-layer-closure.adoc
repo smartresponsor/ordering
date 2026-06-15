@@ -1,0 +1,30 @@
+= Ordering Canon Wave 6: event-layer closure
+:toc:
+:toclevels: 3
+
+== Scope
+
+Wave 6 closes the remaining legacy `EventSubscriber` bucket after the subscriber/listener cleanup waves.
+
+== Canonical change
+
+* `src/EventSubscriber/DomainEventsToOutboxSubscriber.php` is moved to `src/Subscriber/Outbox/DomainEventsToOutboxSubscriber.php`.
+* Namespace changes from `App\EventSubscriber` to `App\Subscriber\Outbox`.
+* `config/services.yaml` keeps `App\Subscriber\` and `App\Listener\` resources and explicitly tags the Doctrine event subscriber.
+* `config/services_audit.yaml` is repaired to reference `App\Subscriber\ApiAuditSubscriber` after Wave 4.
+
+== Non-goals
+
+* No entity-first migration changes are made in this wave.
+* No broad Service-layer taxonomy move is made in this wave.
+* No cumulative snapshot or destructive repository replacement is introduced.
+
+== Verification
+
+[source,powershell]
+----
+cd D:\PhpstormProjects\www\Ordering
+composer dump-autoload
+php -l src/Subscriber/Outbox/DomainEventsToOutboxSubscriber.php
+php tools/ordering-canon/ordering-canon-legacy-event-layer-scan.php --write=.meta/ordering-canon-legacy-event-layer-after-wave6.json
+----

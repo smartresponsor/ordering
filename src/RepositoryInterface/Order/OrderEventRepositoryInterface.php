@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\RepositoryInterface\Order;
 
-use App\Entity\Order\OrderEventRecord;
+use App\Entity\Order\OrderEventRecordEntity;
 
 interface OrderEventRepositoryInterface
 {
     public function existsByEventId(string $eventId): bool;
 
-    public function save(OrderEventRecord $record): void;
+    public function save(OrderEventRecordEntity $record): void;
 
-    /** @return list<OrderEventRecord> */
+    /** @return list<OrderEventRecordEntity> */
     public function findByOrderId(string $orderId): array;
 }
