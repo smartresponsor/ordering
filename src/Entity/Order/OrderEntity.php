@@ -8,7 +8,7 @@ use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\Lifecycle\OrderLifecyclePolicy;
-use App\Ordering\EntityInterface\Order\RecordsEventEntityInterface;
+use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
 use App\Ordering\Repository\Order\OrderRepository;
 use App\ValueObject\OrderStatus;
 use App\ValueObject\Pricing\Order\Money;

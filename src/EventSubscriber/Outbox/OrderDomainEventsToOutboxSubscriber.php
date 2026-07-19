@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber\Outbox;
 
-use App\Ordering\EntityInterface\Order\RecordsEventEntityInterface;
+use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
 use App\Service\Outbox\OutboxWriter;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
