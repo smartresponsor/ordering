@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
 use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectIdentityEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectSoftDeleteEmbeddableTrait;
-use App\Repository\Order\OrderStorageRepository;
+use App\Ordering\Repository\Order\OrderStorageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderStockReservationEntity;
 use App\Event\Domain\Order\StockConsumedEvent;
 use App\Event\Domain\Order\StockReleasedEvent;
 use App\Event\Domain\Order\StockReservationFailedEvent;
 use App\Event\Domain\Order\StockReservedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderStockReservationEntity;
 use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
 use App\ServiceInterface\Inventory\Order\InventoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

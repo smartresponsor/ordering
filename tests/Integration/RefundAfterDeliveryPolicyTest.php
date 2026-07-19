@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderShipmentEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use App\Service\Refund\Order\RefundEligibilityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

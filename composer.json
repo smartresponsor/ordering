@@ -61,6 +61,7 @@
     },
     "scripts": {
         "test": "phpunit --configuration phpunit.xml.dist --testsuite OrderFast",
+        "test:object-identity": "phpunit --configuration phpunit.xml.dist tests/Unit/Order/OrderingObjectIdentityContractTest.php",
         "test:full": "phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack",
         "test:panther": "php vendor/bin/phpunit --configuration phpunit.xml.dist tests/Panther",
         "lint:container": "php bin/console lint:container",

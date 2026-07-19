@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
 use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectIdentityEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectLocaleEmbeddableTrait;
-use App\Repository\Order\OrderPaymentTranslationRepository;
+use App\Ordering\Repository\Order\OrderPaymentTranslationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderPaymentTranslationRepository::class)]

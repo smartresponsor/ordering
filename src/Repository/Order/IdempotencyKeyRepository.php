@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 

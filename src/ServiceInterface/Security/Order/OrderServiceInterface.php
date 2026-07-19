@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Entity\OrderRefundLedger;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

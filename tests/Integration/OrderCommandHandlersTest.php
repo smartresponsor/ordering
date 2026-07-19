@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Command\OrderCreateCommand;
 use App\Message\Command\OrderPayCommand;
 use App\Message\Handler\OrderCreateHandler;
 use App\Message\Handler\OrderPayHandler;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

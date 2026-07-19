@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Command\Order\OrderRefundCommand;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Service\Refund\Order\RefundPolicyService;
 use App\ServiceInterface\Security\Order\OrderRefundHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +35,7 @@ final readonly class OrderRefundHandler implements OrderRefundHandlerInterface
             $this->em->persist(new IdempotencyKey($c->idempotencyKey));
         }
 
-        /** @var \App\Repository\Order\OrderRepository $repo */
+        /** @var \App\Ordering\Repository\Order\OrderRepository $repo */
         $repo = $this->em->getRepository(OrderEntity::class);
         $order = $repo->findByIdentifier($c->orderId);
         if (!$order instanceof OrderEntity) {

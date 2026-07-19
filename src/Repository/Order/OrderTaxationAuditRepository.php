@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderTaxationAuditEntity;
-use App\RepositoryInterface\Order\OrderTaxationAuditRepositoryInterface;
+use App\Ordering\Entity\Order\OrderTaxationAuditEntity;
+use App\Ordering\RepositoryInterface\Order\OrderTaxationAuditRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

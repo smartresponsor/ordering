@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderReturnPolicyEntity;
-use App\RepositoryInterface\Order\OrderReturnPolicyRepositoryInterface;
+use App\Ordering\Entity\Order\OrderReturnPolicyEntity;
+use App\Ordering\RepositoryInterface\Order\OrderReturnPolicyRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderMetricsProjectionEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderMetricsProjectionEntity;
 use App\Service\Analytics\Order\MetricsProjectionService;
 use App\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;

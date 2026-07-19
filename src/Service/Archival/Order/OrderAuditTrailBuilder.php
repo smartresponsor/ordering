@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Archival\Order;
 
-use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
+use App\Ordering\RepositoryInterface\Order\OrderEventRepositoryInterface;
 use App\ServiceInterface\Archival\Order\OrderAuditTrail;
 use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Shipment\Order;
 
-use App\Entity\Order\OrderShipmentEntity;
 use App\Model\Order\OrderReturnPolicy;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

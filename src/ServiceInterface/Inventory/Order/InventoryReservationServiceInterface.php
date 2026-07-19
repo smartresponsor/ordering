@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Inventory\Order;
 
-use App\Entity\Order\OrderStockReservationEntity;
+use App\Ordering\Entity\Order\OrderStockReservationEntity;
 
 interface InventoryReservationServiceInterface
 {

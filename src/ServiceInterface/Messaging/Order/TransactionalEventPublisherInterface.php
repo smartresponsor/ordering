@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Messaging\Order;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
-use App\RepositoryInterface\Order\OutboxRepositoryInterface;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 interface TransactionalEventPublisherInterface

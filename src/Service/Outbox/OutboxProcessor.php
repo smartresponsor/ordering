@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

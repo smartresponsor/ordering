@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderMetricsExportLogEntity;
-use App\RepositoryInterface\Order\OrderMetricsExportLogRepositoryInterface;
+use App\Ordering\Entity\Order\OrderMetricsExportLogEntity;
+use App\Ordering\RepositoryInterface\Order\OrderMetricsExportLogRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

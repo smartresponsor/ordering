@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderShippedEvent;
-use App\Repository\Order\OrderRepository;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Repository\Order\OrderRepository;
 use App\ServiceInterface\Workflow\Order\OrderShippedHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
 use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectIdentityEmbeddableTrait;
 use App\Objecting\EntityTrait\Embeddable\ObjectSoftDeleteEmbeddableTrait;
-use App\Repository\Order\OrderPriceAuditRepository;
+use App\Ordering\Repository\Order\OrderPriceAuditRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderPriceAuditRepository::class)]

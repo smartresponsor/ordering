@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Order\OrderEntity;
-use App\Repository\Order\OrderRepository;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderShipmentEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use App\Service\ShipmentEntity\Order\ShipmentService;
 use App\Subscriber\Event\Order\OrderShipmentSubscriber;
 use App\ValueObject\Pricing\Order\Money;

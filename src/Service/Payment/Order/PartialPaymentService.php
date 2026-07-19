@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order\OrderPaymentTransactionEntity;
-use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
+use App\Ordering\Entity\Order\OrderPaymentTransactionEntity;
+use App\Ordering\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\ServiceInterface\Payment\Order\PartialPaymentServiceInterface;
 
 final readonly class PartialPaymentService implements PartialPaymentServiceInterface

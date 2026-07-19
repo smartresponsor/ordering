@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

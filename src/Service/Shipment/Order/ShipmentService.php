@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderShipmentEntity;
 use App\Event\Domain\Order\OrderDeliveredEvent;
 use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 use App\Model\Order\OrderReturnPolicy;
-use App\Repository\Order\OrderRepository;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
+use App\Ordering\Repository\Order\OrderRepository;
 use App\ServiceInterface\Shipment\Order\ShipmentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

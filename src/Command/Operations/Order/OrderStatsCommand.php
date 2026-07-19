@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command\Operations\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderPaymentEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderPaymentEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderRefundTransactionEntity;
-use App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
+use App\Ordering\Entity\Order\OrderRefundTransactionEntity;
+use App\Ordering\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderRefundTransactionRepository implements OrderRefundTransactionRepositoryInterface

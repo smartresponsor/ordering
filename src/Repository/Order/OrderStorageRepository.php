@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderStorageEntity;
-use App\RepositoryInterface\Order\OrderStorageRepositoryInterface;
+use App\Ordering\Entity\Order\OrderStorageEntity;
+use App\Ordering\RepositoryInterface\Order\OrderStorageRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

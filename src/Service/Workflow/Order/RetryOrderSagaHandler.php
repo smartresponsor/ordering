@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Message\Command\RetryOrderSagaCommand;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Saga\OrderSaga;
 use App\ServiceInterface\Workflow\Order\RetryOrderSagaHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +25,7 @@ final readonly class RetryOrderSagaHandler implements RetryOrderSagaHandlerInter
 
     public function __invoke(RetryOrderSagaCommand $cmd): void
     {
-        /** @var \App\Repository\Order\OrderRepository $repo */
+        /** @var \App\Ordering\Repository\Order\OrderRepository $repo */
         $repo = $this->em->getRepository(OrderEntity::class);
         $order = $repo->findByIdentifier($cmd->orderId);
         if (!$order instanceof OrderEntity) {

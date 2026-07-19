@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Workflow\Order\OrderRefundedHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

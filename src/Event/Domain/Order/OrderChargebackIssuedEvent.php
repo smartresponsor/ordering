@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Event\Domain\Order;
 
-use App\Entity\Order\OrderDisputeEntity;
+use App\Ordering\Entity\Order\OrderDisputeEntity;
 
 final readonly class OrderChargebackIssuedEvent
 {

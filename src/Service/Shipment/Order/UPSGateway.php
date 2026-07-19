@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Shipment\Order\UPSGatewayInterface;
 
 final class UPSGateway implements UPSGatewayInterface

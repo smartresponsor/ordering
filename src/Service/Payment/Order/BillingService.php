@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Model\Billing\Order\OrderInvoice;
 use App\Model\Billing\Order\OrderPaymentIntent;
 use App\Model\Billing\Order\OrderTransaction;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Payment\Order\BillingServiceInterface;
 use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

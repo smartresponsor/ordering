@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
-use App\Entity\Order\OrderEntity as RootOrderEntity;
+use App\Ordering\Entity\Order\OrderEntity as RootOrderEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]

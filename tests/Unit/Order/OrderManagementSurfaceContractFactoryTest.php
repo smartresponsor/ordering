@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Order;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\OrderManagementSurfaceContractFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormView;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Ordering\Entity\Order;
 
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\Quantity;

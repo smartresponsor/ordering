@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Outbox\OrderOutboxDispatchedMessage;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Pricing\Order;
 
-use App\Entity\Order\OrderItemEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 
 interface LegacyTaxationStrategyInterface
 {

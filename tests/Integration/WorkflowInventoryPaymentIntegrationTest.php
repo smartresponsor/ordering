@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderItemEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 use App\Service\Workflow\Order\OrderWorkflowService;
 use App\ValueObject\OrderStatus;
 use App\ValueObject\Pricing\Order\Quantity;

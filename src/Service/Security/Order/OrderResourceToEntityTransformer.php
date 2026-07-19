@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Order;
 
 use App\ApiResource\View\Order\OrderResource;
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Security\Order\OrderResourceToEntityTransformerInterface;
 
 final class OrderResourceToEntityTransformer implements OrderResourceToEntityTransformerInterface

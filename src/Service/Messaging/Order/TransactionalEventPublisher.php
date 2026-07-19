@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Messaging\Order;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Message\Domain\Order\OrderDomainMessage;
-use App\RepositoryInterface\Order\OutboxRepositoryInterface;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
 use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;

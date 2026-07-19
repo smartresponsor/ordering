@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace App\Service\Dispute\Order;
 
-use App\Entity\Order\OrderDisputeEntity;
-use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderChargebackIssuedEvent;
 use App\Event\Domain\Order\OrderDisputeOpenedEvent;
 use App\Event\Domain\Order\OrderDisputeResolvedEvent;
+use App\Ordering\Entity\Order\OrderDisputeEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Dispute\Order\DisputeServiceInterface;
 use App\ServiceInterface\Dispute\Order\OrderDisputeServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

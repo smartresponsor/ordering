@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\Outbox\OutboxProcessor;
 use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,7 +52,7 @@ final class OutboxWorkflowIntegrationTest extends TestCase
         $processed = $proc->process();
         $this->assertGreaterThanOrEqual(2, $processed, 'At least 2 events processed (placed + paid)');
 
-        $count = (int) $em->createQuery('SELECT COUNT(a) FROM App\Entity\Order\OrderAnalyticsRecordEntity a')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(a) FROM App\Ordering\Entity\Order\OrderAnalyticsRecordEntity a')->getSingleScalarResult();
         $this->assertSame(1, $count, 'Analytics record must be created on OrderPaidEvent');
     }
 }

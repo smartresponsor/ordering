@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderPriceAuditEntity;
-use App\RepositoryInterface\Order\OrderPriceAuditRepositoryInterface;
+use App\Ordering\Entity\Order\OrderPriceAuditEntity;
+use App\Ordering\RepositoryInterface\Order\OrderPriceAuditRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

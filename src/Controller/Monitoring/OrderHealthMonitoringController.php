@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Monitoring;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Transport\TransportInterface;

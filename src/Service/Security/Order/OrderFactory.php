@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Security\Order\OrderFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderPaymentEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderPaymentEntity;
 use App\Service\Dispute\Order\DisputeService;
 use App\Service\Security\Order\OrderService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;

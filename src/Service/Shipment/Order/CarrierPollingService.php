@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Shipment\Order;
 
-use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
+use App\Ordering\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use App\ServiceInterface\Shipment\CarrierInterface;
 use App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface;
 use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;

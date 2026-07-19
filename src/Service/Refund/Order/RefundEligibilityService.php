@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace App\Service\Refund\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderShipmentEntity;
 use App\Model\Order\OrderReturnPolicy;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface;
 use App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

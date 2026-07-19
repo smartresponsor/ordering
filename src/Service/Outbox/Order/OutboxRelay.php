@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox\Order;
 
-use App\RepositoryInterface\Order\OutboxRepositoryInterface;
+use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
 use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
 use App\ServiceInterface\Outbox\Order\OutboxRelayInterface;
 use Doctrine\ORM\EntityManagerInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Outbox;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OutboxWriter

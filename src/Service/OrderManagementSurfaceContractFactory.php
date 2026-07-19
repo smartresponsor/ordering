@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Value\Surface\OrderManagementSurfaceContract;
 use Symfony\Component\Form\FormView;
 

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace App\Service\Shipment\Order;
 
 use App\Entity\OrderShipmentView;
-use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
+use App\Ordering\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface;
 
 final readonly class OrderShipmentProjectionService implements OrderShipmentProjectionServiceInterface

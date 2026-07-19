@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTO\Api;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 
 final class OrderOutput
 {

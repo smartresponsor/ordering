@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace App\Service\Workflow\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\Outbox\OutboxPublisher;
 use App\Service\Payment\PaymentProcessorService;
 use App\Service\Shipment\ShipmentProcessorService;

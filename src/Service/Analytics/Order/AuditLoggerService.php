@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
-use App\Entity\Order\OrderAuditLogEntity;
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderAuditLogEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Analytics\Order\AuditLoggerServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

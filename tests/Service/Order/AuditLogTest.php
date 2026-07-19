@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\Analytics\Order\AuditLoggerService;
 use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
 use App\ValueObject\Pricing\Order\Money;

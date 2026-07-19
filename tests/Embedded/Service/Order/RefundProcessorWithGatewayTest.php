@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Tests\Embedded\Service\Order;
 
 use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Entity\Order\OrderRefundTransactionEntity;
+use App\Ordering\Entity\Order\OrderRefundTransactionEntity;
 use App\Service\Refund\Order\RefundProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;

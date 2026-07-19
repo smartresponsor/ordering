@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Inventory\Order;
 
-use App\Entity\Order\OrderStockReservationEntity;
-use App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
+use App\Ordering\Entity\Order\OrderStockReservationEntity;
+use App\Ordering\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
 use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
 use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
 

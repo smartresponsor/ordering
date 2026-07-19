@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
 use App\Entity\OrderShipmentView;
-use App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
+use App\Ordering\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderShipmentViewRepository implements OrderShipmentViewRepositoryInterface

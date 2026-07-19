@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderEventRecordEntity;
-use App\RepositoryInterface\Order\OrderEventRepositoryInterface;
+use App\Ordering\Entity\Order\OrderEventRecordEntity;
+use App\Ordering\RepositoryInterface\Order\OrderEventRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderEventRepository implements OrderEventRepositoryInterface

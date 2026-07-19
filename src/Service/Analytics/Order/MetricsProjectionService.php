@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Analytics\Order;
 
-use App\Entity\Order\OrderMetricsProjectionEntity;
+use App\Ordering\Entity\Order\OrderMetricsProjectionEntity;
 use App\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
 use App\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;

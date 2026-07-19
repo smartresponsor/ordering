@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Transport\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderShipmentEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use App\ServiceInterface\Shipment\CarrierInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

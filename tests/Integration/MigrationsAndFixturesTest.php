@@ -38,11 +38,11 @@ final class MigrationsAndFixturesTest extends TestCase
         // load fixtures
         (new OrderFixtures())->load($em);
 
-        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order\OrderEntity o')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Ordering\Entity\Order\OrderEntity o')->getSingleScalarResult();
 
         self::assertSame(4, $count);
 
-        $slugs = $em->createQuery('SELECT o.slug FROM App\Entity\Order\OrderEntity o ORDER BY o.number ASC')->getScalarResult();
+        $slugs = $em->createQuery('SELECT o.slug FROM App\Ordering\Entity\Order\OrderEntity o ORDER BY o.number ASC')->getScalarResult();
         self::assertCount(4, $slugs);
         foreach ($slugs as $row) {
             self::assertArrayHasKey('slug', $row);

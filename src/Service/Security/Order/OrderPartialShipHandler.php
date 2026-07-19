@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderEntity;
 use App\Message\Command\Order\OrderPartialShipCommand;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\ServiceInterface\Security\Order\OrderPartialShipHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -24,7 +24,7 @@ final readonly class OrderPartialShipHandler implements OrderPartialShipHandlerI
 
     public function __invoke(OrderPartialShipCommand $cmd): void
     {
-        /** @var \App\Repository\Order\OrderRepository $repo */
+        /** @var \App\Ordering\Repository\Order\OrderRepository $repo */
         $repo = $this->em->getRepository(OrderEntity::class);
         $order = $repo->findByIdentifier($cmd->orderId);
         if (!$order instanceof OrderEntity) {

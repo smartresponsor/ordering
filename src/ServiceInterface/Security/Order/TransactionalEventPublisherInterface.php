@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\ServiceInterface\Security\Order;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 
 interface TransactionalEventPublisherInterface extends \App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderStockReservationEntity;
-use App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
+use App\Ordering\Entity\Order\OrderStockReservationEntity;
+use App\Ordering\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderStockReservationRepository implements OrderStockReservationRepositoryInterface

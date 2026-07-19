@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\Order\OrderItemEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\FlatTaxationStrategyInterface;
 use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
 

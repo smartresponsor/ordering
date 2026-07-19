@@ -3,7 +3,7 @@ framework:
         order:
             type: 'state_machine'
             supports:
-                - 'App\Entity\Order\OrderEntity'
+                - 'App\Ordering\Entity\Order\OrderEntity'
             initial_marking: draft
             places:
                 - draft

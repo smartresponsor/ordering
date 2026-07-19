@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
-use App\RepositoryInterface\Order\OutboxRepositoryInterface;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OutboxRepository implements OutboxRepositoryInterface

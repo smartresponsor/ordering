@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderPaymentTranslationEntity;
-use App\RepositoryInterface\Order\OrderPaymentTranslationRepositoryInterface;
+use App\Ordering\Entity\Order\OrderPaymentTranslationEntity;
+use App\Ordering\RepositoryInterface\Order\OrderPaymentTranslationRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

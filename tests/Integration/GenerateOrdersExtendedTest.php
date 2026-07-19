@@ -62,9 +62,9 @@ final class GenerateOrdersExtendedTest extends TestCase
         $this->assertStringContainsString('Payment total: $6000 (Общий платёж: $6000)', $out);
 
         $orders = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order o')->getSingleScalarResult();
-        $payments = (int) $em->createQuery('SELECT COUNT(p.id) FROM App\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
-        $shipments = (int) $em->createQuery('SELECT COUNT(s.id) FROM App\Entity\Order\OrderShipmentEntity s')->getSingleScalarResult();
-        $sum = (int) $em->createQuery('SELECT COALESCE(SUM(p.amount),0) FROM App\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
+        $payments = (int) $em->createQuery('SELECT COUNT(p.id) FROM App\Ordering\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
+        $shipments = (int) $em->createQuery('SELECT COUNT(s.id) FROM App\Ordering\Entity\Order\OrderShipmentEntity s')->getSingleScalarResult();
+        $sum = (int) $em->createQuery('SELECT COALESCE(SUM(p.amount),0) FROM App\Ordering\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
 
         $this->assertSame(4, $orders);
         $this->assertSame(4, $payments);

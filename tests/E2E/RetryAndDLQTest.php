@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\E2E;
 
-use App\Entity\Order\OrderEntity;
 use App\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\Outbox\OutboxMessengerDispatcher;
 use App\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;

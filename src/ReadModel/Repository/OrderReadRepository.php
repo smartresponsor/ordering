@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ReadModel\Repository;
 
-use App\Entity\Order\OrderEntity;
-use App\Repository\Order\OrderRepository;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderReadRepository

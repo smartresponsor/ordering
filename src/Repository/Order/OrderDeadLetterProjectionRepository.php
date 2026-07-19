@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderDeadLetterProjectionEntity;
-use App\RepositoryInterface\Order\OrderDeadLetterProjectionRepositoryInterface;
+use App\Ordering\Entity\Order\OrderDeadLetterProjectionEntity;
+use App\Ordering\RepositoryInterface\Order\OrderDeadLetterProjectionRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

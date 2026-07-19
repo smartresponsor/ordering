@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Repository\Order\IdempotencyKeyRepository;
+use App\Ordering\Repository\Order\IdempotencyKeyRepository;
 use App\ServiceInterface\Security\Order\IdempotencyServiceInterface;
 
 final readonly class IdempotencyService implements IdempotencyServiceInterface

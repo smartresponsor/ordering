@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderEntity;
 use App\Service\Dispute\Order\DisputeService;
 use App\Subscriber\Event\Order\OrderDisputeSubscriber;
 use App\ValueObject\Pricing\Order\Money;

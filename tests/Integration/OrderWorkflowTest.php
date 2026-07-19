@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderOutboxMessageEntity;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -46,7 +46,7 @@ final class OrderWorkflowTest extends TestCase
         $svc->ship($order);
 
         // outbox has 3 messages
-        $count = (int) $em->createQuery('SELECT COUNT(m.id) FROM App\Entity\Order\OrderOutboxMessageEntity m')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(m.id) FROM App\Ordering\Entity\Order\OrderOutboxMessageEntity m')->getSingleScalarResult();
         $this->assertSame(3, $count);
 
         // validate event names in outbox payloads

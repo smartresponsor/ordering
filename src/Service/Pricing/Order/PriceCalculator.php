@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace App\Service\Pricing\Order;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderItemEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
 use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
 use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;

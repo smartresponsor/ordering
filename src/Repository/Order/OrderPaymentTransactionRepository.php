@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Order;
+namespace App\Ordering\Repository\Order;
 
-use App\Entity\Order\OrderPaymentTransactionEntity;
-use App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
+use App\Ordering\Entity\Order\OrderPaymentTransactionEntity;
+use App\Ordering\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderPaymentTransactionRepository implements OrderPaymentTransactionRepositoryInterface

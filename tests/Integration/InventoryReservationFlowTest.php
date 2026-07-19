@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderItemEntity;
 use App\Integration\Inventory\InMemoryInventoryGateway;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 use App\Service\Inventory\Order\InventoryService;
 use App\Subscriber\Event\Order\InventorySubscriber;
 use Doctrine\ORM\EntityManagerInterface;

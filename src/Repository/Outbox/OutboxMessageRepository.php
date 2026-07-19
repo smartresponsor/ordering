@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Outbox;
 
-use App\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

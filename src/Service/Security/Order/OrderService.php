@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Order;
 
-use App\Entity\Order\OrderDisputeEntity;
-use App\Entity\Order\OrderEntity;
-use App\Entity\Order\OrderIdempotencyKeyEntity;
-use App\Entity\Order\OrderPaymentEntity;
 use App\Entity\OrderRefundLedger;
 use App\Event\Domain\Order\OrderFullyRefundedEvent;
 use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\Entity\Order\OrderDisputeEntity;
+use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderIdempotencyKeyEntity;
+use App\Ordering\Entity\Order\OrderPaymentEntity;
 use App\ServiceInterface\Security\Order\OrderServiceInterface;
 use App\ValueObject\Pricing\Order\Money;
 use App\ValueObject\Pricing\Order\RefundAmount;
