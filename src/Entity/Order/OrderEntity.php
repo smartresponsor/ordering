@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Ordering\Entity\Order;
 
-use App\Contract\Domain\RecordsDomainEvents;
 use App\Event\Domain\Order\OrderPaidEvent;
 use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Event\Domain\Order\OrderShippedEvent;
 use App\Lifecycle\OrderLifecyclePolicy;
+use App\Ordering\EntityInterface\Order\RecordsEventEntityInterface;
 use App\Ordering\Repository\Order\OrderRepository;
 use App\ValueObject\OrderStatus;
 use App\ValueObject\Pricing\Order\Money;
@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: 'orders')]
-class OrderEntity implements RecordsDomainEvents
+class OrderEntity implements RecordsEventEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

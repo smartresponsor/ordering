@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber\Outbox;
 
-use App\Contract\Domain\RecordsDomainEvents;
+use App\Ordering\EntityInterface\Order\RecordsEventEntityInterface;
 use App\Service\Outbox\OutboxWriter;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -36,7 +36,7 @@ final class OrderDomainEventsToOutboxSubscriber implements EventSubscriber
         );
 
         foreach ($entities as $entity) {
-            if (!$entity instanceof RecordsDomainEvents) {
+            if (!$entity instanceof RecordsEventEntityInterface) {
                 continue;
             }
 
