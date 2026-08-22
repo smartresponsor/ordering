@@ -277,6 +277,20 @@ class OrderEntity implements RecordsEventEntityInterface
         return $this->vendorId;
     }
 
+    public function setCustomerId(?string $customerId): void
+    {
+        $customerId = null === $customerId ? null : trim($customerId);
+        $this->customerId = '' === $customerId ? null : $customerId;
+        $this->touch();
+    }
+
+    public function setVendorId(?string $vendorId): void
+    {
+        $vendorId = null === $vendorId ? null : trim($vendorId);
+        $this->vendorId = '' === $vendorId ? null : $vendorId;
+        $this->touch();
+    }
+
     public function getTrackingCode(): ?string
     {
         return $this->trackingCode;

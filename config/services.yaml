@@ -335,6 +335,7 @@ services:
     App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface: '@App\Ordering\Service\Payment\Order\StripeGateway'
     App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface: '@App\Ordering\Service\Shipment\Order\DHLGateway'
     App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface: '@App\Ordering\Service\Pricing\Order\EUTaxStrategy'
+    App\Ordering\ServiceInterface\Order\OrderCreationServiceInterface: '@App\Ordering\Service\Order\OrderCreationService'
     App\Ordering\ServiceInterface\Pricing\Order\PriceCalculatorInterface: '@App\Ordering\Service\Pricing\Order\PriceCalculator'
     App\Ordering\ServiceInterface\Pricing\Order\OrderPricingInterface: '@App\Ordering\Service\Pricing\Order\OrderPricingService'
     App\Ordering\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface: '@App\Ordering\Service\Pricing\Order\DefaultPromotionStrategy'
