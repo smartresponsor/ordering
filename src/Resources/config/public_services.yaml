@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Ordering\ReadModel\Repository\OrderReadRepository: ~
+
+    App\Ordering\ReadModel\Service\CustomerOrderReadService:
+        public: true
+
+    App\Ordering\ReadModel\ServiceInterface\CustomerOrderReadServiceInterface:
+        alias: App\Ordering\ReadModel\Service\CustomerOrderReadService

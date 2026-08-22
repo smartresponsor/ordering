@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Ordering\Tests\Unit\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Entity\Order\OrderItemEntity;
 use App\Ordering\ReadModel\Repository\OrderReadRepository;
 use App\Ordering\ReadModel\Service\CustomerOrderReadService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +17,7 @@ final class CustomerOrderReadServiceTest extends TestCase
     public function testCustomerScopedProjectionAndLookup(): void
     {
         $order = new OrderEntity('ORD-CUSTOMER-1', '125.50', 'USD', 'customer-1');
+        $order->addItem(new OrderItemEntity('SKU-RETURN-1', 2, '25.00', 'USD'));
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('findBy')->willReturn([$order]);
 
@@ -32,6 +34,15 @@ final class CustomerOrderReadServiceTest extends TestCase
         self::assertSame('125.50', $items[0]->grandTotal);
         self::assertNotNull($service->findForCustomer('customer-1', 'ORD-CUSTOMER-1'));
         self::assertNull($service->findForCustomer('customer-1', 'ORD-OTHER'));
+
+        $details = $service->listDetailsForCustomer('customer-1');
+        self::assertCount(1, $details);
+        self::assertCount(1, $details[0]->items);
+        self::assertSame('SKU-RETURN-1', $details[0]->items[0]->reference);
+        self::assertSame(2, $details[0]->items[0]->quantity);
+        self::assertSame('25.00', $details[0]->items[0]->unitPrice);
+        self::assertNotNull($service->findDetailForCustomer('customer-1', 'ORD-CUSTOMER-1'));
+        self::assertNull($service->findDetailForCustomer('customer-1', 'ORD-OTHER'));
     }
 
     public function testBlankCustomerCannotReadOrders(): void
