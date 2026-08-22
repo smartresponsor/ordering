@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Ordering\Tests\Unit\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Service\Order\OrderCreationService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -26,6 +27,11 @@ final class OrderCreationServiceTest extends TestCase
         self::assertSame('USD', $order->getCurrency());
         self::assertSame('125.50', $order->getGrandTotal());
         self::assertSame('placed', $order->getStatus());
+
+        $events = $order->releaseEvents();
+        self::assertCount(1, $events);
+        self::assertInstanceOf(OrderPlacedEvent::class, $events[0]);
+        self::assertSame($order->slug(), $events[0]->orderId);
     }
 
     public function testRejectsMissingCustomerIdentifier(): void

@@ -6,6 +6,7 @@ namespace App\Ordering\Entity\Order;
 
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Lifecycle\OrderLifecyclePolicy;
@@ -309,6 +310,12 @@ class OrderEntity implements RecordsEventEntityInterface
         $this->status = $newStatus;
         $this->statusHistory->add(new OrderStatusHistoryEntity($this, $previousStatus, $newStatus));
         $this->touch();
+    }
+
+    public function place(): void
+    {
+        $this->setStatus(OrderStatus::Placed);
+        $this->recordEvent(new OrderPlacedEvent($this->slug));
     }
 
     public function setCurrency(string|\Stringable $currency): void

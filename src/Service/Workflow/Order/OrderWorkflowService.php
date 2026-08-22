@@ -12,7 +12,6 @@ namespace App\Ordering\Service\Workflow\Order;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
-use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Service\Outbox\OutboxPublisher;
@@ -46,10 +45,15 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
      */
     public function place(OrderEntity $order, array $items): void
     {
-        $this->apply($order, 'place');
+        if (!$this->workflow->can($order, 'place')) {
+            throw new \LogicException("Transition 'place' not allowed");
+        }
+
+        $this->workflow->apply($order, 'place');
+        $order->place();
+        $this->em->persist($order);
         $this->calculator->recalc($order, $items);
         $this->inventory->reserve($items);
-        $this->outbox->publish(OrderPlacedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 

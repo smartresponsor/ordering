@@ -6,7 +6,6 @@ namespace App\Ordering\Service\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\ServiceInterface\Order\OrderCreationServiceInterface;
-use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderCreationService implements OrderCreationServiceInterface
@@ -38,7 +37,7 @@ final readonly class OrderCreationService implements OrderCreationServiceInterfa
         $order = new OrderEntity($currency, $grandTotal);
         $order->setCustomerId($customerId);
         $order->setVendorId($vendorId);
-        $order->setStatus(OrderStatus::Placed);
+        $order->place();
 
         $this->entityManager->persist($order);
         $this->entityManager->flush();
