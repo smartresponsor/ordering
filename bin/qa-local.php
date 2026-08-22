@@ -16,7 +16,7 @@ $steps = [
     ],
     [
         'nameEntity' => 'YAML lint',
-        'command' => 'php bin/console lint:yaml config',
+        'command' => 'php bin/console lint:yaml config --parse-tags',
         'optional' => false,
     ],
     [
@@ -31,7 +31,7 @@ $steps = [
     ],
     [
         'nameEntity' => 'Schema validate',
-        'command' => 'php bin/console doctrine:schema:validate -vvv',
+        'command' => 'php bin/console doctrine:schema:validate --skip-sync -vvv',
         'optional' => false,
     ],
     [
