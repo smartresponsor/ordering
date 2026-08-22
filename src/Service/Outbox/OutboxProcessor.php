@@ -11,6 +11,7 @@ use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -35,23 +36,23 @@ final readonly class OutboxProcessor
         foreach ($messages as $message) {
             $payload = $message->payload();
             $eventName = $message->getEventType();
-            $orderId = (int) ($payload['orderId'] ?? $payload['aggregateId'] ?? 0);
+            $orderIdentifier = trim((string) ($payload['orderId'] ?? $payload['aggregateId'] ?? ''));
             $event = match ($eventName) {
-                OrderPlacedEvent::class => new OrderPlacedEvent((string) $orderId),
+                OrderPlacedEvent::class => new OrderPlacedEvent($orderIdentifier),
                 OrderPaidEvent::class => new OrderPaidEvent(
-                    (string) $orderId,
+                    $orderIdentifier,
                     (string) ($payload['amount'] ?? '0.00'),
                     (string) ($payload['currency'] ?? 'USD'),
                     (string) ($payload['externalRef'] ?? $payload['txId'] ?? ''),
                 ),
-                OrderShippedEvent::class => new OrderShippedEvent((string) $orderId),
-                OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderId)),
+                OrderShippedEvent::class => new OrderShippedEvent($orderIdentifier),
+                OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderIdentifier)),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
-                    $this->findOrder($orderId),
+                    $this->findOrder($orderIdentifier),
                     (string) ($payload['amount'] ?? '0.00'),
                 ),
-                default => new class($orderId, $eventName) {
-                    public function __construct(public int $orderId, public string $class)
+                default => new class($orderIdentifier, $eventName) {
+                    public function __construct(public string $orderId, public string $class)
                     {
                     }
                 },
@@ -67,11 +68,13 @@ final readonly class OutboxProcessor
         return $count;
     }
 
-    private function findOrder(int $orderId): OrderEntity
+    private function findOrder(string|int $orderIdentifier): OrderEntity
     {
-        $order = $this->em->getRepository(OrderEntity::class)->find($orderId);
+        /** @var OrderRepository $repository */
+        $repository = $this->em->getRepository(OrderEntity::class);
+        $order = $repository->findByIdentifier($orderIdentifier);
         if (!$order instanceof OrderEntity) {
-            throw new \RuntimeException('Order not found for outbox event: '.$orderId);
+            throw new \RuntimeException('Order not found for outbox event: '.$orderIdentifier);
         }
 
         return $order;
