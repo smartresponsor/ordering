@@ -8,7 +8,7 @@ use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\ReadModel\Repository\OrderReadRepository;
 use App\Ordering\ReadModel\Service\CustomerOrderReadService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
 
 final class CustomerOrderReadServiceTest extends TestCase
@@ -16,7 +16,7 @@ final class CustomerOrderReadServiceTest extends TestCase
     public function testCustomerScopedProjectionAndLookup(): void
     {
         $order = new OrderEntity('ORD-CUSTOMER-1', '125.50', 'USD', 'customer-1');
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = $this->createMock(EntityRepository::class);
         $repository->method('findBy')->willReturn([$order]);
 
         $entityManager = $this->createMock(EntityManagerInterface::class);

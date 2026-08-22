@@ -30,12 +30,13 @@ final readonly class CustomerOrderReadService
 
     public function findForCustomer(string $customerId, string $orderReference): ?CustomerOrderSummary
     {
+        $customerId = trim($customerId);
         $orderReference = trim($orderReference);
-        if ('' === $orderReference) {
+        if ('' === $customerId || '' === $orderReference) {
             return null;
         }
 
-        foreach ($this->orders->findByCustomerId(trim($customerId)) as $order) {
+        foreach ($this->orders->findByCustomerId($customerId) as $order) {
             if ($order->slug() === $orderReference || $order->getNumber() === $orderReference || (string) $order->id() === $orderReference) {
                 return $this->summarize($order);
             }
