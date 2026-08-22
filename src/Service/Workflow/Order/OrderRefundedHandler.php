@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Workflow\Order\OrderRefundedHandlerInterface;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderRefundedHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderRefundedHandler implements OrderRefundedHandlerInterface

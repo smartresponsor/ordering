@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Http;
+namespace App\Ordering\EventListener\Http;
 
-use App\Factory\Http\OrderProblemFactory;
+use App\Ordering\Factory\Http\OrderProblemFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;

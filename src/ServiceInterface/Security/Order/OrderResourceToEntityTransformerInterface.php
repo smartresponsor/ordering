@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\ApiResource\View\Order\OrderResource;
+use App\Ordering\ApiResource\View\Order\OrderResource;
 use App\Ordering\Entity\Order\OrderEntity;
 
 interface OrderResourceToEntityTransformerInterface

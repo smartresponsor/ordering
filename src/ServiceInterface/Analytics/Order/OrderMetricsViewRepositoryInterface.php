@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Analytics\Order;
+namespace App\Ordering\ServiceInterface\Analytics\Order;
 
 interface OrderMetricsViewRepositoryInterface
 {

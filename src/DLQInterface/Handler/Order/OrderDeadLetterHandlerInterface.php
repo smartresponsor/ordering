@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DLQInterface\Handler\Order;
+namespace App\Ordering\DLQInterface\Handler\Order;
 
 interface OrderDeadLetterHandlerInterface
 {

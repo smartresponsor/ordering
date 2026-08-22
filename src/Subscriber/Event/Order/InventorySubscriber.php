@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
-use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
+use App\Ordering\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class InventorySubscriber implements EventSubscriberInterface

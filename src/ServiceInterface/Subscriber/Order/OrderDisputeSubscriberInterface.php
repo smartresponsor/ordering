@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Subscriber\Order;
+namespace App\Ordering\ServiceInterface\Subscriber\Order;
 
-use App\Event\Domain\Order\OrderChargebackIssuedEvent;
-use App\Event\Domain\Order\OrderDisputeOpenedEvent;
-use App\Event\Domain\Order\OrderDisputeResolvedEvent;
+use App\Ordering\Event\Domain\Order\OrderChargebackIssuedEvent;
+use App\Ordering\Event\Domain\Order\OrderDisputeOpenedEvent;
+use App\Ordering\Event\Domain\Order\OrderDisputeResolvedEvent;
 
 interface OrderDisputeSubscriberInterface
 {

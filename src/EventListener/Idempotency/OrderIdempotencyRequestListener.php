@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Idempotency;
+namespace App\Ordering\EventListener\Idempotency;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 

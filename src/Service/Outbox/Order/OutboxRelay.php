@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Outbox\Order;
+namespace App\Ordering\Service\Outbox\Order;
 
 use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
-use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
-use App\ServiceInterface\Outbox\Order\OutboxRelayInterface;
+use App\Ordering\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
+use App\Ordering\ServiceInterface\Outbox\Order\OutboxRelayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 

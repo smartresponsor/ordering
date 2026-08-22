@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Ordering\Controller\Api;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

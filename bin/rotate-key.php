@@ -5,9 +5,9 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Security\Order\FileJwkRepository;
-use App\Service\Security\Order\KeyRotationManager;
-use App\Service\Security\Order\SecretRotationPolicy;
+use App\Ordering\Service\Security\Order\FileJwkRepository;
+use App\Ordering\Service\Security\Order\KeyRotationManager;
+use App\Ordering\Service\Security\Order\SecretRotationPolicy;
 
 $oldKid = $argv[1] ?? 'kid-demo';
 $newKid = $argv[2] ?? 'kid-next';

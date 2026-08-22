@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierHmac;
 
 final readonly class OrderWebhookSignatureVerifier
 {

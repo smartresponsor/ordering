@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\ServiceInterface\Pricing\Order\FlatPromotionStrategyInterface;
-use App\ServiceInterface\Pricing\Order\PromotionStrategyInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\FlatPromotionStrategyInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\PromotionStrategyInterface;
 
 readonly class FlatPromotionStrategy implements PromotionStrategyInterface, FlatPromotionStrategyInterface
 {

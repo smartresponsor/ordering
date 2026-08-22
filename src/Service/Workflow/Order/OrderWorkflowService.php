@@ -7,21 +7,21 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Outbox\OutboxPublisher;
-use App\Service\Payment\PaymentProcessorService;
-use App\Service\Shipment\ShipmentProcessorService;
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
-use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
-use App\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
-use App\ValueObject\OrderStatus;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Service\Outbox\OutboxPublisher;
+use App\Ordering\Service\Payment\PaymentProcessorService;
+use App\Ordering\Service\Shipment\ShipmentProcessorService;
+use App\Ordering\ServiceInterface\Inventory\InventoryServiceInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Workflow\WorkflowInterface;

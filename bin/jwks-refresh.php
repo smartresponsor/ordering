@@ -9,8 +9,8 @@ declare(strict_types=1);
  * This file is part of SmartResponsor (Order domain).
  */
 
-use App\Service\Security\Order\FileJwkRepository;
-use App\Service\Security\Order\JwksIssuer;
+use App\Ordering\Service\Security\Order\FileJwkRepository;
+use App\Ordering\Service\Security\Order\JwksIssuer;
 
 require __DIR__ . '/../vendor/autoload.php';
 

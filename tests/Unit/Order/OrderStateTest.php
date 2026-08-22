@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\ValueObject\OrderStatus;
 use PHPUnit\Framework\TestCase;
 
 final class OrderStateTest extends TestCase
@@ -12,6 +13,7 @@ final class OrderStateTest extends TestCase
     public function testOrderTransitionsAcrossPaymentShipmentAndRefund(): void
     {
         $order = OrderEntity::create('USD', '120.00');
+        $order->setStatus(OrderStatus::Placed);
 
         $payment = $order->applyPayment('120.00', 'pay-ref-1');
         self::assertSame('paid', $order->getStatus());
@@ -19,6 +21,7 @@ final class OrderStateTest extends TestCase
         $shipment = $order->ship('UPS', 'trk-1', 'packed');
         self::assertSame('shipped', $order->getStatus());
 
+        $order->setStatus(OrderStatus::Returned);
         $refund = $order->refund('120.00', 'customer request');
 
         self::assertSame('stripe', $payment->getGateway());

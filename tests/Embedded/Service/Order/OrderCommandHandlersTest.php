@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Message\Command\OrderCreateCommand;
-use App\Message\Command\OrderPayCommand;
-use App\Message\Handler\OrderCreateHandler;
-use App\Message\Handler\OrderPayHandler;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\Service\Outbox\OutboxPublisher;
+use App\Ordering\Message\Command\OrderCreateCommand;
+use App\Ordering\Message\Command\OrderPayCommand;
+use App\Ordering\Message\Handler\OrderCreateHandler;
+use App\Ordering\Message\Handler\OrderPayHandler;
+use App\Ordering\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

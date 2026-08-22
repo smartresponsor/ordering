@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\HttpIdempotencyGuardInterface;
+use App\Ordering\ServiceInterface\Security\Order\HttpIdempotencyGuardInterface;
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -12,7 +12,7 @@ use App\ServiceInterface\Security\Order\HttpIdempotencyGuardInterface;
  * This file is part of SmartResponsor (Order domain).
  */
 
-use App\ServiceInterface\Security\Order\IdempotencyStoreInterface;
+use App\Ordering\ServiceInterface\Security\Order\IdempotencyStoreInterface;
 
 final readonly class HttpIdempotencyGuard implements HttpIdempotencyGuardInterface
 {

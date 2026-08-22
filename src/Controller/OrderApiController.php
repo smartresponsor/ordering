@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Ordering\Controller;
 
-use App\DTO\OrderCreateDTO;
-use App\DTO\OrderPaymentDTO;
-use App\DTO\OrderRefundDTO;
-use App\DTO\OrderShipmentDTO;
+use App\Ordering\DTO\OrderCreateDTO;
+use App\Ordering\DTO\OrderPaymentDTO;
+use App\Ordering\DTO\OrderRefundDTO;
+use App\Ordering\DTO\OrderShipmentDTO;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;

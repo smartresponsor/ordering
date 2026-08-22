@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ordering\Repository\Order;
 
-use App\Entity\OrderShipmentView;
+use App\Ordering\Entity\OrderShipmentView;
 use App\Ordering\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 

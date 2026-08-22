@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Command\ClearOrdersCommand;
-use App\Command\GenerateOrdersCommand;
-use App\Command\StatsOrdersCommand;
+use App\Ordering\Command\ClearOrdersCommand;
+use App\Ordering\Command\GenerateOrdersCommand;
+use App\Ordering\Command\StatsOrdersCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

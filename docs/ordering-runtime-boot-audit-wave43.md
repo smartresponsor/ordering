@@ -7,5 +7,5 @@ Closed in this wave:
 - refund initiated / fully refunded event classes
 - shipment delivered / return-expired event classes
 - inventory stock event classes
-- App\Subscriber\Order subscriber classes expected by integration tests
-- InventoryService import retargeted to the local App\Service\Order\InventoryGatewayInterface
+- App\Ordering\Subscriber\Order subscriber classes expected by integration tests
+- InventoryService import retargeted to the local App\Ordering\Service\Order\InventoryGatewayInterface

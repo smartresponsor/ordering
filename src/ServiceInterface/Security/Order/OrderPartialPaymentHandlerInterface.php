@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\Message\Command\Order\OrderPartialPaymentCommand;
+use App\Ordering\Message\Command\Order\OrderPartialPaymentCommand;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface OrderPartialPaymentHandlerInterface

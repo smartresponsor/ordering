@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Subscriber\Order;
+namespace App\Ordering\ServiceInterface\Subscriber\Order;
 
-use App\Event\Domain\Order\OrderDeliveredEvent;
-use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
+use App\Ordering\Event\Domain\Order\OrderDeliveredEvent;
+use App\Ordering\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 
 interface OrderShipmentSubscriberInterface
 {

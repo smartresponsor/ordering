@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Pricing\Order;
+namespace App\Ordering\ServiceInterface\Pricing\Order;
 
-use App\ValueObject\Pricing\Order\ExchangeRate;
+use App\Ordering\ValueObject\Pricing\Order\ExchangeRate;
 
 interface ExchangeRateProviderInterface
 {

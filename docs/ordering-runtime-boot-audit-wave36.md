@@ -1,7 +1,7 @@
-# Ordering runtime boot audit — wave 36
+# Ordering runtime boot audit вЂ” wave 36
 
 ## Finding
-`config/services/read_model.yaml` still wired `App\ReadModel\Service\OrderReadModelProjector` with two constructor arguments even though the class now declares only one (`EntityManagerInterface`).
+`config/services/read_model.yaml` still wired `App\Ordering\ReadModel\Service\OrderReadModelProjector` with two constructor arguments even though the class now declares only one (`EntityManagerInterface`).
 
 ## Repair
 The service definition was reduced to the single real constructor argument.

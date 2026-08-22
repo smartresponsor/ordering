@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
-use App\Entity\Order\OrderAnalyticsRecordEntity;
-use App\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Entity\Order\OrderAnalyticsRecordEntity;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

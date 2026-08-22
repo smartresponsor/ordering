@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Factory;
+namespace App\Ordering\Factory;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ValueObject\OrderStatus;
+use App\Ordering\ValueObject\OrderStatus;
 
 final class OrderFactory
 {

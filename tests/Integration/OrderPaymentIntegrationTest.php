@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderPaymentIntegrationTest extends KernelTestCase

@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
-use App\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\PriceBreakdown;
+use App\Ordering\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\LegacyTaxationStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\PriceBreakdown;
 
 final readonly class AdvancedPriceCalculator
 {

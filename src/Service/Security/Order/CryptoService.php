@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\CryptoServiceInterface;
+use App\Ordering\ServiceInterface\Security\Order\CryptoServiceInterface;
 
 final readonly class CryptoService implements CryptoServiceInterface
 {

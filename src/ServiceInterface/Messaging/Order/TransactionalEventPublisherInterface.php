@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Messaging\Order;
+namespace App\Ordering\ServiceInterface\Messaging\Order;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Order;
+namespace App\Ordering\Service\Http\Order;
 
-use App\ServiceInterface\Http\Order\AuditSinkInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditSinkInterface;
 
 final readonly class MonologAuditSink implements AuditSinkInterface
 {

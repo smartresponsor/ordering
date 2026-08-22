@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Transport\Order;
+namespace App\Ordering\Service\Transport\Order;
 
-use App\ServiceInterface\Transport\Order\CarrierInterface;
-use App\ServiceInterface\Transport\Order\DHLCarrierInterface;
+use App\Ordering\ServiceInterface\Transport\Order\CarrierInterface;
+use App\Ordering\ServiceInterface\Transport\Order\DHLCarrierInterface;
 
 final class DHLCarrier implements CarrierInterface, DHLCarrierInterface
 {

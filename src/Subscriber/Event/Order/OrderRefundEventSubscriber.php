@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
-use App\Event\Domain\Order\OrderFullyRefundedEvent;
-use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderFullyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

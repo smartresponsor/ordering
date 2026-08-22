@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Outbox\Order;
+namespace App\Ordering\Service\Outbox\Order;
 
-use App\ServiceInterface\Outbox\Order\DlqServiceInterface;
+use App\Ordering\ServiceInterface\Outbox\Order\DlqServiceInterface;
 
 final class DlqService implements DlqServiceInterface
 {

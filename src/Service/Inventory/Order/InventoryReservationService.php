@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Inventory\Order;
+namespace App\Ordering\Service\Inventory\Order;
 
 use App\Ordering\Entity\Order\OrderStockReservationEntity;
 use App\Ordering\RepositoryInterface\Order\OrderStockReservationRepositoryInterface;
-use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
-use App\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
+use App\Ordering\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
+use App\Ordering\ServiceInterface\Inventory\Order\InventoryReservationServiceInterface;
 
 final readonly class InventoryReservationService implements InventoryReservationServiceInterface
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Service;
 
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Ordering\Entity\Order\OrderRefundTransactionEntity;
-use App\Service\Refund\Order\RefundProcessor;
+use App\Ordering\Service\Refund\Order\RefundProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;

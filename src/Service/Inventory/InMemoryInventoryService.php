@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Inventory;
+namespace App\Ordering\Service\Inventory;
 
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
+use App\Ordering\ServiceInterface\Inventory\InventoryServiceInterface;
 
 final class InMemoryInventoryService implements InventoryServiceInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Event\Domain\Order;
+namespace App\Ordering\Event\Domain\Order;
 
 final readonly class OrderShippedEvent
 {

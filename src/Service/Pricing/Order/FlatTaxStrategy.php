@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\FlatTaxStrategyInterface;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ServiceInterface\Pricing\Order\FlatTaxStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 
 final readonly class FlatTaxStrategy implements FlatTaxStrategyInterface
 {

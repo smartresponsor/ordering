@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Monitoring;
+namespace App\Ordering\Infrastructure\Monitoring;
 
 final readonly class MetricsCollector
 {

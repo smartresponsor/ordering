@@ -7,13 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Command\Order\OrderRefundCommand;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\Service\Refund\Order\RefundPolicyService;
-use App\ServiceInterface\Security\Order\OrderRefundHandlerInterface;
+use App\Ordering\Message\Command\Order\OrderRefundCommand;
+use App\Ordering\Service\Refund\Order\RefundPolicyService;
+use App\Ordering\ServiceInterface\Security\Order\OrderRefundHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Uid\Uuid;

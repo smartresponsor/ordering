@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Service;
+namespace App\Ordering\ReadModel\Service;
 
-use App\ReadModel\Entity\OrderViewEntity;
+use App\Ordering\ReadModel\Entity\OrderViewEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderReadModelProjector

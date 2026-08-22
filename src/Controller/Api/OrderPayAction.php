@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Ordering\Controller\Api;
 
-use App\DTO\Api\OrderPayInput;
+use App\Ordering\DTO\Api\OrderPayInput;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;

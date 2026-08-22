@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Operations\Order;
+namespace App\Ordering\Command\Operations\Order;
 
-use App\Factory\OrderFactory;
-use App\ValueObject\OrderStatus;
+use App\Ordering\Factory\OrderFactory;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

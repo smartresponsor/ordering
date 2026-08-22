@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Pricing\Order;
+namespace App\Ordering\ServiceInterface\Pricing\Order;
 
 interface NoTaxStrategyInterface extends TaxationStrategyInterface
 {

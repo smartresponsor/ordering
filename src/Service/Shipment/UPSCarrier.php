@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Shipment;
+namespace App\Ordering\Service\Shipment;
 
-use App\ServiceInterface\Shipment\CarrierInterface;
+use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
 
 final class UPSCarrier implements CarrierInterface
 {

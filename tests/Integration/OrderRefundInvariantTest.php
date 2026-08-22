@@ -6,8 +6,8 @@ namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\Service\Security\Order\OrderService;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Security\Order\OrderService;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Transport\Order;
+namespace App\Ordering\ServiceInterface\Transport\Order;
 
 interface DummyProvInterface
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Payment;
+namespace App\Ordering\Service\Payment;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Payment\PaymentGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderPaymentProcessorService

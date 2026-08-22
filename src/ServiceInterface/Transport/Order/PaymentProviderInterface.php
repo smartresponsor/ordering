@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Transport\Order;
+namespace App\Ordering\ServiceInterface\Transport\Order;
 
 interface PaymentProviderInterface
 {

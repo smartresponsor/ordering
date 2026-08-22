@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Workflow\Order\OrderStatusServiceInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderStatusServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 

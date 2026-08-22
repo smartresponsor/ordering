@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\State\Order;
+namespace App\Ordering\Service\State\Order;
 
 use App\Model\Order\Delivery;
-use App\ServiceInterface\State\Order\DeliveryStateMachineInterface;
+use App\Ordering\ServiceInterface\State\Order\DeliveryStateMachineInterface;
 
 final class DeliveryStateMachine implements DeliveryStateMachineInterface
 {

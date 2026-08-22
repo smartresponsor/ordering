@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Outbox\Order;
+namespace App\Ordering\ServiceInterface\Outbox\Order;
 
 interface OutboxRelayInterface
 {

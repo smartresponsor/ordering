@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Command\Order;
+namespace App\Ordering\Message\Command\Order;
 
 readonly class OrderPartialRefundCommand
 {

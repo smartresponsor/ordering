@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-use App\Middleware\Http\OrderHttpIdempotencyMiddleware;
+use App\Ordering\Middleware\Http\OrderHttpIdempotencyMiddleware;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Request;

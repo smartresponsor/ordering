@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Webhook;
+namespace App\Ordering\Webhook;
 
-use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
 
 final readonly class NoopWebhookDispatcher implements WebhookDispatcherInterface
 {

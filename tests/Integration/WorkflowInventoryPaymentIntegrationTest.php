@@ -6,10 +6,10 @@ namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\Service\Workflow\Order\OrderWorkflowService;
-use App\ValueObject\OrderStatus;
-use App\ValueObject\Pricing\Order\Quantity;
-use App\ValueObject\Pricing\Order\Sku;
+use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\ValueObject\OrderStatus;
+use App\Ordering\ValueObject\Pricing\Order\Quantity;
+use App\Ordering\ValueObject\Pricing\Order\Sku;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

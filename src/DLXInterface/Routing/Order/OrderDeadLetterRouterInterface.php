@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DLXInterface\Routing\Order;
+namespace App\Ordering\DLXInterface\Routing\Order;
 
 interface OrderDeadLetterRouterInterface
 {

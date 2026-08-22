@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Analytics\Order;
+namespace App\Ordering\ServiceInterface\Analytics\Order;
 
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 
 interface MetricsSubscriberInterface
 {

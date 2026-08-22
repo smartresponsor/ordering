@@ -1,11 +1,11 @@
-# Ordering runtime boot audit — wave 39
+# Ordering runtime boot audit вЂ” wave 39
 
 Wave 39 fixed a concrete controller/service coherence layer in the current slice.
 
 ## Closed stale runtime imports
-- `App\Service\Order\Payment\OrderPaymentService` → `App\Service\Order\OrderPaymentService`
-- `App\Service\Order\Webhook\WebhookIdempotencyService` → `App\Service\Order\WebhookIdempotencyService`
-- `App\Service\Order\Outbox\IdempotencyService` → `App\Service\Order\IdempotencyService`
+- `App\Ordering\Service\Order\Payment\OrderPaymentService` в†’ `App\Ordering\Service\Order\OrderPaymentService`
+- `App\Ordering\Service\Order\Webhook\WebhookIdempotencyService` в†’ `App\Ordering\Service\Order\WebhookIdempotencyService`
+- `App\Ordering\Service\Order\Outbox\IdempotencyService` в†’ `App\Ordering\Service\Order\IdempotencyService`
 
 ## Closed missing runtime symbol
 - Added `App\Api\Order\Dto\OrderCreateInput`

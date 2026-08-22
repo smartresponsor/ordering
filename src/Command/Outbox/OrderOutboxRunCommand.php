@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Outbox;
+namespace App\Ordering\Command\Outbox;
 
-use App\Processor\Outbox\OrderOutboxProcessor;
+use App\Ordering\Processor\Outbox\OrderOutboxProcessor;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

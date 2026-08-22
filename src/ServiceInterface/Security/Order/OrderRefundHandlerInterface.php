@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\Message\Command\Order\OrderRefundCommand;
-use App\Service\Refund\Order\RefundPolicyService;
+use App\Ordering\Message\Command\Order\OrderRefundCommand;
+use App\Ordering\Service\Refund\Order\RefundPolicyService;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface OrderRefundHandlerInterface

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Monitoring;
+namespace App\Ordering\Controller\Monitoring;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;

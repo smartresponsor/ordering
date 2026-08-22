@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Demo;
+namespace App\Ordering\Service\Demo;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 
@@ -40,6 +41,7 @@ final readonly class OrderDemoDataService
             $order = new OrderEntity($faker->randomElement($currencies), $total);
 
             if ($i % 4 >= 1) {
+                $order->setStatus(OrderStatus::Placed);
                 $payment = $order->applyPayment($total, sprintf('demo-pay-%02d', $i));
                 $this->em->persist($payment);
             }
@@ -50,6 +52,7 @@ final readonly class OrderDemoDataService
             }
 
             if (3 === $i % 4) {
+                $order->setStatus(OrderStatus::Returned);
                 $refund = $order->refund(number_format((float) $total / 2, 2, '.', ''), 'Fixture partial refund');
                 $this->em->persist($refund);
             }

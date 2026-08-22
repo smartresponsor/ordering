@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Pricing\Order;
+namespace App\Ordering\ValueObject\Pricing\Order;
 
 final class RefundAmount extends Money
 {

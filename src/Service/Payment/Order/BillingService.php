@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
-use App\Model\Billing\Order\OrderInvoice;
-use App\Model\Billing\Order\OrderPaymentIntent;
-use App\Model\Billing\Order\OrderTransaction;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Payment\Order\BillingServiceInterface;
-use App\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
+use App\Ordering\Model\Billing\Order\OrderInvoice;
+use App\Ordering\Model\Billing\Order\OrderPaymentIntent;
+use App\Ordering\Model\Billing\Order\OrderTransaction;
+use App\Ordering\ServiceInterface\Payment\Order\BillingServiceInterface;
+use App\Ordering\ServiceInterface\Payment\Order\OrderBillingServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class BillingService implements BillingServiceInterface, OrderBillingServiceInterface

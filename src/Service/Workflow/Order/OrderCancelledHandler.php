@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Workflow\Order\OrderCancelledHandlerInterface;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderCancelledHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderCancelledHandler implements OrderCancelledHandlerInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Service\Order;
 
-use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderShipmentIntegrationTest extends KernelTestCase

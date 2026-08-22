@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Webhook\Order\WebhookSignerHmac;
-use App\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Ordering\Service\Webhook\Order\WebhookSignerHmac;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierHmac;
 
 $configPath = __DIR__ . '/../config/payments/stripe.json';
 $configRaw = @file_get_contents($configPath);

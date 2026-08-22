@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\ServiceInterface\Order;
+namespace App\Ordering\ReadModel\ServiceInterface\Order;
 
 interface OrderReadModelUpdaterInterface
 {

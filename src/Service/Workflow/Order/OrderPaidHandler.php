@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ServiceInterface\Workflow\Order\OrderPaidHandlerInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderPaidHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderPaidHandler implements OrderPaidHandlerInterface

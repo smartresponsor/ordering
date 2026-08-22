@@ -9,6 +9,6 @@ Wave 48 repaired the Outbox runtime cluster.
 
 ## Result
 The touched Outbox service files are now syntactically valid and internally coherent with:
-- `App\Entity\Outbox\OutboxMessage`
-- `App\Repository\Outbox\OutboxMessageRepository`
-- `App\Message\OrderEventMessage`
+- `App\Ordering\Entity\Outbox\OutboxMessage`
+- `App\Ordering\Repository\Outbox\OutboxMessageRepository`
+- `App\Ordering\Message\OrderEventMessage`

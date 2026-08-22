@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Transport\Order;
+namespace App\Ordering\ServiceInterface\Transport\Order;
 
-use App\ValueObject\Routing\Order\RouteContext;
-use App\ValueObject\Routing\Order\RouteDecision;
+use App\Ordering\ValueObject\Routing\Order\RouteContext;
+use App\Ordering\ValueObject\Routing\Order\RouteDecision;
 
 interface ProviderRouterInterface
 {

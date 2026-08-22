@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPartiallyPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
-use App\ServiceInterface\Analytics\Order\OrderMetricsProjectorInterface;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsProjectorInterface;
 
 final readonly class OrderMetricsProjector implements OrderMetricsProjectorInterface
 {

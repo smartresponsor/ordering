@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DemoInterface\Scenario\Order;
+namespace App\Ordering\DemoInterface\Scenario\Order;
 
 interface OrderDemoServiceInterface
 {

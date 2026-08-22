@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\OrderMetricsEntity;
+namespace App\Ordering\ReadModel\OrderMetricsEntity;
 
 final readonly class OrderMetricsEntity
 {

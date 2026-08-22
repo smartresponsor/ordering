@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Http;
+namespace App\Ordering\EventListener\Http;
 
-use App\Service\Http\Order\MonologAuditLogger;
-use App\Service\Http\Order\Redactor;
+use App\Ordering\Service\Http\Order\MonologAuditLogger;
+use App\Ordering\Service\Http\Order\Redactor;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 

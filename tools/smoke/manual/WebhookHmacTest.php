@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Test\Smoke;
 
-use App\Service\Webhook\Order\WebhookSignerHmac;
-use App\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Ordering\Service\Webhook\Order\WebhookSignerHmac;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierHmac;
 use PHPUnit\Framework\TestCase;
 
 /**

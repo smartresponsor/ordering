@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\State\Api;
+namespace App\Ordering\State\Api;
 
 final readonly class OrderPriceProvider
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Api\Controller;
+namespace App\Ordering\ReadModel\Api\Controller;
 
-use App\ReadModel\Repository\OrderReadRepository;
+use App\Ordering\ReadModel\Repository\OrderReadRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class CustomerOrdersViewAction

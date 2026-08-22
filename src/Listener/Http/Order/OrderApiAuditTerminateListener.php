@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Listener\Http\Order;
+namespace App\Ordering\Listener\Http\Order;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

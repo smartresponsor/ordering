@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber;
+namespace App\Ordering\Subscriber;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

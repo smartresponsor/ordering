@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Observability;
+namespace App\Ordering\EventListener\Observability;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Integration\Inventory\InMemoryInventoryGateway;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\Service\Inventory\Order\InventoryService;
-use App\Subscriber\Event\Order\InventorySubscriber;
+use App\Ordering\Integration\Inventory\InMemoryInventoryGateway;
+use App\Ordering\Service\Inventory\Order\InventoryService;
+use App\Ordering\Subscriber\Event\Order\InventorySubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;

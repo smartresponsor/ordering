@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Pricing\Order;
+namespace App\Ordering\ServiceInterface\Pricing\Order;
 
-use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 
 interface EUTaxStrategyInterface extends OrderTaxationGatewayInterface
 {

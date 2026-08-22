@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Money;
+namespace App\Ordering\ValueObject\Money;
 
 final readonly class Currency
 {

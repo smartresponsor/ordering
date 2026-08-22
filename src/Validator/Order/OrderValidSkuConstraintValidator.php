@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Validator\Order;
+namespace App\Ordering\Validator\Order;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

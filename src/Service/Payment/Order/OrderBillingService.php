@@ -7,6 +7,6 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
 class_alias(BillingService::class, OrderBillingService::class);

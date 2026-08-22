@@ -8,12 +8,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\ApiResource\View\Order\OrderResource;
-use App\Message\Command\Order\OrderPlaceCommand;
+use App\Ordering\ApiResource\View\Order\OrderResource;
+use App\Ordering\Message\Command\Order\OrderPlaceCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
@@ -47,9 +47,9 @@ final readonly class OrderPlaceProcessor implements ProcessorInterface
         ];
 
         $this->bus->dispatch(new OrderPlaceCommand($payload));
-        $this->em->flush(); // единая транзакция с outbox, если используется
+        $this->em->flush(); // РµРґРёРЅР°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ СЃ outbox, РµСЃР»Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
 
-        // Возвращаем облегчённый ресурс
+        // Р’РѕР·РІСЂР°С‰Р°РµРј РѕР±Р»РµРіС‡С‘РЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ
         return new OrderResource(
             id: $orderId,
             number: (string) $payload['orderId'],

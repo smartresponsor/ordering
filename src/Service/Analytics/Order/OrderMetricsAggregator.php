@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\ServiceInterface\Analytics\Order\OrderMetricsAggregatorInterface;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsAggregatorInterface;
 
 final readonly class OrderMetricsAggregator implements OrderMetricsAggregatorInterface
 {

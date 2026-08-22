@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
-use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\Service\Shipment\Order\ShipmentService;
+use App\Ordering\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Ordering\Service\Shipment\Order\ShipmentService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class ShipmentStatusListener implements EventSubscriberInterface
@@ -21,7 +21,7 @@ final readonly class ShipmentStatusListener implements EventSubscriberInterface
 
     public function onStatus(object $event): void
     {
-        // $event должен иметь orderId, tracking, status
+        // $event РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ orderId, tracking, status
         if (method_exists($event, 'orderId') && method_exists($event, 'tracking') && method_exists($event, 'status')) {
             if ('shipped' === $event->status()) {
                 $this->service->markShipped($event->orderId(), $event->tracking());

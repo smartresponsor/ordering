@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Ordering\Entity\Order;
 
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
-use App\Lifecycle\OrderLifecyclePolicy;
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Lifecycle\OrderLifecyclePolicy;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ValueObject\OrderStatus;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\OrderStatus;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

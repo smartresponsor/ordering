@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Observability;
+namespace App\Ordering\EventListener\Observability;
 
-use App\Service\Observability\Order\MonologApiMetric;
+use App\Ordering\Service\Observability\Order\MonologApiMetric;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 final readonly class OrderApiMetricListener

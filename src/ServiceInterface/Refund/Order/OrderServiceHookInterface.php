@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Refund\Order;
+namespace App\Ordering\ServiceInterface\Refund\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 
 interface OrderServiceHookInterface
 {

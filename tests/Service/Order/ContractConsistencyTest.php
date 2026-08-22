@@ -10,8 +10,8 @@ final class ContractConsistencyTest extends TestCase
 {
     public function testInterfacesExist(): void
     {
-        $this->assertTrue(interface_exists(\App\Contract\Gateway\Order\OrderPaymentGatewayInterface::class));
-        $this->assertTrue(interface_exists(\App\Contract\Gateway\Order\OrderShipmentGatewayInterface::class));
-        $this->assertTrue(interface_exists(\App\Contract\Gateway\Order\OrderTaxationGatewayInterface::class));
+        $this->assertTrue(interface_exists(\App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface::class));
+        $this->assertTrue(interface_exists(\App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface::class));
+        $this->assertTrue(interface_exists(\App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface::class));
     }
 }

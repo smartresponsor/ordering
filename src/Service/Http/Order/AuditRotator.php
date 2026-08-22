@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Order;
+namespace App\Ordering\Service\Http\Order;
 
-use App\ServiceInterface\Http\Order\AuditRotateInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditRotateInterface;
 
 final readonly class AuditRotator implements AuditRotateInterface
 {

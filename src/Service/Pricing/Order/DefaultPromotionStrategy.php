@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 
 readonly class DefaultPromotionStrategy implements DefaultPromotionStrategyInterface
 {

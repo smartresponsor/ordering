@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
-use App\ServiceInterface\Payment\Order\StripeGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Payment\Order\StripeGatewayInterface;
 
 final readonly class StripeGateway implements PaymentGatewayInterface, StripeGatewayInterface, OrderPaymentGatewayInterface
 {

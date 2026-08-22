@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Projector\ReadModel\Order;
+namespace App\Ordering\Projector\ReadModel\Order;
 
 final readonly class OrderMetricsProjector
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Ordering\Entity;
 
 use App\Ordering\Entity\Order\OrderEntity;
 

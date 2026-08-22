@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Shipment\Order;
+namespace App\Ordering\ServiceInterface\Shipment\Order;
 
 use App\Model\Order\OrderReturnPolicy;
 use App\Ordering\Entity\Order\OrderShipmentEntity;

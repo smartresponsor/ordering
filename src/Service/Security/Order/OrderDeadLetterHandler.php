@@ -8,9 +8,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\DLQInterface\Handler\Order\OrderDeadLetterHandlerInterface;
+use App\Ordering\DLQInterface\Handler\Order\OrderDeadLetterHandlerInterface;
 
 final readonly class OrderDeadLetterHandler implements OrderDeadLetterHandlerInterface
 {

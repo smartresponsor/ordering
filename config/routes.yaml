@@ -1,7 +1,3 @@
-order_controller:
-    resource: ../src/Controller/OrderController.php
-    type: attribute
-
 order_management_controller:
     resource: ../src/Controller/OrderManagementController.php
     type: attribute
@@ -33,6 +29,3 @@ payment_webhook_controller:
 order_monitoring_health_controller:
     resource: ../src/Controller/Monitoring/OrderHealthMonitoringController.php
     type: attribute
-
-cruding_routes:
-    resource: ../../Cruding/config/routes/cruding_crud.yaml

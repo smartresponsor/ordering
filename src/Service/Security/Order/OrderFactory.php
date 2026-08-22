@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Security\Order\OrderFactoryInterface;
+use App\Ordering\ServiceInterface\Security\Order\OrderFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderFactory implements OrderFactoryInterface

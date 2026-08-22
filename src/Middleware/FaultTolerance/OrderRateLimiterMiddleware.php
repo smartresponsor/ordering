@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Middleware\FaultTolerance;
+namespace App\Ordering\Middleware\FaultTolerance;
 
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;

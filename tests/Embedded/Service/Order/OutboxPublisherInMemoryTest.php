@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Message\Outbox\OrderOutboxDispatchedMessage;
-use App\Service\Outbox\OutboxPublisher;
+use App\Ordering\Message\Outbox\OrderOutboxDispatchedMessage;
+use App\Ordering\Service\Outbox\OutboxPublisher;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Messenger\MessageBus;

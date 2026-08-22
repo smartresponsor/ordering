@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\Repository\Outbox\OutboxMessageRepository;
+use App\Ordering\Message\Outbox\OrderOutboxDispatchedMessage;
+use App\Ordering\Repository\Outbox\OutboxMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 

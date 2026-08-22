@@ -7,15 +7,15 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
-use App\ServiceInterface\Payment\Order\PaymentServiceInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentServiceInterface;
 
 final class PaymentService implements PaymentServiceInterface
 {
     public function applyPayment(string $orderId, string $amount, string $txId): void
     {
-        // Тут привязка к WriteModel + перерасчёт paid_total (опущено для краткости)
-        // Событие отправляется через TransactionalEventPublisher в хендлере
+        // РўСѓС‚ РїСЂРёРІСЏР·РєР° Рє WriteModel + РїРµСЂРµСЂР°СЃС‡С‘С‚ paid_total (РѕРїСѓС‰РµРЅРѕ РґР»СЏ РєСЂР°С‚РєРѕСЃС‚Рё)
+        // РЎРѕР±С‹С‚РёРµ РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ С‡РµСЂРµР· TransactionalEventPublisher РІ С…РµРЅРґР»РµСЂРµ
     }
 }

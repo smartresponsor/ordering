@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Monitoring;
+namespace App\Ordering\Monitoring;
 
 final readonly class MetricsRegistry
 {

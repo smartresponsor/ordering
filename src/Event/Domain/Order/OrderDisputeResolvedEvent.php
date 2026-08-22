@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Event\Domain\Order;
+namespace App\Ordering\Event\Domain\Order;
 
 use App\Ordering\Entity\Order\OrderDisputeEntity;
 

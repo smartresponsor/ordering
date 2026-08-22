@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Inventory\Order;
+namespace App\Ordering\ValueObject\Inventory\Order;
 
 final readonly class Sku
 {

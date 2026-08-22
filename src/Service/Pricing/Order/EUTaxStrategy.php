@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
-use App\ServiceInterface\Pricing\Order\EUTaxStrategyInterface;
+use App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\EUTaxStrategyInterface;
 
 final class EUTaxStrategy implements EUTaxStrategyInterface, OrderTaxationGatewayInterface
 {

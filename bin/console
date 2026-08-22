@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-use App\Kernel;
+use App\Ordering\Service\Security\Order\Kernel;
 
 if (!is_file(dirname(__DIR__) . '/vendor/autoload_runtime.php')) {
     throw new RuntimeException('Missing vendor/autoload_runtime.php. Run composer install.');

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Archival\Order;
+namespace App\Ordering\ServiceInterface\Archival\Order;
 
 final readonly class OrderAuditTrail
 {

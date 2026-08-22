@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Service\Security\Jwt\OrderJwtTenantResolver;
+use App\Ordering\Service\Security\Jwt\OrderJwtTenantResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 

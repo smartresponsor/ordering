@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Config;
+namespace App\Ordering\Form\Config;
 
 final class OrderingRateLimitsConfigData
 {

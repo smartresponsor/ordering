@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler;
+namespace App\Ordering\MessageHandler;
 
-use App\Message\OrderEventMessage;
+use App\Ordering\Message\OrderEventMessage;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

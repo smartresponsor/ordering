@@ -9,9 +9,9 @@ declare(strict_types=1);
  * This file is part of SmartResponsor (Order domain).
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\IdempotencyKeyPolicyInterface;
+use App\Ordering\ServiceInterface\Security\Order\IdempotencyKeyPolicyInterface;
 
 final readonly class IdempotencyKeyPolicy implements IdempotencyKeyPolicyInterface
 {

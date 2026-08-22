@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\Command\Operations\Order;
+namespace App\Ordering\Command\Operations\Order;
 
-use App\CommandInterface\Console\Order\OrderAuditShipS3CommandInterface;
-use App\ServiceInterface\Http\Order\AuditShipInterface;
+use App\Ordering\CommandInterface\Console\Order\OrderAuditShipS3CommandInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditShipInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Outbox\Order;
+namespace App\Ordering\Service\Outbox\Order;
 
 final class ExponentialBackoffStrategy
 {

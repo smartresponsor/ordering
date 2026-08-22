@@ -5,4 +5,4 @@ framework:
             async: 'in-memory://'
             failed: 'in-memory://'
         routing:
-            'App\Message\Outbox\OrderOutboxDispatchedMessage': async
+            'App\Ordering\Message\Outbox\OrderOutboxDispatchedMessage': async

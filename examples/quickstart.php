@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Service\Transport\Order\Client;
+use App\Ordering\Service\Transport\Order\Client;
 
 /**
  * Minimal PHP quickstart against the current order transport client.

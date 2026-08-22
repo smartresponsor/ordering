@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Ordering\Service;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Value\Surface\OrderManagementSurfaceContract;
+use App\Ordering\Value\Surface\OrderManagementSurfaceContract;
 use Symfony\Component\Form\FormView;
 
 final class OrderManagementSurfaceContractFactory
@@ -23,7 +23,7 @@ final class OrderManagementSurfaceContractFactory
         return new OrderManagementSurfaceContract(
             OrderManagementSurfaceContract::WORD,
             OrderManagementSurfaceContract::VIEW_MANAGEMENT,
-            'order/base.html.twig',
+            'order_management/index.html.twig',
             $this->slotMap(),
             $orders,
             $createForm,

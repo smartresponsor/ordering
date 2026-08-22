@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Command;
+namespace App\Ordering\Message\Command;
 
 readonly class FlakyCommand
 {

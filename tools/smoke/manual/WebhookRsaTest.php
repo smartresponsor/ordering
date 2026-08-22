@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Test\Smoke;
 
-use App\Service\Webhook\Order\WebhookSignerRsa;
-use App\Service\Webhook\Order\WebhookVerifierRsa;
+use App\Ordering\Service\Webhook\Order\WebhookSignerRsa;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierRsa;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -1,9 +1,9 @@
 services:
-    App\Service\Security\Order\OrderWebhookSignatureVerifier:
+    App\Ordering\Service\Security\Order\OrderWebhookSignatureVerifier:
         arguments:
             $secret: '%env(WEBHOOK_SECRET)%'
 
-    App\EventSubscriber\OrderWebhookHmacSubscriber:
+    App\Ordering\EventSubscriber\OrderWebhookHmacSubscriber:
         arguments:
             $header: 'X-Signature'
         tags:

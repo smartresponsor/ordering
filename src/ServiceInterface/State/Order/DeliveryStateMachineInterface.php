@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\State\Order;
+namespace App\Ordering\ServiceInterface\State\Order;
 
 use App\Model\Order\Delivery;
 

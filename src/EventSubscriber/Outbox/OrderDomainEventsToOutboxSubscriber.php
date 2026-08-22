@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber\Outbox;
+namespace App\Ordering\EventSubscriber\Outbox;
 
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
-use App\Service\Outbox\OutboxWriter;
+use App\Ordering\Service\Outbox\OutboxWriter;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;

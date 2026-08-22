@@ -8,9 +8,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\ValueObject\Security\Order\JwkKey;
+use App\Ordering\ValueObject\Security\Order\JwkKey;
 
 interface FileJwkRepositoryInterface
 {

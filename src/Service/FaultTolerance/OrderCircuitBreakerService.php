@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\FaultTolerance;
+namespace App\Ordering\Service\FaultTolerance;
 
 final class OrderCircuitBreakerService
 {

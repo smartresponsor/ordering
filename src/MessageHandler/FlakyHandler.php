@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler;
+namespace App\Ordering\MessageHandler;
 
-use App\Message\Command\FlakyCommand;
+use App\Ordering\Message\Command\FlakyCommand;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(fromTransport: 'async')]

@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Security\Order\FileJwkRepository;
-use App\ValueObject\Security\Order\JwkKey;
+use App\Ordering\Service\Security\Order\FileJwkRepository;
+use App\Ordering\ValueObject\Security\Order\JwkKey;
 
 $dir = __DIR__ . '/../var/key';
 if (!is_dir($dir)) {

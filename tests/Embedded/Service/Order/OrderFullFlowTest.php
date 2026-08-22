@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Embedded\Service\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Workflow\Order\OrderOrchestrator;
+use App\Ordering\Service\Workflow\Order\OrderOrchestrator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderFullFlowTest extends KernelTestCase

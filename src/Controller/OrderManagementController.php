@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Ordering\Controller;
 
-use App\DTO\OrderCreateDTO;
-use App\DTO\OrderPaymentDTO;
-use App\DTO\OrderRefundDTO;
-use App\DTO\OrderShipmentDTO;
-use App\Form\OrderCreateType;
-use App\Form\OrderPaymentType;
-use App\Form\OrderRefundType;
-use App\Form\OrderShipmentType;
+use App\Ordering\DTO\OrderCreateDTO;
+use App\Ordering\DTO\OrderPaymentDTO;
+use App\Ordering\DTO\OrderRefundDTO;
+use App\Ordering\DTO\OrderShipmentDTO;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Form\OrderCreateType;
+use App\Ordering\Form\OrderPaymentType;
+use App\Ordering\Form\OrderRefundType;
+use App\Ordering\Form\OrderShipmentType;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\Service\OrderManagementSurfaceContractFactory;
+use App\Ordering\Service\OrderManagementSurfaceContractFactory;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,7 @@ final class OrderManagementController extends AbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             $order = new OrderEntity($createDto->currency, $createDto->grandTotal);
+            $order->setStatus(OrderStatus::Placed);
             $em->persist($order);
             $em->flush();
 

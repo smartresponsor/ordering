@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler\Outbox;
+namespace App\Ordering\MessageHandler\Outbox;
 
-use App\Message\Outbox\OrderOutboxDispatchedMessage;
+use App\Ordering\Message\Outbox\OrderOutboxDispatchedMessage;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(fromTransport: 'async')]

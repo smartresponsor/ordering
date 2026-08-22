@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Api\Processor;
+namespace App\Ordering\Api\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Message\Command\Order\OrderCancelCommand;
+use App\Ordering\Message\Command\Order\OrderCancelCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderDeleteProcessor implements ProcessorInterface

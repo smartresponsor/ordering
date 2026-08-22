@@ -1,4 +1,4 @@
-App\Entity\Order:
+App\Ordering\Entity\Order:
     type: entity
     table: orders
     id:

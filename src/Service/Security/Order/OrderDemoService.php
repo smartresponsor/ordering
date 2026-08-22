@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\DemoInterface\Scenario\Order\OrderDemoServiceInterface;
+use App\Ordering\DemoInterface\Scenario\Order\OrderDemoServiceInterface;
 
 final class OrderDemoService implements OrderDemoServiceInterface
 {

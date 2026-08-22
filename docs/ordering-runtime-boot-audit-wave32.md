@@ -1,10 +1,10 @@
-# Ordering runtime/boot audit — wave 32
+# Ordering runtime/boot audit вЂ” wave 32
 
 Wave 32 focuses on PSR-4 and bundle boot coherence in the current slice.
 
 ## Repaired items
 - `src/OrderComponentBundle.php` now declares `App\OrderComponentBundle`.
-- `src/DependencyInjection/OrderComponentExtension.php` now declares `App\DependencyInjection\OrderComponentExtension`.
+- `src/DependencyInjection/OrderComponentExtension.php` now declares `App\Ordering\DependencyInjection\OrderComponentExtension`.
 - Remaining test namespace/file-path mismatches under `tests/` were normalized to `Tests\...`.
 
 ## Result

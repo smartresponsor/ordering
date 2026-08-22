@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Api\Order;
+namespace App\Ordering\DTO\Api\Order;
 
 final class OrderCreateInput
 {

@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\Command\Outbox;
+namespace App\Ordering\Command\Outbox;
 
-use App\CommandInterface\Console\Order\OrderOutboxDlqRequeueCommandInterface;
-use App\ServiceInterface\Outbox\Order\DlqServiceInterface;
+use App\Ordering\CommandInterface\Console\Order\OrderOutboxDlqRequeueCommandInterface;
+use App\Ordering\ServiceInterface\Outbox\Order\DlqServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

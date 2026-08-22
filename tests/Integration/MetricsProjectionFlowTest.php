@@ -6,8 +6,8 @@ namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderMetricsProjectionEntity;
-use App\Service\Analytics\Order\MetricsProjectionService;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Analytics\Order\MetricsProjectionService;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Security\Order\OrderIdempotencyGuard;
+use App\Ordering\Service\Security\Order\OrderIdempotencyGuard;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class IdempotencyGuardTest extends KernelTestCase

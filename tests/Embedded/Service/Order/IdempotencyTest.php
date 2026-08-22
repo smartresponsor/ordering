@@ -11,14 +11,14 @@ namespace Tests\Embedded\Service\Order;
  * This file is part of SmartResponsor (Order domain).
  */
 
-use App\Service\Security\Order\HttpIdempotencyGuard;
-use App\Service\Security\Order\IdempotencyKeyPolicy;
-use App\Service\Security\Order\MemoryIdempotencyStore;
+use App\Ordering\Service\Security\Order\HttpIdempotencyGuard;
+use App\Ordering\Service\Security\Order\IdempotencyKeyPolicy;
+use App\Ordering\Service\Security\Order\MemoryIdempotencyStore;
 use PHPUnit\Framework\TestCase;
 
 final class IdempotencyTest extends TestCase
 {
-    public function testHttpIdempotencyGuard()
+    public function testHttpIdempotencyGuard(): void
     {
         $policy = new IdempotencyKeyPolicy(1);
         $store = new MemoryIdempotencyStore();

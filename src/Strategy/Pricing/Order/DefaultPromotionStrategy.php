@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Strategy\Pricing\Order;
+namespace App\Ordering\Strategy\Pricing\Order;
 
 final class DefaultPromotionStrategy
 {

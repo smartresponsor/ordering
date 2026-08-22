@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Payment\Order;
+namespace App\Ordering\ServiceInterface\Payment\Order;
 
-use App\Event\Domain\Order\OrderFullyPaidEvent;
-use App\Event\Domain\Order\OrderPartiallyPaidEvent;
-use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderFullyPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyRefundedEvent;
 
 interface PaymentStatusSubscriberInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Processor\Observability;
+namespace App\Ordering\Processor\Observability;
 
 final class OrderLogCorrelationProcessor
 {
@@ -19,7 +19,7 @@ final class OrderLogCorrelationProcessor
         }
 
         if (!array_key_exists('correlation_id', $extra)) {
-            $extra['correlation_id'] = \App\EventListener\Observability\OrderRequestCorrelationListener::currentCorrelationId();
+            $extra['correlation_id'] = \App\Ordering\EventListener\Observability\OrderRequestCorrelationListener::currentCorrelationId();
         }
 
         $record['extra'] = $extra;

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Analytics\Order\AuditLoggerService;
-use App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Analytics\Order\AuditLoggerService;
+use App\Ordering\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

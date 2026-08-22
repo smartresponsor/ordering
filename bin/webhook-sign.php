@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Webhook\Order\WebhookSignerHmac;
-use App\Service\Webhook\Order\WebhookSignerRsa;
+use App\Ordering\Service\Webhook\Order\WebhookSignerHmac;
+use App\Ordering\Service\Webhook\Order\WebhookSignerRsa;
 
 $alg = $argv[1] ?? 'hmac';
 $payload = stream_get_contents(STDIN);

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener;
+namespace App\Ordering\EventListener;
 
-use App\RateLimiter\TenantKeyResolver;
+use App\Ordering\RateLimiter\TenantKeyResolver;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;

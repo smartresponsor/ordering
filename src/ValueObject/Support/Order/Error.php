@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Support\Order;
+namespace App\Ordering\ValueObject\Support\Order;
 
 final readonly class Error
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Billing\Order;
+namespace App\Ordering\ValueObject\Billing\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 

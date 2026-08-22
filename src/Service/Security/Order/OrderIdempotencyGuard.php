@@ -7,6 +7,6 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 class_alias(IdempotencyGuard::class, OrderIdempotencyGuard::class);

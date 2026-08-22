@@ -1,9 +1,9 @@
-# Ordering runtime boot audit — wave 52
+# Ordering runtime boot audit вЂ” wave 52
 
 Wave 52 repaired the remaining contract drift around the Order outbox entity.
 
 ## Repaired layer
-- `App\Entity\Order\OutboxMessage`
+- `App\Ordering\Entity\Order\OutboxMessage`
 - `App\RepositoryInterface\Order\OutboxRepositoryInterface`
 
 ## Concrete effect

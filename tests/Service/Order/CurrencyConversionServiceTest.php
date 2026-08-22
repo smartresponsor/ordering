@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Service\Order;
 
-use App\Service\Pricing\Order\CurrencyConversionService;
-use App\ValueObject\Pricing\Order\Currency;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Pricing\Order\CurrencyConversionService;
+use App\Ordering\ValueObject\Pricing\Order\Currency;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class CurrencyConversionServiceTest extends TestCase

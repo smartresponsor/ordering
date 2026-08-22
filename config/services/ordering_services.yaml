@@ -1,4 +1,4 @@
 services:
-    App\ServiceInterface\Inventory\InventoryServiceInterface: '@App\Service\Inventory\InMemoryInventoryService'
-    App\ServiceInterface\Payment\PaymentGatewayInterface: '@App\Service\Payment\StripeGateway'
-    App\ServiceInterface\Shipment\CarrierInterface: '@App\Service\Shipment\UPSCarrier'
+    App\Ordering\ServiceInterface\Inventory\InventoryServiceInterface: '@App\Ordering\Service\Inventory\InMemoryInventoryService'
+    App\Ordering\ServiceInterface\Payment\PaymentGatewayInterface: '@App\Ordering\Service\Payment\StripeGateway'
+    App\Ordering\ServiceInterface\Shipment\CarrierInterface: '@App\Ordering\Service\Shipment\UPSCarrier'

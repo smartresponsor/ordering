@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Pricing\Order;
+namespace App\Ordering\ServiceInterface\Pricing\Order;
 
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\PriceBreakdown;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\PriceBreakdown;
 
 interface AdvancedPriceCalculatorInterface
 {

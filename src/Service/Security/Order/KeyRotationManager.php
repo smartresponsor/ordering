@@ -6,11 +6,11 @@ declare(strict_types=1);
  * Author: Oleksandr Tishchenko / Marketing America Corp <dev@smartresponsor.com>.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\JwkRepositoryInterface;
-use App\ServiceInterface\Security\Order\KeyRotationManagerInterface;
-use App\ValueObject\Security\Order\JwkKey;
+use App\Ordering\ServiceInterface\Security\Order\JwkRepositoryInterface;
+use App\Ordering\ServiceInterface\Security\Order\KeyRotationManagerInterface;
+use App\Ordering\ValueObject\Security\Order\JwkKey;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Payment\Order;
+namespace App\Ordering\ServiceInterface\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderPaymentTransactionEntity;
 use App\Ordering\Entity\Order\OrderRefundTransactionEntity;

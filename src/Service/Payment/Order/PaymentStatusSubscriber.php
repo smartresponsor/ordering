@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
-use App\Event\Domain\Order\OrderFullyPaidEvent;
-use App\Event\Domain\Order\OrderPartiallyPaidEvent;
-use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
-use App\ServiceInterface\Payment\Order\PaymentStatusSubscriberInterface;
+use App\Ordering\Event\Domain\Order\OrderFullyPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentStatusSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

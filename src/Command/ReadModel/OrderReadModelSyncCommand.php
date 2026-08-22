@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Command\ReadModel;
+namespace App\Ordering\Command\ReadModel;
 
-use App\ReadModel\Entity\OrderViewEntity;
-use App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
+use App\Ordering\ReadModel\Entity\OrderViewEntity;
+use App\Ordering\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

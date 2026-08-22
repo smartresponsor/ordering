@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use App\Ordering\Repository\Order\IdempotencyKeyRepository;
-use App\ServiceInterface\Security\Order\IdempotencyServiceInterface;
+use App\Ordering\ServiceInterface\Security\Order\IdempotencyServiceInterface;
 
 final readonly class IdempotencyService implements IdempotencyServiceInterface
 {

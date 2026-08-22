@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Security\Order;
+namespace App\Ordering\Support\Security\Order;
 
 final class Idempotency
 {

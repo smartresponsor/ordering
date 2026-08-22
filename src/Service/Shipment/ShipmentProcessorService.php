@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Shipment;
+namespace App\Ordering\Service\Shipment;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderShipmentEntity;
-use App\ServiceInterface\Shipment\CarrierInterface;
+use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class ShipmentProcessorService

@@ -2,45 +2,45 @@
 
 declare(strict_types=1);
 
-use App\Controller\Api\OrderPayController;
-use App\Controller\Api\OrderShipController;
-use App\EventListener\OrderApiRateLimitListener;
-use App\EventListener\OrderTenantRateLimitListener;
-use App\Factory\Storage\OrderS3ClientFactory;
-use App\MessageHandler\OrderEventMessageHandler;
-use App\Service\Http\Order\AuditRotator;
-use App\Service\Http\Order\MonologAuditSink;
-use App\Service\Http\Order\NdjsonAuditSink;
-use App\Service\Http\Order\S3AuditShipper;
-use App\Service\Inventory\InMemoryInventoryService;
-use App\Service\Inventory\Order\InMemoryInventoryGateway;
-use App\Service\OrderSummaryProvider;
-use App\Service\Outbox\OutboxMessengerDispatcher;
-use App\Service\Outbox\OutboxPublisher;
-use App\Service\Payment\Order\StripeGateway as OrderStripeGateway;
-use App\Service\Payment\PaymentProcessorService;
-use App\Service\Payment\StripeGateway;
-use App\Service\Pricing\Order\CurrencyConversionService;
-use App\Service\Pricing\Order\DefaultPromotionStrategy;
-use App\Service\Pricing\Order\FlatPromotionStrategy;
-use App\Service\Pricing\Order\FlatTaxationStrategy;
-use App\Service\Pricing\Order\PriceCalculator;
-use App\Service\Pricing\Order\TaxationConfigLoader;
-use App\Service\Pricing\Order\VatExclusiveStrategy;
-use App\Service\Security\Jwt\OrderJwtTenantResolver;
-use App\Service\Shipment\ShipmentProcessorService;
-use App\Service\Shipment\UPSCarrier;
-use App\Service\Workflow\Order\OrderWorkflowService;
-use App\ServiceInterface\Http\Order\AuditRotateInterface;
-use App\ServiceInterface\Http\Order\AuditShipInterface;
-use App\ServiceInterface\Http\Order\AuditSinkInterface;
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
-use App\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
-use App\ServiceInterface\OrderSummaryProviderInterface;
-use App\ServiceInterface\Payment\Order\PaymentGatewayInterface as OrderPaymentGatewayInterface;
-use App\ServiceInterface\Payment\PaymentGatewayInterface;
-use App\ServiceInterface\Shipment\CarrierInterface;
-use App\State\Api\OrderDataPersister;
+use App\Ordering\Controller\Api\OrderPayController;
+use App\Ordering\Controller\Api\OrderShipController;
+use App\Ordering\EventListener\OrderApiRateLimitListener;
+use App\Ordering\EventListener\OrderTenantRateLimitListener;
+use App\Ordering\Factory\Storage\OrderS3ClientFactory;
+use App\Ordering\MessageHandler\OrderEventMessageHandler;
+use App\Ordering\Service\Http\Order\AuditRotator;
+use App\Ordering\Service\Http\Order\MonologAuditSink;
+use App\Ordering\Service\Http\Order\NdjsonAuditSink;
+use App\Ordering\Service\Http\Order\S3AuditShipper;
+use App\Ordering\Service\Inventory\InMemoryInventoryService;
+use App\Ordering\Service\Inventory\Order\InMemoryInventoryGateway;
+use App\Ordering\Service\OrderSummaryProvider;
+use App\Ordering\Service\Outbox\OutboxMessengerDispatcher;
+use App\Ordering\Service\Outbox\OutboxPublisher;
+use App\Ordering\Service\Payment\Order\StripeGateway as OrderStripeGateway;
+use App\Ordering\Service\Payment\PaymentProcessorService;
+use App\Ordering\Service\Payment\StripeGateway;
+use App\Ordering\Service\Pricing\Order\CurrencyConversionService;
+use App\Ordering\Service\Pricing\Order\DefaultPromotionStrategy;
+use App\Ordering\Service\Pricing\Order\FlatPromotionStrategy;
+use App\Ordering\Service\Pricing\Order\FlatTaxationStrategy;
+use App\Ordering\Service\Pricing\Order\PriceCalculator;
+use App\Ordering\Service\Pricing\Order\TaxationConfigLoader;
+use App\Ordering\Service\Pricing\Order\VatExclusiveStrategy;
+use App\Ordering\Service\Security\Jwt\OrderJwtTenantResolver;
+use App\Ordering\Service\Shipment\ShipmentProcessorService;
+use App\Ordering\Service\Shipment\UPSCarrier;
+use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\ServiceInterface\Http\Order\AuditRotateInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditShipInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditSinkInterface;
+use App\Ordering\ServiceInterface\Inventory\InventoryServiceInterface;
+use App\Ordering\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
+use App\Ordering\ServiceInterface\OrderSummaryProviderInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentGatewayInterface as OrderPaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Payment\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
+use App\Ordering\State\Api\OrderDataPersister;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -96,7 +96,7 @@ return static function (ContainerConfigurator $c): void {
     // Outbox + Messenger
     $s->set(OutboxPublisher::class)
         ->public()
-        ->arg(0, new Reference('App\Repository\Outbox\OutboxMessageRepository'))
+        ->arg(0, new Reference('App\Ordering\Repository\Outbox\OutboxMessageRepository'))
         ->arg(1, new Reference('doctrine.orm.entity_manager'))
         ->arg(2, new Reference('messenger.default_bus'));
     $s->set(OutboxMessengerDispatcher::class)

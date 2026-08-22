@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Order;
 
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class MoneyTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Webhook\Order;
+namespace App\Ordering\ValueObject\Webhook\Order;
 
 final class Webhook
 {

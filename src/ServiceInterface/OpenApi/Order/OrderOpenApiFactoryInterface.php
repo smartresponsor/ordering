@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\OpenApi\Order;
+namespace App\Ordering\ServiceInterface\OpenApi\Order;
 
 use ApiPlatform\OpenApi\OpenApi;
 

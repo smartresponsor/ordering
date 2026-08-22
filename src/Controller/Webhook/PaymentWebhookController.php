@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Webhook;
+namespace App\Ordering\Controller\Webhook;
 
-use App\Service\Billing\Order\WebhookHandler;
+use App\Ordering\Service\Billing\Order\WebhookHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;

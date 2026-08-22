@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Listener\Http\Order;
+namespace App\Ordering\Listener\Http\Order;
 
-use App\RateLimiter\TenantKeyResolver;
+use App\Ordering\RateLimiter\TenantKeyResolver;
 use Symfony\Component\HttpFoundation\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\RateLimiter\RateLimiterFactory;

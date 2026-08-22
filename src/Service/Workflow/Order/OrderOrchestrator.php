@@ -7,13 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
-use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Workflow\Order\OrderOrchestratorInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderOrchestratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderOrchestrator implements OrderOrchestratorInterface
