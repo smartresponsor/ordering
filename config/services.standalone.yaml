@@ -1,0 +1,22 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Ordering\Form\:
+        resource: '../src/Form/'
+
+    App\Ordering\Service\OrderManagementSurfaceContractFactory: ~
+    App\Ordering\Service\Demo\OrderDemoDataService: ~
+
+    App\Ordering\Repository\Order\OrderRepository:
+        tags: ['doctrine.repository_service']
+
+    App\Ordering\Controller\OrderManagementController:
+        public: true
+        tags: ['controller.service_arguments']
+
+    App\Ordering\Command\OrderDemoLoadCommand: ~
+    App\Ordering\Command\OrderDemoResetCommand: ~
+    App\Ordering\Command\OrderDiagnosticsCommand: ~
+    App\Ordering\Command\OrderReportCommand: ~
