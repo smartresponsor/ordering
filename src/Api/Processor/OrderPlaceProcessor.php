@@ -12,7 +12,7 @@ namespace App\Ordering\Api\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Resource\Order\OrderResource;
+use App\Ordering\ApiResource\View\Order\OrderResource;
 use App\Ordering\Message\Command\Order\OrderPlaceCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -40,16 +40,15 @@ final readonly class OrderPlaceProcessor implements ProcessorInterface
             'vendorId' => $data->vendorId,
             'currency' => $data->currency ?? 'USD',
             'items' => array_map(
-                static fn ($i) => ['sku' => $i->sku, 'qty' => $i->qty, 'price' => $i->price],
-                $data->items,
+                static fn (array $item): array => ['sku' => $item['sku'], 'qty' => $item['qty'], 'price' => $item['price']],
+                $data->items ?? [],
             ),
-            'placeAt' => $data->placeAt ?? new \DateTimeImmutable()->format(DATE_ATOM),
+            'placeAt' => $data->placeAt ?? (new \DateTimeImmutable())->format(DATE_ATOM),
         ];
 
         $this->bus->dispatch(new OrderPlaceCommand($payload));
-        $this->em->flush(); // РµРґРёРЅР°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ СЃ outbox, РµСЃР»Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
+        $this->em->flush();
 
-        // Р’РѕР·РІСЂР°С‰Р°РµРј РѕР±Р»РµРіС‡С‘РЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ
         return new OrderResource(
             id: $orderId,
             number: (string) $payload['orderId'],

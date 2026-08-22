@@ -14,6 +14,7 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Ordering\Message\Command\Order\OrderCancelCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+/** @implements ProcessorInterface<mixed, null> */
 final readonly class OrderDeleteProcessor implements ProcessorInterface
 {
     public function __construct(private MessageBusInterface $bus)
@@ -22,8 +23,9 @@ final readonly class OrderDeleteProcessor implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): null
     {
-        $id = $uriVariables['id'] ?? null;
-        if ($id) {
+        $idValue = $uriVariables['id'] ?? null;
+        $id = is_scalar($idValue) ? trim((string) $idValue) : '';
+        if ('' !== $id) {
             $this->bus->dispatch(new OrderCancelCommand($id));
         }
 
