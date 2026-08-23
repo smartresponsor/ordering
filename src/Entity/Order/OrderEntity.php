@@ -444,7 +444,7 @@ class OrderEntity implements RecordsEventEntityInterface
         }
         $this->trackingCode = $trackingCode;
         $this->setStatus(OrderStatus::Shipped->value);
-        $this->recordEvent(new OrderShippedEvent($this->slug));
+        $this->recordEvent(new OrderShippedEvent($this->slug, $carrier, $trackingCode));
         $this->touch();
 
         return $shipment;
@@ -477,7 +477,7 @@ class OrderEntity implements RecordsEventEntityInterface
         }
 
         $this->setStatus('partially_shipped');
-        $this->recordEvent(new OrderShippedEvent($this->slug));
+        $this->recordEvent(new OrderShippedEvent($this->slug, 'manual', null));
         $this->touch();
     }
 

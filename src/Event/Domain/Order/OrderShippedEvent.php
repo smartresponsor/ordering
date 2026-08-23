@@ -6,7 +6,10 @@ namespace App\Ordering\Event\Domain\Order;
 
 final readonly class OrderShippedEvent
 {
-    public function __construct(public string $orderId)
-    {
+    public function __construct(
+        public string $orderId,
+        public ?string $carrier = null,
+        public ?string $trackingCode = null,
+    ) {
     }
 }

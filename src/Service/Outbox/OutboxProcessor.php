@@ -45,7 +45,11 @@ final readonly class OutboxProcessor
                     (string) ($payload['currency'] ?? 'USD'),
                     (string) ($payload['externalRef'] ?? $payload['txId'] ?? ''),
                 ),
-                OrderShippedEvent::class => new OrderShippedEvent($orderIdentifier),
+                OrderShippedEvent::class => new OrderShippedEvent(
+                    $orderIdentifier,
+                    isset($payload['carrier']) ? (string) $payload['carrier'] : null,
+                    isset($payload['trackingCode']) ? (string) $payload['trackingCode'] : null,
+                ),
                 OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderIdentifier)),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
                     $orderIdentifier,

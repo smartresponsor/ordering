@@ -11,7 +11,6 @@ namespace App\Ordering\Service\Workflow\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
-use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Service\Outbox\OutboxPublisher;
 use App\Ordering\Service\Payment\PaymentProcessorService;
 use App\Ordering\Service\Shipment\ShipmentProcessorService;
@@ -68,9 +67,12 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
 
     public function ship(OrderEntity $order): void
     {
+        if (!$this->workflow->can($order, 'ship')) {
+            throw new \LogicException("Transition 'ship' not allowed");
+        }
+
+        $this->workflow->apply($order, 'ship');
         $this->shipper->ship($order);
-        $this->apply($order, 'ship');
-        $this->outbox->publish(OrderShippedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 

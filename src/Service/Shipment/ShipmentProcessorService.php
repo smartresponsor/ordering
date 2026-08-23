@@ -17,11 +17,12 @@ final readonly class ShipmentProcessorService
 
     public function ship(OrderEntity $order, string $carrierName = 'UPS'): OrderShipmentEntity
     {
-        $tracking = $this->carrier->createShipment($carrierName, (string) ($order->getId() ?? 0));
-        $s = new OrderShipmentEntity($order, $carrierName, $tracking);
-        $s->markShipped($tracking);
-        $this->em->persist($s);
+        $tracking = $this->carrier->createShipment($carrierName, $order->slug());
+        $shipment = $order->ship($carrierName, $tracking);
+        $shipment->markShipped();
+        $this->em->persist($shipment);
+        $this->em->persist($order);
 
-        return $s;
+        return $shipment;
     }
 }

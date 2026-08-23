@@ -36,7 +36,11 @@ final readonly class OrderMessageHandler
         $map = [
             OrderPlacedEvent::class => fn () => new OrderPlacedEvent($order->slug()),
             OrderPaidEvent::class => fn () => new OrderPaidEvent($order->slug(), $order->grandTotal(), $order->currency(), $order->slug()),
-            OrderShippedEvent::class => fn () => new OrderShippedEvent($order->slug()),
+            OrderShippedEvent::class => fn () => new OrderShippedEvent(
+                $order->slug(),
+                null,
+                $order->getTrackingCode(),
+            ),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
             OrderRefundedEvent::class => fn () => new OrderRefundedEvent(
                 $order->slug(),

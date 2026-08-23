@@ -6,11 +6,15 @@ namespace App\Ordering\Tests\Unit\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
+use App\Ordering\Entity\Order\OrderShipmentEntity;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Service\Order\OrderCreationService;
 use App\Ordering\Service\Payment\PaymentProcessorService;
+use App\Ordering\Service\Shipment\ShipmentProcessorService;
 use App\Ordering\ServiceInterface\Payment\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
 use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -73,6 +77,42 @@ final class OrderCreationServiceTest extends TestCase
         self::assertSame('100.00', $events[0]->amount);
         self::assertSame('USD', $events[0]->currency);
         self::assertSame('pay-ref-100', $events[0]->externalRef);
+    }
+
+    public function testShipPreservesCarrierTrackingAndOrderEvent(): void
+    {
+        $order = OrderEntity::create('USD', '100.00');
+        $order->setStatus(OrderStatus::Placed);
+        $order->applyPayment('100.00', 'pay-ref-ship');
+        $order->releaseEvents();
+
+        $carrier = $this->createMock(CarrierInterface::class);
+        $carrier->expects(self::once())
+            ->method('createShipment')
+            ->with('UPS', $order->slug())
+            ->willReturn('1ZTRACK100');
+
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::exactly(2))
+            ->method('persist')
+            ->with(self::logicalOr(
+                self::isInstanceOf(OrderShipmentEntity::class),
+                self::identicalTo($order),
+            ));
+
+        $shipment = (new ShipmentProcessorService($carrier, $entityManager))->ship($order);
+
+        self::assertSame('UPS', $shipment->getCarrier());
+        self::assertSame('1ZTRACK100', $shipment->getTrackingCode());
+        self::assertSame('1ZTRACK100', $order->getTrackingCode());
+        self::assertSame('shipped', $order->getStatus());
+
+        $events = $order->releaseEvents();
+        self::assertCount(1, $events);
+        self::assertInstanceOf(OrderShippedEvent::class, $events[0]);
+        self::assertSame($order->slug(), $events[0]->orderId);
+        self::assertSame('UPS', $events[0]->carrier);
+        self::assertSame('1ZTRACK100', $events[0]->trackingCode);
     }
 
     public function testRejectsMissingCustomerIdentifier(): void
