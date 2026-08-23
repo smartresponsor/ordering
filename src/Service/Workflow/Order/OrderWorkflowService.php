@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace App\Ordering\Service\Workflow\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
 use App\Ordering\Service\Outbox\OutboxPublisher;
 use App\Ordering\Service\Payment\PaymentProcessorService;
 use App\Ordering\Service\Shipment\ShipmentProcessorService;
@@ -93,8 +92,14 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
 
     public function cancel(OrderEntity $order): void
     {
-        $this->apply($order, 'cancel');
-        $this->publish(OrderCancelledEvent::class, $order);
+        if (!$this->workflow->can($order, 'cancel')) {
+            throw new \LogicException("Transition 'cancel' not allowed");
+        }
+
+        $this->workflow->apply($order, 'cancel');
+        $order->cancel();
+        $this->em->persist($order);
+        $this->em->flush();
     }
 
     public function refund(OrderEntity $order): void

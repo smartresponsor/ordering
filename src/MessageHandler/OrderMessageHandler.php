@@ -41,7 +41,10 @@ final readonly class OrderMessageHandler
                 null,
                 $order->getTrackingCode(),
             ),
-            OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
+            OrderCancelledEvent::class => fn () => new OrderCancelledEvent(
+                $order->slug(),
+                $order->getVendorId(),
+            ),
             OrderRefundedEvent::class => fn () => new OrderRefundedEvent(
                 $order->slug(),
                 $order->refundedTotal(),

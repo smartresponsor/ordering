@@ -50,7 +50,10 @@ final readonly class OutboxProcessor
                     isset($payload['carrier']) ? (string) $payload['carrier'] : null,
                     isset($payload['trackingCode']) ? (string) $payload['trackingCode'] : null,
                 ),
-                OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderIdentifier)),
+                OrderCancelledEvent::class => new OrderCancelledEvent(
+                    $orderIdentifier,
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
                     $orderIdentifier,
                     (string) ($payload['amount'] ?? '0.00'),

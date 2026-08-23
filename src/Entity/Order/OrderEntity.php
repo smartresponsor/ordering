@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Ordering\Entity\Order;
 
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
@@ -316,6 +317,12 @@ class OrderEntity implements RecordsEventEntityInterface
     {
         $this->setStatus(OrderStatus::Placed);
         $this->recordEvent(new OrderPlacedEvent($this->slug));
+    }
+
+    public function cancel(): void
+    {
+        $this->setStatus(OrderStatus::Cancelled);
+        $this->recordEvent(new OrderCancelledEvent($this->slug, $this->vendorId));
     }
 
     public function setCurrency(string|\Stringable $currency): void
