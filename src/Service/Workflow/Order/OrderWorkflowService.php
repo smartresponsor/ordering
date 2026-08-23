@@ -11,7 +11,6 @@ namespace App\Ordering\Service\Workflow\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
-use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Service\Outbox\OutboxPublisher;
@@ -59,9 +58,12 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
 
     public function pay(OrderEntity $order, int $amount): void
     {
+        if (!$this->workflow->can($order, 'pay')) {
+            throw new \LogicException("Transition 'pay' not allowed");
+        }
+
+        $this->workflow->apply($order, 'pay');
         $this->payments->charge($order, $amount);
-        $this->apply($order, 'pay');
-        $this->outbox->publish(OrderPaidEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 

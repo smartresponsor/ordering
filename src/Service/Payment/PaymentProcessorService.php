@@ -17,11 +17,21 @@ final readonly class PaymentProcessorService
 
     public function charge(OrderEntity $order, int $amount, string $gatewayName = 'stripe'): OrderPaymentEntity
     {
-        $ref = $this->gateway->charge($order, $amount);
-        $p = new OrderPaymentEntity($order, $gatewayName, $amount);
-        $p->markPaid();
-        $this->em->persist($p);
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException('Payment amount must be greater than zero.');
+        }
 
-        return $p;
+        $externalRef = $this->gateway->charge($order, $amount);
+        $normalizedAmount = number_format($amount / 100, 2, '.', '');
+        $payment = $order->applyPayment(
+            $normalizedAmount,
+            $externalRef,
+            bccomp($normalizedAmount, $order->getGrandTotal(), 2) < 0,
+            $gatewayName,
+        );
+        $this->em->persist($payment);
+        $this->em->persist($order);
+
+        return $payment;
     }
 }
