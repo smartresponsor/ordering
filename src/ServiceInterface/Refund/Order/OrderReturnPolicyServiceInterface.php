@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Refund\Order;
+namespace App\Ordering\ServiceInterface\Refund\Order;
 
 interface OrderReturnPolicyServiceInterface extends ReturnPolicyServiceInterface
 {

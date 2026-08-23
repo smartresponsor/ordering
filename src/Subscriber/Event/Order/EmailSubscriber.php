@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -11,8 +11,8 @@ final class EmailSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'App\Event\Domain\Order\OrderPaidEvent' => 'onPaid',
-            'App\Event\Domain\Order\OrderShippedEvent' => 'onShipped',
+            'App\Ordering\Event\Domain\Order\OrderPaidEvent' => 'onPaid',
+            'App\Ordering\Event\Domain\Order\OrderShippedEvent' => 'onShipped',
         ];
     }
 

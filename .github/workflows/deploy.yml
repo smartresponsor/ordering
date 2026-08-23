@@ -2,7 +2,7 @@ name: Order — Full CI/CD (Helm + Docker + QA + Caching + Releases)
 
 on:
   push:
-    branches: [ main, develop, release/**, feature/** ]
+    branches: [ main, develop, release/** ]
     tags: [ 'v*' ]
   pull_request:
     branches: [ main, develop ]

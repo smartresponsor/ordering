@@ -1,4 +1,4 @@
-# Ordering runtime boot audit — wave 18
+# Ordering runtime boot audit вЂ” wave 18
 
 Wave 18 repairs the `problem / idempotency / outbox` cluster by adding missing runtime classes referenced from configuration and by normalizing malformed outbox service registration.
 
@@ -14,11 +14,11 @@ Resolved references include:
 - `App\Infrastructure\Order\Idempotency\IdempotencyRequestListener`
 - `App\Infrastructure\Order\Outbox\OutboxProcessor`
 - `App\Infrastructure\Order\Outbox\Command\OutboxRunCommand`
-- `App\Service\Order\Http\ViolationNormalizer`
-- `App\Service\Order\Http\ProblemFactory`
-- `App\Service\Order\Outbox\ExponentialBackoffStrategy`
-- `App\Service\Order\Outbox\DlqPublisher`
-- `App\Service\Order\Outbox\DlqService`
-- malformed config reference to `App\Command\Order\OutboxProcessCommand` removed by normalizing `config/services/order_outbox.yaml`
+- `App\Ordering\Service\Order\Http\ViolationNormalizer`
+- `App\Ordering\Service\Order\Http\ProblemFactory`
+- `App\Ordering\Service\Order\Outbox\ExponentialBackoffStrategy`
+- `App\Ordering\Service\Order\Outbox\DlqPublisher`
+- `App\Ordering\Service\Order\Outbox\DlqService`
+- malformed config reference to `App\Ordering\Command\Order\OutboxProcessCommand` removed by normalizing `config/services/order_outbox.yaml`
 
 All touched PHP files passed `php -l`.

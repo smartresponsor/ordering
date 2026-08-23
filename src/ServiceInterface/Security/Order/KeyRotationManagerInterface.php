@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Author: Oleksandr Tishchenko / Marketing America Corp <dev@smartresponsor.com>.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
 interface KeyRotationManagerInterface
 {

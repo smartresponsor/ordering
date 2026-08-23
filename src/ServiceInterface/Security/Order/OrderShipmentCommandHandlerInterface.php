@@ -8,12 +8,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\Message\Command\Order\OrderShipmentCommand;
-use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\Service\Shipment\Order\ShipmentService;
-use App\ServiceInterface\Shipment\CarrierInterface;
+use App\Ordering\Message\Command\Order\OrderShipmentCommand;
+use App\Ordering\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Ordering\Service\Shipment\Order\ShipmentService;
+use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
 
 interface OrderShipmentCommandHandlerInterface
 {

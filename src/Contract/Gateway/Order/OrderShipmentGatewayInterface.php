@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Contract\Gateway\Order;
+namespace App\Ordering\Contract\Gateway\Order;
 
 interface OrderShipmentGatewayInterface
 {

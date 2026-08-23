@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler\Order;
+namespace App\Ordering\Message\Handler\Order;
 
 final class RecalculateOrderPricingHandler
 {

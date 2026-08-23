@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\OpenApi;
+namespace App\Ordering\OpenApi;
 
 use ApiPlatform\OpenApi\OpenApi;
-use App\ServiceInterface\OpenApi\Order\OrderOpenApiFactoryInterface;
+use App\Ordering\ServiceInterface\OpenApi\Order\OrderOpenApiFactoryInterface;
 
 final readonly class OrderOpenApiFactory implements OrderOpenApiFactoryInterface
 {

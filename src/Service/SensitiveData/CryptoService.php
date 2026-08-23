@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\SensitiveData;
+namespace App\Ordering\Service\SensitiveData;
 
 final class CryptoService
 {

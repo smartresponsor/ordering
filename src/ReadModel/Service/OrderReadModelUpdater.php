@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Service;
+namespace App\Ordering\ReadModel\Service;
 
+use App\Ordering\ReadModel\Entity\OrderViewEntity;
+use App\Ordering\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use App\Ordering\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface;
 use App\Ordering\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface;
-use App\ReadModel\Entity\OrderViewEntity;
-use App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderReadModelUpdater implements OrderReadModelUpdaterInterface

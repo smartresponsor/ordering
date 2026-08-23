@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\State\Order\OrderStateMachine;
-use App\Webhook\NoopWebhookDispatcher;
+use App\Ordering\Service\State\Order\OrderStateMachine;
+use App\Ordering\Webhook\NoopWebhookDispatcher;
 use PHPUnit\Framework\TestCase;
 
 final class OrderStateMachineTest extends TestCase

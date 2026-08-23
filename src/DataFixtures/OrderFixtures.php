@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures;
+namespace App\Ordering\DataFixtures;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ValueObject\OrderStatus;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

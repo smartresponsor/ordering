@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Pricing\Order\CurrencyConversionService;
-use App\Service\Pricing\Order\DefaultPromotionStrategy;
-use App\Service\Pricing\Order\PriceCalculator;
-use App\Service\Pricing\Order\TaxationConfigLoader;
-use App\Service\Pricing\Order\VatExclusiveStrategy;
-use App\ValueObject\Pricing\Order\Currency;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\TaxRate;
+use App\Ordering\Service\Pricing\Order\CurrencyConversionService;
+use App\Ordering\Service\Pricing\Order\DefaultPromotionStrategy;
+use App\Ordering\Service\Pricing\Order\PriceCalculator;
+use App\Ordering\Service\Pricing\Order\TaxationConfigLoader;
+use App\Ordering\Service\Pricing\Order\VatExclusiveStrategy;
+use App\Ordering\ValueObject\Pricing\Order\Currency;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\TaxRate;
 use PHPUnit\Framework\TestCase;
 
 final class PriceCalculatorTest extends TestCase

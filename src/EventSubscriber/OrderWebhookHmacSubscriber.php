@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Ordering\EventSubscriber;
 
-use App\Service\Security\Order\OrderWebhookSignatureVerifier;
+use App\Ordering\Service\Security\Order\OrderWebhookSignatureVerifier;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 

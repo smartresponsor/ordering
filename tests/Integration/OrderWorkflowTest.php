@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

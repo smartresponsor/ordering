@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Lifecycle;
+namespace App\Ordering\Lifecycle;
 
 /**
  * Canonical lifecycle transition policy for this component.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ordering\RepositoryInterface\Order;
 
-use App\Entity\OrderShipmentView;
+use App\Ordering\Entity\OrderShipmentView;
 
 interface OrderShipmentViewRepositoryInterface
 {

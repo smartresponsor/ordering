@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Webhook\Order\WebhookSignerHmac;
-use App\Service\Webhook\Order\WebhookSignerRsa;
-use App\Service\Webhook\Order\WebhookVerifierHmac;
-use App\Service\Webhook\Order\WebhookVerifierRsa;
+use App\Ordering\Service\Webhook\Order\WebhookSignerHmac;
+use App\Ordering\Service\Webhook\Order\WebhookSignerRsa;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierRsa;
 
 $algorithm = $argv[1] ?? 'hmac';
 $payload = $argv[2] ?? '{"event":"order.created","id":"ord_demo_1"}';

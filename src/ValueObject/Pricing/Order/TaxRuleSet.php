@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ValueObject\Pricing\Order;
+namespace App\Ordering\ValueObject\Pricing\Order;
 
 final readonly class TaxRuleSet
 {

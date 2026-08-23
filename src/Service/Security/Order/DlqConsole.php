@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\DlqConsoleInterface;
-use App\ServiceInterface\Security\Order\DlqRepositoryInterface;
-use App\ValueObject\Archival\Order\AuditLog;
+use App\Ordering\ServiceInterface\Security\Order\DlqConsoleInterface;
+use App\Ordering\ServiceInterface\Security\Order\DlqRepositoryInterface;
+use App\Ordering\ValueObject\Archival\Order\AuditLog;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Workflow\Order;
+namespace App\Ordering\ServiceInterface\Workflow\Order;
 
-use App\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 
 interface OrderPaidHandlerInterface
 {

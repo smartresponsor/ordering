@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 
-interface TransactionalEventPublisherInterface extends \App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface
+interface TransactionalEventPublisherInterface extends \App\Ordering\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface
 {
     public function relay(OrderOutboxMessageEntity $m): void;
 }

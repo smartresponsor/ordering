@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ApiResource\View\Order\OrderResource;
+use App\Ordering\ApiResource\View\Order\OrderResource;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Security\Order\OrderResourceToEntityTransformerInterface;
+use App\Ordering\ServiceInterface\Security\Order\OrderResourceToEntityTransformerInterface;
 
 final class OrderResourceToEntityTransformer implements OrderResourceToEntityTransformerInterface
 {

@@ -3,9 +3,9 @@
 
 declare(strict_types=1);
 
-use App\Service\Security\Order\DlqConsole;
-use App\Service\Security\Order\FileDlqRepository;
-use App\ValueObject\Archival\Order\AuditLog;
+use App\Ordering\Service\Security\Order\DlqConsole;
+use App\Ordering\Service\Security\Order\FileDlqRepository;
+use App\Ordering\ValueObject\Archival\Order\AuditLog;
 
 require __DIR__ . '/../vendor/autoload.php';
 

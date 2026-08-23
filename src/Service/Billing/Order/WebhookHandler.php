@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Billing\Order;
+namespace App\Ordering\Service\Billing\Order;
 
-use App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
-use App\ServiceInterface\Webhook\Order\OrderWebhookHandlerInterface;
-use App\ServiceInterface\Webhook\Order\WebhookHandlerInterface;
+use App\Ordering\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\OrderWebhookHandlerInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\WebhookHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final readonly class WebhookHandler implements WebhookHandlerInterface, OrderWebhookHandlerInterface

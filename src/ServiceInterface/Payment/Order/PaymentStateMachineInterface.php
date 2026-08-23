@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Payment\Order;
+namespace App\Ordering\ServiceInterface\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderPaymentEntity;
 

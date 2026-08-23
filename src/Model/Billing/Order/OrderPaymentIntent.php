@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Billing\Order;
+namespace App\Ordering\Model\Billing\Order;
 
 final readonly class OrderPaymentIntent
 {

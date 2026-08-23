@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures;
+namespace App\Ordering\DataFixtures;
 
-use App\Service\Demo\OrderDemoDataService;
+use App\Ordering\Service\Demo\OrderDemoDataService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

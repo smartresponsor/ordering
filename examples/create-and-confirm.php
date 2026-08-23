@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Service\Transport\Order\Client;
-use App\Support\Security\Order\Idempotency;
+use App\Ordering\Service\Transport\Order\Client;
+use App\Ordering\Support\Security\Order\Idempotency;
 
 /**
  * Create an order and confirm it through the current transport client.

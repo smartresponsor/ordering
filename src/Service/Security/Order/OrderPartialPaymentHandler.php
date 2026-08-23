@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Command\Order\OrderPartialPaymentCommand;
 use App\Model\Order\OrderPartialPayment;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\ServiceInterface\Security\Order\OrderPartialPaymentHandlerInterface;
+use App\Ordering\Message\Command\Order\OrderPartialPaymentCommand;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialPaymentHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

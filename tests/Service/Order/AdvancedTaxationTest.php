@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Tests\Service\Order;
 
-use App\Service\Pricing\Order\FlatTaxStrategy;
-use App\Service\Pricing\Order\ProgressiveTaxStrategy;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Pricing\Order\FlatTaxStrategy;
+use App\Ordering\Service\Pricing\Order\ProgressiveTaxStrategy;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use PHPUnit\Framework\TestCase;
 
 final class AdvancedTaxationTest extends TestCase

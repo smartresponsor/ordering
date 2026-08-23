@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
 interface KernelInterface
 {

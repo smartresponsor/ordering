@@ -7,13 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Legacy\Order\OrderPartialPaymentCommand;
-use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\Service\Payment\Order\PartialPaymentService;
-use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
-use App\ServiceInterface\Security\Order\OrderPartialPaymentCommandHandlerInterface;
+use App\Ordering\Message\Legacy\Order\OrderPartialPaymentCommand;
+use App\Ordering\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Ordering\Service\Payment\Order\PartialPaymentService;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialPaymentCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

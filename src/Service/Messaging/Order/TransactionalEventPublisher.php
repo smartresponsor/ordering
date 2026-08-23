@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Messaging\Order;
+namespace App\Ordering\Service\Messaging\Order;
 
-use App\Message\Domain\Order\OrderDomainMessage;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Message\Domain\Order\OrderDomainMessage;
 use App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface;
-use App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
+use App\Ordering\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -27,10 +27,10 @@ final readonly class TransactionalEventPublisher implements TransactionalEventPu
     public function publish(string $topic, array $payload): string
     {
         $messageId = Uuid::v7()->toRfc4122();
-        // Пишем в outbox (транзакция с UoW)
+        // РџРёС€РµРј РІ outbox (С‚СЂР°РЅР·Р°РєС†РёСЏ СЃ UoW)
         $this->outbox->add(new OrderOutboxMessageEntity($messageId, $topic, $payload));
 
-        // Асинхронная публикация произойдёт через OutboxRelay (ниже)
+        // РђСЃРёРЅС…СЂРѕРЅРЅР°СЏ РїСѓР±Р»РёРєР°С†РёСЏ РїСЂРѕРёР·РѕР№РґС‘С‚ С‡РµСЂРµР· OutboxRelay (РЅРёР¶Рµ)
         return $messageId;
     }
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Test\Smoke;
 
-use App\Service\Security\Order\HttpIdempotencyGuard;
-use App\Service\Security\Order\IdempotencyKeyPolicy;
-use App\Service\Security\Order\MemoryIdempotencyStore;
+use App\Ordering\Service\Security\Order\HttpIdempotencyGuard;
+use App\Ordering\Service\Security\Order\IdempotencyKeyPolicy;
+use App\Ordering\Service\Security\Order\MemoryIdempotencyStore;
 use PHPUnit\Framework\TestCase;
 
 /**

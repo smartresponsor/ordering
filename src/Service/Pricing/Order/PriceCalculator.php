@@ -7,19 +7,19 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
-use App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
-use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
-use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
-use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
-use App\ValueObject\Pricing\Order\Currency;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\Taxation;
-use App\ValueObject\Pricing\Order\TaxRate;
+use App\Ordering\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Currency;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Taxation;
+use App\Ordering\ValueObject\Pricing\Order\TaxRate;
 
 readonly class PriceCalculator implements PriceCalculatorInterface
 {

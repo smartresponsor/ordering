@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp
  */
 
-namespace App\ServiceInterface\Webhook\Order;
+namespace App\Ordering\ServiceInterface\Webhook\Order;
 
 interface PaymentWebhookListenerInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Security\Order;
+namespace App\Ordering\Support\Security\Order;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler\Order;
+namespace App\Ordering\Message\Handler\Order;
 
-use App\Message\Command\Order\OrderPartialRefundCommand;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Message\Command\Order\OrderPartialRefundCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -27,7 +27,7 @@ final readonly class OrderPartialRefundHandler
         $order->refundPartial($cmd->amount, $cmd->reason, true);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // outbox write (упрощённо)
+            // outbox write (СѓРїСЂРѕС‰С‘РЅРЅРѕ)
         }
 
         $this->em->flush();

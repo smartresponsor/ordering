@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Ordering\EventSubscriber;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

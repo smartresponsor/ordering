@@ -3,8 +3,8 @@ config_tools:
     tool_code: ordering.rate_limits
     label: Ordering Rate Limits
     description: Safe runtime limits for ordering API read/write traffic.
-    form_class: App\Form\Config\OrderingRateLimitsConfigFormType
-    service_class: App\Service\Config\OrderingRateLimitsConfigService
+    form_class: App\Ordering\Form\Config\OrderingRateLimitsConfigFormType
+    service_class: App\Ordering\Service\Config\OrderingRateLimitsConfigService
     required_permission: administration.config.update
     editable_fields:
       - apiWriteLimit

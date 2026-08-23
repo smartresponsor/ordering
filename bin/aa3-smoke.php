@@ -5,15 +5,15 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Transport\Order\DummyAdapter;
-use App\Service\Transport\Order\ProviderRouter;
-use App\Service\Transport\Order\StripeAdapter;
-use App\ValueObject\Routing\Order\CanarySwitch;
-use App\ValueObject\Routing\Order\CostPolicy;
-use App\ValueObject\Routing\Order\HealthProbe;
-use App\ValueObject\Routing\Order\ProviderPolicy;
-use App\ValueObject\Routing\Order\QuotaPolicy;
-use App\ValueObject\Routing\Order\RouteContext;
+use App\Ordering\Service\Transport\Order\DummyAdapter;
+use App\Ordering\Service\Transport\Order\ProviderRouter;
+use App\Ordering\Service\Transport\Order\StripeAdapter;
+use App\Ordering\ValueObject\Routing\Order\CanarySwitch;
+use App\Ordering\ValueObject\Routing\Order\CostPolicy;
+use App\Ordering\ValueObject\Routing\Order\HealthProbe;
+use App\Ordering\ValueObject\Routing\Order\ProviderPolicy;
+use App\Ordering\ValueObject\Routing\Order\QuotaPolicy;
+use App\Ordering\ValueObject\Routing\Order\RouteContext;
 
 $router = new ProviderRouter(
     [

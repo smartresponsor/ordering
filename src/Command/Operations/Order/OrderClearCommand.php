@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Operations\Order;
+namespace App\Ordering\Command\Operations\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;

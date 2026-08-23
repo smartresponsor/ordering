@@ -1,4 +1,5 @@
 imports:
+    - { resource: 'component/services.yaml' }
     - { resource: '../src/Resources/config/services.php' }
     - { resource: 'services.security.yaml' }
     - { resource: '../../Cruding/config/services.yaml' }
@@ -143,10 +144,10 @@ parameters:
         vendor: 'App\Vendoring\Entity\Vendor\VendorEntity'
         attachment: 'App\Attaching\Entity\Attachment\Attachment'
         message: 'App\Messaging\Entity\Message\MessageEntity'
-        order: 'App\Entity\Order\OrderEntity'
+        order: 'App\Ordering\Entity\Order\OrderEntity'
         payment: 'App\Paying\Entity\PaymentEntity'
-        product: 'App\Entity\Product\CommerceProductEntity'
-        project: 'App\Entity\Project\CommerceProjectEntity'
+        product: 'App\Ordering\Entity\Product\CommerceProductEntity'
+        project: 'App\Ordering\Entity\Project\CommerceProjectEntity'
         category: 'App\Cataloging\Entity\Catalog\CatalogCategoryEntity'
     cruding.form_type_map: []
     viewing.enabled: true
@@ -191,28 +192,25 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\Controller\OrderController:
+    App\Ordering\Controller\OrderManagementController:
         tags: [ 'controller.service_arguments' ]
 
-    App\Controller\OrderManagementController:
+    App\Ordering\Controller\OrderApiController:
         tags: [ 'controller.service_arguments' ]
 
-    App\Controller\OrderApiController:
+    App\Ordering\Controller\Webhook\PaymentWebhookController:
         tags: [ 'controller.service_arguments' ]
 
-    App\Controller\Webhook\PaymentWebhookController:
-        tags: [ 'controller.service_arguments' ]
-
-    App\Controller\Monitoring\:
+    App\Ordering\Controller\Monitoring\:
         resource: '../src/Controller/Monitoring/'
         tags: [ 'controller.service_arguments' ]
 
     Psr\Container\ContainerInterface: '@service_container'
 
-    App\Form\:
+    App\Ordering\Form\:
         resource: '../src/Form/'
 
-    App\Service\:
+    App\Ordering\Service\:
         resource: '../src/Service/'
         exclude:
             - '../src/Service/Tx/'
@@ -231,131 +229,143 @@ services:
             - '../src/Service/Security/Order/*Message.php'
             - '../src/Service/Security/Order/*View.php'
 
-    App\EventListener\:
+    App\Ordering\Service\Config\OrderingRateLimitsConfigService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+            $applyService: '@App\Administering\Service\Config\AdministrationConfigApplyService'
+            $fileWriter: '@App\Administering\Service\Config\AdministrationConfigFileWriterService'
+        tags: [ 'administering.config_tool' ]
+
+    App\Ordering\EventListener\:
         resource: '../src/EventListener/'
         exclude:
             - '../src/EventListener/Http/'
 
-    App\EventSubscriber\:
+    App\Ordering\EventSubscriber\:
         resource: '../src/EventSubscriber/'
 
-    App\Subscriber\:
+    App\Ordering\Subscriber\:
         resource: '../src/Subscriber/'
 
-    App\Validator\:
+    App\Ordering\Validator\:
         resource: '../src/Validator/'
 
-    App\Processor\:
+    App\Ordering\Processor\:
         resource: '../src/Processor/'
 
-    App\Repository\:
+    App\Ordering\Repository\:
         resource: '../src/Repository/'
 
-    App\Repository\Order\OrderRepository:
+    App\Ordering\Repository\Order\OrderRepository:
         tags: [ 'doctrine.repository_service' ]
 
-    App\Webhook\:
+    App\Ordering\Webhook\:
         resource: '../src/Webhook/'
 
-    App\ReadModel\Service\:
+    App\Ordering\ReadModel\Service\:
         resource: '../src/ReadModel/Service/'
 
-    App\ReadModel\Repository\:
+    App\Ordering\ReadModel\Repository\:
         resource: '../src/ReadModel/Repository/'
 
-    App\Infrastructure\Monitoring\MetricsCollector: ~
+    App\Ordering\Infrastructure\Monitoring\MetricsCollector: ~
 
-    App\Service\Analytics\Order\BigQueryExportSink:
+    App\Ordering\Service\Analytics\Order\BigQueryExportSink:
         arguments:
             $targetPath: '%kernel.project_dir%/var/bigquery'
 
-    App\ServiceInterface\Analytics\Order\ExportSinkInterface: '@App\Service\Analytics\Order\BigQueryExportSink'
-    App\ServiceInterface\Analytics\Order\BigQueryExportSinkInterface: '@App\Service\Analytics\Order\BigQueryExportSink'
-    App\Service\Analytics\Order\ClickHouseExportSink:
+    App\Ordering\ServiceInterface\Analytics\Order\ExportSinkInterface: '@App\Ordering\Service\Analytics\Order\BigQueryExportSink'
+    App\Ordering\ServiceInterface\Analytics\Order\BigQueryExportSinkInterface: '@App\Ordering\Service\Analytics\Order\BigQueryExportSink'
+    App\Ordering\Service\Analytics\Order\ClickHouseExportSink:
         arguments:
             $endpoint: 'http://127.0.0.1:8123'
             $table: 'order_metrics_aggregate_view'
 
-    App\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface: '@App\Service\Analytics\Order\ClickHouseExportSink'
-    App\Service\SensitiveData\MaskingService:
+    App\Ordering\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface: '@App\Ordering\Service\Analytics\Order\ClickHouseExportSink'
+    App\Ordering\Service\SensitiveData\MaskingService:
         arguments:
             $maskKeys: ['email', 'phone', 'card_number', 'password', 'plainPassword']
         public: true
-    App\Service\Security\Order\CryptoService:
+    App\Ordering\Service\Security\Order\CryptoService:
         arguments:
             $key: '%kernel.secret%'
 
-    App\ServiceInterface\Security\Order\CryptoServiceInterface: '@App\Service\Security\Order\CryptoService'
-    App\Service\Security\Order\FileDlqRepository:
+    App\Ordering\ServiceInterface\Security\Order\CryptoServiceInterface: '@App\Ordering\Service\Security\Order\CryptoService'
+    App\Ordering\Service\Security\Order\FileDlqRepository:
         arguments:
             $file: '%kernel.project_dir%/var/dlq.ndjson'
 
-    App\ServiceInterface\Security\Order\DlqRepositoryInterface: '@App\Service\Security\Order\FileDlqRepository'
-    App\Service\Security\Order\FileJwkRepository:
+    App\Ordering\ServiceInterface\Security\Order\DlqRepositoryInterface: '@App\Ordering\Service\Security\Order\FileDlqRepository'
+    App\Ordering\Service\Security\Order\FileJwkRepository:
         arguments:
             $dir: '%kernel.project_dir%/var/jwks'
 
-    App\ServiceInterface\Security\Order\JwkRepositoryInterface: '@App\Service\Security\Order\FileJwkRepository'
-    App\ServiceInterface\Security\Order\IdempotencyStoreInterface: '@App\Service\Security\Order\MemoryIdempotencyStore'
-    App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface: '@App\Webhook\NoopWebhookDispatcher'
-    App\ValueObject\Archival\Order\AuditLog:
+    App\Ordering\ServiceInterface\Security\Order\JwkRepositoryInterface: '@App\Ordering\Service\Security\Order\FileJwkRepository'
+    App\Ordering\ServiceInterface\Security\Order\IdempotencyStoreInterface: '@App\Ordering\Service\Security\Order\MemoryIdempotencyStore'
+    App\Ordering\ServiceInterface\Webhook\Order\WebhookDispatcherInterface: '@App\Ordering\Webhook\NoopWebhookDispatcher'
+    App\Ordering\ValueObject\Archival\Order\AuditLog:
         arguments:
             $file: '%kernel.project_dir%/var/dlq-audit.ndjson'
 
-    App\ServiceInterface\Security\Order\DlqConsoleInterface: '@App\Service\Security\Order\DlqConsole'
+    App\Ordering\ServiceInterface\Security\Order\DlqConsoleInterface: '@App\Ordering\Service\Security\Order\DlqConsole'
 
-    App\Command\OrderDemoLoadCommand: ~
-    App\Command\OrderDemoResetCommand: ~
-    App\Command\OrderDiagnosticsCommand: ~
-    App\Command\OrderReportCommand: ~
+    App\Ordering\Command\OrderDemoLoadCommand: ~
+    App\Ordering\Command\OrderDemoResetCommand: ~
+    App\Ordering\Command\OrderDiagnosticsCommand: ~
+    App\Ordering\Command\OrderReportCommand: ~
 
-    App\Command\Outbox\:
+    App\Ordering\Command\Outbox\:
         resource: '../src/Command/Outbox/'
 
-    App\Command\Messenger\:
+    App\Ordering\Command\Messenger\:
         resource: '../src/Command/Messenger/'
 
-    App\Command\Operations\Order\:
+    App\Ordering\Command\Operations\Order\:
         resource: '../src/Command/Operations/Order/'
 
-    App\DataFixtures\OrderDemoFixtures: ~
+    App\Ordering\DataFixtures\OrderDemoFixtures: ~
 
     Symfony\Component\Messenger\Transport\TransportInterface: '@messenger.transport.async'
     Symfony\Component\Messenger\Transport\Sender\SenderInterface: '@messenger.transport.async'
     Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface: '@messenger.transport.failed'
     Symfony\Component\Workflow\WorkflowInterface: '@state_machine.order'
     Symfony\Component\RateLimiter\RateLimiterFactory: '@limiter.order_api_write'
-    App\RateLimiter\TenantKeyResolver: ~
-    App\Saga\OrderSaga: '@App\Service\Workflow\Order\OrderSaga'
-    App\Contract\Gateway\Order\OrderPaymentGatewayInterface: '@App\Service\Payment\Order\StripeGateway'
-    App\Contract\Gateway\Order\OrderShipmentGatewayInterface: '@App\Service\Shipment\Order\DHLGateway'
-    App\Contract\Gateway\Order\OrderTaxationGatewayInterface: '@App\Service\Pricing\Order\EUTaxStrategy'
-    App\ServiceInterface\Pricing\Order\PriceCalculatorInterface: '@App\Service\Pricing\Order\PriceCalculator'
-    App\ServiceInterface\Pricing\Order\OrderPricingInterface: '@App\Service\Pricing\Order\OrderPricingService'
-    App\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface: '@App\Service\Pricing\Order\DefaultPromotionStrategy'
-    App\ServiceInterface\Pricing\Order\TaxationStrategyInterface: '@App\Service\Pricing\Order\VatExclusiveStrategy'
-    App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface: '@App\Service\Pricing\Order\TaxationConfigLoader'
-    App\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface: '@App\Service\Pricing\Order\CurrencyConversionService'
+    App\Ordering\RateLimiter\TenantKeyResolver: ~
+    App\Ordering\Saga\OrderSaga: '@App\Ordering\Service\Workflow\Order\OrderSaga'
+    App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface: '@App\Ordering\Service\Payment\Order\StripeGateway'
+    App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface: '@App\Ordering\Service\Shipment\Order\DHLGateway'
+    App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface: '@App\Ordering\Service\Pricing\Order\EUTaxStrategy'
+    App\Ordering\ServiceInterface\Order\OrderCreationServiceInterface: '@App\Ordering\Service\Order\OrderCreationService'
+    App\Ordering\ServiceInterface\Pricing\Order\PriceCalculatorInterface: '@App\Ordering\Service\Pricing\Order\PriceCalculator'
+    App\Ordering\ServiceInterface\Pricing\Order\OrderPricingInterface: '@App\Ordering\Service\Pricing\Order\OrderPricingService'
+    App\Ordering\ServiceInterface\Pricing\Order\DefaultPromotionStrategyInterface: '@App\Ordering\Service\Pricing\Order\DefaultPromotionStrategy'
+    App\Ordering\ServiceInterface\Pricing\Order\TaxationStrategyInterface: '@App\Ordering\Service\Pricing\Order\VatExclusiveStrategy'
+    App\Ordering\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface: '@App\Ordering\Service\Pricing\Order\TaxationConfigLoader'
+    App\Ordering\ServiceInterface\Pricing\Order\CurrencyConversionServiceInterface: '@App\Ordering\Service\Pricing\Order\CurrencyConversionService'
 
-    App\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Repository\Order\OrderPaymentTransactionRepository'
-    App\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Repository\Order\OrderRefundTransactionRepository'
-    App\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Repository\Order\OrderEventRepository'
-    App\RepositoryInterface\Order\OutboxRepositoryInterface: '@App\Repository\Order\OutboxRepository'
-    App\RepositoryInterface\Order\OrderStockReservationRepositoryInterface: '@App\Repository\Order\OrderStockReservationRepository'
-    App\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Repository\Order\OrderShipmentViewRepository'
+    App\Ordering\RepositoryInterface\Order\OrderPaymentTransactionRepositoryInterface: '@App\Ordering\Repository\Order\OrderPaymentTransactionRepository'
+    App\Ordering\RepositoryInterface\Order\OrderRefundTransactionRepositoryInterface: '@App\Ordering\Repository\Order\OrderRefundTransactionRepository'
+    App\Ordering\RepositoryInterface\Order\OrderEventRepositoryInterface: '@App\Ordering\Repository\Order\OrderEventRepository'
+    App\Ordering\RepositoryInterface\Order\OutboxRepositoryInterface: '@App\Ordering\Repository\Order\OutboxRepository'
+    App\Ordering\RepositoryInterface\Order\OrderStockReservationRepositoryInterface: '@App\Ordering\Repository\Order\OrderStockReservationRepository'
+    App\Ordering\RepositoryInterface\Order\OrderShipmentViewRepositoryInterface: '@App\Ordering\Repository\Order\OrderShipmentViewRepository'
 
-    App\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Service\Outbox\Order\OutboxRelay'
-    App\ServiceInterface\Outbox\Order\DlqServiceInterface: '@App\Service\Outbox\Order\DlqService'
-    App\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface: '@App\Service\Messaging\Order\TransactionalEventPublisher'
-    App\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Service\Shipment\Order\OrderShipmentProjectionService'
-    App\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Service\Shipment\Order\CarrierPollingService'
-    App\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
-    App\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface: '@App\Service\Refund\Order\RefundEligibilityService'
-    App\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Service\Refund\Order\OrderServiceHook'
-    App\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\ReadModel\Service\OrderReadModelUpdater'
-    App\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Service\Archival\Order\OrderAuditTrailBuilder'
-    App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface: '@App\Service\Security\Order\IdempotencyGuard'
-    App\Service\Workflow\Order\OrderOrchestrator:
+    App\Ordering\ServiceInterface\Outbox\Order\OutboxRelayInterface: '@App\Ordering\Service\Outbox\Order\OutboxRelay'
+    App\Ordering\ServiceInterface\Outbox\Order\DlqServiceInterface: '@App\Ordering\Service\Outbox\Order\DlqService'
+    App\Ordering\ServiceInterface\Messaging\Order\TransactionalEventPublisherInterface: '@App\Ordering\Service\Messaging\Order\TransactionalEventPublisher'
+    App\Ordering\ServiceInterface\Shipment\Order\OrderShipmentProjectionServiceInterface: '@App\Ordering\Service\Shipment\Order\OrderShipmentProjectionService'
+    App\Ordering\Service\Shipment\Order\CarrierPollingService:
+        arguments:
+            $carriers: !tagged_iterator order.shipment.carrier
+
+    App\Ordering\ServiceInterface\Shipment\Order\CarrierPollingServiceInterface: '@App\Ordering\Service\Shipment\Order\CarrierPollingService'
+    App\Ordering\ServiceInterface\Refund\Order\RefundEligibilityServiceInterface: '@App\Ordering\Service\Refund\Order\RefundEligibilityService'
+    App\Ordering\ServiceInterface\Refund\Order\OrderRefundEligibilityServiceInterface: '@App\Ordering\Service\Refund\Order\RefundEligibilityService'
+    App\Ordering\ServiceInterface\Refund\Order\OrderServiceHookInterface: '@App\Ordering\Service\Refund\Order\OrderServiceHook'
+    App\Ordering\ReadModel\ServiceInterface\Order\OrderReadModelUpdaterInterface: '@App\Ordering\ReadModel\Service\OrderReadModelUpdater'
+    App\Ordering\ServiceInterface\Archival\Order\OrderAuditTrailBuilderInterface: '@App\Ordering\Service\Archival\Order\OrderAuditTrailBuilder'
+    App\Ordering\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface: '@App\Ordering\Service\Security\Order\IdempotencyGuard'
+    App\Ordering\Service\Workflow\Order\OrderOrchestrator:
         public: true
     Doctrine\ORM\EntityManagerInterface:
         public: true
@@ -373,7 +383,7 @@ when@test:
             autowire: true
             autoconfigure: true
 
-        App\Service\:
+        App\Ordering\Service\:
             resource: '../src/Service/'
             public: true
             exclude:
@@ -393,80 +403,80 @@ when@test:
                 - '../src/Service/Security/Order/*Message.php'
                 - '../src/Service/Security/Order/*View.php'
 
-        App\EventListener\:
+        App\Ordering\EventListener\:
             resource: '../src/EventListener/'
             public: true
             exclude:
                 - '../src/EventListener/Http/'
 
-        App\EventSubscriber\:
+        App\Ordering\EventSubscriber\:
             resource: '../src/EventSubscriber/'
             public: true
 
-        App\Subscriber\:
+        App\Ordering\Subscriber\:
             resource: '../src/Subscriber/'
             public: true
 
-        App\Validator\:
+        App\Ordering\Validator\:
             resource: '../src/Validator/'
             public: true
 
-        App\Processor\:
+        App\Ordering\Processor\:
             resource: '../src/Processor/'
             public: true
 
-        App\Repository\:
+        App\Ordering\Repository\:
             resource: '../src/Repository/'
             public: true
 
-        App\Webhook\:
+        App\Ordering\Webhook\:
             resource: '../src/Webhook/'
             public: true
 
-        App\Service\SensitiveData\MaskingService:
+        App\Ordering\Service\SensitiveData\MaskingService:
             arguments:
                 $maskKeys: ['email', 'phone', 'card_number', 'password', 'plainPassword']
             public: true
 
-        App\ReadModel\Service\:
+        App\Ordering\ReadModel\Service\:
             resource: '../src/ReadModel/Service/'
             public: true
 
-        App\ReadModel\Repository\:
+        App\Ordering\ReadModel\Repository\:
             resource: '../src/ReadModel/Repository/'
             public: true
 
-        App\Command\:
+        App\Ordering\Command\:
             resource: '../src/Command/'
             public: true
 
-        App\Service\Analytics\Order\BigQueryExportSink:
+        App\Ordering\Service\Analytics\Order\BigQueryExportSink:
             arguments:
                 $targetPath: '%kernel.project_dir%/var/bigquery'
             public: true
 
-        App\Service\Analytics\Order\ClickHouseExportSink:
+        App\Ordering\Service\Analytics\Order\ClickHouseExportSink:
             arguments:
                 $endpoint: 'http://127.0.0.1:8123'
                 $table: 'order_metrics_aggregate_view'
             public: true
 
-        App\Service\Security\Order\CryptoService:
+        App\Ordering\Service\Security\Order\CryptoService:
             arguments:
                 $key: '%kernel.secret%'
             public: true
 
-        App\Service\Security\Order\FileDlqRepository:
+        App\Ordering\Service\Security\Order\FileDlqRepository:
             arguments:
                 $file: '%kernel.project_dir%/var/dlq.ndjson'
             public: true
 
-        App\Service\Security\Order\FileJwkRepository:
+        App\Ordering\Service\Security\Order\FileJwkRepository:
             arguments:
                 $dir: '%kernel.project_dir%/var/jwks'
             public: true
 
-        App\ValueObject\Archival\Order\AuditLog:
+        App\Ordering\ValueObject\Archival\Order\AuditLog:
             arguments:
                 $file: '%kernel.project_dir%/var/dlq-audit.ndjson'
             public: true

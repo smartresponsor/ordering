@@ -1,8 +1,6 @@
 name: CI - Tests & Analysis (with Alerts)
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   build-test:
@@ -13,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
-        with: { php-version: ${ { matrix.php } }, extensions: amqp, intl, pdo_pgsql, tools: composer:v2 }
+        with: { php-version: '${{ matrix.php }}', extensions: amqp, intl, pdo_pgsql, tools: composer:v2 }
       - name: Install deps
         run: composer install --no-interaction --no-progress
       - name: Run tests & analysis

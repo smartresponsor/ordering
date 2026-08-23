@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\Entity\OrderRefundLedger;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Entity\OrderRefundLedger;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

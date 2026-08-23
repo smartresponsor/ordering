@@ -66,6 +66,9 @@ Thumbs.db
 /tmp/
 /cache/
 /artifacts/
+/.codebase-memory/
+/tool/
+/var/
 
 # ──────────────────────────────────────────────
 #  🧰 Temporary & Backup files

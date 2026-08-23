@@ -7,18 +7,18 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Entity\OrderRefundLedger;
-use App\Event\Domain\Order\OrderFullyRefundedEvent;
-use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
 use App\Ordering\Entity\Order\OrderDisputeEntity;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderIdempotencyKeyEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\ServiceInterface\Security\Order\OrderServiceInterface;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\RefundAmount;
+use App\Ordering\Entity\OrderRefundLedger;
+use App\Ordering\Event\Domain\Order\OrderFullyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\ServiceInterface\Security\Order\OrderServiceInterface;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\RefundAmount;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

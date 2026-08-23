@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Outbox;
+namespace App\Ordering\Service\Outbox;
 
-use App\Message\Outbox\OrderOutboxDispatchedMessage;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Message\Outbox\OrderOutboxDispatchedMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;

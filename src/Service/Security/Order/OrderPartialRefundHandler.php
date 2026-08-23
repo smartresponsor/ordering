@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Command\Order\OrderPartialRefundCommand;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Security\Order\OrderPartialRefundHandlerInterface;
+use App\Ordering\Message\Command\Order\OrderPartialRefundCommand;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialRefundHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -33,7 +33,7 @@ final readonly class OrderPartialRefundHandler implements OrderPartialRefundHand
         $order->refundPartial($cmd->amount, $cmd->reason, true);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // outbox write (упрощённо)
+            // outbox write (СѓРїСЂРѕС‰С‘РЅРЅРѕ)
         }
 
         $this->em->flush();

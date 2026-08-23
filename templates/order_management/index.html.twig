@@ -3,6 +3,13 @@
 {% block title %}Order Management{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="status">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+
     <div class="row g-4">
         <div class="col-12 col-xl-4">
             <div class="card shadow-sm">
@@ -10,11 +17,11 @@
                     <h1 class="h5 mb-0">Create demo order</h1>
                 </div>
                 <div class="card-body">
-                    {{ form_start(create_form) }}
-                    <div class="mb-3">{{ form_row(create_form.currency) }}</div>
-                    <div class="mb-3">{{ form_row(create_form.grandTotal) }}</div>
-                    {{ form_row(create_form.submit, { attr: { class: 'btn btn-primary' } }) }}
-                    {{ form_end(create_form) }}
+                    {{ form_start(createForm) }}
+                    <div class="mb-3">{{ form_row(createForm.currency) }}</div>
+                    <div class="mb-3">{{ form_row(createForm.grandTotal) }}</div>
+                    {{ form_row(createForm.submit, { attr: { class: 'btn btn-primary' } }) }}
+                    {{ form_end(createForm) }}
                 </div>
             </div>
         </div>
@@ -48,25 +55,25 @@
                                         </div>
                                         <div class="row g-2 flex-grow-1">
                                             <div class="col-12 col-md-4">
-                                                {{ form_start(payment_forms[order.id]) }}
-                                                {{ form_row(payment_forms[order.id].amount) }}
-                                                {{ form_row(payment_forms[order.id].externalRef) }}
-                                                {{ form_row(payment_forms[order.id].submit, { attr: { class: 'btn btn-outline-success w-100' } }) }}
-                                                {{ form_end(payment_forms[order.id]) }}
+                                                {{ form_start(paymentForms[order.slug]) }}
+                                                {{ form_row(paymentForms[order.slug].amount) }}
+                                                {{ form_row(paymentForms[order.slug].externalRef) }}
+                                                {{ form_row(paymentForms[order.slug].submit, { attr: { class: 'btn btn-outline-success w-100' } }) }}
+                                                {{ form_end(paymentForms[order.slug]) }}
                                             </div>
                                             <div class="col-12 col-md-4">
-                                                {{ form_start(shipment_forms[order.id]) }}
-                                                {{ form_row(shipment_forms[order.id].carrier) }}
-                                                {{ form_row(shipment_forms[order.id].note) }}
-                                                {{ form_row(shipment_forms[order.id].submit, { attr: { class: 'btn btn-outline-primary w-100' } }) }}
-                                                {{ form_end(shipment_forms[order.id]) }}
+                                                {{ form_start(shipmentForms[order.slug]) }}
+                                                {{ form_row(shipmentForms[order.slug].carrier) }}
+                                                {{ form_row(shipmentForms[order.slug].note) }}
+                                                {{ form_row(shipmentForms[order.slug].submit, { attr: { class: 'btn btn-outline-primary w-100' } }) }}
+                                                {{ form_end(shipmentForms[order.slug]) }}
                                             </div>
                                             <div class="col-12 col-md-4">
-                                                {{ form_start(refund_forms[order.id]) }}
-                                                {{ form_row(refund_forms[order.id].amount) }}
-                                                {{ form_row(refund_forms[order.id].reason) }}
-                                                {{ form_row(refund_forms[order.id].submit, { attr: { class: 'btn btn-outline-danger w-100' } }) }}
-                                                {{ form_end(refund_forms[order.id]) }}
+                                                {{ form_start(refundForms[order.slug]) }}
+                                                {{ form_row(refundForms[order.slug].amount) }}
+                                                {{ form_row(refundForms[order.slug].reason) }}
+                                                {{ form_row(refundForms[order.slug].submit, { attr: { class: 'btn btn-outline-danger w-100' } }) }}
+                                                {{ form_end(refundForms[order.slug]) }}
                                             </div>
                                         </div>
                                     </div>

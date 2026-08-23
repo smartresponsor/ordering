@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Ordering\Command;
 
-use App\Service\Demo\OrderDemoDataService;
+use App\Ordering\Service\Demo\OrderDemoDataService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

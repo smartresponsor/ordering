@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Dispute\Order;
+namespace App\Ordering\ServiceInterface\Dispute\Order;
 
 use App\Ordering\Entity\Order\OrderDisputeEntity;
 use App\Ordering\Entity\Order\OrderEntity;

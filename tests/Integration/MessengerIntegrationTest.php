@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Message\OrderMessage;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\Message\OrderMessage;
+use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -42,12 +42,12 @@ final class MessengerIntegrationTest extends TestCase
         $em->persist($o);
         $em->flush();
 
-        $svc->place($o); // should publish OrderPlaced → handled synchronously in test via sync transport
+        $svc->place($o); // should publish OrderPlaced в†’ handled synchronously in test via sync transport
         // publish duplicate
         $bus = $c->get('messenger.default_bus');
-        $bus->dispatch(new OrderMessage('App\Event\Domain\Order\OrderPlacedEvent', $o->getId()));
+        $bus->dispatch(new OrderMessage('App\Ordering\Event\Domain\Order\OrderPlacedEvent', $o->getId()));
 
-        $count = (int) $em->createQuery('SELECT COUNT(k.key) FROM App\Entity\Outbox\IdempotencyKey k')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(k.key) FROM App\Ordering\Entity\Outbox\IdempotencyKey k')->getSingleScalarResult();
         $this->assertSame(1, $count, 'Idempotency stored only once');
     }
 }

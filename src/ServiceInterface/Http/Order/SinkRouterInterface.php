@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Http\Order;
+namespace App\Ordering\ServiceInterface\Http\Order;
 
 interface SinkRouterInterface
 {

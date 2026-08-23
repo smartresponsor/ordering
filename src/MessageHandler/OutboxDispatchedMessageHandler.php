@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler;
+namespace App\Ordering\MessageHandler;
 
 use App\Messenger\Message\OutboxDispatchedMessage;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

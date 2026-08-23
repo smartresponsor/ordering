@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Webhook\Order\WebhookVerifierHmac;
-use App\Service\Webhook\Order\WebhookVerifierRsa;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierHmac;
+use App\Ordering\Service\Webhook\Order\WebhookVerifierRsa;
 
 $alg = $argv[1] ?? 'hmac';
 $payload = $argv[3] ?? '{"ok":true}';

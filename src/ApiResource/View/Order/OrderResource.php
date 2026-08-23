@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ApiResource\View\Order;
+namespace App\Ordering\ApiResource\View\Order;
 
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
@@ -37,7 +37,7 @@ final readonly class OrderResource
         #[Groups(['order:read'])] public ?string $refundedTotal = null,
         #[Groups(['order:read', 'order:write'])] public ?string $customerId = null,
         #[Groups(['order:read', 'order:write'])] public ?string $vendorId = null,
-        /** @var list<object{sku:string,qty:int,price:string|int|float}>|null */
+        /** @var list<array{sku:string,qty:int,price:string|int|float}>|null */
         #[Groups(['order:read', 'order:write'])] public ?array $items = null,
         #[Groups(['order:read', 'order:write'])] public ?string $placeAt = null,
     ) {

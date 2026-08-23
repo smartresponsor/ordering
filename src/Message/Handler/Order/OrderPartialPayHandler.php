@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler\Order;
+namespace App\Ordering\Message\Handler\Order;
 
-use App\Message\Command\Order\OrderPartialPayCommand;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Message\Command\Order\OrderPartialPayCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -27,7 +27,7 @@ final readonly class OrderPartialPayHandler
         $order->applyPartialPayment($cmd->amount, $cmd->externalRef);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // тут пишем в outbox (упрощено — пропущено для краткости)
+            // С‚СѓС‚ РїРёС€РµРј РІ outbox (СѓРїСЂРѕС‰РµРЅРѕ вЂ” РїСЂРѕРїСѓС‰РµРЅРѕ РґР»СЏ РєСЂР°С‚РєРѕСЃС‚Рё)
         }
 
         $this->em->flush();

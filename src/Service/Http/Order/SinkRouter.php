@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Order;
+namespace App\Ordering\Service\Http\Order;
 
-use App\ServiceInterface\Http\Order\AuditSinkInterface;
-use App\ServiceInterface\Http\Order\SinkRouterInterface;
+use App\Ordering\ServiceInterface\Http\Order\AuditSinkInterface;
+use App\Ordering\ServiceInterface\Http\Order\SinkRouterInterface;
 
 final readonly class SinkRouter implements SinkRouterInterface
 {

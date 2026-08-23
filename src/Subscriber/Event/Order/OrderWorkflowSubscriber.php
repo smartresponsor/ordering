@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Event\Order;
+namespace App\Ordering\Subscriber\Event\Order;
 
 use App\Model\Order\OrderPriceAudit;
-use App\ServiceInterface\Pricing\Order\OrderPricingInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\OrderPricingInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Uid\Uuid;

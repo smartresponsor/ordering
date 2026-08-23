@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Outbox;
+namespace App\Ordering\Service\Outbox;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\ORM\EntityManagerInterface;

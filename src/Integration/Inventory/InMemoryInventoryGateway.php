@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\Inventory;
+namespace App\Ordering\Integration\Inventory;
 
-class_alias(\App\Service\Inventory\Order\InMemoryInventoryGateway::class, __NAMESPACE__.'\InMemoryInventoryGateway');
+class_alias(\App\Ordering\Service\Inventory\Order\InMemoryInventoryGateway::class, __NAMESPACE__.'\InMemoryInventoryGateway');

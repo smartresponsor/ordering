@@ -9,17 +9,11 @@ doctrine:
                 is_bundle: false
                 type: attribute
                 dir: '%kernel.project_dir%/src/Entity/Order'
-                prefix: 'App\Entity\Order'
+                prefix: 'App\Ordering\Entity\Order'
                 alias: Order
-            Vendoring:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/../Vendoring/src/Entity/Vendor'
-                prefix: 'App\Vendoring\Entity\Vendor'
-                alias: Vendoring
             Objecting:
                 is_bundle: false
                 type: attribute
-                dir: '%kernel.project_dir%/../Objecting/src/Embeddable'
+                dir: '%kernel.project_dir%/vendor/objecting/object/src/Embeddable'
                 prefix: 'App\Objecting\Embeddable'
                 alias: Objecting

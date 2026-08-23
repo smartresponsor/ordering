@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\DefaultTaxationStrategyInterface;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\TaxRate;
+use App\Ordering\ServiceInterface\Pricing\Order\DefaultTaxationStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\TaxRate;
 
 class DefaultTaxationStrategy implements DefaultTaxationStrategyInterface
 {

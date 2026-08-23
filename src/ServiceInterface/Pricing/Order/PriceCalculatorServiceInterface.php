@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Pricing\Order;
+namespace App\Ordering\ServiceInterface\Pricing\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderItemEntity;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\Price;
-use App\ValueObject\Pricing\Order\Taxation;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Price;
+use App\Ordering\ValueObject\Pricing\Order\Taxation;
 
 interface PriceCalculatorServiceInterface
 {

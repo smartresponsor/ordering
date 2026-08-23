@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
-use App\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface;
+use App\Ordering\ServiceInterface\Analytics\Order\ClickHouseExportSinkInterface;
 
 final readonly class ClickHouseExportSink implements ClickHouseExportSinkInterface
 {

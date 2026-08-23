@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Transport\Order;
+namespace App\Ordering\Service\Transport\Order;
 
-use App\ServiceInterface\Transport\Order\PaymentProviderInterface;
+use App\Ordering\ServiceInterface\Transport\Order\PaymentProviderInterface;
 
 final readonly class ChaosProv implements PaymentProviderInterface
 {

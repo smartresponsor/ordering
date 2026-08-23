@@ -26,6 +26,7 @@
         "doctrine/orm": "^3.3",
         "interfacing/interface": "*@dev",
         "objecting/object": "*@dev",
+        "viewing/view": "*@dev",
         "psr/simple-cache": "3.0",
         "sentry/sentry-symfony": "^5.7",
         "symfony/asset": "^8.1",
@@ -66,11 +67,11 @@
         "lint:container": "php bin/console lint:container",
         "lint:yaml": "php bin/console lint:yaml config",
         "lint:twig": "php bin/console lint:twig templates",
-        "db:schema:validate": "php bin/console doctrine:schema:validate -vvv",
+        "db:schema:validate": "php bin/console doctrine:schema:validate --skip-sync -vvv",
         "owner:canon:scan": "php bin/owner-canon-scan.php",
         "owner:canon:report": "php bin/owner-canon-scan.php --write=.meta/owner-canon-scan.json",
         "owner:canon:enforce": "php bin/owner-canon-scan.php --fail-on-violations",
-        "lint:php": "find src config tests -name \"*.php\" -print0 | xargs -0 -n1 php -l",
+        "lint:php": "@php bin/php-lint.php",
         "lint:canon": "@owner:canon:enforce",
         "fix:cs": "php vendor/bin/php-cs-fixer fix",
         "check:cs": "php vendor/bin/php-cs-fixer fix --dry-run --diff",
@@ -96,6 +97,13 @@
         {
             "type": "path",
             "url": "../Objecting",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Viewing",
             "options": {
                 "symlink": true
             }

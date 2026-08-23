@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Service\SensitiveData\MaskingService;
+use App\Ordering\Service\SensitiveData\MaskingService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class MaskingServiceTest extends KernelTestCase

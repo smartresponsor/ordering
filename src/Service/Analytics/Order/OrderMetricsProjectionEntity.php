@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 

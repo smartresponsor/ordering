@@ -3,11 +3,13 @@
     <php>
         <server name="APP_ENV" value="test"/>
         <server name="APP_DEBUG" value="1"/>
-        <server name="KERNEL_CLASS" value="App\Kernel"/>
+        <server name="KERNEL_CLASS" value="App\Ordering\Service\Security\Order\Kernel"/>
     </php>
     <testsuites>
         <testsuite name="OrderFast">
             <file>tests/Unit/Order/OrderStateTest.php</file>
+            <file>tests/Unit/Order/OrderCreationServiceTest.php</file>
+            <file>tests/Unit/Order/OutboxProcessorIdentifierTest.php</file>
         </testsuite>
         <testsuite name="OrderFullStack">
             <file>tests/Integration/OrderDemoCommandTest.php</file>

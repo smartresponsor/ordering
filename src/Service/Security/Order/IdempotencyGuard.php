@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\ServiceInterface\Security\Order\IdempotencyGuardInterface;
-use App\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
+use App\Ordering\ServiceInterface\Security\Order\IdempotencyGuardInterface;
+use App\Ordering\ServiceInterface\Security\Order\OrderIdempotencyGuardInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class IdempotencyGuard implements IdempotencyGuardInterface, OrderIdempotencyGuardInterface

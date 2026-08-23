@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
 final class PredictionService
 {

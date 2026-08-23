@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Support\Security\Order\SecureString;
+use App\Ordering\Support\Security\Order\SecureString;
 
 final readonly class MaskingService
 {

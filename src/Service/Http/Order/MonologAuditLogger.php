@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Http\Order;
+namespace App\Ordering\Service\Http\Order;
 
 use Psr\Log\LoggerInterface;
 

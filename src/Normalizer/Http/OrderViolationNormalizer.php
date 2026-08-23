@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Normalizer\Http;
+namespace App\Ordering\Normalizer\Http;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 

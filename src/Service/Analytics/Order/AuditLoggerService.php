@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
 use App\Ordering\Entity\Order\OrderAuditLogEntity;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Analytics\Order\AuditLoggerServiceInterface;
+use App\Ordering\ServiceInterface\Analytics\Order\AuditLoggerServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class AuditLoggerService implements AuditLoggerServiceInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OrderTaxationIntegrationTest extends KernelTestCase

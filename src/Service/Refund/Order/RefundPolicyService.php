@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Refund\Order;
+namespace App\Ordering\Service\Refund\Order;
 
 final readonly class RefundPolicyService
 {

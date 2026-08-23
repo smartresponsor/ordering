@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-use App\Middleware\Http\OrderRateLimitHeaderMiddleware;
+use App\Ordering\Middleware\Http\OrderRateLimitHeaderMiddleware;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

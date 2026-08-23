@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Webhook\Order;
+namespace App\Ordering\Service\Webhook\Order;
 
 use App\Ordering\Repository\Order\WebhookLogRepository;
-use App\ServiceInterface\Webhook\Order\WebhookIdempotencyServiceInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\WebhookIdempotencyServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class WebhookIdempotencyService implements WebhookIdempotencyServiceInterface

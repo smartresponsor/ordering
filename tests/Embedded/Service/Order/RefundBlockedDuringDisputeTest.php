@@ -6,10 +6,10 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\Service\Dispute\Order\DisputeService;
-use App\Service\Security\Order\OrderService;
-use App\Subscriber\Event\Order\OrderDisputeSubscriber;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Dispute\Order\DisputeService;
+use App\Ordering\Service\Security\Order\OrderService;
+use App\Ordering\Subscriber\Event\Order\OrderDisputeSubscriber;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

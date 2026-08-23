@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\State\Order;
+namespace App\Ordering\Service\State\Order;
 
-use App\Event\Domain\Order\OrderStatusChanged;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\State\Order\OrderStateMachineInterface;
-use App\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
+use App\Ordering\Event\Domain\Order\OrderStatusChanged;
+use App\Ordering\ServiceInterface\State\Order\OrderStateMachineInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\WebhookDispatcherInterface;
 
 final readonly class OrderStateMachine implements OrderStateMachineInterface
 {

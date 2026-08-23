@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Repository;
+namespace App\Ordering\ReadModel\Repository;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Config;
+namespace App\Ordering\Form\Config;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;

@@ -7,21 +7,16 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Outbox\OutboxPublisher;
-use App\Service\Payment\PaymentProcessorService;
-use App\Service\Shipment\ShipmentProcessorService;
-use App\ServiceInterface\Inventory\InventoryServiceInterface;
-use App\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
-use App\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
-use App\ValueObject\OrderStatus;
+use App\Ordering\Service\Outbox\OutboxPublisher;
+use App\Ordering\Service\Payment\PaymentProcessorService;
+use App\Ordering\Service\Shipment\ShipmentProcessorService;
+use App\Ordering\ServiceInterface\Inventory\InventoryServiceInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\PriceCalculatorInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderWorkflowServiceInterface;
+use App\Ordering\ValueObject\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
@@ -46,26 +41,37 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
      */
     public function place(OrderEntity $order, array $items): void
     {
-        $this->apply($order, 'place');
+        if (!$this->workflow->can($order, 'place')) {
+            throw new \LogicException("Transition 'place' not allowed");
+        }
+
+        $this->workflow->apply($order, 'place');
+        $order->place();
+        $this->em->persist($order);
         $this->calculator->recalc($order, $items);
         $this->inventory->reserve($items);
-        $this->outbox->publish(OrderPlacedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 
     public function pay(OrderEntity $order, int $amount): void
     {
+        if (!$this->workflow->can($order, 'pay')) {
+            throw new \LogicException("Transition 'pay' not allowed");
+        }
+
+        $this->workflow->apply($order, 'pay');
         $this->payments->charge($order, $amount);
-        $this->apply($order, 'pay');
-        $this->outbox->publish(OrderPaidEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 
     public function ship(OrderEntity $order): void
     {
+        if (!$this->workflow->can($order, 'ship')) {
+            throw new \LogicException("Transition 'ship' not allowed");
+        }
+
+        $this->workflow->apply($order, 'ship');
         $this->shipper->ship($order);
-        $this->apply($order, 'ship');
-        $this->outbox->publish(OrderShippedEvent::class, ['orderId' => $order->getId()]);
         $this->em->flush();
     }
 
@@ -86,14 +92,20 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
 
     public function cancel(OrderEntity $order): void
     {
-        $this->apply($order, 'cancel');
-        $this->publish(OrderCancelledEvent::class, $order);
+        if (!$this->workflow->can($order, 'cancel')) {
+            throw new \LogicException("Transition 'cancel' not allowed");
+        }
+
+        $this->workflow->apply($order, 'cancel');
+        $order->cancel();
+        $this->em->persist($order);
+        $this->em->flush();
     }
 
     public function refund(OrderEntity $order): void
     {
         $this->apply($order, 'refund');
-        $this->publish(OrderRefundedEvent::class, $order);
+        $this->em->flush();
     }
 
     private function publish(string $eventClass, OrderEntity $order): void

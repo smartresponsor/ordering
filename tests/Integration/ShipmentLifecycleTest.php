@@ -6,8 +6,8 @@ namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderShipmentEntity;
-use App\Service\ShipmentEntity\Order\ShipmentService;
-use App\Subscriber\Event\Order\OrderShipmentSubscriber;
+use App\Ordering\Service\ShipmentEntity\Order\ShipmentService;
+use App\Ordering\Subscriber\Event\Order\OrderShipmentSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ServiceInterface\Payment\Order\OrderPaymentReconciliationServiceInterface;
+use App\Ordering\ServiceInterface\Payment\Order\OrderPaymentReconciliationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 

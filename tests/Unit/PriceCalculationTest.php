@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use App\Service\Pricing\Order\PriceCalculatorService;
-use App\Service\Pricing\Order\VatExclusiveStrategy;
-use App\ValueObject\Pricing\Order\Discount;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\Taxation;
+use App\Ordering\Service\Pricing\Order\PriceCalculatorService;
+use App\Ordering\Service\Pricing\Order\VatExclusiveStrategy;
+use App\Ordering\ValueObject\Pricing\Order\Discount;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Taxation;
 use PHPUnit\Framework\TestCase;
 
 final class PriceCalculationTest extends TestCase

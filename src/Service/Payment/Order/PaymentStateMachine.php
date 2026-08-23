@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\ServiceInterface\Payment\Order\PaymentStateMachineInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentStateMachineInterface;
 
 final class PaymentStateMachine implements PaymentStateMachineInterface
 {

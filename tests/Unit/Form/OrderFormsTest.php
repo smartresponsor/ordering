@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Form;
 
-use App\Form\OrderCreateType;
-use App\Form\OrderPaymentType;
-use App\Form\OrderRefundType;
-use App\Form\OrderShipmentType;
+use App\Ordering\Form\OrderCreateType;
+use App\Ordering\Form\OrderPaymentType;
+use App\Ordering\Form\OrderRefundType;
+use App\Ordering\Form\OrderShipmentType;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;

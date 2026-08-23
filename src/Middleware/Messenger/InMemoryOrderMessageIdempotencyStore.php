@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Middleware\Messenger;
+namespace App\Ordering\Middleware\Messenger;
 
 final class InMemoryOrderMessageIdempotencyStore implements OrderMessageIdempotencyStoreInterface
 {

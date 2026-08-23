@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Http\Order\Redactor;
+use App\Ordering\Service\Http\Order\Redactor;
 
 function argvValue(array $argv, string $nameEntity, ?string $default = null): ?string
 {

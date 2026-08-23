@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\OrderTaxationServiceInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\OrderTaxationServiceInterface;
 
 final class OrderTaxationService implements OrderTaxationServiceInterface
 {

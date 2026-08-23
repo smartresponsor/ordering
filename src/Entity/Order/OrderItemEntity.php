@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Ordering\Entity\Order;
 
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\Quantity;
-use App\ValueObject\Pricing\Order\Sku;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Quantity;
+use App\Ordering\ValueObject\Pricing\Order\Sku;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler;
+namespace App\Ordering\Message\Handler;
 
-use App\Message\Command\OrderCreateCommand;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Message\Command\OrderCreateCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

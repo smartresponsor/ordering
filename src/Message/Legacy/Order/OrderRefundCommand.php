@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Legacy\Order;
+namespace App\Ordering\Message\Legacy\Order;
 
 final readonly class OrderRefundCommand
 {

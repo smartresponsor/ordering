@@ -1,4 +1,4 @@
-# Ordering runtime boot audit — wave 40
+# Ordering runtime boot audit вЂ” wave 40
 
 ## Focus
 
@@ -12,5 +12,5 @@ Runtime/interface coherence in webhook/idempotency/shipment-support layers.
 ## Result
 
 - `RefundWebhookController` now dispatches through `WebhookIdempotencyService::handleOnce(...)`.
-- `OrderIdempotencyService`, `IdempotencyService`, and `OrderShipmentService` are aligned to current `App\ServiceInterface\Order\...` contracts.
+- `OrderIdempotencyService`, `IdempotencyService`, and `OrderShipmentService` are aligned to current `App\Ordering\ServiceInterface\Order\...` contracts.
 - Key interface files are now explicit about imports and type resolution.

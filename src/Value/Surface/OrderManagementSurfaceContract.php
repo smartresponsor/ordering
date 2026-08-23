@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Value\Surface;
+namespace App\Ordering\Value\Surface;
 
-use App\Interfacing\Contract\Surface\InterfaceSurfaceRenderableInterface;
+use App\Interfacing\Contract\InterfaceSurfaceRenderableInterface;
 
 final readonly class OrderManagementSurfaceContract implements InterfaceSurfaceRenderableInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Tx;
+namespace App\Ordering\Service\Tx;
 
 use Doctrine\ORM\EntityManagerInterface;
 

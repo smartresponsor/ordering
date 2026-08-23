@@ -8,11 +8,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Refund\Order;
+namespace App\Ordering\Service\Refund\Order;
 
-use App\Message\Legacy\Order\OrderRefundCommand;
-use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\ServiceInterface\Refund\Order\OrderRefundCommandHandlerInterface;
+use App\Ordering\Message\Legacy\Order\OrderRefundCommand;
+use App\Ordering\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Ordering\ServiceInterface\Refund\Order\OrderRefundCommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

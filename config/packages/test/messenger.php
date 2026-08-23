@@ -11,7 +11,7 @@ return static function (ContainerConfigurator $c): void {
                 'sync' => ['dsn' => 'sync://'],
             ],
             'routing' => [
-                'App\Message\OrderMessage' => 'sync',
+                'App\Ordering\Message\OrderMessage' => 'sync',
             ],
         ],
     ]);

@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
-use App\Model\Billing\Order\OrderPaymentIntent;
-use App\Model\Billing\Order\OrderTransaction;
-use App\ServiceInterface\Payment\Order\PaymentProcessorInterface;
+use App\Ordering\Model\Billing\Order\OrderPaymentIntent;
+use App\Ordering\Model\Billing\Order\OrderTransaction;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentProcessorInterface;
 
 final class OrderPaymentProcessor implements PaymentProcessorInterface
 {

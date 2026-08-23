@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Domain\Order\OrderDomainMessage;
-use App\ServiceInterface\Security\Order\OrderDomainMessageHandlerInterface;
+use App\Ordering\Message\Domain\Order\OrderDomainMessage;
+use App\Ordering\ServiceInterface\Security\Order\OrderDomainMessageHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -23,7 +23,7 @@ final readonly class OrderDomainMessageHandler implements OrderDomainMessageHand
 
     public function __invoke(OrderDomainMessage $msg): void
     {
-        // В реальности: отправка во внешние системы / webhooks / analytics
+        // Р’ СЂРµР°Р»СЊРЅРѕСЃС‚Рё: РѕС‚РїСЂР°РІРєР° РІРѕ РІРЅРµС€РЅРёРµ СЃРёСЃС‚РµРјС‹ / webhooks / analytics
         $this->logger->info('[OrderDomainMessage] consumed', [
             'topic' => $msg->topic,
             'messageId' => $msg->messageId,

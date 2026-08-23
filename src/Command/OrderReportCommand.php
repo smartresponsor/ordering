@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Ordering\Command;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Repository\Order\OrderRepository;

@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\DTO\Api\OrderRefundInput;
-use App\Message\Command\Order\OrderRefundCommand;
+use App\Ordering\DTO\Api\OrderRefundInput;
+use App\Ordering\Message\Command\Order\OrderRefundCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderRefundProcessor implements ProcessorInterface

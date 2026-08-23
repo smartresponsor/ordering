@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Contract\Gateway\Order\OrderPaymentGatewayInterface;
-use App\Contract\Gateway\Order\OrderShipmentGatewayInterface;
-use App\Contract\Gateway\Order\OrderTaxationGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderShipmentGatewayInterface;
+use App\Ordering\Contract\Gateway\Order\OrderTaxationGatewayInterface;
 use App\Ordering\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;

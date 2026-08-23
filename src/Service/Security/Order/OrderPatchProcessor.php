@@ -7,14 +7,14 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\ApiResource\View\Order\OrderResource;
-use App\Message\Command\Order\OrderCancelCommand;
-use App\Message\Command\Order\OrderPaymentCommand;
-use App\Message\Command\Order\OrderShipmentCommand;
+use App\Ordering\ApiResource\View\Order\OrderResource;
+use App\Ordering\Message\Command\Order\OrderCancelCommand;
+use App\Ordering\Message\Command\Order\OrderPaymentCommand;
+use App\Ordering\Message\Command\Order\OrderShipmentCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderPatchProcessor implements ProcessorInterface
@@ -31,7 +31,7 @@ final readonly class OrderPatchProcessor implements ProcessorInterface
             return $data;
         }
 
-        // простая маршрутизация по статусу/полям
+        // РїСЂРѕСЃС‚Р°СЏ РјР°СЂС€СЂСѓС‚РёР·Р°С†РёСЏ РїРѕ СЃС‚Р°С‚СѓСЃСѓ/РїРѕР»СЏРј
         if (($data->status ?? null) === 'cancelled') {
             $this->bus->dispatch(new OrderCancelCommand($id));
         }

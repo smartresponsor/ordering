@@ -1,7 +1,7 @@
 resources:
     Order\ReturnRequest:
         disabled: true
-    App\ApiResource\View\Order\ReturnRequestInput:
+    App\Ordering\ApiResource\View\Order\ReturnRequestInput:
         shortName: 'OrderReturn'
         operations:
             -   class: 'ApiPlatform\Metadata\Post'
@@ -11,7 +11,7 @@ resources:
                 read: false
                 validate: true
                 name: 'order_return_create'
-    App\ApiResource\View\Order\RefundView:
+    App\Ordering\ApiResource\View\Order\RefundView:
         shortName: 'OrderRefund'
         operations:
             -   class: 'ApiPlatform\Metadata\GetCollection'

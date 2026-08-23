@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Contract\Domain;
+namespace App\Ordering\Contract\Domain;
 
 interface RecordsDomainEvents
 {

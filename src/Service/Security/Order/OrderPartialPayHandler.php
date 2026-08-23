@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Command\Order\OrderPartialPayCommand;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Security\Order\OrderPartialPayHandlerInterface;
+use App\Ordering\Message\Command\Order\OrderPartialPayCommand;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialPayHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -33,7 +33,7 @@ final readonly class OrderPartialPayHandler implements OrderPartialPayHandlerInt
         $order->applyPartialPayment($cmd->amount, $cmd->externalRef);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // тут пишем в outbox (упрощено — пропущено для краткости)
+            // С‚СѓС‚ РїРёС€РµРј РІ outbox (СѓРїСЂРѕС‰РµРЅРѕ вЂ” РїСЂРѕРїСѓС‰РµРЅРѕ РґР»СЏ РєСЂР°С‚РєРѕСЃС‚Рё)
         }
 
         $this->em->flush();

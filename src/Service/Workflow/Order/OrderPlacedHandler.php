@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ServiceInterface\Workflow\Order\OrderPlacedHandlerInterface;
+use App\Ordering\ServiceInterface\Workflow\Order\OrderPlacedHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderPlacedHandler implements OrderPlacedHandlerInterface

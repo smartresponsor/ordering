@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use App\Command\GenerateOrdersCommand;
+use App\Ordering\Command\GenerateOrdersCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -47,10 +47,10 @@ final class GenerateOrdersCommandTest extends TestCase
         $this->assertStringContainsString('Created 5 orders with payments', $out);
         $this->assertStringContainsString('Status: paid', $out);
         $this->assertStringContainsString('Payment amount: $1000', $out);
-        $this->assertStringContainsString('Payment total: $5000 (Общий платёж: $5000)', $out);
+        $this->assertStringContainsString('Payment total: $5000 (РћР±С‰РёР№ РїР»Р°С‚С‘Р¶: $5000)', $out);
 
         // verify counts
-        $orders = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order o')->getSingleScalarResult();
+        $orders = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Ordering\Entity\Order o')->getSingleScalarResult();
         $payments = (int) $em->createQuery('SELECT COUNT(p.id) FROM App\Ordering\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
         $sum = (int) $em->createQuery('SELECT COALESCE(SUM(p.amount),0) FROM App\Ordering\Entity\Order\OrderPaymentEntity p')->getSingleScalarResult();
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Processor\Outbox;
+namespace App\Ordering\Processor\Outbox;
 
-use App\Service\Outbox\Order\DlqPublisher;
-use App\Service\Outbox\Order\ExponentialBackoffStrategy;
-use App\Service\Outbox\OutboxProcessor as BaseOutboxProcessor;
+use App\Ordering\Service\Outbox\Order\DlqPublisher;
+use App\Ordering\Service\Outbox\Order\ExponentialBackoffStrategy;
+use App\Ordering\Service\Outbox\OutboxProcessor as BaseOutboxProcessor;
 use Psr\Log\LoggerInterface;
 
 final readonly class OrderOutboxProcessor

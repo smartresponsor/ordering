@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Outbox;
+namespace App\Ordering\Service\Outbox;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -35,23 +36,32 @@ final readonly class OutboxProcessor
         foreach ($messages as $message) {
             $payload = $message->payload();
             $eventName = $message->getEventType();
-            $orderId = (int) ($payload['orderId'] ?? $payload['aggregateId'] ?? 0);
+            $orderIdentifier = trim((string) ($payload['orderId'] ?? $payload['aggregateId'] ?? ''));
             $event = match ($eventName) {
-                OrderPlacedEvent::class => new OrderPlacedEvent((string) $orderId),
+                OrderPlacedEvent::class => new OrderPlacedEvent($orderIdentifier),
                 OrderPaidEvent::class => new OrderPaidEvent(
-                    (string) $orderId,
+                    $orderIdentifier,
                     (string) ($payload['amount'] ?? '0.00'),
                     (string) ($payload['currency'] ?? 'USD'),
                     (string) ($payload['externalRef'] ?? $payload['txId'] ?? ''),
                 ),
-                OrderShippedEvent::class => new OrderShippedEvent((string) $orderId),
-                OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderId)),
-                OrderRefundedEvent::class => new OrderRefundedEvent(
-                    $this->findOrder($orderId),
-                    (string) ($payload['amount'] ?? '0.00'),
+                OrderShippedEvent::class => new OrderShippedEvent(
+                    $orderIdentifier,
+                    isset($payload['carrier']) ? (string) $payload['carrier'] : null,
+                    isset($payload['trackingCode']) ? (string) $payload['trackingCode'] : null,
                 ),
-                default => new class($orderId, $eventName) {
-                    public function __construct(public int $orderId, public string $class)
+                OrderCancelledEvent::class => new OrderCancelledEvent(
+                    $orderIdentifier,
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
+                OrderRefundedEvent::class => new OrderRefundedEvent(
+                    $orderIdentifier,
+                    (string) ($payload['amount'] ?? '0.00'),
+                    (string) ($payload['currency'] ?? ''),
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
+                default => new class($orderIdentifier, $eventName) {
+                    public function __construct(public string $orderId, public string $class)
                     {
                     }
                 },
@@ -67,11 +77,13 @@ final readonly class OutboxProcessor
         return $count;
     }
 
-    private function findOrder(int $orderId): OrderEntity
+    private function findOrder(string|int $orderIdentifier): OrderEntity
     {
-        $order = $this->em->getRepository(OrderEntity::class)->find($orderId);
+        /** @var OrderRepository $repository */
+        $repository = $this->em->getRepository(OrderEntity::class);
+        $order = $repository->findByIdentifier($orderIdentifier);
         if (!$order instanceof OrderEntity) {
-            throw new \RuntimeException('Order not found for outbox event: '.$orderId);
+            throw new \RuntimeException('Order not found for outbox event: '.$orderIdentifier);
         }
 
         return $order;

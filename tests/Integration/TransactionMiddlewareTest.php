@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Tx\TransactionMiddleware;
+use App\Ordering\Service\Tx\TransactionMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
@@ -49,7 +49,7 @@ final class TransactionMiddlewareTest extends TestCase
         } catch (\RuntimeException $e) { /* ok */
         }
 
-        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Order o')->getSingleScalarResult();
+        $count = (int) $em->createQuery('SELECT COUNT(o.id) FROM App\Ordering\Entity\Order o')->getSingleScalarResult();
         $this->assertSame(0, $count, 'Order must not be persisted after rollback');
     }
 }

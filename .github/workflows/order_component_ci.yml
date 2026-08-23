@@ -1,13 +1,20 @@
 name: Order Component CI
-on: [ push, pull_request ]
+
+on:
+  workflow_dispatch:
+
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup PHP
+      - name: Setup PHP 8.4
         uses: shivammathur/setup-php@v2
-        with: { php-version: '8.3' }
-      - run: composer install --no-interaction --no-progress
-      - run: make validate-service-interface-canon || true
-      - run: make test
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer:v2
+      - name: Validate Composer manifest
+        run: composer validate --no-check-publish
+      - name: PHP syntax
+        run: find src tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l

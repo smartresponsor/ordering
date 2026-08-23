@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
-use App\Service\Outbox\OutboxProcessor;
+use App\Ordering\Service\Outbox\OutboxProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;

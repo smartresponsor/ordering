@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderPaymentEntity;
-use App\ServiceInterface\Payment\Order\PaymentGatewayInterface;
-use App\ServiceInterface\Payment\Order\PaymentProcessorServiceInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentGatewayInterface;
+use App\Ordering\ServiceInterface\Payment\Order\PaymentProcessorServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class PaymentProcessorService implements PaymentProcessorServiceInterface

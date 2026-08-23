@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Webhook\Order;
+namespace App\Ordering\Service\Webhook\Order;
 
-use App\ServiceInterface\Webhook\Order\WebhookVerifierRsaInterface;
+use App\Ordering\ServiceInterface\Webhook\Order\WebhookVerifierRsaInterface;
 
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp

@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Workflow\Order;
+namespace App\Ordering\ServiceInterface\Workflow\Order;
 
-use App\Message\Command\StartOrderSagaCommand;
-use App\Saga\OrderSaga;
+use App\Ordering\Message\Command\StartOrderSagaCommand;
+use App\Ordering\Saga\OrderSaga;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface StartOrderSagaHandlerInterface

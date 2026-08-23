@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Ordering\Service;
 
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\OrderSummaryProviderInterface;
+use App\Ordering\ServiceInterface\OrderSummaryProviderInterface;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 

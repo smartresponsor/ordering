@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Service;
 
-use App\Service\Refund\Order\ReturnPolicyService;
+use App\Ordering\Service\Refund\Order\ReturnPolicyService;
 use PHPUnit\Framework\TestCase;
 
 final class ReturnPolicyServiceTest extends TestCase

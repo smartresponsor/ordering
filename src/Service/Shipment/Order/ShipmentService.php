@@ -8,15 +8,15 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Shipment\Order;
+namespace App\Ordering\Service\Shipment\Order;
 
-use App\Event\Domain\Order\OrderDeliveredEvent;
-use App\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 use App\Model\Order\OrderReturnPolicy;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderShipmentEntity;
+use App\Ordering\Event\Domain\Order\OrderDeliveredEvent;
+use App\Ordering\Event\Domain\Order\OrderReturnWindowExpiredEvent;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ServiceInterface\Shipment\Order\ShipmentServiceInterface;
+use App\Ordering\ServiceInterface\Shipment\Order\ShipmentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

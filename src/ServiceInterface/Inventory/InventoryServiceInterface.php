@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Inventory;
+namespace App\Ordering\ServiceInterface\Inventory;
 
 interface InventoryServiceInterface
 {

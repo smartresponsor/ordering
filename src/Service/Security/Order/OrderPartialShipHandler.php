@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
-use App\Message\Command\Order\OrderPartialShipCommand;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\ServiceInterface\Security\Order\OrderPartialShipHandlerInterface;
+use App\Ordering\Message\Command\Order\OrderPartialShipCommand;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialShipHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -33,7 +33,7 @@ final readonly class OrderPartialShipHandler implements OrderPartialShipHandlerI
         $order->shipItems($cmd->count, $cmd->note);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // outbox write (упрощённо)
+            // outbox write (СѓРїСЂРѕС‰С‘РЅРЅРѕ)
         }
 
         $this->em->flush();

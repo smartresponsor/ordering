@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Outbox;
+namespace App\Ordering\Repository\Outbox;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

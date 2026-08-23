@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Subscriber;
+namespace App\Ordering\ReadModel\Subscriber;
 
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
-use App\ReadModel\Service\OrderReadModelProjector;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\ReadModel\Service\OrderReadModelProjector;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class OrderEventProjectorSubscriber implements EventSubscriberInterface

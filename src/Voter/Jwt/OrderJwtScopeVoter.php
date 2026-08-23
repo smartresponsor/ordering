@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Voter\Jwt;
+namespace App\Ordering\Voter\Jwt;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;

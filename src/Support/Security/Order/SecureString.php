@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Support\Security\Order;
+namespace App\Ordering\Support\Security\Order;
 
 final class SecureString
 {

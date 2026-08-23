@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Transport\Order;
+namespace App\Ordering\Service\Transport\Order;
 
-use App\ServiceInterface\Transport\Order\ProviderAdapterInterface;
-use App\ServiceInterface\Transport\Order\ProviderRouterInterface;
-use App\ValueObject\Routing\Order\CanarySwitch;
-use App\ValueObject\Routing\Order\CostPolicy;
-use App\ValueObject\Routing\Order\HealthProbe;
-use App\ValueObject\Routing\Order\ProviderPolicy;
-use App\ValueObject\Routing\Order\QuotaPolicy;
-use App\ValueObject\Routing\Order\RouteContext;
-use App\ValueObject\Routing\Order\RouteDecision;
+use App\Ordering\ServiceInterface\Transport\Order\ProviderAdapterInterface;
+use App\Ordering\ServiceInterface\Transport\Order\ProviderRouterInterface;
+use App\Ordering\ValueObject\Routing\Order\CanarySwitch;
+use App\Ordering\ValueObject\Routing\Order\CostPolicy;
+use App\Ordering\ValueObject\Routing\Order\HealthProbe;
+use App\Ordering\ValueObject\Routing\Order\ProviderPolicy;
+use App\Ordering\ValueObject\Routing\Order\QuotaPolicy;
+use App\Ordering\ValueObject\Routing\Order\RouteContext;
+use App\Ordering\ValueObject\Routing\Order\RouteDecision;
 
 final readonly class ProviderRouter implements ProviderRouterInterface
 {

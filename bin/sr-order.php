@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\Transport\Order\Client;
-use App\Support\Security\Order\Idempotency;
+use App\Ordering\Service\Transport\Order\Client;
+use App\Ordering\Support\Security\Order\Idempotency;
 
 $base = getenv('BASE') ?: 'http://127.0.0.1:8000';
 $token = getenv('TOKEN') ?: null;

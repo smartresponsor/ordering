@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\State\Api;
+namespace App\Ordering\State\Api;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\DTO\Api\OrderInput;
-use App\DTO\Api\OrderOutput;
-use App\Entity\Order\OrderEntity;
+use App\Ordering\DTO\Api\OrderInput;
+use App\Ordering\DTO\Api\OrderOutput;
+use App\Ordering\Entity\Order\OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class OrderDataPersister implements ProcessorInterface

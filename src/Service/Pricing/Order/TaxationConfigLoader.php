@@ -7,10 +7,10 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
-use App\ValueObject\Pricing\Order\TaxRate;
+use App\Ordering\ServiceInterface\Pricing\Order\TaxationConfigLoaderInterface;
+use App\Ordering\ValueObject\Pricing\Order\TaxRate;
 use Symfony\Component\Yaml\Yaml;
 
 final readonly class TaxationConfigLoader implements TaxationConfigLoaderInterface

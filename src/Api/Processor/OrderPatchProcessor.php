@@ -7,16 +7,17 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Api\Processor;
+namespace App\Ordering\Api\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Resource\Order\OrderResource;
-use App\Message\Command\Order\OrderCancelCommand;
-use App\Message\Command\Order\OrderPaymentCommand;
-use App\Message\Command\Order\OrderShipmentCommand;
+use App\Ordering\ApiResource\View\Order\OrderResource;
+use App\Ordering\Message\Command\Order\OrderCancelCommand;
+use App\Ordering\Message\Command\Order\OrderPaymentCommand;
+use App\Ordering\Message\Command\Order\OrderShipmentCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+/** @implements ProcessorInterface<OrderResource, OrderResource> */
 final readonly class OrderPatchProcessor implements ProcessorInterface
 {
     public function __construct(private MessageBusInterface $bus)
@@ -26,12 +27,12 @@ final readonly class OrderPatchProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): OrderResource
     {
         \assert($data instanceof OrderResource);
-        $id = $uriVariables['id'] ?? $data->id ?? null;
-        if (!$id) {
+        $idValue = $uriVariables['id'] ?? $data->id;
+        $id = is_scalar($idValue) ? trim((string) $idValue) : '';
+        if ('' === $id) {
             return $data;
         }
 
-        // простая маршрутизация по статусу/полям
         if (($data->status ?? null) === 'cancelled') {
             $this->bus->dispatch(new OrderCancelCommand($id));
         }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler;
+namespace App\Ordering\Message\Handler;
 
-use App\Message\Command\OrderPayCommand;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Service\Outbox\OutboxPublisher;
+use App\Ordering\Message\Command\OrderPayCommand;
+use App\Ordering\Service\Outbox\OutboxPublisher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;

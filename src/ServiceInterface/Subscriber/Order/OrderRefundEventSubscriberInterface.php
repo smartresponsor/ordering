@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Subscriber\Order;
+namespace App\Ordering\ServiceInterface\Subscriber\Order;
 
-use App\Event\Domain\Order\OrderFullyRefundedEvent;
-use App\Event\Domain\Order\OrderPartiallyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderFullyRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderPartiallyRefundedEvent;
 
 interface OrderRefundEventSubscriberInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Outbox;
+namespace App\Ordering\Message\Outbox;
 
 final readonly class OrderOutboxDispatchedMessage
 {

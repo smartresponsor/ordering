@@ -7,11 +7,11 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
 use App\Ordering\Entity\Order\OrderMetricsProjectionEntity;
-use App\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
-use App\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
+use App\Ordering\ServiceInterface\Analytics\Order\MetricsProjectionServiceInterface;
+use App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsProjectionServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class MetricsProjectionService implements MetricsProjectionServiceInterface, OrderMetricsProjectionServiceInterface

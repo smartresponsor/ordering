@@ -6,8 +6,8 @@ namespace Tests\Embedded\Service\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderShipmentEntity;
-use App\Service\Refund\Order\RefundEligibilityService;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\Service\Refund\Order\RefundEligibilityService;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

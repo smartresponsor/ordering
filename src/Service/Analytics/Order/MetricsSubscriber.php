@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\ServiceInterface\Analytics\Order\MetricsSubscriberInterface;
-use App\ServiceInterface\Analytics\Order\OrderMetricsSubscriberInterface;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\ServiceInterface\Analytics\Order\MetricsSubscriberInterface;
+use App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsSubscriberInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 final readonly class MetricsSubscriber implements MetricsSubscriberInterface, OrderMetricsSubscriberInterface

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Kernel;
+use App\Ordering\Service\Security\Order\Kernel;
 
 $autoload = dirname(__DIR__).'/vendor/autoload.php';
 if (!is_file($autoload)) {

@@ -1,9 +1,9 @@
-# Ordering runtime boot audit — wave 55
+# Ordering runtime boot audit вЂ” wave 55
 
 ## Fixed
-- `App\Service\Order\OrderWorkflowService`
+- `App\Ordering\Service\Order\OrderWorkflowService`
   - `cancel()` and `refund()` no longer call a missing method.
-  - Workflow event publishing now routes through a local helper backed by `App\Service\Outbox\OutboxPublisher`.
+  - Workflow event publishing now routes through a local helper backed by `App\Ordering\Service\Outbox\OutboxPublisher`.
   - Both flows flush after applying transition and publishing outbox event.
 
 ## Verification

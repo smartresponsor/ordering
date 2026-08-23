@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Analytics\Order;
+namespace App\Ordering\Service\Analytics\Order;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use App\Provider\Api\OrderMetricsProvider;
+use App\Ordering\Provider\Api\OrderMetricsProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 

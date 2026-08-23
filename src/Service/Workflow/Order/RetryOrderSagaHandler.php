@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Workflow\Order;
+namespace App\Ordering\Service\Workflow\Order;
 
-use App\Message\Command\RetryOrderSagaCommand;
 use App\Ordering\Entity\Order\OrderEntity;
-use App\Saga\OrderSaga;
-use App\ServiceInterface\Workflow\Order\RetryOrderSagaHandlerInterface;
+use App\Ordering\Message\Command\RetryOrderSagaCommand;
+use App\Ordering\Saga\OrderSaga;
+use App\Ordering\ServiceInterface\Workflow\Order\RetryOrderSagaHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

@@ -8,12 +8,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Pricing\Order;
+namespace App\Ordering\Service\Pricing\Order;
 
-use App\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
-use App\ServiceInterface\Pricing\Order\VatExclusiveStrategyInterface;
-use App\ValueObject\Pricing\Order\Money;
-use App\ValueObject\Pricing\Order\Taxation;
+use App\Ordering\ServiceInterface\Pricing\Order\TaxationStrategyInterface;
+use App\Ordering\ServiceInterface\Pricing\Order\VatExclusiveStrategyInterface;
+use App\Ordering\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\Pricing\Order\Taxation;
 
 class VatExclusiveStrategy implements VatExclusiveStrategyInterface, TaxationStrategyInterface
 {

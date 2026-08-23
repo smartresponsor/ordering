@@ -7,9 +7,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Payment\Order;
+namespace App\Ordering\ServiceInterface\Payment\Order;
 
-use App\Message\Command\Order\OrderPaymentCommand;
+use App\Ordering\Message\Command\Order\OrderPaymentCommand;
 
 interface OrderPaymentCommandHandlerInterface
 {

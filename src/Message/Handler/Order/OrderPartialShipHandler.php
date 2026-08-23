@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Message\Handler\Order;
+namespace App\Ordering\Message\Handler\Order;
 
-use App\Message\Command\Order\OrderPartialShipCommand;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Message\Command\Order\OrderPartialShipCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -27,7 +27,7 @@ final readonly class OrderPartialShipHandler
         $order->shipItems($cmd->count, $cmd->note);
 
         foreach ($order->releaseEvents() as $ignored) {
-            // outbox write (упрощённо)
+            // outbox write (СѓРїСЂРѕС‰С‘РЅРЅРѕ)
         }
 
         $this->em->flush();

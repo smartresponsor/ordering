@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Ordering\Entity\Order;
 
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
-use App\Lifecycle\OrderLifecyclePolicy;
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Lifecycle\OrderLifecyclePolicy;
 use App\Ordering\Repository\Order\OrderRepository;
-use App\ValueObject\OrderStatus;
-use App\ValueObject\Pricing\Order\Money;
+use App\Ordering\ValueObject\OrderStatus;
+use App\Ordering\ValueObject\Pricing\Order\Money;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -277,6 +279,20 @@ class OrderEntity implements RecordsEventEntityInterface
         return $this->vendorId;
     }
 
+    public function setCustomerId(?string $customerId): void
+    {
+        $customerId = null === $customerId ? null : trim($customerId);
+        $this->customerId = '' === $customerId ? null : $customerId;
+        $this->touch();
+    }
+
+    public function setVendorId(?string $vendorId): void
+    {
+        $vendorId = null === $vendorId ? null : trim($vendorId);
+        $this->vendorId = '' === $vendorId ? null : $vendorId;
+        $this->touch();
+    }
+
     public function getTrackingCode(): ?string
     {
         return $this->trackingCode;
@@ -295,6 +311,18 @@ class OrderEntity implements RecordsEventEntityInterface
         $this->status = $newStatus;
         $this->statusHistory->add(new OrderStatusHistoryEntity($this, $previousStatus, $newStatus));
         $this->touch();
+    }
+
+    public function place(): void
+    {
+        $this->setStatus(OrderStatus::Placed);
+        $this->recordEvent(new OrderPlacedEvent($this->slug));
+    }
+
+    public function cancel(): void
+    {
+        $this->setStatus(OrderStatus::Cancelled);
+        $this->recordEvent(new OrderCancelledEvent($this->slug, $this->vendorId));
     }
 
     public function setCurrency(string|\Stringable $currency): void
@@ -403,7 +431,12 @@ class OrderEntity implements RecordsEventEntityInterface
         if (bccomp($this->refundedTotal, $this->paidTotal, 2) >= 0) {
             $this->setStatus(OrderStatus::Refunded->value);
         }
-        $this->recordEvent(new OrderRefundedEvent($this, $normalizedAmount));
+        $this->recordEvent(new OrderRefundedEvent(
+            $this->slug,
+            $normalizedAmount,
+            $this->currency,
+            $this->vendorId,
+        ));
         $this->touch();
 
         return $refund;
@@ -418,7 +451,7 @@ class OrderEntity implements RecordsEventEntityInterface
         }
         $this->trackingCode = $trackingCode;
         $this->setStatus(OrderStatus::Shipped->value);
-        $this->recordEvent(new OrderShippedEvent($this->slug));
+        $this->recordEvent(new OrderShippedEvent($this->slug, $carrier, $trackingCode));
         $this->touch();
 
         return $shipment;
@@ -451,7 +484,7 @@ class OrderEntity implements RecordsEventEntityInterface
         }
 
         $this->setStatus('partially_shipped');
-        $this->recordEvent(new OrderShippedEvent($this->slug));
+        $this->recordEvent(new OrderShippedEvent($this->slug, 'manual', null));
         $this->touch();
     }
 

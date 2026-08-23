@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Webhook\Order;
+namespace App\Ordering\Service\Webhook\Order;
 
-use App\Service\Messaging\Order\TransactionalEventPublisher;
-use App\Service\Payment\Order\PaymentService;
-use App\ServiceInterface\Webhook\Order\PaymentWebhookListenerInterface;
+use App\Ordering\Service\Messaging\Order\TransactionalEventPublisher;
+use App\Ordering\Service\Payment\Order\PaymentService;
+use App\Ordering\ServiceInterface\Webhook\Order\PaymentWebhookListenerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final readonly class PaymentWebhookListener implements EventSubscriberInterface, PaymentWebhookListenerInterface
@@ -22,7 +22,7 @@ final readonly class PaymentWebhookListener implements EventSubscriberInterface,
 
     public function onWebhook(object $event): void
     {
-        // $event должен иметь orderId, amount, txId
+        // $event РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ orderId, amount, txId
         if (method_exists($event, 'orderId') && method_exists($event, 'amount') && method_exists($event, 'txId')) {
             $this->service->applyPayment($event->orderId(), $event->amount(), $event->txId());
             $this->publisher->publish('order.paid', ['orderId' => $event->orderId(), 'amount' => $event->amount(), 'txId' => $event->txId()]);

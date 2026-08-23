@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Messenger;
+namespace App\Ordering\Command\Messenger;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +34,7 @@ final class OrderDlqRequeueCommand extends Command
             $this->failed->ack($envelope);
             ++$count;
         }
-        $io->success("Requeued $count messages from failed → async");
+        $io->success("Requeued $count messages from failed в†’ async");
 
         return Command::SUCCESS;
     }

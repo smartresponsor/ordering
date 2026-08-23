@@ -7,12 +7,12 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Payment\Order;
+namespace App\Ordering\Service\Payment\Order;
 
 use App\Ordering\Entity\Order\OrderPaymentTransactionEntity;
 use App\Ordering\Entity\Order\OrderRefundTransactionEntity;
-use App\Service\Refund\Order\OrderRefundService;
-use App\ServiceInterface\Payment\Order\OrderPaymentServiceInterface;
+use App\Ordering\Service\Refund\Order\OrderRefundService;
+use App\Ordering\ServiceInterface\Payment\Order\OrderPaymentServiceInterface;
 
 final readonly class OrderPaymentService implements OrderPaymentServiceInterface
 {

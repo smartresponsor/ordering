@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Transport\Order;
+namespace App\Ordering\Service\Transport\Order;
 
 final readonly class Order
 {

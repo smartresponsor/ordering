@@ -8,9 +8,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Refund\Order;
+namespace App\Ordering\ServiceInterface\Refund\Order;
 
-use App\Message\Legacy\Order\OrderRefundCommand;
+use App\Ordering\Message\Legacy\Order\OrderRefundCommand;
 
 interface OrderRefundCommandHandlerInterface
 {

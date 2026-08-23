@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Provider\Api;
+namespace App\Ordering\Provider\Api;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;

@@ -7,13 +7,13 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\Service\Security\Order;
+namespace App\Ordering\Service\Security\Order;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\DTO\Api\OrderPartialPaymentInput;
-use App\Message\Command\Order\OrderPartialPaymentCommand;
-use App\ServiceInterface\Security\Order\OrderPartialPaymentProcessorInterface;
+use App\Ordering\DTO\Api\OrderPartialPaymentInput;
+use App\Ordering\Message\Command\Order\OrderPartialPaymentCommand;
+use App\Ordering\ServiceInterface\Security\Order\OrderPartialPaymentProcessorInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class OrderPartialPaymentProcessor implements ProcessorInterface, OrderPartialPaymentProcessorInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Service\Pricing\Order\TaxationConfigLoader;
+use App\Ordering\Service\Pricing\Order\TaxationConfigLoader;
 use PHPUnit\Framework\TestCase;
 
 final class TaxationConfigLoaderTest extends TestCase

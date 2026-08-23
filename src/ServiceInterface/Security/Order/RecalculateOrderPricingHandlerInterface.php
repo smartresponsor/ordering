@@ -8,9 +8,9 @@ declare(strict_types=1);
  * Owner: Marketing America Corp.
  */
 
-namespace App\ServiceInterface\Security\Order;
+namespace App\Ordering\ServiceInterface\Security\Order;
 
-use App\Message\Command\Order\RecalculateOrderPricingCommand;
+use App\Ordering\Message\Command\Order\RecalculateOrderPricingCommand;
 
 interface RecalculateOrderPricingHandlerInterface
 {

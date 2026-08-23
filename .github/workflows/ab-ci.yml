@@ -1,12 +1,6 @@
 name: AB CI
 on:
-  push:
-    paths:
-      - 'src/**'
-      - 'bin/**'
-      - 'tools/smoke/manual/**'
-  pull_request:
-    branches: [ "order-rc-2-stab", "master" ]
+  workflow_dispatch:
 
 jobs:
   build:

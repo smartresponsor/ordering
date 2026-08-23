@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler;
+namespace App\Ordering\MessageHandler;
 
-use App\Event\Domain\Order\OrderCancelledEvent;
-use App\Event\Domain\Order\OrderPaidEvent;
-use App\Event\Domain\Order\OrderPlacedEvent;
-use App\Event\Domain\Order\OrderRefundedEvent;
-use App\Event\Domain\Order\OrderShippedEvent;
-use App\Message\OrderMessage;
 use App\Ordering\Entity\Order\OrderEntity;
+use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderPaidEvent;
+use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
+use App\Ordering\Event\Domain\Order\OrderShippedEvent;
+use App\Ordering\Message\OrderMessage;
 use App\Ordering\Repository\Order\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -36,9 +36,21 @@ final readonly class OrderMessageHandler
         $map = [
             OrderPlacedEvent::class => fn () => new OrderPlacedEvent($order->slug()),
             OrderPaidEvent::class => fn () => new OrderPaidEvent($order->slug(), $order->grandTotal(), $order->currency(), $order->slug()),
-            OrderShippedEvent::class => fn () => new OrderShippedEvent($order->slug()),
-            OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
-            OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order, $order->refundedTotal()),
+            OrderShippedEvent::class => fn () => new OrderShippedEvent(
+                $order->slug(),
+                null,
+                $order->getTrackingCode(),
+            ),
+            OrderCancelledEvent::class => fn () => new OrderCancelledEvent(
+                $order->slug(),
+                $order->getVendorId(),
+            ),
+            OrderRefundedEvent::class => fn () => new OrderRefundedEvent(
+                $order->slug(),
+                $order->refundedTotal(),
+                $order->currency(),
+                $order->getVendorId(),
+            ),
         ];
         if (isset($map[$m->eventName])) {
             $this->dispatcher->dispatch($map[$m->eventName](), $m->eventName);

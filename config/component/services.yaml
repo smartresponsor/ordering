@@ -4,12 +4,12 @@ services:
     autoconfigure: true
     public: false
 
-  App\Form\Config\:
+  App\Ordering\Form\Config\:
     resource: '../../src/Form/Config/'
 
-  App\Service\Config\OrderingRateLimitsConfigService:
+  App\Ordering\Service\Config\OrderingRateLimitsConfigService:
     arguments:
       $projectDir: '%kernel.project_dir%'
-      $applyService: '@App\Administering\Service\Config\ConfigApplyService'
-      $fileWriter: '@App\Administering\Service\Config\ConfigFileWriterService'
+      $applyService: '@App\Administering\Service\Config\AdministrationConfigApplyService'
+      $fileWriter: '@App\Administering\Service\Config\AdministrationConfigFileWriterService'
     tags: ['administering.config_tool']
