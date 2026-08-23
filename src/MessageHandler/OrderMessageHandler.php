@@ -38,7 +38,12 @@ final readonly class OrderMessageHandler
             OrderPaidEvent::class => fn () => new OrderPaidEvent($order->slug(), $order->grandTotal(), $order->currency(), $order->slug()),
             OrderShippedEvent::class => fn () => new OrderShippedEvent($order->slug()),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent($order),
-            OrderRefundedEvent::class => fn () => new OrderRefundedEvent($order, $order->refundedTotal()),
+            OrderRefundedEvent::class => fn () => new OrderRefundedEvent(
+                $order->slug(),
+                $order->refundedTotal(),
+                $order->currency(),
+                $order->getVendorId(),
+            ),
         ];
         if (isset($map[$m->eventName])) {
             $this->dispatcher->dispatch($map[$m->eventName](), $m->eventName);

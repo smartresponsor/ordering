@@ -48,8 +48,10 @@ final readonly class OutboxProcessor
                 OrderShippedEvent::class => new OrderShippedEvent($orderIdentifier),
                 OrderCancelledEvent::class => new OrderCancelledEvent($this->findOrder($orderIdentifier)),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
-                    $this->findOrder($orderIdentifier),
+                    $orderIdentifier,
                     (string) ($payload['amount'] ?? '0.00'),
+                    (string) ($payload['currency'] ?? ''),
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
                 ),
                 default => new class($orderIdentifier, $eventName) {
                     public function __construct(public string $orderId, public string $class)

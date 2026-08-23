@@ -424,7 +424,12 @@ class OrderEntity implements RecordsEventEntityInterface
         if (bccomp($this->refundedTotal, $this->paidTotal, 2) >= 0) {
             $this->setStatus(OrderStatus::Refunded->value);
         }
-        $this->recordEvent(new OrderRefundedEvent($this, $normalizedAmount));
+        $this->recordEvent(new OrderRefundedEvent(
+            $this->slug,
+            $normalizedAmount,
+            $this->currency,
+            $this->vendorId,
+        ));
         $this->touch();
 
         return $refund;

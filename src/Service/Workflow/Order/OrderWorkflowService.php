@@ -11,7 +11,6 @@ namespace App\Ordering\Service\Workflow\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
-use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Service\Outbox\OutboxPublisher;
 use App\Ordering\Service\Payment\PaymentProcessorService;
@@ -99,7 +98,7 @@ final readonly class OrderWorkflowService implements OrderWorkflowServiceInterfa
     public function refund(OrderEntity $order): void
     {
         $this->apply($order, 'refund');
-        $this->publish(OrderRefundedEvent::class, $order);
+        $this->em->flush();
     }
 
     private function publish(string $eventClass, OrderEntity $order): void
