@@ -1,9 +1,6 @@
 name: OrderComponent CI/CD
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
   workflow_dispatch:
 
 jobs:
