@@ -34,6 +34,12 @@ final readonly class RefundProcessor implements RefundProcessorInterface
         $this->em->persist($tx);
         $this->em->flush();
 
-        $this->bus->dispatch(new OrderRefundCompletedEvent($tx->orderId(), $tx->id(), $tx->amount(), 'USD'));
+        $this->bus->dispatch(new OrderRefundCompletedEvent(
+            $tx->orderId(),
+            $tx->id(),
+            $tx->amount(),
+            $tx->currency(),
+            $gatewayRef,
+        ));
     }
 }
