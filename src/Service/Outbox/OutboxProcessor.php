@@ -66,6 +66,7 @@ final readonly class OutboxProcessor
                     (string) ($payload['amount'] ?? '0.00'),
                     (string) ($payload['currency'] ?? ''),
                     (string) ($payload['externalRef'] ?? ''),
+                    (string) ($payload['occurredAt'] ?? ''),
                 ),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
                     $orderIdentifier,

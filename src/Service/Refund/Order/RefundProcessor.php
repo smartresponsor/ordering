@@ -37,6 +37,7 @@ final readonly class RefundProcessor implements RefundProcessorInterface
             $tx->amount(),
             $tx->currency(),
             $gatewayRef,
+            (new \DateTimeImmutable())->format(DATE_ATOM),
         );
 
         $this->em->persist($tx);

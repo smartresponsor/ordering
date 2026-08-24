@@ -12,6 +12,7 @@ final readonly class OrderRefundCompletedEvent
         public string $amount,
         public string $currency,
         public string $externalRef,
+        public string $occurredAt,
     ) {
     }
 }

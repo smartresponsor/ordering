@@ -36,12 +36,13 @@ final class RefundProcessorWithGatewayTest extends TestCase
         self::assertSame($tx, $persisted[0]);
         self::assertInstanceOf(OrderOutboxMessageEntity::class, $persisted[1]);
         self::assertSame(OrderRefundCompletedEvent::class, $persisted[1]->getEventType());
-        self::assertSame([
-            'orderId' => 'ORD1',
-            'refundId' => 'TX1',
-            'amount' => '15.00',
-            'currency' => 'USD',
-            'externalRef' => 'gw_refund_1',
-        ], $persisted[1]->payload());
+        $payload = $persisted[1]->payload();
+        self::assertSame('ORD1', $payload['orderId']);
+        self::assertSame('TX1', $payload['refundId']);
+        self::assertSame('15.00', $payload['amount']);
+        self::assertSame('USD', $payload['currency']);
+        self::assertSame('gw_refund_1', $payload['externalRef']);
+        self::assertNotSame('', $payload['occurredAt']);
+        self::assertInstanceOf(\DateTimeImmutable::class, new \DateTimeImmutable($payload['occurredAt']));
     }
 }
