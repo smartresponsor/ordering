@@ -7,6 +7,7 @@ namespace App\Ordering\Service\Outbox;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
@@ -51,6 +52,10 @@ final readonly class OutboxProcessor
                     isset($payload['trackingCode']) ? (string) $payload['trackingCode'] : null,
                 ),
                 OrderCancelledEvent::class => new OrderCancelledEvent(
+                    $orderIdentifier,
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
+                OrderCompletedEvent::class => new OrderCompletedEvent(
                     $orderIdentifier,
                     isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
                 ),
