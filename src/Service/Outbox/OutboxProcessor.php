@@ -7,8 +7,10 @@ namespace App\Ordering\Service\Outbox;
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
+use App\Ordering\Event\Domain\Order\OrderRefundCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
 use App\Ordering\Event\Domain\Order\OrderShippedEvent;
 use App\Ordering\Repository\Order\OrderRepository;
@@ -53,6 +55,18 @@ final readonly class OutboxProcessor
                 OrderCancelledEvent::class => new OrderCancelledEvent(
                     $orderIdentifier,
                     isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
+                OrderCompletedEvent::class => new OrderCompletedEvent(
+                    $orderIdentifier,
+                    isset($payload['vendorId']) ? (string) $payload['vendorId'] : null,
+                ),
+                OrderRefundCompletedEvent::class => new OrderRefundCompletedEvent(
+                    $orderIdentifier,
+                    (string) ($payload['refundId'] ?? ''),
+                    (string) ($payload['amount'] ?? '0.00'),
+                    (string) ($payload['currency'] ?? ''),
+                    (string) ($payload['externalRef'] ?? ''),
+                    (string) ($payload['occurredAt'] ?? ''),
                 ),
                 OrderRefundedEvent::class => new OrderRefundedEvent(
                     $orderIdentifier,

@@ -8,8 +8,11 @@ final readonly class OrderRefundCompletedEvent
 {
     public function __construct(
         public string $orderId,
-        public ?string $refundId = null,
-        public ?string $amount = null,
+        public string $refundId,
+        public string $amount,
+        public string $currency,
+        public string $externalRef,
+        public string $occurredAt,
     ) {
     }
 }

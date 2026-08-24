@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Ordering\Tests\Unit\Order;
 
 use App\Ordering\Entity\Order\OrderOutboxMessageEntity;
+use App\Ordering\Event\Domain\Order\OrderCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Service\Outbox\OutboxProcessor;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +15,37 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class OutboxProcessorIdentifierTest extends TestCase
 {
+    public function testPreservesCompletedEventMetadataThroughOutbox(): void
+    {
+        $orderId = '0198f6e1-7b9e-7db8-8ad8-bf2b7937070f';
+        $message = new OrderOutboxMessageEntity(
+            $orderId,
+            OrderCompletedEvent::class,
+            ['orderId' => $orderId, 'vendorId' => 'vendor-5'],
+        );
+
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('findBy')->willReturn([$message]);
+
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->method('getRepository')->willReturn($repository);
+        $entityManager->expects(self::once())->method('flush');
+
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects(self::once())
+            ->method('dispatch')
+            ->with(
+                self::callback(static fn (object $event): bool => $event instanceof OrderCompletedEvent
+                    && $event->orderId === $orderId
+                    && 'vendor-5' === $event->vendorId),
+                OrderCompletedEvent::class,
+            )
+            ->willReturnArgument(0);
+
+        self::assertSame(1, (new OutboxProcessor($entityManager, $dispatcher))->process());
+        self::assertTrue($message->isDispatched());
+    }
+
     public function testPreservesUuidOrderIdentifierWhenDispatchingPlacedEvent(): void
     {
         $orderId = '0198f6e1-7b9e-7db8-8ad8-bf2b7937070f';

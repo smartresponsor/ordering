@@ -10,6 +10,7 @@
             <file>tests/Unit/Order/OrderStateTest.php</file>
             <file>tests/Unit/Order/OrderCreationServiceTest.php</file>
             <file>tests/Unit/Order/OutboxProcessorIdentifierTest.php</file>
+            <file>tests/Service/RefundProcessorWithGatewayTest.php</file>
         </testsuite>
         <testsuite name="OrderFullStack">
             <file>tests/Integration/OrderDemoCommandTest.php</file>

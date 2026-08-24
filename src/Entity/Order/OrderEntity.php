@@ -6,6 +6,7 @@ namespace App\Ordering\Entity\Order;
 
 use App\Ordering\EntityInterface\Event\Order\RecordsEventEntityInterface;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
@@ -520,6 +521,7 @@ class OrderEntity implements RecordsEventEntityInterface
     public function markAsCompleted(): void
     {
         $this->setStatus(OrderStatus::Completed->value);
+        $this->recordEvent(new OrderCompletedEvent($this->slug, $this->vendorId));
         $this->touch();
     }
 
