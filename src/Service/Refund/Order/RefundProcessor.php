@@ -12,15 +12,15 @@ namespace App\Ordering\Service\Refund\Order;
 use App\Ordering\Contract\Gateway\Order\OrderPaymentGatewayInterface;
 use App\Ordering\Entity\Order\OrderRefundTransactionEntity;
 use App\Ordering\Event\Domain\Order\OrderRefundCompletedEvent;
+use App\Ordering\Service\Outbox\OutboxWriter;
 use App\Ordering\ServiceInterface\Refund\Order\RefundProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class RefundProcessor implements RefundProcessorInterface
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private MessageBusInterface $bus,
+        private OutboxWriter $outbox,
         private OrderPaymentGatewayInterface $gateway,
     ) {
     }
@@ -31,15 +31,16 @@ final readonly class RefundProcessor implements RefundProcessorInterface
         if ('' === $gatewayRef) {
             return;
         }
-        $this->em->persist($tx);
-        $this->em->flush();
-
-        $this->bus->dispatch(new OrderRefundCompletedEvent(
+        $event = new OrderRefundCompletedEvent(
             $tx->orderId(),
             $tx->id(),
             $tx->amount(),
             $tx->currency(),
             $gatewayRef,
-        ));
+        );
+
+        $this->em->persist($tx);
+        $this->outbox->store(OrderRefundCompletedEvent::class, get_object_vars($event));
+        $this->em->flush();
     }
 }
