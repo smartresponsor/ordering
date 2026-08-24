@@ -6,6 +6,7 @@ namespace App\Ordering\MessageHandler;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Event\Domain\Order\OrderCancelledEvent;
+use App\Ordering\Event\Domain\Order\OrderCompletedEvent;
 use App\Ordering\Event\Domain\Order\OrderPaidEvent;
 use App\Ordering\Event\Domain\Order\OrderPlacedEvent;
 use App\Ordering\Event\Domain\Order\OrderRefundedEvent;
@@ -42,6 +43,10 @@ final readonly class OrderMessageHandler
                 $order->getTrackingCode(),
             ),
             OrderCancelledEvent::class => fn () => new OrderCancelledEvent(
+                $order->slug(),
+                $order->getVendorId(),
+            ),
+            OrderCompletedEvent::class => fn () => new OrderCompletedEvent(
                 $order->slug(),
                 $order->getVendorId(),
             ),
