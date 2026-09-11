@@ -86,6 +86,12 @@ Thumbs.db
 /.meta/phpstan-2-report.json
 /.meta/gitleaks-report.json
 
+# Noncanonical generated Symfony reference artifacts
+/config/reference.php*
+
+# Local gating tooling is not part of the Ordering repository surface
+/.gating/
+
 # ──────────────────────────────────────────────
 #  🔐 Local environment (never commit)
 # ──────────────────────────────────────────────
