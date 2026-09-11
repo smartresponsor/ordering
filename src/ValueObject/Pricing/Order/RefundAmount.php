@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ordering\ValueObject\Pricing\Order;
 
-final class RefundAmount extends Money
+final readonly class RefundAmount extends Money
 {
     public static function fromMoney(Money $money): self
     {

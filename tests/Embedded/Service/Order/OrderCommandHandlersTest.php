@@ -25,7 +25,9 @@ final class OrderCommandHandlersTest extends TestCase
     {
         $kernel = new Kernel('test', true);
         $kernel->boot();
-        $this->em = $kernel->getContainer()->get(EntityManagerInterface::class);
+        $entityManager = $kernel->getContainer()->get(EntityManagerInterface::class);
+        self::assertInstanceOf(EntityManagerInterface::class, $entityManager);
+        $this->em = $entityManager;
 
         $tool = new SchemaTool($this->em);
         $tool->dropDatabase();

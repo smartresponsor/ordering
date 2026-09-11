@@ -83,6 +83,8 @@ Thumbs.db
 *~
 # PHP-CS-Fixer cache
 .php-cs-fixer.cache
+/.meta/phpstan-2-report.json
+/.meta/gitleaks-report.json
 
 # ──────────────────────────────────────────────
 #  🔐 Local environment (never commit)

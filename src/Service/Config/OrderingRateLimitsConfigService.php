@@ -8,6 +8,7 @@ use App\Administering\Service\Config\AdministrationConfigApplyService;
 use App\Administering\Service\Config\AdministrationConfigFileWriterService;
 use App\Administering\ServiceInterface\Config\AdministrationConfigToolServiceInterface;
 use App\Administering\Value\Config\AdministrationConfigToolDescriptor;
+use App\Administering\Value\Config\ConfigToolDescriptor;
 use App\Ordering\Form\Config\OrderingRateLimitsConfigData;
 use App\Ordering\Form\Config\OrderingRateLimitsConfigFormType;
 use Symfony\Component\Yaml\Yaml;
@@ -68,8 +69,9 @@ final readonly class OrderingRateLimitsConfigService implements AdministrationCo
     {
         $payload = $this->assertData($data);
 
-        return $this->applyService->save(
-            $this->descriptor(),
+        /** @var array{status:string, messages:list<string>, masked_changes:array<string, string>, file_changes:array<int, array<string, mixed>>, secret_changes:array<int, array<string, mixed>>} $result */
+        $result = $this->applyService->save(
+            $this->applyDescriptor(),
             (string) ($context['actor'] ?? 'system'),
             $this->stateRows($payload, 'pending'),
             [
@@ -80,6 +82,8 @@ final readonly class OrderingRateLimitsConfigService implements AdministrationCo
             ],
             [],
         );
+
+        return $result;
     }
 
     public function apply(object $data, array $context = []): array
@@ -95,8 +99,9 @@ final readonly class OrderingRateLimitsConfigService implements AdministrationCo
 
         $status = 'applied' === $write['status'] ? 'applied' : 'failed';
 
-        return $this->applyService->apply(
-            $this->descriptor(),
+        /** @var array{status:string, messages:list<string>, masked_changes:array<string, string>, file_changes:array<int, array<string, mixed>>, secret_changes:array<int, array<string, mixed>>} $result */
+        $result = $this->applyService->apply(
+            $this->applyDescriptor(),
             (string) ($context['actor'] ?? 'system'),
             $this->stateRows($payload, $status),
             $patch,
@@ -110,6 +115,30 @@ final readonly class OrderingRateLimitsConfigService implements AdministrationCo
             [],
             'applied' === $write['status'] ? null : $write['message'],
             $status,
+        );
+
+        return $result;
+    }
+
+    private function applyDescriptor(): ConfigToolDescriptor
+    {
+        $descriptor = $this->descriptor();
+
+        return new ConfigToolDescriptor(
+            applicationCode: $descriptor->applicationCode,
+            toolCode: $descriptor->toolCode,
+            label: $descriptor->label,
+            description: $descriptor->description,
+            metadata: $descriptor->metadata,
+            formClass: $descriptor->formClass,
+            serviceClass: $descriptor->serviceClass,
+            requiredPermission: $descriptor->requiredPermission,
+            editableFields: $descriptor->editableFields,
+            sensitiveFields: $descriptor->sensitiveFields,
+            readableFiles: $descriptor->readableFiles,
+            writableFiles: $descriptor->writableFiles,
+            secretNames: [],
+            applyStrategy: $descriptor->applyStrategy,
         );
     }
 

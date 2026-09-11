@@ -13,7 +13,7 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-final class Kernel extends BaseKernel
+class Kernel extends BaseKernel
 {
     public function registerBundles(): iterable
     {

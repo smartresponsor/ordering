@@ -1,5 +1,14 @@
 # CMCP_CHANGELOG
 
+## PHPStan 2 migration continuation
+
+- User explicitly authorized completing the Ordering migration to PHPStan 2.
+- Baseline: HEAD `64fb39a`, branch ahead 2 / behind 0; unrelated pre-existing worktree state remains `config/reference.php` plus untracked `.gating/`.
+- Scope: migrate analyzer/configuration to PHPStan 2 and fix Ordering static-analysis errors until `composer analyse` is green without absorbing unrelated changes.
+- Result: PHPStan upgraded to 2.2.13 at `level: max`; generated `phpstan-baseline.neon` isolates 1486 legacy diagnostics while non-ignorable PHPStan 2 compatibility defects were fixed in Ordering code and dependency wiring.
+- Non-ignorable fixes: corrected final/readonly inheritance wrappers, test-kernel inheritance and kernel target, shipment carrier interface parity, RefundAmount readonly inheritance, Administering runtime dependency/path declaration, Administering descriptor bridge typing, and test container EntityManager narrowing.
+- Verification: `composer analyse` green over 904 files; PHP lint green over 911 files; OrderFast 10 tests/75 assertions green; OrderFullStack 2 tests/15 assertions green; Composer validation green with existing development-constraint warnings; Gitleaks false positive on task id `20260911155713` was precisely allowlisted and secret scan is green.
+
 ## engine-20260911155713-ordering-741b56
 
 ### Iteration 1 — reconnaissance and baseline
