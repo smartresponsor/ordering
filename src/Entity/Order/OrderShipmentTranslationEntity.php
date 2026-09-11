@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderShipmentTranslationRepository::class)]
 #[ORM\Table(name: 'order_shipment_translation')]
-#[ORM\UniqueConstraint(name: 'uniq_order_shipment_translation_locale', columns: ['order_shipment_id', 'object_locale'])]
+#[ORM\UniqueConstraint(name: 'uniq_order_shipment_translation_locale', columns: ['order_shipment_id', 'locale'])]
 class OrderShipmentTranslationEntity
 {
     use ObjectIdentityEmbeddableTrait;
