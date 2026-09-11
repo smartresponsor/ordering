@@ -44,3 +44,26 @@
 Что имеем? Runtime, canon, package metadata, mapping, unit/functional, and secret-scanning gates are green; static analysis has a precisely identified pre-existing repository-wide blocker.
 
 Что осталось? Final diff acceptance, coherent commit/push, PR merge-gate evaluation, and post-integration verification.
+
+### Iteration 4 — debt closure and integration
+
+- Final RC patch was narrowed to `composer.json`, `OrderPaymentTranslationEntity.php`, `OrderShipmentTranslationEntity.php`, and this orchestration journal. The pre-existing `config/reference.php` modification and untracked `.gating/` tree were explicitly excluded from staging.
+- Re-ran `composer test:object-identity`: 2 tests / 16 assertions green.
+- Created signed commit `4008ad3` (`Harden Ordering RC dependency and identity contracts`).
+- Push through Console MCP was attempted and blocked by its `working_tree_dirty` safety guard because the two unrelated pre-existing worktree changes remain present. The branch itself is one commit ahead and zero behind its configured upstream.
+- No unrelated files were committed, deleted, reverted, or hidden to bypass that guard. PR creation/merge cannot be truthfully performed until the signed commit is published.
+
+Что имеем? The bounded RC implementation is committed locally and isolated from unrelated pre-existing worktree state.
+
+Что осталось? Final local acceptance and a remote publication/PR step blocked solely by the Console MCP clean-worktree push policy.
+
+### Iteration 5 — final acceptance and handoff
+
+- Post-commit branch state: `feature/facting-order-completed-publish-20260824`, HEAD `4008ad3`, upstream configured, ahead 1 / behind 0 before this journal-only acceptance commit.
+- Accepted product evidence: Composer manifest/lock validation green; Canon gate 0 violations; Objecting identity contract 2/16 green; local full pipeline green for audit, PHP/YAML/Twig/container lint, Doctrine mapping, unit 10/75, functional 2/15, and Gitleaks.
+- Bounded residual debt: PHPStan 1.x/Symfony 8.1 incompatibility plus broader historical PHPStan 2 findings; Semgrep findings in the pre-existing `.gating/` tooling tree; Doctrine database synchronicity is skipped by the repository's configured `--skip-sync` validation command.
+- Remote integration status is not green only because Console MCP refuses push from a dirty worktree containing unrelated user/pre-existing changes. No destructive cleanup was authorized or performed.
+
+Что имеем? The original bounded Ordering RC task is locally implemented, verified, journaled, and committed without absorbing unrelated worktree state.
+
+Что осталось? Publish the local signed commits once the pre-existing dirty worktree is independently cleared or the Console MCP push guard gains a safe committed-HEAD-only publication path; then create/inspect/merge the PR.
