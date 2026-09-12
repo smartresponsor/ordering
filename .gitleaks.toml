@@ -19,7 +19,8 @@ paths = [
 regexes = [
     '''dummy-key''',
     '''example-(token|api|key)''',
-    '''sample-(id|secret)'''
+    '''sample-(id|secret)''',
+    '''^20260911155713$'''
 ]
 
 # Игнорировать комментарии (начинающиеся с # или //)

@@ -6,6 +6,6 @@ namespace Tests\Integration;
 
 use Tests\Kernel as BaseTestKernel;
 
-final class TestKernel extends BaseTestKernel
+class TestKernel extends BaseTestKernel
 {
 }

@@ -11,7 +11,7 @@ namespace App\Ordering\Service\Inventory\Order;
 
 use App\Ordering\ServiceInterface\Inventory\Order\InventoryGatewayInterface;
 
-final class InMemoryInventoryGateway implements InventoryGatewayInterface
+class InMemoryInventoryGateway implements InventoryGatewayInterface
 {
     /** @var array<string,int> */
     private array $stock = [];

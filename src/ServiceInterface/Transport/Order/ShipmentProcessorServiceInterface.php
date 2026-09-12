@@ -11,7 +11,6 @@ namespace App\Ordering\ServiceInterface\Transport\Order;
 
 use App\Ordering\Entity\Order\OrderEntity;
 use App\Ordering\Entity\Order\OrderShipmentEntity;
-use App\Ordering\ServiceInterface\Shipment\CarrierInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 interface ShipmentProcessorServiceInterface

@@ -9,7 +9,7 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 
-final readonly class OrderMessageIdempotencyMiddleware implements MiddlewareInterface
+readonly class OrderMessageIdempotencyMiddleware implements MiddlewareInterface
 {
     private OrderMessageIdempotencyStoreInterface $store;
 
