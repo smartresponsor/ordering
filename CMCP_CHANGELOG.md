@@ -75,4 +75,18 @@
 
 Что имеем? The original bounded Ordering RC task is locally implemented, verified, journaled, and committed without absorbing unrelated worktree state.
 
-Что осталось? Publish the local signed commits once the pre-existing dirty worktree is independently cleared or the Console MCP push guard gains a safe committed-HEAD-only publication path; then create/inspect/merge the PR.
+Что осталось? At that handoff point, remote publication and PR integration were still blocked by the dirty-worktree safety guard.
+
+### Post-handoff RC closure — publication and integration
+
+- Re-entered the same Task ID from the authoritative local workspace rather than restarting implementation.
+- Current worktree was clean; branch `feature/facting-order-completed-publish-20260824` was already published and synchronized with its upstream at HEAD `6081c455b2ad1385f8a7506571803c111398f5ce`.
+- Re-ran `composer test:object-identity`: 2 tests / 16 assertions green.
+- Re-ran `composer pipeline:local:full`: Composer audit, PHP/YAML/Twig/container lint, Doctrine mapping, unit 10/75, functional 2/15, and Gitleaks green. Semgrep continues to report historical CI/security findings that are not introduced by this bounded RC patch.
+- Created PR #4 `Harden Ordering RC dependency and identity contracts`; Console MCP inspection reported `MERGEABLE`, zero blockers, and an allowed merge gate.
+- Squash-merged PR #4 into `master`; fetched `origin/master` and confirmed the integrated Composer dependency/path contract is present on the remote base branch.
+- Console MCP intentionally forbids switching directly to the protected local `master` branch, so post-merge evidence uses fetched `origin/master` plus the merge result rather than bypassing that safety policy.
+
+Что имеем? Ordering RC implementation is published and merged into `master`; the product gates relevant to this bounded task are green, and the remote base contains the canonical dependency contract.
+
+Что осталось? No authorized in-scope RC tail remains. Historical Semgrep/static-analysis debt stays a separate bounded follow-up and is not silently absorbed into this task.
