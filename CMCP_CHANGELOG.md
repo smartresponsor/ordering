@@ -1,5 +1,43 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Canon024 production Composer manifest
+
+- Started from clean `origin/master` at `95f6ce4` on `feature/ordering-canon024-production-manifest` after the prior RC hardening merge.
+- Canon024 requires `composer.prod.json` as the production/container manifest and forbids sibling `path` repositories, `../Component` source paths, and `symlink: true` wiring.
+- Canon033 requires identity parity between development and production manifests for package name/type, PSR-4 identity, PHP baseline, and Symfony generation.
+- Verified production reference: `App/composer.prod.json` resolves internal SmartResponsor packages through VCS repositories and packaged `dev-master` dependencies rather than workstation sibling paths.
+- Selected work: materialize a path-independent Ordering production manifest with the same `ordering/order` identity, `App\\Ordering\\ => src/`, PHP `^8.4`, Symfony `^8.1`, and the production runtime dependency contour already proven in `composer.json`.
+
+Что имеем? The production packaging contract is now factually defined from Canon024/033 plus an existing repository reference.
+
+Что осталось? Create the manifest, run canonical/RC validation, verify the production dependency graph can resolve without sibling path repositories, then integrate only if green.
+
+- File creation note: exact-replace cannot create a missing file, so `composer.prod.json` was added through the guarded patch endpoint; no repository content was changed by the failed create attempt.
+- Validation hygiene: broad RC validation unexpectedly regenerated `phpstan-baseline.neon` via `analyse:baseline`; that out-of-scope mutation was explicitly restored from `origin/master` before any commit.
+
+### Production dependency resolution closure
+
+- Verified actual first-party origins rather than inferring repository names. Administering, Collectioning, Cruding, Interfacing, Objecting, and Viewing use their expected `git@github.com:smartresponsor/<name>.git` origins; Tabling is factually hosted at `git@github.com:smartresponsor/tabling-.git`.
+- Initial production dry-resolution correctly failed against the guessed `tabling.git` URL; the manifest was corrected to the verified origin.
+- Collectioning and Tabling currently have no remote `master` branch. Production root requirements therefore use Composer inline aliases: `dev-collection-query-hardening as dev-master` and `dev-backend-table-actions as dev-master`. This preserves compatibility with Cruding's packaged `dev-main || dev-master` Collectioning requirement without introducing local path wiring.
+- Isolated validation with `COMPOSER=composer.prod.json` reports the manifest valid and a `composer update --dry-run --no-dev --no-install --no-interaction` resolves the full packaged graph successfully: 114 installs planned, zero removals, and no security advisories. Resolved first-party evidence includes Collectioning `9fc56c8`, Tabling `8f955eb`, Cruding `dev-master`, Objecting `dev-master`, Interfacing `dev-master`, Viewing `dev-master`, and Administering `dev-master`.
+- Temporary validation/recovery scripts were removed after use; no helper tooling or regenerated PHPStan baseline is retained in the patch.
+
+Что имеем? `composer.prod.json` now satisfies the Canon024 path-independent production model, Canon033 identity parity, and real Composer VCS graph resolution.
+
+Что осталось? Re-run the normal development manifest/canon/full local gates, inspect the final two-file patch, then signed commit, push, PR merge gate, and post-merge verification.
+
+### Final gate closure
+
+- Development `composer validate --strict --check-lock`: green.
+- Owner canon enforcement: green with 0 violations.
+- Full local pipeline completed through the durable bounded runner with exit code 0: Composer audit, PHP/YAML/Twig/container lint, Doctrine mapping, unit 10 tests / 75 assertions, functional 2 tests / 15 assertions, Gitleaks, and Semgrep all completed. Semgrep remains at the same 174 historical report-only findings.
+- No temporary validation scripts or PHPStan baseline changes remain in the intended patch.
+
+Что имеем? Canon024/033 production packaging is implemented, VCS-resolvable, and development/runtime gates remain green.
+
+Что осталось? Final diff acceptance and remote integration only.
+
 ## 2026-09-13 — Ordering RC dependency-canon continuation
 
 - Baseline: clean worktree on `feature/ordering-rc-journal-final-20260911` before mutation.
