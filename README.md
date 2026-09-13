@@ -2,7 +2,7 @@
 
 Symfony-oriented ordering component with Doctrine-first storage, API surface, background workers, deploy assets, and archived root documentation.
 
-- Language: PHP 8.2+
+- Language: PHP 8.4+
 - Runtime style: Symfony app namespace (`App\\...`)
 - Persistence: Doctrine ORM entities + migrations as primary schema truth
 - Owner: Marketing America Corp
