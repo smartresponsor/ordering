@@ -21,16 +21,19 @@
         "ext-openssl": "*",
         "ext-sodium": "*",
         "ext-zlib": "*",
-        "administering/administration": "*@dev",
+        "administering/administration": "dev-master",
         "api-platform/core": "^4.0",
-        "cruding/crud": "*@dev",
+        "collectioning/collection": "dev-master",
+        "cruding/crud": "dev-master",
         "doctrine/collections": "^2.5",
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/orm": "^3.3",
-        "interfacing/interface": "*@dev",
-        "objecting/object": "*@dev",
-        "viewing/view": "*@dev",
-        "psr/simple-cache": "3.0",
+        "easycorp/easyadmin-bundle": "^5.0",
+        "interfacing/interface": "dev-master",
+        "objecting/object": "dev-master",
+        "tabling/table": "dev-master",
+        "viewing/view": "dev-master",
+        "psr/simple-cache": "^3.0",
         "sentry/sentry-symfony": "^5.7",
         "symfony/asset": "^8.1",
         "symfony/cache": "^8.1",
@@ -107,6 +110,13 @@
         },
         {
             "type": "path",
+            "url": "../Collectioning",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
             "url": "../Interfacing",
             "options": {
                 "symlink": true
@@ -115,6 +125,13 @@
         {
             "type": "path",
             "url": "../Objecting",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../Tabling",
             "options": {
                 "symlink": true
             }

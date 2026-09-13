@@ -1,5 +1,34 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Ordering RC dependency-canon continuation
+
+- Baseline: clean worktree on `feature/ordering-rc-journal-final-20260911` before mutation.
+- Read Ordering README/Composer/current RC inventory and prior journal; mandatory helper contracts from Objecting, Cruding, Viewing, and Interfacing; Collectioning and Tabling package identities; Canonization architecture rules Canon007, Canon008, Canon018, Canon022, Canon023, Canon024, Canon025, Canon026, Canon043; Gating remains the executable companion.
+- Canon mapping: `ordering/order` => `App\\Ordering\\ => src/`; no namespace rewrite is justified. Ordering has standalone Symfony boot surfaces and Canon022 therefore requires direct runtime dependencies on Cruding, Collectioning, Tabling, Viewing, Interfacing, Objecting, and EasyAdmin.
+- Confirmed RC defect: local path dependencies used `*@dev`; `composer validate --strict` reports the unbound constraints and Canon043 requires exact `dev-master`.
+- Selected RC-critical work: normalize first-party local dependency constraints, complete the direct standalone dependency baseline, preserve symlink path repositories, synchronize Composer lock state, and rerun quality/runtime gates.
+- Growth workstream remains non-blocking: workflow/idempotency observability, reconciliation/timeline UX, and order-edit/version tooling.
+- Separate tail: `composer.prod.json` is absent while Canon024 requires a production manifest; it is not guessed from development wiring and remains a separately evidenced packaging task.
+
+Что имеем? Canonical dependency/version defects are isolated and the bounded RC correction is being applied.
+
+Что осталось? Synchronize lock state, run Composer/canon/tests/static/runtime verification, and integrate only on green evidence.
+
+### Verification and runtime repair closure
+
+- Composer dependency resolution completed successfully with direct Collectioning/Tabling installation and local junction wiring; Composer audit reported no known security advisories.
+- `composer validate --strict --check-lock`: green after normalizing `psr/simple-cache` from exact `3.0` to `^3.0`.
+- `composer lint:canon`: green with 0 violations.
+- `composer analyse`: green across 904 files with 0 PHPStan errors.
+- First full local pipeline exposed a real Doctrine metadata mismatch after Objecting `dev-master`: translation unique constraints referenced legacy `locale` while `ObjectLocaleEmbeddable` maps `object_locale` / `object_timezone`.
+- Repaired both `OrderPaymentTranslationEntity` and `OrderShipmentTranslationEntity` unique constraints to use the actual canonical `object_locale` column.
+- Re-ran `composer pipeline:local:full`: green exit code; Composer audit, PHP/YAML/Twig/container lint, Doctrine mapping, unit 10 tests / 75 assertions, functional 2 tests / 15 assertions, and Gitleaks all passed. Doctrine database synchronicity remains intentionally skipped by the repository's configured schema check.
+- Semgrep completed successfully but continues to report 174 historical blocking-class findings, concentrated in tracked CI/workflow and legacy surfaces; the repository pipeline treats Semgrep as report-only and returned success. No Semgrep finding was introduced by this bounded dependency/metadata patch.
+
+Что имеем? The RC-critical dependency canon and Objecting locale metadata integration are implemented and the repository's complete local pipeline is green.
+
+Что осталось? Final diff acceptance, coherent signed commit, push, PR mergeability/check inspection, merge if the gate is green, and post-integration state verification.
+
 ## PHPStan 2 migration continuation
 
 - User explicitly authorized completing the Ordering migration to PHPStan 2.
