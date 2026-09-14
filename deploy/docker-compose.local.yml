@@ -21,6 +21,8 @@ services:
         condition: service_healthy
   postgres:
     image: postgres:16-alpine
+    security_opt:
+      - no-new-privileges:true
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-order}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-order}
@@ -33,6 +35,8 @@ services:
     ports: [ "5432:5432" ]
   rabbitmq:
     image: rabbitmq:3.13-management
+    security_opt:
+      - no-new-privileges:true
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-user}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-pass}
@@ -44,6 +48,8 @@ services:
       retries: 10
   redis:
     image: redis:7.4-alpine
+    security_opt:
+      - no-new-privileges:true
     ports: [ "6379:6379" ]
     healthcheck:
       test: [ "CMD","redis-cli","ping" ]
@@ -52,6 +58,8 @@ services:
       retries: 10
   minio:
     image: minio/minio:latest
+    security_opt:
+      - no-new-privileges:true
     command: server /data --console-address ":9001"
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
@@ -64,6 +72,8 @@ services:
       retries: 10
   mailpit:
     image: axllent/mailpit:latest
+    security_opt:
+      - no-new-privileges:true
     ports: [ "1025:1025","8025:8025" ]
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: "true"
