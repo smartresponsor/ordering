@@ -1,5 +1,19 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — API Dockerfile non-root hardening
+
+- Started from `origin/master` at `948cca6` after canon scanner path hardening merged.
+- Residual Semgrep baseline entering this batch: 44 findings, including one Dockerfile `missing-user` finding in `deploy/docker/api.Dockerfile`.
+- Repository search found no in-repo references to `deploy/docker/api.Dockerfile`, lowering integration risk, but the image contract was still inspected rather than silencing the scanner mechanically.
+- `deploy/Dockerfile.prod` already establishes the local Symfony runtime convention of writable `var/cache` and `var/log` owned by `www-data`.
+- Hardened the API image by creating those runtime directories, assigning them to the built-in `www-data` user from `php:8.2-fpm-alpine`, and switching to `USER www-data` before starting the PHP built-in server on unprivileged port 8080.
+
+Что имеем? The API image now has an explicit non-root runtime identity with Symfony write paths prepared before privilege drop.
+
+- Semgrep verification removed the Dockerfile `missing-user` finding; full-repository findings dropped exactly from 44 to 43 with no new rule classes.
+
+Что осталось? Clean temporary tooling, then signed commit / safe PR / merge.
+
 ## 2026-09-13 — Canon scanner write-path hardening
 
 - Started from `origin/master` at `0d578e4` after Kubernetes privilege-escalation hardening merged.
