@@ -8,7 +8,7 @@ jobs:
             matrix:
                 scenario: [ "deploy/chaos/scenario/db-outage.json", "deploy/chaos/scenario/netem-db.yaml" ]
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
             -   name: Preflight
                 run:
                     echo "Note: netem requires privileged runner"

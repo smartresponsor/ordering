@@ -1,5 +1,28 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Residual Semgrep hardening baseline
+
+- Started from `origin/master` at `417883c` after the full top-level GitHub Actions sweep merged.
+- Fresh full-repository `semgrep scan --config auto .` reports 86 findings, down from the earlier 174 historical baseline.
+- Residual rule distribution: 19 PHP `exec-use`, 17 mutable GitHub Action refs, 15 Docker Compose `no-new-privileges`, 15 Docker Compose writable-filesystem, 8 Kubernetes privilege-escalation/security-context, 7 Kubernetes run-as-non-root, 2 tainted-filename, and one each for Dockerfile missing-user, npm minimum-release-age, and unlink-use.
+- Residual path distribution is led by `deploy` (49), then `bin` (19), `charts` (9), `docs` (4), `tools` (2), plus isolated findings in `.npmrc`, `ci`, and `src`.
+- Selected next bounded batch: the 17 remaining mutable action refs under nested deploy/security workflows, archived CI documentation, and `ci/github/chaos-nightly.yaml`. These use the same already-verified action/tag SHAs as the completed top-level workflow sweep.
+
+Что имеем? The workflow-related security debt is no longer in `.github/workflows`; only nested/archive workflow copies remain.
+
+Что осталось? Pin the 17 residual action refs, verify the full-repository Semgrep count drops accordingly, then integrate only that bounded supply-chain batch.
+
+### Residual workflow closure
+
+- Pinned all 17 residual mutable action references across nested deploy/security workflows, archived CI documentation, and `ci/github/chaos-nightly.yaml` using previously verified immutable SHAs.
+- Full-repository Semgrep verification dropped exactly from 86 to 69 findings; the mutable-action rule class is now absent from the residual baseline.
+- Targeted YAML lint exposed one pre-existing malformed inline `with:` map in `deploy/security/.github/workflows/deploy-pipeline.yml`; it was converted to equivalent block YAML without changing `php-version` or extension inputs.
+- Final targeted YAML lint: all 4 affected YAML targets valid.
+
+Что имеем? No mutable GitHub Action references remain anywhere in the scanned Ordering repository.
+
+Что осталось? Clean temporary scan tooling, review the bounded diff, then signed commit / safe PR / merge. The next residual security class after this batch is infrastructure hardening (Docker Compose/Kubernetes), not workflow supply-chain pinning.
+
 ## 2026-09-13 — Remaining workflow immutable-action sweep
 
 - Started from clean `origin/master` at `b71d37d` after `cd.yml` and `deploy.yml` security hardening merged.
