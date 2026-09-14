@@ -1,5 +1,31 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Remaining workflow immutable-action sweep
+
+- Started from clean `origin/master` at `b71d37d` after `cd.yml` and `deploy.yml` security hardening merged.
+- Inventory covers the 14 remaining workflow files under `.github/workflows/`, excluding already-clean `cd.yml` and `deploy.yml`.
+- Targeted Semgrep baseline across those 14 files found only one rule class: mutable GitHub Action references. No remaining workflow produced a shell-injection finding.
+- Per-file finding counts: `ab-ci.yml` 2, `ac-ci.yml` 2, `ci-cd.yml` 5, `ci-enhancements.yml` 4, `ci-tests.yml` 2, `ci.yml` 2, `container-image-scan.yml` 4, `k8s-security-scan.yml` 5, `order_component_ci.yml` 2, `order_component_ci_cd_full.yml` 8, `order_component_ci_cd_prod.yml` 11, `packagist.yml` 1, `release.yml` 4, `rollback.yml` 1.
+- Existing verified SHA pins from prior workflow hardening will be reused where the same action/tag appears. New security/release/Kubernetes action refs were resolved directly with `git ls-remote`.
+- `kubescape/github-action@v3` does not resolve as a literal tag or branch; its published v3 release line includes `v3.0.21` at `c9749b84d138c0cbbb702b258774954f5463b82e`, which will replace the invalid mutable ref.
+
+Что имеем? The remaining workflow debt is homogeneous supply-chain pinning rather than mixed shell-safety defects.
+
+Что осталось? Apply one deterministic fleet replacement map, verify each workflow reaches zero targeted Semgrep findings, lint all workflow YAML, then integrate as one coherent security PR.
+
+### Fleet closure
+
+- Deterministic replacement map pinned exactly 53 mutable action references across the 14 remaining workflows; no `cd.yml` or `deploy.yml` references were touched.
+- New immutable pins include Trivy `v0.20.0` (`b2933f565dbc598b29947660e66259e3c7bc8561`), CodeQL action v3 (`c20e34f438d671fc35777cc9820dd7adf8252874`), GitHub Script v7 (`f28e40c7f34bde8b3046d885e986cb6290c5673b`), setup-kubectl v3 (`901a10e89ea615cf61f57ac05cecdf23e7de06d8`), setup-helm v3 (`5119fcb9089d432beecbf79bb2c7915207344b78`), cache v3 (`6f8efc29b200d32929f49075959781ed54ec270c`), and action-gh-release v1 (`26994186c0ac3ef5cae75ac16aa32e8153525f77`).
+- `kubescape/github-action@v3` was corrected to immutable release `v3.0.21` (`c9749b84d138c0cbbb702b258774954f5463b82e`) because literal `v3` does not exist as a tag or branch in that repository.
+- Fleet YAML lint exposed one pre-existing syntax error in `ci.yml`: an inline `with:` map containing nested GitHub expression quotes. It was converted to equivalent block YAML without changing setup-php values. Final YAML lint: all 16 workflow files valid.
+- Final single-pass `semgrep scan --config auto .github/workflows` scanned all 16 tracked workflow files with 82 rules and reports `0 findings / 0 blocking`.
+- All temporary inventory, SHA-resolution, mutation, and scan helper scripts were removed after use.
+
+Что имеем? The complete Ordering GitHub Actions surface is now Semgrep-clean for the configured workflow security rules and uses immutable third-party action references.
+
+Что осталось? Final bounded diff review, signed commit, safe publication, PR merge gate, and post-merge verification.
+
 ## 2026-09-13 — Post-RC deploy workflow hardening
 
 - Started from `origin/master` at `877eee2` after the previous CD workflow security merge.
