@@ -1,5 +1,26 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Post-RC CI shell-injection hardening
+
+- Started from clean `origin/master` at `a277ad8` on `feature/ordering-security-hardening` after Canon024 production packaging merged.
+- Semgrep currently reports 174 historical findings. This workstream intentionally does not treat all findings as equivalent or mutate code solely to silence scanners.
+- `AuditRotator` unlink finding was triaged as a false positive: the deleted file path is derived only from trusted `%kernel.project_dir%`, a fixed audit-log basename, and a server-generated timestamp; no user-controlled path reaches `unlink()`.
+- Selected high-signal bounded fix: `.github/workflows/cd.yml` directly interpolates GitHub context and deployment values into `run:` / remote shell commands. Move those values through environment variables, quote shell expansions, and use GHCR `--password-stdin`.
+
+Что имеем? A real CI command-injection boundary has been isolated without broad workflow churn.
+
+Что осталось? Patch `cd.yml`, run YAML and targeted Semgrep verification, then integrate only if the security signal materially improves.
+
+- `cd.yml` hardened: image/ref values now enter shell through quoted environment variables; remote deploy values are explicitly passed through `ssh-action` `envs`; GHCR authentication uses `--password-stdin`; PHP container selection is separated, checked, and quoted before `docker exec`.
+- Exact action tag SHAs were resolved directly with `git ls-remote`: checkout v4 `11d5960a326750d5838078e36cf38b85af677262`, docker/login-action v3 `c94ce9fb468520275223c153574b00df6fe4bcc9`, appleboy/ssh-action v1.0.3 `029f5b4aeeeb58fdfe1410a5d17f967dacf36262`.
+- Those action dependencies are now pinned to immutable full commit SHAs while retaining version comments for maintainability.
+- Verification: Symfony YAML lint is green and targeted `semgrep scan --config auto .github/workflows/cd.yml` reports `0 findings / 0 blocking` across 82 rules. Before the action pins, the same targeted scan had 3 mutable-action findings; before the shell hardening, the full scan additionally reported direct GitHub-context shell injection in this workflow.
+- Temporary verification scripts were removed after use.
+
+Что имеем? The CD workflow has a materially stronger command-execution boundary and immutable third-party action supply chain, with targeted Semgrep reduced to zero findings.
+
+Что осталось? Final diff review, signed commit, safe feature-branch publication, PR merge gate, and post-merge verification.
+
 ## 2026-09-13 — Canon024 production Composer manifest
 
 - Started from clean `origin/master` at `95f6ce4` on `feature/ordering-canon024-production-manifest` after the prior RC hardening merge.

@@ -11,32 +11,44 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build -t ghcr.io/${{ github.repository }}:${{ github.ref_name }} -f Dockerfile.prod .
+        env:
+          GHCR_IMAGE: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+        run: docker build -t "$GHCR_IMAGE" -f Dockerfile.prod .
       - name: Push image
-        run: docker push ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+        env:
+          GHCR_IMAGE: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+        run: docker push "$GHCR_IMAGE"
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
+        env:
+          DEPLOY_DIR: ${{ secrets.DEPLOY_DIR }}
+          GH_ACTOR: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHCR_IMAGE: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
+          envs: DEPLOY_DIR,GH_ACTOR,GH_TOKEN,GHCR_IMAGE
           script: |
             set -e
-            cd ${{ secrets.DEPLOY_DIR }}
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-            docker pull ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+            cd -- "$DEPLOY_DIR"
+            printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+            docker pull "$GHCR_IMAGE"
             docker compose -f deploy/docker/docker-compose.prod.yml up -d
-            docker exec $(docker ps -qf "name=php") php bin/console doctrine:migrations:migrate --no-interaction
+            PHP_CONTAINER="$(docker ps -qf 'name=php' | head -n 1)"
+            test -n "$PHP_CONTAINER"
+            docker exec "$PHP_CONTAINER" php bin/console doctrine:migrations:migrate --no-interaction
