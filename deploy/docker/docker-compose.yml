@@ -2,6 +2,8 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    security_opt:
+      - no-new-privileges:true
     ports: [ "5672:5672", "15672:15672" ]
     environment:
       RABBITMQ_DEFAULT_USER: guest

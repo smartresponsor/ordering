@@ -2,6 +2,8 @@ version: '3.8'
 services:
   nginx:
     image: nginx:1.27-alpine
+    security_opt:
+      - no-new-privileges:true
     ports: [ "8080:80" ]
     volumes:
       - ../..:/var/www/html:ro
@@ -28,6 +30,8 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+    security_opt:
+      - no-new-privileges:true
     ports: [ "5672:5672", "15672:15672" ]
     healthcheck:
       test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
@@ -37,6 +41,8 @@ services:
 
   db:
     image: postgres:16-alpine
+    security_opt:
+      - no-new-privileges:true
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: orderdb

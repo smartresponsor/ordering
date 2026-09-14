@@ -1,5 +1,19 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Docker Compose no-new-privileges hardening
+
+- Started from `origin/master` at `e9c9725` after residual workflow action pinning merged.
+- Fresh residual Semgrep baseline entering this batch: 69 findings, including 15 Docker Compose `no-new-privileges` findings and 15 separate writable-filesystem findings.
+- Reconnaissance intentionally separated these classes: `read_only` was not applied because Postgres, RabbitMQ, Redis, MinIO and similar services require writable runtime paths; `no-new-privileges` is a narrower privilege-escalation boundary that does not change filesystem semantics.
+- Enumerated the exact 15 flagged image-backed Compose services before mutation and added only `security_opt: [no-new-privileges:true]` semantics to those service blocks across six Compose files.
+- Targeted Semgrep verification reports zero remaining `no-new-privileges` findings.
+- Symfony YAML lint reports all 6 affected Compose files valid.
+- Full-repository Semgrep verification dropped exactly from 69 to 54 findings, with no new rule classes; the `no-new-privileges` rule class is absent.
+
+Что имеем? The bounded Compose privilege-escalation layer is closed without forcing read-only filesystems onto stateful services.
+
+Что осталось? Clean temporary scan tooling, review the bounded diff, then signed commit / safe PR / merge. Remaining infrastructure debt is the separate writable-filesystem and Kubernetes security-context classes.
+
 ## 2026-09-13 — Residual Semgrep hardening baseline
 
 - Started from `origin/master` at `417883c` after the full top-level GitHub Actions sweep merged.
