@@ -1,5 +1,18 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — npm dependency cooldown hardening
+
+- Started from `origin/master` at `e3636e3` after API Dockerfile non-root hardening merged.
+- Residual Semgrep baseline entering this batch: 43 findings, including one npm `missing-minimum-release-age` finding in `.npmrc`.
+- Repository uses npm without a package lock (`package-lock=false`), so fresh dependency resolution is the relevant supply-chain surface.
+- Local npm is 11.13.0. npm introduced `min-release-age` in 11.10.0; the project setting is therefore supported by the local toolchain even though npm 11.12/11.13 has a known config-reporting bug that may display `null` while installs still honor the setting.
+- Added `min-release-age=7` to `.npmrc`, establishing a seven-day dependency publication cooldown without changing package ranges or application code.
+- Full-repository Semgrep verification dropped exactly from 43 to 42 findings; the npm release-age finding is gone and no new rule classes appeared.
+
+Что имеем? Fresh npm resolution now rejects package releases younger than seven days, reducing exposure to rapid supply-chain compromise windows.
+
+Что осталось? Clean temporary probe tooling, review the two-file diff, then signed commit / safe PR / merge.
+
 ## 2026-09-13 — API Dockerfile non-root hardening
 
 - Started from `origin/master` at `948cca6` after canon scanner path hardening merged.
