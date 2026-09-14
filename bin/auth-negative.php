@@ -120,7 +120,7 @@ $valid = mintJwt(['test1']);
 $result = verifyJwt($valid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('valid token', true === $result['ok']);
 
-$expired = mintJwt(['test1', $issuer, $audience, 'user_123', '-10']);
+$expired = mintJwt(['test1', $issuer, $audience, 'user_123', '-60']);
 $result = verifyJwt($expired, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('expired token', false === $result['ok'] && 'expired' === ($result['error'] ?? null));
 
