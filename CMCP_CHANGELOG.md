@@ -1,5 +1,19 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Kubernetes privilege-escalation hardening
+
+- Started from `origin/master` at `282532d` after Docker Compose `no-new-privileges` hardening merged.
+- Entering residual Semgrep baseline: 54 findings, including 8 Kubernetes `allowPrivilegeEscalation` findings and 7 separate `runAsNonRoot` findings.
+- Reconnaissance kept those classes separate: `allowPrivilegeEscalation: false` does not require changing the container UID, while forcing `runAsNonRoot: true` can break images whose USER contract is unknown.
+- Exact findings covered 8 containers across observability, legacy Helm, and the E2E test Pod. Added only container-level `securityContext.allowPrivilegeEscalation: false` to those 8 containers.
+- Repository inspection did not establish a non-root USER contract for the legacy `ghcr.io/acme/order` images or templated exporter images, so the 7 `runAsNonRoot` findings remain intentionally deferred rather than guessed away.
+- Targeted Semgrep verification removed all 8 `allowPrivilegeEscalation` findings and left exactly the 7 `runAsNonRoot` findings.
+- Full-repository Semgrep verification dropped exactly from 54 to 46 findings with no new rule classes.
+
+Что имеем? The Kubernetes privilege-escalation layer is closed without imposing an unverified UID policy on images.
+
+Что осталось? Clean temporary scan tooling, review the bounded diff, then signed commit / safe PR / merge. Remaining security debt is 19 PHP `exec-use`, 15 Compose writable-filesystem findings, 7 Kubernetes `runAsNonRoot`, and five isolated findings.
+
 ## 2026-09-13 — Docker Compose no-new-privileges hardening
 
 - Started from `origin/master` at `e9c9725` after residual workflow action pinning merged.

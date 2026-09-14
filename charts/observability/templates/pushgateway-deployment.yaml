@@ -10,4 +10,6 @@ spec:
             containers:
                 -   name: pushgateway
                     image: { { .Values.pushgateway.image } }
+                    securityContext:
+                        allowPrivilegeEscalation: false
                     ports: [ { containerPort: 9091 } ]
