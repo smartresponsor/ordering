@@ -1,5 +1,18 @@
 # CMCP_CHANGELOG
 
+## 2026-09-14 — JWT test fixture repair
+
+- Started from `origin/master` at `bbe2cce` after PHP process-execution hardening merged.
+- Failure reproduced in `bin/auth-negative.php`: OpenSSL could not coerce the committed RSA private test key; JWKS/public fixture content also showed placeholder-like malformed RSA material.
+- Regenerated a valid test-only RSA 2048 private/public pair using PHP OpenSSL with an explicitly resolved local `openssl.cnf`; private key material was never printed or surfaced.
+- After key repair, five of six JWT cases passed. The remaining `expired token` case used `ttl=-10` while configured leeway is 30 seconds, so it was still valid by design.
+- Changed the expired fixture to `ttl=-60`, placing expiration safely beyond configured leeway.
+- Final JWT negative smoke: valid, expired, nbf future, wrong audience, wrong issuer, and unknown kid all PASS.
+
+Что имеем? JWT signing and verification fixtures are valid again, and expiration testing now respects configured leeway semantics.
+
+Что осталось? Run syntax/unit gates, clean temporary tooling, then signed commit / PR / merge.
+
 ## 2026-09-14 — PHP shell-execution hardening
 
 - Started from `origin/master` at `0737083` after verified observability non-root hardening merged.
