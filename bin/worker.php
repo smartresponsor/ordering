@@ -3,6 +3,10 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 $console = __DIR__ . '/console';
 if (!is_file($console)) {
     fwrite(STDERR, "bin/console not found\n");
@@ -24,5 +28,10 @@ $cmd = [
     '--cycles=' . $cycles,
 ];
 
-passthru(implode(' ', array_map('escapeshellarg', $cmd)), $exitCode);
+$process = new Process($cmd);
+$process->setTimeout(null);
+$exitCode = $process->run(static function (string $type, string $buffer): void {
+    fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+});
+
 exit($exitCode);

@@ -3,6 +3,10 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 $root = dirname(__DIR__);
 $directories = ['src', 'config', 'tests'];
 $failures = [];
@@ -24,12 +28,12 @@ foreach ($directories as $directory) {
         }
 
         ++$checked;
-        $command = escapeshellarg(PHP_BINARY).' -l '.escapeshellarg($file->getPathname()).' 2>&1';
-        exec($command, $output, $exitCode);
-        if (0 !== $exitCode) {
-            $failures[] = $file->getPathname().PHP_EOL.implode(PHP_EOL, $output);
+        $process = new Process([PHP_BINARY, '-l', $file->getPathname()]);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            $output = trim($process->getOutput().PHP_EOL.$process->getErrorOutput());
+            $failures[] = $file->getPathname().PHP_EOL.$output;
         }
-        $output = [];
     }
 }
 

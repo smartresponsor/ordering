@@ -5,6 +5,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Symfony\Component\Process\Process;
+
 function base64UrlDecode(string $value): string
 {
     $padding = 4 - (strlen($value) % 4);
@@ -90,6 +92,15 @@ function reportCase(string $nameEntity, bool $ok): bool
     return $ok;
 }
 
+/** @param list<string> $arguments */
+function mintJwt(array $arguments): string
+{
+    $process = new Process([PHP_BINARY, __DIR__ . '/jwt-mint-test.php', ...$arguments]);
+    $process->run();
+
+    return trim($process->getOutput());
+}
+
 $config = json_decode((string)file_get_contents(__DIR__ . '/../config/security/jwt.json'), true);
 
 if (!is_array($config)) {
@@ -105,61 +116,27 @@ $publicPem = (string)file_get_contents($publicPemPath);
 
 $pass = true;
 
-$valid = trim((string)shell_exec('php ' . escapeshellarg(__DIR__ . '/jwt-mint-test.php') . ' test1'));
+$valid = mintJwt(['test1']);
 $result = verifyJwt($valid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('valid token', true === $result['ok']);
 
-$expired = trim((string)shell_exec(
-    'php '
-    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
-    . ' test1 '
-    . escapeshellarg($issuer)
-    . ' '
-    . escapeshellarg($audience)
-    . ' user_123 -10',
-));
+$expired = mintJwt(['test1', $issuer, $audience, 'user_123', '-10']);
 $result = verifyJwt($expired, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('expired token', false === $result['ok'] && 'expired' === ($result['error'] ?? null));
 
-$future = trim((string)shell_exec(
-    'php '
-    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
-    . ' test1 '
-    . escapeshellarg($issuer)
-    . ' '
-    . escapeshellarg($audience)
-    . ' user_123 300 9999',
-));
+$future = mintJwt(['test1', $issuer, $audience, 'user_123', '300', '9999']);
 $result = verifyJwt($future, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('nbf future', false === $result['ok'] && 'nbf_future' === ($result['error'] ?? null));
 
-$wrongAudience = trim((string)shell_exec(
-    'php '
-    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
-    . ' test1 '
-    . escapeshellarg($issuer)
-    . ' WRONGAUD',
-));
+$wrongAudience = mintJwt(['test1', $issuer, 'WRONGAUD']);
 $result = verifyJwt($wrongAudience, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong audience', false === $result['ok'] && 'bad_aud' === ($result['error'] ?? null));
 
-$wrongIssuer = trim((string)shell_exec(
-    'php '
-    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
-    . ' test1 https://bad-issuer '
-    . escapeshellarg($audience),
-));
+$wrongIssuer = mintJwt(['test1', 'https://bad-issuer', $audience]);
 $result = verifyJwt($wrongIssuer, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('wrong issuer', false === $result['ok'] && 'bad_iss' === ($result['error'] ?? null));
 
-$unknownKid = trim((string)shell_exec(
-    'php '
-    . escapeshellarg(__DIR__ . '/jwt-mint-test.php')
-    . ' test2 '
-    . escapeshellarg($issuer)
-    . ' '
-    . escapeshellarg($audience),
-));
+$unknownKid = mintJwt(['test2', $issuer, $audience]);
 $result = verifyJwt($unknownKid, $publicPem, $issuer, $audience, $leeway, 'test1');
 $pass &= reportCase('unknown kid', false === $result['ok'] && 'kid_not_found' === ($result['error'] ?? null));
 

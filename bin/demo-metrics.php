@@ -3,6 +3,10 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 /*
  * Copyright (c) 2025 Oleksandr Tishchenko / Marketing America Corp
  * Author: Oleksandr Tishchenko <dev@smartresponsor.com>
@@ -12,11 +16,10 @@ declare(strict_types=1);
 $console = __DIR__ . '/console';
 $format = $argv[1] ?? 'json';
 
-$command = sprintf(
-    'php %s order:metrics:export --format=%s',
-    escapeshellarg($console),
-    escapeshellarg($format),
-);
+$process = new Process([PHP_BINARY, $console, 'order:metrics:export', '--format=' . $format]);
+$process->setTimeout(null);
+$exitCode = $process->run(static function (string $type, string $buffer): void {
+    fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+});
 
-passthru($command, $exitCode);
 exit($exitCode);

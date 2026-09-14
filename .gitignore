@@ -89,8 +89,9 @@ Thumbs.db
 # Noncanonical generated Symfony reference artifacts
 /config/reference.php*
 
-# Local gating tooling is not part of the Ordering repository surface
+# Local gating / Console MCP tooling is not part of the Ordering repository surface
 /.gating/
+/.console-mcp/
 
 # ──────────────────────────────────────────────
 #  🔐 Local environment (never commit)

@@ -3,6 +3,10 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 /**
  * Read scenario (.json) and print steps; execute fault scripts and link to SLO gate.
  * This is a scaffold: integrate with your metrics source for real measurement.
@@ -28,9 +32,17 @@ $duration = (int)($experiment['duration_s'] ?? 60);
 
 fwrite(STDOUT, sprintf("Scenario: %s\n", $nameEntity));
 
-$runCommand = static function (string $command): void {
-    fwrite(STDOUT, sprintf("+ %s\n", $command));
-    passthru($command, $exitCode);
+/**
+ * @param list<string> $command
+ * @param array<string,string> $env
+ */
+$runCommand = static function (array $command, array $env = []): void {
+    fwrite(STDOUT, '+ ' . implode(' ', $command) . PHP_EOL);
+    $process = new Process($command, null, $env);
+    $process->setTimeout(null);
+    $exitCode = $process->run(static function (string $type, string $buffer): void {
+        fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+    });
     if (0 !== $exitCode) {
         exit($exitCode);
     }
@@ -40,16 +52,22 @@ switch ($fault) {
     case 'netem':
         $delay = (int)($params['delay_ms'] ?? 150);
         $loss = (int)($params['loss_pct'] ?? 2);
-        $runCommand(sprintf('DELAY_MS=%d LOSS_PCT=%d ./bin/fault-netem.sh', $delay, $loss));
+        $runCommand(
+            ['sh', __DIR__ . '/fault-netem.sh'],
+            ['DELAY_MS' => (string)$delay, 'LOSS_PCT' => (string)$loss],
+        );
         break;
 
     case 'kill_db':
         $faultDuration = (int)($params['dur'] ?? 90);
-        $runCommand(sprintf('DUR=%d ./bin/fault-kill-db.sh', $faultDuration));
+        $runCommand(
+            ['sh', __DIR__ . '/fault-kill-db.sh'],
+            ['DUR' => (string)$faultDuration],
+        );
         break;
 
     case 'kill_worker':
-        $runCommand('./bin/fault-kill-worker.sh');
+        $runCommand(['sh', __DIR__ . '/fault-kill-worker.sh']);
         break;
 
     default:
@@ -82,5 +100,10 @@ if ($errorRate > $errorBudget) {
     $failed = true;
 }
 
-passthru('./bin/fault-netem-undo.sh');
+$undoProcess = new Process(['sh', __DIR__ . '/fault-netem-undo.sh']);
+$undoProcess->setTimeout(null);
+$undoProcess->run(static function (string $type, string $buffer): void {
+    fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+});
+
 exit($failed ? 1 : 0);
