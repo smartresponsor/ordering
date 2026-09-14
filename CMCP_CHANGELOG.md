@@ -1,5 +1,19 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Canon scanner write-path hardening
+
+- Started from `origin/master` at `0d578e4` after Kubernetes privilege-escalation hardening merged.
+- Entering residual Semgrep baseline: 46 findings, including two `tainted-filename` findings in `tools/ordering-canon/ordering-canon-api-state-processor-layer-scan.php`.
+- Reconnaissance confirmed the scanner derives a filesystem target directly from CLI `--write=` input, while repository documentation defines exactly one supported output artifact: `.meta/ordering-canon-api-state-processor-layer-after-wave13.json`.
+- Replaced arbitrary repository-relative write-path derivation with an allowlist for that sole documented target. Unsupported `--write` values now fail explicitly instead of reaching `mkdir()` / `file_put_contents()`.
+- `AuditRotator` unlink remains intentionally unchanged because its path is server-generated under the project log directory and was previously reviewed as a false positive.
+- Targeted Semgrep verification removed both `tainted-filename` findings; PHP lint is clean.
+- Full-repository Semgrep verification dropped exactly from 46 to 44 findings with no new rule classes.
+
+Что имеем? The canon scanner can no longer use CLI input to traverse or select arbitrary filesystem targets.
+
+Что осталось? Clean temporary scan tooling, review the bounded diff, then signed commit / safe PR / merge. Remaining isolated findings are Dockerfile missing-user, npm minimum-release-age, and the known AuditRotator unlink false positive.
+
 ## 2026-09-13 — Kubernetes privilege-escalation hardening
 
 - Started from `origin/master` at `282532d` after Docker Compose `no-new-privileges` hardening merged.

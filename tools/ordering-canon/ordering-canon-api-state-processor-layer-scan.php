@@ -56,7 +56,13 @@ foreach ($args as $arg) {
 }
 
 if (null !== $write && '' !== $write) {
-    $target = $root . '/' . ltrim(str_replace('\\', '/', $write), '/');
+    $supportedWriteTarget = '.meta/ordering-canon-api-state-processor-layer-after-wave13.json';
+    $normalizedWrite = ltrim(str_replace('\\', '/', $write), '/');
+    if ($supportedWriteTarget !== $normalizedWrite) {
+        throw new InvalidArgumentException(sprintf('Unsupported --write target: %s', $write));
+    }
+
+    $target = $root . '/' . $supportedWriteTarget;
     $dir = dirname($target);
     if (!is_dir($dir)) {
         mkdir($dir, 0775, true);
