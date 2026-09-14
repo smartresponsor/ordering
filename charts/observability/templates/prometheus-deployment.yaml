@@ -14,6 +14,8 @@ spec:
                     image: { { .Values.prometheus.image } }
                     securityContext:
                         allowPrivilegeEscalation: false
+                        runAsNonRoot: true
+                        runAsUser: 65534
                     args:
                         - "--config.file=/etc/prometheus/prometheus.yml"
                         - "--storage.tsdb.retention.time={{ .Values.prometheus.retention }}"

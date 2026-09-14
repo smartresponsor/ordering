@@ -12,6 +12,8 @@ spec:
                     image: { { .Values.grafana.image } }
                     securityContext:
                         allowPrivilegeEscalation: false
+                        runAsNonRoot: true
+                        runAsUser: 472
                     ports: [ { containerPort: 3000 } ]
                     env:
                         -   name: GF_SECURITY_ADMIN_USER
