@@ -3,60 +3,64 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 $steps = [
     [
         'nameEntity' => 'Composer audit',
-        'command' => 'composer audit --no-interaction',
+        'command' => ['composer', 'audit', '--no-interaction'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'PHP lint',
-        'command' => 'php -l src/Controller/OrderManagementController.php',
+        'command' => [PHP_BINARY, '-l', 'src/Controller/OrderManagementController.php'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'YAML lint',
-        'command' => 'php bin/console lint:yaml config --parse-tags',
+        'command' => [PHP_BINARY, 'bin/console', 'lint:yaml', 'config', '--parse-tags'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Twig lint',
-        'command' => 'php bin/console lint:twig templates',
+        'command' => [PHP_BINARY, 'bin/console', 'lint:twig', 'templates'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Container lint',
-        'command' => 'php bin/console lint:container',
+        'command' => [PHP_BINARY, 'bin/console', 'lint:container'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Schema validate',
-        'command' => 'php bin/console doctrine:schema:validate --skip-sync -vvv',
+        'command' => [PHP_BINARY, 'bin/console', 'doctrine:schema:validate', '--skip-sync', '-vvv'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Unit tests',
-        'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFast',
+        'command' => [PHP_BINARY, 'vendor/bin/phpunit', '--configuration', 'phpunit.xml.dist', '--testsuite', 'OrderFast'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Functional tests',
-        'command' => 'php vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite OrderFullStack',
+        'command' => [PHP_BINARY, 'vendor/bin/phpunit', '--configuration', 'phpunit.xml.dist', '--testsuite', 'OrderFullStack'],
         'optional' => false,
     ],
     [
         'nameEntity' => 'Importmap audit',
-        'command' => 'php bin/console importmap:audit',
+        'command' => [PHP_BINARY, 'bin/console', 'importmap:audit'],
         'optional' => true,
     ],
     [
         'nameEntity' => 'Gitleaks',
-        'command' => 'gitleaks detect --no-banner --source .',
+        'command' => ['gitleaks', 'detect', '--no-banner', '--source', '.'],
         'optional' => true,
     ],
     [
         'nameEntity' => 'Semgrep',
-        'command' => 'semgrep scan --config auto',
+        'command' => ['semgrep', 'scan', '--config', 'auto'],
         'optional' => true,
     ],
 ];
@@ -69,7 +73,11 @@ foreach ($steps as $step) {
         continue;
     }
 
-    passthru($step['command'], $exitCode);
+    $process = new Process($step['command']);
+    $process->setTimeout(null);
+    $exitCode = $process->run(static function (string $type, string $buffer): void {
+        fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+    });
 
     if (0 !== $exitCode) {
         fwrite(STDERR, 'FAILED: ' . $step['nameEntity'] . PHP_EOL);
@@ -79,22 +87,49 @@ foreach ($steps as $step) {
 
 echo PHP_EOL . 'QA pipeline completed successfully.' . PHP_EOL;
 
-function commandIsAvailable(string $command): bool
+/** @param list<string> $command */
+function commandIsAvailable(array $command): bool
 {
-    if (str_contains($command, 'importmap:audit')) {
-        exec('php bin/console list --raw', $consoleCommands, $consoleExit);
+    if (in_array('importmap:audit', $command, true)) {
+        $process = new Process([PHP_BINARY, 'bin/console', 'list', '--raw']);
+        $process->run();
+        $consoleCommands = preg_split('/\R/', trim($process->getOutput())) ?: [];
 
-        return 0 === $consoleExit && in_array('importmap:audit', $consoleCommands, true);
+        return $process->isSuccessful() && in_array('importmap:audit', $consoleCommands, true);
     }
 
-    $binary = explode(' ', trim($command))[0];
+    $binary = $command[0];
 
-    if ('php' === $binary || 'composer' === $binary) {
+    if (PHP_BINARY === $binary) {
         return true;
     }
 
-    $where = strtoupper(substr(PHP_OS_FAMILY, 0, 3)) === 'WIN' ? 'where' : 'command -v';
-    exec($where . ' ' . $binary, $output, $exitCode);
+    return binaryIsAvailable($binary);
+}
 
-    return 0 === $exitCode;
+function binaryIsAvailable(string $binary): bool
+{
+    $path = getenv('PATH');
+    if (false === $path || '' === $path) {
+        return false;
+    }
+
+    $extensions = [''];
+    if ('Windows' === PHP_OS_FAMILY) {
+        $pathExt = getenv('PATHEXT');
+        $extensions = false !== $pathExt && '' !== $pathExt
+            ? preg_split('/;/', $pathExt) ?: ['.EXE', '.BAT', '.CMD', '.COM']
+            : ['.EXE', '.BAT', '.CMD', '.COM'];
+    }
+
+    foreach (explode(PATH_SEPARATOR, $path) as $directory) {
+        foreach ($extensions as $extension) {
+            $candidate = rtrim($directory, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$binary.$extension;
+            if (is_file($candidate) && is_executable($candidate)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

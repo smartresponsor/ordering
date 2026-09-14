@@ -3,6 +3,10 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 $console = __DIR__ . '/console';
 
 if (!is_file($console)) {
@@ -11,12 +15,16 @@ if (!is_file($console)) {
 }
 
 $batch = getenv('ORDER_OUTBOX_BATCH');
-$command = sprintf('php %s order:outbox:dispatch', escapeshellarg($console));
+$command = [PHP_BINARY, $console, 'order:outbox:dispatch'];
 
 if (is_string($batch) && '' !== trim($batch)) {
-    $command .= sprintf(' --batch=%d', max(1, (int)$batch));
+    $command[] = '--batch=' . max(1, (int)$batch);
 }
 
-passthru($command, $exitCode);
+$process = new Process($command);
+$process->setTimeout(null);
+$exitCode = $process->run(static function (string $type, string $buffer): void {
+    fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+});
 
 exit($exitCode);

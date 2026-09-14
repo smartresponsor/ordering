@@ -1,5 +1,25 @@
 # CMCP_CHANGELOG
 
+## 2026-09-14 — PHP shell-execution hardening
+
+- Started from `origin/master` at `0737083` after verified observability non-root hardening merged.
+- Current Semgrep inventory for `php.lang.security.exec-use.exec-use` resolved to 11 findings across `bin/`: demo metrics, outbox replay/worker wrappers, PHP lint, local QA, chaos scenario, payments worker, and generic worker. This supersedes the older journal count of 19 from an earlier Semgrep ruleset snapshot.
+- Reconnaissance showed the scripts were primarily internal CLI wrappers; several already escaped arguments, but all still depended on shell parsing through `exec`, `shell_exec`, or `passthru`.
+- Selected work: remove shell-based process APIs entirely and use `Symfony\Component\Process\Process` with argument vectors. Added `symfony/process:^8.1` directly to both `composer.json` and `composer.prod.json` for Canon008/Canon033 compliance.
+- JWT negative-test minting, legacy importer dispatch, PHP lint, local QA, metrics export, outbox replay/dispatch/run wrappers, payment/general workers, and chaos fault hooks now pass arguments directly rather than constructing shell command strings.
+- Chaos scenario environment values are supplied via Process environment maps; shell scripts remain explicitly invoked through `sh` as their existing POSIX execution contract.
+- Long-running wrappers explicitly call `setTimeout(null)` to preserve the former unbounded `passthru`/`exec` runtime behavior rather than inheriting Symfony Process's default timeout.
+- Material risks reviewed: command output/exit-code forwarding, Windows tool discovery in local QA, long-running worker timeouts, and Composer dev-master sibling drift. A package-scoped Composer refresh reported sibling updates but produced no tracked `composer.lock` diff, so no sibling package revisions are included in this change.
+- Gates already green: `php -l` across all 12 changed PHP scripts; `composer validate --strict`.
+
+Что имеем? Ordering CLI wrappers no longer need PHP shell execution APIs for the reviewed process-launch surfaces, and command arguments are structurally separated from the executable.
+
+- Final gates: all 12 changed PHP scripts pass `php -l`; `composer validate --strict` is clean; `composer audit` reports no advisories; OrderFast passes 10/10 tests with 75 assertions; full-repository `semgrep scan --config auto` reports `exec-use` findings reduced from 11 to 0.
+- The JWT negative smoke remains independently blocked by the existing test private-key/OpenSSL fixture failure in `jwt-mint-test.php`; the Process refactor preserves the former non-throwing child-process behavior and does not introduce that fixture defect.
+- Added `/.console-mcp/` to `.gitignore` alongside `/.gating/` because Console MCP local runtime state is not part of the Ordering repository surface.
+
+Что осталось? Clean temporary scan tooling, perform final diff/status review, then signed commit / safe PR / merge.
+
 ## 2026-09-13 — Observability Kubernetes non-root hardening
 
 - Started from `origin/master` at `c2c6aa7` after npm dependency cooldown hardening merged.

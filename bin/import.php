@@ -9,11 +9,17 @@ declare(strict_types=1);
  * This file is part of SmartResponsor (Order domain).
  */
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+
 $console = __DIR__ . '/console';
 $projectRoot = dirname(__DIR__);
-$commandsOutput = [];
-$commandsExitCode = 0;
-@exec(sprintf('php %s list --raw 2>NUL', escapeshellarg($console)), $commandsOutput, $commandsExitCode);
+$listProcess = new Process([PHP_BINARY, $console, 'list', '--raw']);
+$listProcess->run();
+$commandsOutput = 0 === $listProcess->getExitCode()
+    ? preg_split('/\R/', trim($listProcess->getOutput())) ?: []
+    : [];
 
 $knownCandidates = [
     'order:import',
@@ -37,11 +43,10 @@ if (null === $resolvedCommand) {
 }
 
 $arguments = array_slice($argv, 1);
-$command = sprintf('php %s %s', escapeshellarg($console), $resolvedCommand);
+$process = new Process([PHP_BINARY, $console, $resolvedCommand, ...$arguments]);
+$process->setTimeout(null);
+$exitCode = $process->run(static function (string $type, string $buffer): void {
+    fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
+});
 
-foreach ($arguments as $argument) {
-    $command .= ' ' . escapeshellarg($argument);
-}
-
-passthru($command, $exitCode);
 exit($exitCode);
