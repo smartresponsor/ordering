@@ -1,5 +1,18 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Post-RC deploy workflow hardening
+
+- Started from `origin/master` at `877eee2` after the previous CD workflow security merge.
+- Targeted Semgrep baseline for `.github/workflows/deploy.yml`: 30 findings / 30 blocking across 82 rules — 1 direct GitHub-context shell-injection finding plus 29 mutable GitHub Action references.
+- Removed direct `${{ github.ref_name }}` / `${{ github.sha }}` interpolation from the Buildx cache-key shell command by passing values through step environment variables.
+- Resolved the exact current tag SHAs for every unique action dependency with `git ls-remote`, then pinned all 29 action uses to full immutable commit SHAs while retaining version comments.
+- Verification: targeted `semgrep scan --config auto .github/workflows/deploy.yml` now reports 0 findings / 0 blocking; Symfony YAML lint is green.
+- Temporary SHA-resolution and targeted-scan helper scripts were removed after use.
+
+Что имеем? `deploy.yml` moved from 30 Semgrep findings to zero without changing the workflow topology or application runtime.
+
+Что осталось? Final diff acceptance, signed commit, safe publication, PR merge gate, and post-merge verification.
+
 ## 2026-09-13 — Post-RC CI shell-injection hardening
 
 - Started from clean `origin/master` at `a277ad8` on `feature/ordering-security-hardening` after Canon024 production packaging merged.
