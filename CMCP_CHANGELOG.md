@@ -1,5 +1,20 @@
 # CMCP_CHANGELOG
 
+## 2026-09-13 — Observability Kubernetes non-root hardening
+
+- Started from `origin/master` at `c2c6aa7` after npm dependency cooldown hardening merged.
+- Residual Semgrep baseline entering this batch: 42 findings, including seven Kubernetes `run-as-non-root` findings.
+- Reconnaissance separated public observability images from repo-local/templated images. The latter remain untouched because their runtime UID contract is not proven.
+- Official image contracts support numeric non-root UIDs for the pinned public images: Prometheus and Pushgateway use UID 65534, Grafana uses UID 472.
+- Added `runAsNonRoot: true` plus explicit numeric `runAsUser` to the Prometheus, Pushgateway, and Grafana container security contexts only.
+- Did not modify exporters, the Helm E2E test pod, or legacy `ghcr.io/acme/order` manifests because enforcing non-root there without a proven image/filesystem contract could break startup.
+
+Что имеем? Three public observability workloads now have Kubernetes-enforced non-root runtime identity backed by verified image UID contracts.
+
+- Full-repository Semgrep verification dropped exactly from 42 to 39 findings; Kubernetes `run-as-non-root` findings dropped from 7 to 4 with no new rule classes.
+
+Что осталось? Clean temporary tooling, review the bounded diff, then signed commit / safe PR / merge.
+
 ## 2026-09-13 — npm dependency cooldown hardening
 
 - Started from `origin/master` at `e3636e3` after API Dockerfile non-root hardening merged.
