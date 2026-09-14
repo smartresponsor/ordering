@@ -13,16 +13,16 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
         with:
           php-version: '8.4'
           extensions: mbstring, intl, pdo_pgsql
 
       - name: Cache Composer packages
-        uses: actions/cache@v3
+        uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: vendor
           key: composer-${{ hashFiles('**/composer.lock') }}
@@ -38,7 +38,7 @@ jobs:
         run: zip -r OrderComponent.zip src config README.md composer.json
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@26994186c0ac3ef5cae75ac16aa32e8153525f77 # v1
         with:
           files: OrderComponent.zip
           tag_name: ${{ github.event.inputs.version || github.ref_name }}
