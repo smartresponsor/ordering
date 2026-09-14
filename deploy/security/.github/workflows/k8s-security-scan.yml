@@ -4,16 +4,16 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Kubescape (Helm chart scan)
-        uses: kubescape/github-action@v3
+        uses: kubescape/github-action@c9749b84d138c0cbbb702b258774954f5463b82e # v3.0.21
         with:
           frameworks: 'nsa,cis-eks'
           files: 'deploy/order/charts/ordercomponent'
           format: 'sarif'
           outputFile: 'kubescape.sarif'
       - name: Trivy config scan
-        uses: aquasecurity/trivy-action@0.20.0
+        uses: aquasecurity/trivy-action@b2933f565dbc598b29947660e66259e3c7bc8561 # v0.20.0
         with:
           scan-type: 'config'
           scanners: 'misconfig'
@@ -23,10 +23,10 @@ jobs:
           hide-progress: true
           input: 'deploy/order/charts/ordercomponent'
       - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
         with:
           sarif_file: 'trivy.sarif'
       - name: Upload Kubescape SARIF
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
         with:
           sarif_file: 'kubescape.sarif'
