@@ -10,7 +10,11 @@ spec:
             containers:
                 -   name: ci-failure-exporter
                     image: { { .Values.exporters.images.failure } }
+                    securityContext:
+                        allowPrivilegeEscalation: false
                     ports: [ { containerPort: { { .Values.exporters.ports.failure } } } ]
                 -   name: ci-metrics-exporter
                     image: { { .Values.exporters.images.metrics } }
+                    securityContext:
+                        allowPrivilegeEscalation: false
                     ports: [ { containerPort: { { .Values.exporters.ports.metrics } } } ]

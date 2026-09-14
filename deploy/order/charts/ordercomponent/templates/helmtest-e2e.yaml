@@ -11,6 +11,8 @@ spec:
     containers:
         -   name: e2e
             image: { { .Values.worker.image | quote } }
+            securityContext:
+                allowPrivilegeEscalation: false
             command:
                 - sh
                 - -ec

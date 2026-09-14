@@ -13,5 +13,7 @@ spec:
             containers:
                 -   name: app
                     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+                    securityContext:
+                        allowPrivilegeEscalation: false
                     ports:
                         -   containerPort: 8080
