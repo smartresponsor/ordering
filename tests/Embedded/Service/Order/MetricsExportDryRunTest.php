@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\Embedded\Service\Order;
 
-use App\Ordering\Command\OrderMetricsExportCommand;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Tester\CommandTester;
 
 final class MetricsExportDryRunTest extends KernelTestCase
 {
-    public function testExportDryRun(): void
+    public function testExportCommandContractIsWired(): void
     {
         self::bootKernel();
-        $cmd = self::$kernel->getContainer()->get(OrderMetricsExportCommand::class);
-        $tester = new CommandTester($cmd);
-        $tester->execute([]);
-        $this->assertStringContainsString('not wired yet', $tester->getDisplay());
+        $kernel = self::$kernel;
+        self::assertNotNull($kernel);
+
+        $application = new Application($kernel);
+        $command = $application->find('order:metrics:export');
+        $definition = $command->getDefinition();
+
+        self::assertTrue($definition->hasOption('since'));
+        self::assertTrue($definition->hasOption('until'));
+        self::assertTrue($definition->hasOption('sink'));
+        self::assertTrue($definition->hasOption('batch'));
+        self::assertTrue($definition->hasOption('dry-run'));
+        self::assertStringNotContainsString('placeholder', (string) $command->getDescription());
     }
 }
