@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class WebhookRsaTest extends TestCase
 {
-    public function testRsaSignVerify()
+    public function testRsaSignVerify(): void
     {
         $cfg = [
             'private_key_bits' => 2048,

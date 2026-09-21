@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class WebhookHmacTest extends TestCase
 {
-    public function testHmacSignVerify()
+    public function testHmacSignVerify(): void
     {
         $s = new WebhookSignerHmac();
         $v = new WebhookVerifierHmac();

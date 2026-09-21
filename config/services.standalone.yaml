@@ -16,7 +16,16 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    App\Ordering\Service\Analytics\Order\OrderMetricsQueryService: ~
+    App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsQueryServiceInterface: '@App\Ordering\Service\Analytics\Order\OrderMetricsQueryService'
+
+    App\Ordering\Service\Analytics\Order\BigQueryExportSink:
+        arguments:
+            $targetPath: '%kernel.project_dir%/var/bigquery'
+    App\Ordering\ServiceInterface\Analytics\Order\BigQueryExportSinkInterface: '@App\Ordering\Service\Analytics\Order\BigQueryExportSink'
+
     App\Ordering\Command\OrderDemoLoadCommand: ~
     App\Ordering\Command\OrderDemoResetCommand: ~
     App\Ordering\Command\OrderDiagnosticsCommand: ~
+    App\Ordering\Command\OrderMetricsExportCommand: ~
     App\Ordering\Command\OrderReportCommand: ~

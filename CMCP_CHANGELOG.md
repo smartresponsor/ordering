@@ -1,5 +1,21 @@
 # CMCP_CHANGELOG
 
+## 2026-09-20 — Ordering metrics export RC hardening
+
+- Baseline: `feature/ordering-jwt-fixture-fix-v2` at `1e3fd2ddcf4554f8bd91141ceb346be4c493a251`, one commit ahead of upstream. `config/services.yaml` was already modified before this run to register `OrderDemoDataService`; that diff is pre-existing and will not be staged or claimed here.
+- Reconnaissance covered Ordering README/Composer/service configuration, current metrics command/query/sinks/entities/tests, migration baseline, RC diagnostics, and relevant implementation history. The current export source is `order_metrics_projection` through `OrderMetricsQueryService`; the historical aggregate-view source is not the current Doctrine baseline.
+- Runtime dependency contour verified for Objecting, Cruding, Viewing, and Interfacing, including development path/symlink wiring and packaged production declarations. Relevant README, Composer, agent/manifest contracts were consulted where present.
+- Canonization rules consulted and mapped: Canon000, Canon001, Canon002, Canon007, Canon008, Canon011, Canon013, Canon019, Canon021, Canon024, Canon038, Canon044. Gating's canon mirror contract was also read. The export command remains under the canonical Command role and Order subject vocabulary; it is Ordering-specific operational behavior, not generic CRUD.
+- Baseline gates: `composer validate --strict` passed; `composer test` passed 10 tests / 75 assertions; `composer lint:canon` reported zero local scanner violations. RC diagnostics nevertheless identified `OrderMetricsExportCommand` as the only production-code placeholder candidate, exposing a semantic Canon013 false green.
+- RC-critical workstream: replace the fake-success metrics export placeholder with executable behavior built on the current query contract, align production/standalone registration and tests, repair the demo invocation contract, and harden directly exercised sinks.
+- Risks: preserve the pre-existing dirty config diff, do not revive archived table assumptions, keep external I/O outside database transactions, validate dates/batch/sink input, and keep failures observable per Canon011.
+- Growth workstream (non-RC): provider-neutral DWH connector discovery, checkpoint/reconciliation UX, export history/API surfaces, resumable/replay semantics, and richer operational dashboards.
+- Gates planned: targeted PHPUnit, PHP lint, Symfony container/YAML lint, PHPStan, OrderFast/OrderFullStack, owner canon enforcement, Composer validation/audit, and final Git state review.
+
+Что имеем? The Canon013 fake-success metrics export path is replaced by executable daily-projection export through the BigQuery-compatible sink. Input validation, batching, dry-run behavior, production/standalone registration, demo invocation, and file-sink failure handling are covered. Final verification is green: OrderFast 13/13 (87 assertions), OrderFullStack 4/4 (29 assertions), PHPStan 0 errors, CS 0/911, Symfony container/YAML lint green, Doctrine mapping green, owner canon 0 violations, Composer validation clean, Composer audit 0 advisories, changed-PHP lint clean, and RC diagnose reports zero blockers.
+
+Что осталось? ClickHouse export remains deliberately outside this RC command because the configured legacy `order_metrics_aggregate_view` schema does not match the current daily `order_metrics_projection` payload; a schema-specific adapter/query is growth work. The pre-existing `config/services.yaml` change and unrelated `PRODUCT_CAPABILITY_AUDIT.adoc` remain excluded from this run. Integrate only the owned diff and verify remote/PR state.
+
 ## 2026-09-14 — JWT test fixture repair
 
 - Started from `origin/master` at `bbe2cce` after PHP process-execution hardening merged.
