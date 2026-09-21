@@ -15,5 +15,6 @@ interface OrderMetricsQueryServiceInterface
 {
     public function __construct(EntityManagerInterface $em);
 
+    /** @return array<int,array{date:string,orders:int,gross:string,refund:string,net:string}> */
     public function ordersByDay(\DateTimeImmutable $from, \DateTimeImmutable $to): array;
 }

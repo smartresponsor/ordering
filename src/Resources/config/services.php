@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Ordering\Command\OrderMetricsExportCommand;
 use App\Ordering\Controller\Api\OrderPayController;
 use App\Ordering\Controller\Api\OrderShipController;
 use App\Ordering\EventListener\OrderApiRateLimitListener;
 use App\Ordering\EventListener\OrderTenantRateLimitListener;
 use App\Ordering\Factory\Storage\OrderS3ClientFactory;
 use App\Ordering\MessageHandler\OrderEventMessageHandler;
+use App\Ordering\Service\Analytics\Order\OrderMetricsQueryService;
 use App\Ordering\Service\Http\Order\AuditRotator;
 use App\Ordering\Service\Http\Order\MonologAuditSink;
 use App\Ordering\Service\Http\Order\NdjsonAuditSink;
@@ -31,6 +33,7 @@ use App\Ordering\Service\Security\Jwt\OrderJwtTenantResolver;
 use App\Ordering\Service\Shipment\ShipmentProcessorService;
 use App\Ordering\Service\Shipment\UPSCarrier;
 use App\Ordering\Service\Workflow\Order\OrderWorkflowService;
+use App\Ordering\ServiceInterface\Analytics\Order\OrderMetricsQueryServiceInterface;
 use App\Ordering\ServiceInterface\Http\Order\AuditRotateInterface;
 use App\Ordering\ServiceInterface\Http\Order\AuditShipInterface;
 use App\Ordering\ServiceInterface\Http\Order\AuditSinkInterface;
@@ -136,6 +139,11 @@ return static function (ContainerConfigurator $c): void {
     $s->set(OrderDataPersister::class)->tag('api_platform.state_processor');
     $s->set(OrderPayController::class)->public();
     $s->set(OrderShipController::class)->public();
+
+    // Metrics export
+    $s->set(OrderMetricsQueryService::class);
+    $s->alias(OrderMetricsQueryServiceInterface::class, OrderMetricsQueryService::class);
+    $s->set(OrderMetricsExportCommand::class);
 
     // Messenger handler
     $s->set(OrderEventMessageHandler::class)->tag('messenger.message_handler');

@@ -14,9 +14,9 @@ use Symfony\Component\Process\Process;
  */
 
 $console = __DIR__ . '/console';
-$format = $argv[1] ?? 'json';
+$sink = $argv[1] ?? 'bigquery';
 
-$process = new Process([PHP_BINARY, $console, 'order:metrics:export', '--format=' . $format]);
+$process = new Process([PHP_BINARY, $console, 'order:metrics:export', '--sink='.$sink]);
 $process->setTimeout(null);
 $exitCode = $process->run(static function (string $type, string $buffer): void {
     fwrite(Process::ERR === $type ? STDERR : STDOUT, $buffer);
